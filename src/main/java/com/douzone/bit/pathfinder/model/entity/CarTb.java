@@ -1,10 +1,11 @@
-package com.douzone.bit.pathfinder.area.entity;
+package com.douzone.bit.pathfinder.model.entity;
+
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-public class AreaTb {
+public class CarTb {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long areaIndex;
-	private String areaName;
+	private Long carIndex;
+	private String carName;
+	private Double carFuel;
+	private String carNumber;
+	private LocalDateTime carBuy;
 }

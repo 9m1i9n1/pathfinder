@@ -1,6 +1,4 @@
-package com.douzone.bit.pathfinder.car.entity;
-
-import java.time.LocalDateTime;
+package com.douzone.bit.pathfinder.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,13 +13,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-public class CarTb {
+public class BranchTb {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long carIndex;
-	private String carName;
-	private Double carFuel;
-	private String carNumber;
-	private LocalDateTime carBuy;
+	private Long branchIndex;
+	private String branchName;
+	private String branchOwner;
+	private Integer branchValue;
+	private String branchAddr;
+	private String branchDaddr;
+	private String branchPhone;
+	private Double brachLat;
+	private Double branchLng;
 }

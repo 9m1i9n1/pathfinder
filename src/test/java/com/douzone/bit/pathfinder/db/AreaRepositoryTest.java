@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.douzone.bit.pathfinder.PathfinderApplicationTests;
-import com.douzone.bit.pathfinder.area.entity.AreaTb;
-import com.douzone.bit.pathfinder.area.repository.AreaRepository;
+import com.douzone.bit.pathfinder.model.entity.AreaTb;
+import com.douzone.bit.pathfinder.repository.AreaRepository;
 
 public class AreaRepositoryTest extends PathfinderApplicationTests {
 

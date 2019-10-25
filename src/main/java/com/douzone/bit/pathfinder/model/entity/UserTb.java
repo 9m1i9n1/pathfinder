@@ -1,4 +1,4 @@
-package com.douzone.bit.pathfinder.user.entity;
+package com.douzone.bit.pathfinder.model.entity;
 
 import java.time.LocalDateTime;
 
@@ -10,8 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import com.douzone.bit.pathfinder.area.entity.AreaTb;
-import com.douzone.bit.pathfinder.branch.entity.BranchTb;
+import com.douzone.bit.pathfinder.model.entity.AreaTb;
+import com.douzone.bit.pathfinder.model.entity.BranchTb;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
