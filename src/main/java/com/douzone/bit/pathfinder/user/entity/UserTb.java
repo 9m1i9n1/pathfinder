@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.douzone.bit.pathfinder.area.entity.AreaTb;
@@ -34,9 +35,11 @@ public class UserTb {
 	private LocalDateTime userCreated;
 	private Boolean userAuth;
 	
-//	@JoinColumn(name = "branch_index")
-//	private BranchTb branch;
+	@ManyToOne
+	@JoinColumn(name = "branch_index")
+	private BranchTb branch;
 	
-//	@JoinColumn(name = "area_index")
-//	private AreaTb area;
+	@ManyToOne
+	@JoinColumn(name = "area_index")
+	private AreaTb area;
 }

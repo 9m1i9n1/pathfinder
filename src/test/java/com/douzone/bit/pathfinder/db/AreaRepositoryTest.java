@@ -1,5 +1,7 @@
 package com.douzone.bit.pathfinder.db;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ public class AreaRepositoryTest extends PathfinderApplicationTests {
 	@Autowired
 	private AreaRepository areaRepository;
 	
-	@Test
 	public void create() {
 		AreaTb area;
 		
@@ -26,5 +27,14 @@ public class AreaRepositoryTest extends PathfinderApplicationTests {
 			
 			areaRepository.save(area);
 		}
+	}
+	
+	@Test
+	public void read() {
+		List<AreaTb> area = areaRepository.findAll();
+		
+		area.forEach(result -> {
+			System.out.println(result.getAreaName());
+		});
 	}
 }
