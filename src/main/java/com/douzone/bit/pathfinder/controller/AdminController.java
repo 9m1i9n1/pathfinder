@@ -21,59 +21,65 @@ import com.douzone.bit.pathfinder.service.AdminService;
 @RequestMapping("/admin")
 public class AdminController {
 
-  @Autowired
-  AdminService adminService;
-	
-  @GetMapping({ "", "/" })
-  public String admin(Model model) {
+	@Autowired
+	AdminService adminService;
 
-    return "/admin/mainManage";
-  }
+	@GetMapping({ "", "/" })
+	public String admin(Model model) {
+
+		return "/admin/mainManage";
+	}
 
 //  @GetMapping("/branchmanage")
 //  public String branchManage(Model model) {
 //
 //    return "/admin/branchManage";
 //  }
-  
-  @GetMapping("/branchmanage/read/{branchIndex}")
-  public ModelAndView read(@PathVariable Long branchIndex) {
-	  
-	  ModelAndView mv = new ModelAndView();
-	  Header<BranchTb> a = adminService.read(branchIndex);
-	  a.getData().getBranchAddr();
-	  
-	  mv.setViewName("/admin/branchManage");
-	  mv.addObject("read", adminService.read(branchIndex));
 
-	  return mv;
-  }
-  
-  //페이징처리
-  @GetMapping("/branchmanage")
-  public ModelAndView search(@PageableDefault(sort ="branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
+	@GetMapping("/branchmanage/read/{branchIndex}")
+	public ModelAndView read(@PathVariable Long branchIndex) {
 
-	  ModelAndView mv = new ModelAndView();
-	  Header<List<BranchTb>> b = adminService.search(pageable);
-	  
-	  mv.addObject("initpage", b.getData());
-	  System.out.println(b);
-	  mv.setViewName("/admin/branchManage");
-	  return mv;
-	  
-  }
+		ModelAndView mv = new ModelAndView();
+		Header<BranchTb> a = adminService.read(branchIndex);
+		a.getData().getBranchAddr();
 
-  
-  @GetMapping("/usermanage")
-  public String userManage(Model model) {
+		mv.setViewName("/admin/branchManage");
+		mv.addObject("read", adminService.read(branchIndex));
 
-    return "/admin/userManage";
-  }
+		return mv;
+	}
 
-  @GetMapping("/carmanage")
-  public String carManage(Model model) {
+	// 페이징처리
+	@GetMapping("/branchmanage")
+	public ModelAndView search(
+			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
 
-    return "/admin/carManage";
-  }
+		ModelAndView mv = new ModelAndView();
+		Header<List<BranchTb>> b = adminService.search(pageable);
+
+		mv.addObject("initpage", b.getData());
+		System.out.println(b);
+		mv.setViewName("/admin/branchManage");
+		return mv;
+
+	}
+
+	@GetMapping("/usermanage")
+	public ModelAndView userManage(Model model) {
+
+		ModelAndView mv = new ModelAndView();
+
+		mv.setViewName("/admin/userManage");
+		return mv;
+	}
+
+	@GetMapping("/carmanage")
+	public ModelAndView carManage(Model model) {
+
+		ModelAndView mv = new ModelAndView();
+
+		mv.setViewName("/admin/carManage");
+		return mv;
+	}
 
 }

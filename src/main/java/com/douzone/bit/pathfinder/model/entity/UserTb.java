@@ -35,6 +35,7 @@ public class UserTb {
 	private LocalDateTime userCreated;
 	private Boolean userAuth;
 	
+	@ManyToOne
 	@JoinColumn(name = "branch_index")
 	private BranchTb branch;
 }

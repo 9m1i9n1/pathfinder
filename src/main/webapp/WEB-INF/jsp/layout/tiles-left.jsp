@@ -1,30 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
-<!-- Sidebar -->
 <ul class="sidebar navbar-nav">
-	<li class="nav-item active"><a class="nav-link" href="index.html">
+	<li class="nav-item active"><a class="nav-link" href="http://localhost:8181/">
 			<i class="fas fa-fw fa-tachometer-alt"></i> <span>메인화면</span>
-	</a></li>
-	<li class="nav-item"><a class="nav-link" href="charts.html"> <i
+	</a>
+	</li>
+	<li class="nav-item"><a class="nav-link" href="http://localhost:8181/maproute"> <i
 			class="fas fa-fw fa-chart-area"></i> <span>경로탐색</span></a></li>
-	<li class="nav-item"><a class="nav-link" href="tables.html"> <i
+	<li class="nav-item"><a class="nav-link" href="http://localhost:8181/history"> <i
 			class="fas fa-fw fa-table"></i> <span>조회내역</span></a></li>
-	<li class="nav-item"><a class="nav-link" href="tables.html"> <i
+	<li class="nav-item"><a class="nav-link" href="http://localhost:8181/hierarchy"> <i
 			class="fas fa-fw fa-table"></i> <span>조직도</span></a></li>
 	<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
 		href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
 		aria-haspopup="true" aria-expanded="false"> <i
-			class="fas fa-fw fa-folder"></i> <span>Pages</span>
+			class="fas fa-fw fa-folder"></i> <span>관리자 설정</span>
 	</a>
 		<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-			<h6 class="dropdown-header">Login Screens:</h6>
-			<a class="dropdown-item" href="login.html">Login</a> <a
-				class="dropdown-item" href="register.html">Register</a> <a
-				class="dropdown-item" href="forgot-password.html">Forgot
-				Password</a>
-			<div class="dropdown-divider"></div>
-			<h6 class="dropdown-header">Other Pages:</h6>
-			<a class="dropdown-item" href="404.html">404 Page</a> <a
-				class="dropdown-item" href="blank.html">Blank Page</a>
+			<a class="dropdown-item" href="http://localhost:8181/admin/usermanage">사용자 관리</a>
+			<a class="dropdown-item"
+				href="http://localhost:8181/admin/branchmanage">지점 관리</a>
+			<a class="dropdown-item" href="http://localhost:8181/admin/carmanage">차량 관리</a>
 		</div></li>
 </ul>
