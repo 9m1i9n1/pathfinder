@@ -2,7 +2,7 @@
 
 **Address** :  pathfinder.ca5sinhqhzpv.ap-northeast-2.rds.amazonaws.com
 
-**Address** : pathfinder1123!
+**Password** : pathfinder1123!
 
 ## Schema
 **User Table**
@@ -22,6 +22,7 @@ user_created | 아이디 생성일자 | DATETIME
 user_auth | TINYINT | 유저 권한
 
 **Branch Table**
+
 Column | Content | Type
 ------- | ------- | -------
 branch_index | 지점 키 | BIGINT
@@ -35,15 +36,17 @@ branch_lat | 지점 위도 | DOUBLE
 branch_lng | 지점 경도 | DOUBLE
 
 **Car Table**
+
 Column | Content | Type
 ------- | ------- | -------
 car_index | 자동차 키 | BIGINT
 car_name | 자동차 이름 | VARCHAR(20)
-car_fuel | 자동차 연비 | DOUBLe
+car_fuel | 자동차 연비 | DOUBLE
 car_number | 자동차 번호판 | VARCHAR(10)
 car_buy | 자동차 구입 날짜 | DATETIME
 
 **Area Table**
+
 Column | Content | Type
 ------- | ------- | -------
 area_index | 지역 키 | BIGINT
