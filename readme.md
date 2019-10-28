@@ -19,7 +19,7 @@ user_position | 유저 직책 | VARCHAR(10)
 user_email | 유저 이메일 | VARCHAR(30)
 user_phone | 유저 전화번호 | VARCHAR(20)
 user_created | 아이디 생성일자 | DATETIME
-user_auth | TINYINT | 유저 권한
+user_auth | 유저 권한 | TINYINT
 
 **Branch Table**
 
