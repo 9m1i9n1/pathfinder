@@ -37,6 +37,6 @@ public class UserTb {
 	private Boolean userAuth;
 	
 	@ManyToOne
-	@JoinColumn(name = "branch_index")
+	@JoinColumn(name = "branchIndex")
 	private BranchTb branch;
 }

@@ -20,3 +20,10 @@
 
 <!-- Custom styles for this template-->
 <link href="/static/css/sb-admin.css" rel="stylesheet">
+
+<!-- JQuery -->
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+
+<!-- JsTree -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/jstree.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/themes/default/style.min.css" />
