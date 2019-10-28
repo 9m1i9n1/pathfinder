@@ -35,29 +35,16 @@ public class AdminService {
 				.branchName(branchTb.getBranchName())
 				.branchOwner(branchTb.getBranchOwner())
 				.branchValue(branchTb.getBranchValue())
+				.area(areaRepository.getOne(branchTb.getArea().getAreaIndex()))
 				.build();
 		
 		BranchTb newBranchTb = branchRepository.save(branchtb);
 		
 		return branchResponse(newBranchTb);
 		
-				//.area(areaRepository.getOne(body.))
-			
-				
+				//.area(areaRepository.getOne(body.))			
 	}
-	
-	
-	
-	//branch read
-	public Header<BranchTb> read(Long id) {
-		
-		return branchRepository.findById(id)
-				.map(branch -> branchResponse(branch))
-				.map(branchResponse -> Header.OK(branchResponse)) 
-				.orElseGet(()-> Header.ERROR("데이터 없음"));
-		
-	}
-	
+
 
 	//branch page
 	public List<BranchTb> search(Pageable pageable) {
@@ -100,13 +87,13 @@ public class AdminService {
 	
 	
 	//branch delete 대기
-	public Header delete(Long id) {
+	public int delete(Long id) {
 		return branchRepository.findById(id)
 				.map(branch -> {
 					branchRepository.delete(branch);
-					return Header.OK();
-				})
-				.orElseGet(()->Header.ERROR("데이터없음"));
+					return 1;
+				}).orElse(0);
+				
 	}
 	
 	
@@ -122,6 +109,7 @@ public class AdminService {
 				.branchPhone(branch.getBranchPhone())
 				.branchLng(branch.getBranchLng())
 				.branchLat(branch.getBranchLat())
+				.area(areaRepository.getOne(branch.getArea().getAreaIndex()))
 				.build();
 		
 		return body;

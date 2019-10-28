@@ -34,18 +34,19 @@ public class AdminController {
   }
 
 
-  //branch read
-  @GetMapping("/branchmanage/read/{branchIndex}")
-  public ModelAndView read(@PathVariable Long branchIndex) {
-	  
-	  ModelAndView mv = new ModelAndView();
-	  Header<BranchTb> a = adminService.read(branchIndex);
-	  
-	  mv.setViewName("/admin/branchManage");
-	  mv.addObject("read", adminService.read(branchIndex));
+//  //branch read
+//  @GetMapping("/branchmanage/read/{branchIndex}")
+//  public ModelAndView read(@PathVariable Long branchIndex) {
+//	  
+//	  ModelAndView mv = new ModelAndView();
+//	  Header<BranchTb> a = adminService.read(branchIndex);
+//	  
+//	  mv.setViewName("/admin/branchManage");
+//	  mv.addObject("read", adminService.read(branchIndex));
+//
+//	  return mv;
+//  }
 
-	  return mv;
-  }
   
   //branch page
   @GetMapping("/branchmanage")
@@ -68,7 +69,7 @@ public class AdminController {
 
   //branch delete
   @DeleteMapping("/branchmanage/delete/{branchIndex}")
-  public Header delete(@PathVariable Long branchIndex) {
+  public int delete(@PathVariable Long branchIndex) {
 	  return adminService.delete(branchIndex);
 
   }
