@@ -17,6 +17,7 @@ public class AdminService {
 	@Autowired
 	private BranchRepository branchRepository;
 	
+	//branch read
 	public Header<BranchTb> read(Long id) {
 		
 		return branchRepository.findById(id)
@@ -27,7 +28,7 @@ public class AdminService {
 	}
 	
 
-	//페이징 서비스
+	//branch page
 	public Header<List<BranchTb>> search(Pageable pageable) {
 		
 		Page<BranchTb> branchs = branchRepository.findAll(pageable);
@@ -37,6 +38,16 @@ public class AdminService {
 				.collect(Collectors.toList());
 			
 		return Header.OK(branchList);
+	}
+	
+	//branch delete
+	public Header delete(Long id) {
+		return branchRepository.findById(id)
+				.map(branch -> {
+					branchRepository.delete(branch);
+					return Header.OK();
+				})
+				.orElseGet(()->Header.ERROR("데이터없음"));
 	}
 	
 	

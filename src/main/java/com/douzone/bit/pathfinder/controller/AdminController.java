@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,12 +37,12 @@ public class AdminController {
 //    return "/admin/branchManage";
 //  }
   
+  //branch read
   @GetMapping("/branchmanage/read/{branchIndex}")
   public ModelAndView read(@PathVariable Long branchIndex) {
 	  
 	  ModelAndView mv = new ModelAndView();
 	  Header<BranchTb> a = adminService.read(branchIndex);
-	  a.getData().getBranchAddr();
 	  
 	  mv.setViewName("/admin/branchManage");
 	  mv.addObject("read", adminService.read(branchIndex));
@@ -49,7 +50,7 @@ public class AdminController {
 	  return mv;
   }
   
-  //페이징처리
+  //branch page
   @GetMapping("/branchmanage")
   public ModelAndView search(@PageableDefault(sort ="branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
 
@@ -57,12 +58,23 @@ public class AdminController {
 	  Header<List<BranchTb>> b = adminService.search(pageable);
 	  
 	  mv.addObject("initpage", b.getData());
-	  System.out.println(b);
 	  mv.setViewName("/admin/branchManage");
 	  return mv;
 	  
   }
 
+  //branch delete
+  @DeleteMapping("/branchmanage/delete/{id}")
+  public ModelAndView delete(@PathVariable Long branchIndex) {
+	
+	  ModelAndView mv = new ModelAndView();
+	  Header<BranchTb> d = adminService.delete(branchIndex);
+	 
+	  return mv;
+
+
+  }
+  
   
   @GetMapping("/usermanage")
   public String userManage(Model model) {
