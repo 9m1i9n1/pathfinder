@@ -40,6 +40,34 @@ public class AdminService {
 		return Header.OK(branchList);
 	}
 	
+	//branch update
+	public Header update(Header<BranchTb> request){
+		
+		BranchTb body = request.getData();
+		
+		return branchRepository.findById(body.getBranchIndex())
+				.map(branch -> {
+					branch
+					.setArea(body.getArea())
+					.setBranchAddr(body.getBranchAddr())
+					.setBranchDaddr(body.getBranchDaddr())
+					.setBranchLat(body.getBranchLat())
+					.setBranchLng(body.getBranchLng())
+					.setBranchName(body.getBranchName())
+					.setBranchOwner(body.getBranchOwner())
+					.setBranchPhone(body.getBranchPhone())
+					.setBranchValue(body.getBranchValue());
+					
+					return branch;
+				})
+				.map(changeBranch -> branchRepository.save(changeBranch))
+				.map(newBranch -> response(newBranch))
+				.map(branch -> Header.OK(branch))
+				.orElseGet(() -> Header.ERROR("데이터 없음"));
+		
+	}
+	
+	
 	//branch delete
 	public Header delete(Long id) {
 		return branchRepository.findById(id)

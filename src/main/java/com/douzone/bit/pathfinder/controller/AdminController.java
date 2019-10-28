@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,12 +33,7 @@ public class AdminController {
     return "/admin/mainManage";
   }
 
-//  @GetMapping("/branchmanage")
-//  public String branchManage(Model model) {
-//
-//    return "/admin/branchManage";
-//  }
-  
+
   //branch read
   @GetMapping("/branchmanage/read/{branchIndex}")
   public ModelAndView read(@PathVariable Long branchIndex) {
@@ -62,18 +59,20 @@ public class AdminController {
 	  return mv;
 	  
   }
+  
+  //branch update
+  @PutMapping("/branchmanage/update")
+  public Header update(@RequestBody Header<BranchTb> request) {
+	  return adminService.update(request);
+  }
 
   //branch delete
-  @DeleteMapping("/branchmanage/delete/{id}")
-  public ModelAndView delete(@PathVariable Long branchIndex) {
-	
-	  ModelAndView mv = new ModelAndView();
-	  Header<BranchTb> d = adminService.delete(branchIndex);
-	 	  
-	  return mv;
-
+  @GetMapping("/branchmanage/delete/{branchIndex}")
+  public Header delete(@PathVariable Long branchIndex) {
+	  return adminService.delete(branchIndex);
 
   }
+  
   
   
   @GetMapping("/usermanage")
