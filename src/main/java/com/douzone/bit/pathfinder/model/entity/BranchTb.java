@@ -50,6 +50,7 @@ public class BranchTb {
 	private AreaTb area;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private List<UserTb> user;
+
+	@JoinColumn(name = "userId")
+	private List<UserTb> user;
 }

@@ -69,7 +69,7 @@ public class AdminController {
 	
 	  ModelAndView mv = new ModelAndView();
 	  Header<BranchTb> d = adminService.delete(branchIndex);
-	 
+	 	  
 	  return mv;
 
 
