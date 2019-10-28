@@ -10,18 +10,49 @@ import org.springframework.stereotype.Service;
 
 import com.douzone.bit.pathfinder.controller.Header;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
+import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 
 @Service
 public class AdminService {
+	
 	@Autowired
 	private BranchRepository branchRepository;
+	
+	@Autowired
+	private AreaRepository areaRepository;
+	
+	//branch create
+	public BranchTb create(Header<BranchTb> request){
+		
+		BranchTb branchTb = request.getData();
+		
+		BranchTb branchtb = BranchTb.builder()
+				.branchAddr(branchTb.getBranchAddr())
+				.branchDaddr(branchTb.getBranchDaddr())
+				.branchLat(branchTb.getBranchLat())
+				.branchLng(branchTb.getBranchLng())
+				.branchName(branchTb.getBranchName())
+				.branchOwner(branchTb.getBranchOwner())
+				.branchValue(branchTb.getBranchValue())
+				.build();
+		
+		BranchTb newBranchTb = branchRepository.save(branchtb);
+		
+		return branchResponse(newBranchTb);
+		
+				//.area(areaRepository.getOne(body.))
+			
+				
+	}
+	
+	
 	
 	//branch read
 	public Header<BranchTb> read(Long id) {
 		
 		return branchRepository.findById(id)
-				.map(branch -> response(branch))
+				.map(branch -> branchResponse(branch))
 				.map(branchResponse -> Header.OK(branchResponse)) 
 				.orElseGet(()-> Header.ERROR("데이터 없음"));
 		
@@ -29,18 +60,18 @@ public class AdminService {
 	
 
 	//branch page
-	public Header<List<BranchTb>> search(Pageable pageable) {
+	public List<BranchTb> search(Pageable pageable) {
 		
 		Page<BranchTb> branchs = branchRepository.findAll(pageable);
 		
 		List<BranchTb> branchList = branchs.stream()
-				.map(branch -> response(branch))
+				.map(branch -> branchResponse(branch))
 				.collect(Collectors.toList());
 			
-		return Header.OK(branchList);
+		return branchList;
 	}
 	
-	//branch update
+	//branch update 대기
 	public Header update(Header<BranchTb> request){
 		
 		BranchTb body = request.getData();
@@ -61,14 +92,14 @@ public class AdminService {
 					return branch;
 				})
 				.map(changeBranch -> branchRepository.save(changeBranch))
-				.map(newBranch -> response(newBranch))
+				.map(newBranch -> branchResponse(newBranch))
 				.map(branch -> Header.OK(branch))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 		
 	}
 	
 	
-	//branch delete
+	//branch delete 대기
 	public Header delete(Long id) {
 		return branchRepository.findById(id)
 				.map(branch -> {
@@ -79,7 +110,7 @@ public class AdminService {
 	}
 	
 	
-	private BranchTb response(BranchTb branch){
+	private BranchTb branchResponse(BranchTb branch){
 		
 		BranchTb body = BranchTb.builder()
 				.branchIndex(branch.getBranchIndex())

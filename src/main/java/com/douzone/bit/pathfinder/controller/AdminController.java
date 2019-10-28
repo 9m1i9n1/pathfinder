@@ -52,9 +52,9 @@ public class AdminController {
   public ModelAndView search(@PageableDefault(sort ="branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
 
 	  ModelAndView mv = new ModelAndView();
-	  Header<List<BranchTb>> b = adminService.search(pageable);
-	  
-	  mv.addObject("initpage", b.getData());
+	  List<BranchTb> b = adminService.search(pageable);
+	  System.out.println(b);
+	  mv.addObject("initpage", b);
 	  mv.setViewName("/admin/branchManage");
 	  return mv;
 	  
@@ -67,7 +67,7 @@ public class AdminController {
   }
 
   //branch delete
-  @GetMapping("/branchmanage/delete/{branchIndex}")
+  @DeleteMapping("/branchmanage/delete/{branchIndex}")
   public Header delete(@PathVariable Long branchIndex) {
 	  return adminService.delete(branchIndex);
 
