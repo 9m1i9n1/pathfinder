@@ -5,7 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Document</title>
+
+  <title>Document</title>
 </head>
 <body>
 	<h1>Branch</h1>

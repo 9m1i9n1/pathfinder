@@ -38,8 +38,4 @@ public class UserTb {
 	@ManyToOne
 	@JoinColumn(name = "branch_index")
 	private BranchTb branch;
-	
-	@ManyToOne
-	@JoinColumn(name = "area_index")
-	private AreaTb area;
 }
