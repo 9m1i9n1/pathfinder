@@ -1,9 +1,10 @@
 # Server URL
+(현재는 젠킨스 포트로 설정중)
 **https://e64b00e5.ngrok.io**
 
 ## Port
-8787 : jenkins  
-8181 : pathfinder  
+**8787** : jenkins  
+**8181** : pathfinder  
 
 # DB Information
 
