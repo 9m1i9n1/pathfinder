@@ -1,3 +1,10 @@
+# Server URL
+**https://e64b00e5.ngrok.io**
+
+## Port
+8787 : jenkins  
+8181 : pathfinder  
+
 # DB Information
 
 **Address** :  pathfinder.ca5sinhqhzpv.ap-northeast-2.rds.amazonaws.com
