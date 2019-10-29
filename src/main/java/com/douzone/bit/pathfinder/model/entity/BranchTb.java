@@ -46,7 +46,7 @@ public class BranchTb {
 	private Double branchLng;
 	
 	@ManyToOne
-	@JoinColumn(name = "area_index")
+	@JoinColumn(name = "areaIndex")
 	private AreaTb area;
 	
 	@OneToMany(fetch = FetchType.LAZY)
