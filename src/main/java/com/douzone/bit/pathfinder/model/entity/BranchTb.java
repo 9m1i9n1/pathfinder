@@ -15,12 +15,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
+@ToString(exclude = {"userList", "area"})
 @Builder
 @Accessors(chain = true)
 public class BranchTb {
@@ -46,10 +48,10 @@ public class BranchTb {
 	private Double branchLng;
 	
 	@ManyToOne
-	@JoinColumn(name = "area_index")
+	@JoinColumn(name = "areaIndex")
 	private AreaTb area;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
-	private List<UserTb> user;
+	private List<UserTb> userList;
 }
