@@ -1,5 +1,7 @@
-# Server URL
-(현재는 젠킨스 포트로 설정중)
+# Pathfinder Server URL
+**http://218.39.221.89:8181/**
+
+## Jenkins Server URL 
 **https://e64b00e5.ngrok.io**
 
 ## Port
