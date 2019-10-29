@@ -7,5 +7,5 @@ import com.douzone.bit.pathfinder.model.entity.BranchTb;
 
 @Repository
 public interface BranchRepository extends JpaRepository<BranchTb, Long> {
-
+  
 }
