@@ -1,0 +1,64 @@
+#maproute-container {
+	width: 95%;
+	height: 95%;
+	margin: 10px auto;
+	padding: 20px;
+	border: 1px solid #bcbcbc;
+}
+
+#maproute-content {
+	width: 73%;
+	height: 75%;
+	padding: 20px;
+	margin-bottom: 20px;
+	float: left;
+	border: 1px solid #bcbcbc;
+	overflow: auto;
+}
+
+#maproute-sidebar {
+	width: 25%;
+	height: 36%;
+	padding: 20px;
+	margin-bottom: 20px;
+	float: right;
+	border: 1px solid #bcbcbc;
+	overflow: hidden;
+}
+
+#fuckingmin {
+	width: 100%;
+	height: 80%;
+	overflow: auto;
+}
+
+#fuckingmin2 {
+	width: 100%;
+	height: 170px;
+	overflow: auto;
+}
+
+#maproute-footer {
+	clear: both;
+	height: 23%;
+	padding: 20px;
+	border: 1px solid #bcbcbc;
+	overflow: hidden;
+}
+
+@media ( max-width : 480px ) {
+	#maproute-container {
+		width: auto;
+		overflow: auto;
+	}
+	#maproute-content {
+		float: none;
+		width: auto;
+		overflow: auto;
+	}
+	#maproute-sidebar {
+		float: none;
+		width: auto;
+		overflow: auto;
+	}
+}

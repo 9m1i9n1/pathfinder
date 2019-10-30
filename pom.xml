@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -27,22 +29,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
-		    <groupId>org.json</groupId>
-		    <artifactId>json</artifactId>
-		    <version>20160810</version>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160810</version>
 		</dependency>
-				
-		
+
+
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.8</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
 		</dependency>
-		
+
 
 		<!-- dev tools -->
 		<dependency>
@@ -121,12 +123,33 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+<!-- 				<configuration>
+					<jvmArguments>
+						-Xms1024m
+						-Xmx8096m
+						-XX:PermSize=128M
+						-XX:MaxPermSize=1024M
+						-Xnoclassgc
+						-XX:NewSize=512M
+						-XX:MaxNewSize=1024M
+						-XX:+UseParNewGC
+						-XX:ParallelGCThreads=4
+						-XX:+UseConcMarkSweepGC
+						-XX:CMSInitiatingOccupancyFraction=50
+						-XX:+PrintGCDetails
+						-XX:+PrintGCTimeStamps
+						-XX:+PrintHeapAtGC
+						-XX:+AggressiveOpts
+						-Djava.net.preferIPv4Stack=true
+						-Djava.awt.headless=true"
+					</jvmArguments>
+				</configuration> -->
 			</plugin>
 			<plugin>
-      			<groupId>org.sonarsource.scanner.maven</groupId>
-      			<artifactId>sonar-maven-plugin</artifactId>
-      			<version>3.2</version>
-  			</plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.2</version>
+			</plugin>
 		</plugins>
 	</build>
 
