@@ -1,3 +1,13 @@
+# Pathfinder Server URL
+**http://218.39.221.89:8181/**
+
+## Jenkins Server URL 
+**https://e64b00e5.ngrok.io**
+
+## Port
+**8787** : jenkins  
+**8181** : pathfinder  
+
 # DB Information
 
 **Address** :  pathfinder.ca5sinhqhzpv.ap-northeast-2.rds.amazonaws.com

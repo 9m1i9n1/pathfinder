@@ -17,8 +17,10 @@
 					$('#jstree').jstree({
 						'core' : {
 							'data' : {
-								"url" : "//www.jstree.com/fiddle/",
-								"dataType" : "json"
+								"url" : "//www.jstree.com/fiddle/?lazy",
+								"data" : function(node) {
+									return {"id" : node.id};
+								}
 							}
 						}
 					});

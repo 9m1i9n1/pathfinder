@@ -22,8 +22,8 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Data
 @Entity
+@ToString(exclude = {"userList", "area"})
 @Builder
-@ToString(exclude = {"user"})
 @Accessors(chain = true)
 public class BranchTb {
 
@@ -48,10 +48,10 @@ public class BranchTb {
 	private Double branchLng;
 	
 	@ManyToOne
-	@JoinColumn(name = "area_index")
+	@JoinColumn(name = "areaIndex")
 	private AreaTb area;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userId")
-	private List<UserTb> user;
+	private List<UserTb> userList;
 }

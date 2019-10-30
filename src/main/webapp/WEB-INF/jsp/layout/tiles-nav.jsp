@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
 	<!-- Server 주소 설정 -->
-	<a class="navbar-brand mr-1" href="http://localhost:8181/">PathFinder</a>
+	<a class="navbar-brand mr-1" href="/">PathFinder</a>
 
 	<button class="btn btn-link btn-sm text-white order-1 order-sm-0"
 		id="sidebarToggle" href="#">
