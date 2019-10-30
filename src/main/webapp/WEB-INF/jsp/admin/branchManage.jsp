@@ -23,22 +23,77 @@
 
 
   <script type="text/javascript">
-    $(document).ready(function(){
-      $("#branchDelete").click(function(){
-          callAjax(94);
-      });
-    });
-    function callAjax(idx){
+  
+  
+  $(document).ready(function(){
+	    branchlist();
+	    $('[name=branchInsertBtn]').click(function(){
+	  	  console.log("@@@@@@@@@@@@@@")
+	  	  var insertData = $('[name=branchInsertform]').serialize();
+	  	  console.log(insertData);
+	  	  branchInsert(insertData);
+	  	  console.log(insertData);
+	    })
+	});
+      
+  
+	function branchinsert(insertData){
+		$.ajax({
+		     type  : "POST",
+			 url : "http://localhost:8181/admin/branchmanage",
+			 data   : insertData,
+			 success : function(data){
+				 branchlist();
+			 }
+		})
+	}
+  
+  
+    function branchdelete(idx){
         $.ajax({
            type: "DELETE",
            url : "http://localhost:8181/admin/branchmanage/delete/"+idx,
            data: {},
-           success: whenSuccess,
+           success: function(data){
+        	   branchlist();
+           }
         });
     }
-    function whenSuccess(){
-          window.location.href = "/admin/branchmanage/";
-      }
+ 
+	
+    function branchlist() {
+    		$.ajax({
+    			url:"http://localhost:8181/admin/branchmanage.do",
+    			data: {},
+    			success:function(data){
+    				console.log(data);
+    			      var str = '<tr>'+
+    				  '<th>번호</th>'+
+                      '<th>지점명</th>'+
+                      '<th>지점장</th>'+
+                      '<th>운반비</th>'+
+                      '<th>주소</th>'+
+                      '<th>전화번호</th>'+
+                      '<th>수정/삭제</th>'+
+                      '</tr>';
+                      
+                          $.each(data, function(i, s) {
+                              str +=    '<tr>' +
+                              '<td>' + data[i].branchIndex + '</td>'+
+                              '<td>' + data[i].branchName + '</td>'+
+                              '<td>' + data[i].branchOwner + '</td>'+
+                              '<td>' + data[i].branchValue + '</td>'+
+                              '<td>' + data[i].branchAddr + '</td>'+
+                              '<td>' + data[i].branchPhone + '</td>'+
+                              '<td><button>수정</button><button onclick="branchdelete('+ data[i].branchIndex + ')">삭제</button></td>'
+                              +'</tr>';
+                          });
+                      $("#tableTest").html(str);
+                  }
+    		})
+    }
+
+    
 
 </script>
 
@@ -51,23 +106,20 @@
 <body>
    <h1>Branch</h1>
 
-   <button data-target="#layerpop" data-toggle="modal">지점추가</button>
-   <br />
-   <div class="modal fade" id="layerpop">
-      <div class="modal-dialog">
-         <div class="modal-content">
-            <!-- header -->
-            <div class="modal-header">
-               <h4 class="modal-title">지점 추가</h4>
-               <!-- 닫기(x) 버튼 -->
-               <button type="button" class="close" data-dismiss="modal">×</button>
-               <!-- header title -->
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+	지점 추가
+	</button>
 
-            </div>
-            <!-- body -->
-            <div class="modal-body">
-               <form action="http://localhost:8181/admin/branchmanage"
-                  method="post">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel">지점 추가</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+		 <form name="branchInsertform">
                   <p>
                      <strong>지점명</strong> <input type="text" name="branchName">
                   </p>
@@ -107,17 +159,21 @@
                   </p>
                   <p hidden>
                      <strong>경도</strong> <input type="text" name="branchLng">
-                  </p>
-                  <input type="submit" id="branchInsert" value="추가">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-
-               </form>
-            </div>
-         </div>
+                  </p>  
+                  </form>    
+                  </div>
+                  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" name="branchInsertBtn" class="btn btn-primary">Save</button>
       </div>
-   </div>
+    </div>
+  </div>
+</div>
 
-   <br />
+  
+
+ <br />
    <div class="modal fade" id="layerpop1">
       <div class="modal-dialog">
          <div class="modal-content">
@@ -167,7 +223,7 @@
    </div>
 
    <br />
-   <table border="1">
+  <%--  <table border="1">
       <th>번호</th>
       <th>지점명</th>
       <th>지점장</th>
@@ -190,7 +246,16 @@
             </td>
          </tr>
       </c:forEach>
+   </table> --%>
+   
+   <div id="Testliset"></div>
+   <table id ="tableTest">
    </table>
+   <div id ="test123"></div>
+   
+   
    
 </body>
+
+
 </html>

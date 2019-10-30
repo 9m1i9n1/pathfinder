@@ -1,4 +1,5 @@
 package com.douzone.bit.pathfinder.controller;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,148 +20,70 @@ import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
-
-  @Autowired
-  AdminService adminService;
-	
-  @GetMapping({ "", "/" })
-  public String admin(Model model) {
-
-    return "/admin/mainManage";
-  }
-
-
-//  //branch read
-//  @GetMapping("/branchmanage/read/{branchIndex}")
-//  public ModelAndView read(@PathVariable Long branchIndex) {
-//	  
-//	  ModelAndView mv = new ModelAndView();
-//	  Header<BranchTb> a = adminService.read(branchIndex);
-//	  
-//	  mv.setViewName("/admin/branchManage");
-//	  mv.addObject("read", adminService.read(branchIndex));
-//
-//	  return mv;
-//  }
-
-  
-  //branch page
-  @GetMapping("/branchmanage")
-  public ModelAndView search(@PageableDefault(sort ="branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
-
-	  ModelAndView mv = new ModelAndView();
-	  List<BranchTb> b = adminService.search(pageable);
-	  System.out.println(b);
-	  mv.addObject("initpage", b);
-	  mv.setViewName("/admin/branchManage");
-	  return mv;
-	  
-  }
-  
-  //branch update
-  @PutMapping("/branchmanage/update")
-  public Header update(@RequestBody Header<BranchTb> request) {
-	  return adminService.update(request);
-  }
-
-  //branch delete
-  @DeleteMapping("/branchmanage/delete/{branchIndex}")
-  public int delete(@PathVariable Long branchIndex) {
-	  return adminService.delete(branchIndex);
-
-  }
-  
-  
-  
-  @GetMapping("/usermanage")
-  public String userManage(Model model) {
-
-    return "/admin/userManage";
-  }
-
-  @GetMapping("/carmanage")
-  public String carManage(Model model) {
-
-    return "/admin/carManage";
-=======
-  @Autowired
+	@Autowired
 	AdminBranchService adminBranchService;
-	
+
 	@Autowired
 	AdminUserService adminUserService;
-    
-  @GetMapping({ "", "/" })
-  public String admin(Model model) {
-    return "/admin/mainManage";
-  }
- //branch read
-  @GetMapping("/branchmanage/read/{branchIndex}")
-  public Optional<BranchTb> read(@PathVariable Long branchIndex) {
-      System.out.println(adminBranchService.read(branchIndex));
-      return adminBranchService.read(branchIndex);
-  }
- //branch create
-  @PostMapping("/branchmanage")
-  public String branchCreate(@RequestBody BranchTb request) {
-	adminBranchService.create(request);
-      return "redirect:/admin/branchmanage";
+
+	@GetMapping({ "", "/" })
+	public String admin(Model model) {
+		return "/admin/mainManage";
+	}
+
+	// branch create
+	@PostMapping("/branchmanage")
+	public String branchCreate(@RequestBody BranchTb request) {
+		System.out.println(request);
+		adminBranchService.create(request);
+		return "redirect:/admin/branchmanage";
 	}
 	
- //branch page
-  @GetMapping("/branchmanage")
-  public ModelAndView branchSearch(@PageableDefault(sort ="branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
-			ModelAndView mv = new ModelAndView();
-			
-			List<BranchTb> b = adminBranchService.search(pageable);
-			
-      mv.addObject("initpage", b);
-      mv.setViewName("/admin/branchManage");
-      return mv;
-      
-  }
- //branch update
-  @PutMapping("/branchmanage/update")
-  public  Optional<Object> branchUpdate(@RequestBody BranchTb request) {
-      System.out.println(adminBranchService.update(request));
-      return adminBranchService.update(request);
-  }
- //branch delete
-  @DeleteMapping("/branchmanage/delete/{branchIndex}")
-  public int branchDelete(@PathVariable Long branchIndex) {
-      return adminBranchService.delete(branchIndex);
+	// branch read
+	@GetMapping("/branchmanage/read/{branchIndex}")
+	public Optional<BranchTb> read(@PathVariable Long branchIndex) {
+		System.out.println(adminBranchService.read(branchIndex));
+		return adminBranchService.read(branchIndex);
 	}
-	
-	//TODO ===============================
 
-  @GetMapping("/usermanage")
-  public ModelAndView userManage(
-	  @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable,
-	  Model model) {
+	// branch view
+	@GetMapping("/branchmanage")
+	public ModelAndView branchSearch(
+			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
+		ModelAndView mv = new ModelAndView();
 
-	  ModelAndView mv = new ModelAndView();
+		List<BranchTb> b = adminBranchService.search(pageable);
 
-	 	List<UserTb> userList = adminUserService.search(pageable);
-
-	  mv.addObject("userList", userList);
-
-	  mv.setViewName("/admin/userManage");
-	  return mv;
+		mv.addObject("initpage", b);
+		mv.setViewName("/admin/branchManage");
+		return mv;
 	}
-	
-	//TODO ===============================
 
-  @GetMapping("/carmanage")
-  public ModelAndView carManage(Model model) {
+	//branch data
+	@GetMapping("/branchmanage.do")
+	public List<BranchTb> branchData(
+			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
+		List<BranchTb> b = adminBranchService.search(pageable);
+		return adminBranchService.search(pageable);
 
-	  ModelAndView mv = new ModelAndView();
+	}
 
-	  mv.setViewName("/admin/carManage");
-	  return mv;
->>>>>>> origin/master
-  }
+	// branch update
+	@PutMapping("/branchmanage/update")
+	public Optional<Object> branchUpdate(@RequestBody BranchTb request) {
+		System.out.println(adminBranchService.update(request));
+		return adminBranchService.update(request);
+	}
+
+	// branch delete
+	@DeleteMapping("/branchmanage/delete/{branchIndex}")
+	public int branchDelete(@PathVariable Long branchIndex) {
+		return adminBranchService.delete(branchIndex);
+	}
 
 }
