@@ -44,14 +44,14 @@ public class testService {
 		createMap m = new createMap(n, line);
 
 		System.out.println("정렬전" + testList);
-		if (n <= 2)
-			throw new IllegalStateException("TSP on 0, 1 or 2 nodes doesn't make sense.");
-		if (n != m.getmap()[0].length)
-			throw new IllegalArgumentException("Matrix must be square (N x N)");
-		if (n > 32)
-			throw new IllegalArgumentException(
-					"Matrix too large! A matrix that size for the DP TSP problem with a time complexity of"
-							+ "O(n^2*2^n) requires way too much computation for any modern home computer to handle");
+//		if (n <= 2)
+//			throw new IllegalStateException("TSP on 0, 1 or 2 nodes doesn't make sense.");
+//		if (n != m.getmap()[0].length)
+//			throw new IllegalArgumentException("Matrix must be square (N x N)");
+//		if (n > 32)
+//			throw new IllegalArgumentException(
+//					"Matrix too large! A matrix that size for the DP TSP problem with a time complexity of"
+//							+ "O(n^2*2^n) requires way too much computation for any modern home computer to handle");
 
 		Recursive r = new Recursive(0, m.getmap());
 

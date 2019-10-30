@@ -56,7 +56,9 @@
 	var route = new Array();
 	var amu = new Object;
 	var data = new Array();
-
+	
+	var routecnt =0;
+	
 	function HighLightTR(target, backColor) {
 		tbody = target.parentNode;
 		var trs = tbody.getElementsByTagName('tr');
@@ -70,6 +72,7 @@
 				route = route.splice(1, route.length);
 				data = data.splice(1, data.length);
 				console.log('녹색 누르면 데이타가 사라지니? ', data);
+				console.log("녹색 클릭할 때 ", routecnt);
 				if (route.length != 0)
 					route[0].style.backgroundColor = 'rgb(45, 180, 0)';
 				continue;
@@ -97,7 +100,7 @@
 					//0 1 2 3 4 5 6에서 slice(1,4)하면 1 2 3 출력
 					//var a = route = route.splice(1, route.length);
 					var hi = 0;
-
+					console.log("나머지 클릭할 때 ", routecnt);
 					route.forEach(function(item) {
 						if (item === target) {
 							var t1 = new Array();
@@ -126,7 +129,13 @@
 
 	$(function() {
 		$("#submitroute").click(
+
 				function() {
+					if(routecnt <= 2){
+						alert("출발지와 목적지를 포함한 경로가 세개 이상이어야 합니다.");
+					} else if(routecnt > 5){
+						alert("경유지가 너무 MP염");
+					}else{
 					$.ajax({
 						url : "/test/testSend",
 						type : 'post',
@@ -159,7 +168,7 @@
 							alert("에러 발생~~ \n" + textStatus + " : "
 									+ errorThrown);
 						}
-					});
+					});}
 				})
 	})
 
@@ -168,13 +177,13 @@
 		tdArr = new Array(); // 배열 선언
 		// 테이블의 Row 클릭시 값 가져오기
 		$("#allDataTable tr").click(function() {
-			var cnt = 0;
 			var str = "경로 = ";
 
 			// 현재 클릭된 Row(<tr>)
 			var tr = $(this);
 			var td = tr.children();
-
+			var cnt =0;
+			console.log("ajax 내부", routecnt);
 			console.log("클릭한 Row의 모든 데이터 : " + tr.text());
 
 			var areaName = td.eq(0).text();
@@ -185,6 +194,7 @@
 			if (arr.indexOf(areaName) == -1) {
 				arr.push(areaName);
 				if (arr.length > 0) {
+					routecnt++;
 					$.each(arr, function(i) {
 						cnt++;
 						if (cnt == arr.length)
@@ -194,6 +204,7 @@
 					});
 				}
 			} else {
+				routecnt--;
 				arr.splice(arr.indexOf(areaName), 1);
 				$.each(arr, function(i) {
 					cnt++;

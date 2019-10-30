@@ -36,11 +36,7 @@ public class testController {
 //		System.out.println(testService.tryCalc(list));
 //		System.out.println("여기는 칸트롤라");
 //		model.addAttribute("testList", testList);
-		try {
 			return testService.tryCalc(list);
-		} catch (Exception e) {
-			return (List<TestDTO>) e;
-		}
 	}
 
 }
