@@ -10,15 +10,16 @@
 	<div id="content-wrapper">
 		<div class="container-fluid">
 			Hierarchy
-			<div id="jstree"/>
+			<div id="jstreee"/>
 
 			<script type="text/javascript">
 				$(function() {
-					$('#jstree').jstree({
+					$('#jstreee').jstree({
 						'core' : {
 							'data' : {
-								"url" : "//www.jstree.com/fiddle/?lazy",
+								"url" : "/hierarchy/tree",
 								"data" : function(node) {
+									console.log(node);
 									return {"id" : node.id};
 								}
 							}
