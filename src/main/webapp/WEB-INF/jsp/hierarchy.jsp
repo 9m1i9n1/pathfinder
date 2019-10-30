@@ -82,7 +82,6 @@
 						'data' : {
 							"url" : "/hierarchy/gettree",
 							"data" : function(node) {
-								console.log(node);
 								return {"id" : node.id};
 							}
 						}
