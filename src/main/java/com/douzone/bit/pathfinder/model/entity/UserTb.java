@@ -10,10 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.transaction.Transactional;
 
-import com.douzone.bit.pathfinder.model.entity.AreaTb;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -31,7 +29,7 @@ import lombok.experimental.Accessors;
 @Data
 
 @Entity
-@ToString(exclude = {"branch"})
+@ToString(exclude = { "branch" })
 @EntityListeners(AuditingEntityListener.class)
 @Transactional
 @Builder
@@ -58,8 +56,8 @@ public class UserTb {
 	private LocalDateTime userCreated;
 
 	private Boolean userAuth;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "branchIndex")
 	private BranchTb branch;
 }

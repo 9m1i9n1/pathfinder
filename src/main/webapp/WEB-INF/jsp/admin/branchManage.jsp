@@ -132,7 +132,7 @@
                   
                   <p>
                   <strong>주소</strong>
-                  <input type="text" id="sample6_address" name="branchAddr" placeholder="주소" readonly>
+                  <input type="text" id="sample6_address" name="branchAddr" placeholder="주소">
                   <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기"><br>
                   <strong>상세주소</strong>
                   <input type="text" id="sample6_detailAddress" name="branchDaddr" placeholder="상세주소"></p>

@@ -23,7 +23,7 @@ import com.douzone.bit.pathfinder.service.AdminUserService;
 
 @RestController
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminBranchController {
 
 	@Autowired
 	AdminBranchService adminBranchService;
@@ -85,5 +85,4 @@ public class AdminController {
 	public int branchDelete(@PathVariable Long branchIndex) {
 		return adminBranchService.delete(branchIndex);
 	}
-
 }
