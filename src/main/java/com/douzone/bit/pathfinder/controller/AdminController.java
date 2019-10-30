@@ -1,36 +1,100 @@
 package com.douzone.bit.pathfinder.controller;
-
-import org.springframework.stereotype.Controller;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-@Controller
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import com.douzone.bit.pathfinder.model.entity.BranchTb;
+import com.douzone.bit.pathfinder.model.entity.UserTb;
+import com.douzone.bit.pathfinder.service.AdminBranchService;
+import com.douzone.bit.pathfinder.service.AdminUserService;
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
-
+  @Autowired
+	AdminBranchService adminBranchService;
+	
+	@Autowired
+	AdminUserService adminUserService;
+    
   @GetMapping({ "", "/" })
   public String admin(Model model) {
-
     return "/admin/mainManage";
   }
-
-  @GetMapping("/branchmanage")
-  public String branchManage(Model model) {
-
-    return "/admin/branchManage";
+ //branch read
+  @GetMapping("/branchmanage/read/{branchIndex}")
+  public Optional<BranchTb> read(@PathVariable Long branchIndex) {
+      System.out.println(adminBranchService.read(branchIndex));
+      return adminBranchService.read(branchIndex);
   }
+ //branch create
+  @PostMapping("/branchmanage")
+  public String branchCreate(@RequestBody BranchTb request) {
+	adminBranchService.create(request);
+      return "redirect:/admin/branchmanage";
+	}
+	
+ //branch page
+  @GetMapping("/branchmanage")
+  public ModelAndView branchSearch(@PageableDefault(sort ="branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
+			ModelAndView mv = new ModelAndView();
+			
+			List<BranchTb> b = adminBranchService.search(pageable);
+			
+      mv.addObject("initpage", b);
+      mv.setViewName("/admin/branchManage");
+      return mv;
+      
+  }
+ //branch update
+  @PutMapping("/branchmanage/update")
+  public  Optional<Object> branchUpdate(@RequestBody BranchTb request) {
+      System.out.println(adminBranchService.update(request));
+      return adminBranchService.update(request);
+  }
+ //branch delete
+  @DeleteMapping("/branchmanage/delete/{branchIndex}")
+  public int branchDelete(@PathVariable Long branchIndex) {
+      return adminBranchService.delete(branchIndex);
+	}
+	
+	//TODO ===============================
 
   @GetMapping("/usermanage")
-  public String userManage(Model model) {
+  public ModelAndView userManage(
+	  @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable,
+	  Model model) {
 
-    return "/admin/userManage";
-  }
+	  ModelAndView mv = new ModelAndView();
+
+	 	List<UserTb> userList = adminUserService.search(pageable);
+
+	  mv.addObject("userList", userList);
+
+	  mv.setViewName("/admin/userManage");
+	  return mv;
+	}
+	
+	//TODO ===============================
 
   @GetMapping("/carmanage")
-  public String carManage(Model model) {
+  public ModelAndView carManage(Model model) {
 
-    return "/admin/carManage";
+	  ModelAndView mv = new ModelAndView();
+
+	  mv.setViewName("/admin/carManage");
+	  return mv;
   }
 
 }

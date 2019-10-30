@@ -7,5 +7,5 @@ import com.douzone.bit.pathfinder.model.entity.UserTb;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserTb, Long> {
-
+  
 }

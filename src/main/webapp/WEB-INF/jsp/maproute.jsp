@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
@@ -43,10 +44,14 @@
 
 	}
 %>
+=======
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+>>>>>>> origin/master
 
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -221,6 +226,9 @@
 </script>
 
 <title>Insert title here</title>
+=======
+  <title>Document</title>
+>>>>>>> origin/master
 </head>
 <body>
 	<table border="1" align=center id="allDataTable">
