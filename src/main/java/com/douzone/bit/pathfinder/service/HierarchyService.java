@@ -77,11 +77,20 @@ public class HierarchyService {
 			
 			userData = userRepository.findByBranchIn(
 					branchIdData);
-			
 		} else {
 			userData = userRepository.findByBranch(
 					branchRepository.getOne(Long.parseLong(index[1])));
+		}
+		
+		for (int i = 0; i < userData.size(); i++) {
+			JsonObject sObject = new JsonObject();
+			sObject.addProperty("userId", userData.get(i).getUserId());
+			sObject.addProperty("userName", userData.get(i).getUserName());
+			sObject.addProperty("userPosition", userData.get(i).getUserPosition());
+			sObject.addProperty("userEmail", userData.get(i).getUserEmail());
+			sObject.addProperty("userPhone", userData.get(i).getUserPhone());
 			
+			jArray.add(sObject);
 		}
 		
 		return jArray;
