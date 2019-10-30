@@ -6,13 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.service.HierarchyService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-@Controller
+@RestController
 @RequestMapping("/hierarchy")
 public class HierarchyController {
 
@@ -28,20 +29,18 @@ public class HierarchyController {
 		return mv;
 	}
 
-	@ResponseBody
-	@GetMapping("/tree")
+	@GetMapping("/gettree")
 	public JsonArray getHierarchyChild(
 			@RequestParam(value = "id", required = false, defaultValue = "#") String id) {
 
-		JsonArray resultJson = new JsonArray();;
-		
-		if (id.equals("#")) {
-			resultJson = hierarchyService.areaRead();
-		} else {
-			resultJson = hierarchyService.branchRead(id);
-		}
-
-		return resultJson;
+		return (id.equals("#")) ? hierarchyService.areaRead() :
+			hierarchyService.branchRead(id);
 	}
-
+	
+	@GetMapping("/getuser")
+	public JsonArray getUser(
+			@RequestParam("id") String id) {
+		
+		return hierarchyService.userRead(id);
+	}
 }
