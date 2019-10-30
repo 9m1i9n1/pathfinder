@@ -22,7 +22,7 @@
 <link href="/static/css/sb-admin.css" rel="stylesheet">
 
 <!-- JQuery -->
-<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- JsTree -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/jstree.min.js"></script>
