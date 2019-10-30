@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -32,10 +32,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="insertModalTitle">사용자 추가</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="title">사용자 추가</h5>
       </div>
 
       <div class="modal-body">
@@ -55,41 +52,41 @@
           </div>
           
           <div class="form-group row">
-            <label for="email" class="col-sm-2 col-form-label">이메일</label>
+            <label for="email" class="col-sm-2 col-form-label-sm">이메일</label>
             <div class="col-sm-10">
               <input type="email" class="form-control" id="email">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="phone" class="col-sm-2 col-form-label">전화번호</label>
+            <label for="phone" class="col-sm-2 col-form-label-sm">전화번호</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="phone">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="id" class="col-sm-2 col-form-label">지역</label>
+            <label for="area" class="col-sm-2 col-form-label-sm">지역</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="id">
+              <input type="text" class="form-control" id="area">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="id" class="col-sm-2 col-form-label">지점</label>
+            <label for="branch" class="col-sm-2 col-form-label-sm">지점</label>
             <div class="col-sm-10">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="id" class="col-sm-2 col-form-label">직책</label>
+            <label for="position" class="col-sm-2 col-form-label-sm">직책</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="id">
+              <input type="text" class="form-control" id="position">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="id" class="col-sm-2 col-form-label">권한</label>
+            <label for="auth" class="col-sm-2 col-form-label-sm">권한</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="auth" id="authUser" value="user">
@@ -101,6 +98,7 @@
               </div>
             </div>
           </div>
+
         </form>
         
       </div>
