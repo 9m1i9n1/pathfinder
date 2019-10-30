@@ -19,33 +19,32 @@ import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
+
 @RestController
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminBranchController {
   @Autowired
 	AdminBranchService adminBranchService;
-	
-	@Autowired
-	AdminUserService adminUserService;
-    
+
   @GetMapping({ "", "/" })
   public String admin(Model model) {
     return "/admin/mainManage";
   }
- //branch read
+
+  //branch read
   @GetMapping("/branchmanage/read/{branchIndex}")
   public Optional<BranchTb> read(@PathVariable Long branchIndex) {
       System.out.println(adminBranchService.read(branchIndex));
       return adminBranchService.read(branchIndex);
   }
- //branch create
+  //branch create
   @PostMapping("/branchmanage")
   public String branchCreate(@RequestBody BranchTb request) {
 	adminBranchService.create(request);
       return "redirect:/admin/branchmanage";
 	}
 	
- //branch page
+  //branch page
   @GetMapping("/branchmanage")
   public ModelAndView branchSearch(@PageableDefault(sort ="branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
 			ModelAndView mv = new ModelAndView();
@@ -57,44 +56,18 @@ public class AdminController {
       return mv;
       
   }
+
  //branch update
   @PutMapping("/branchmanage/update")
   public  Optional<Object> branchUpdate(@RequestBody BranchTb request) {
       System.out.println(adminBranchService.update(request));
       return adminBranchService.update(request);
   }
+
  //branch delete
   @DeleteMapping("/branchmanage/delete/{branchIndex}")
   public int branchDelete(@PathVariable Long branchIndex) {
       return adminBranchService.delete(branchIndex);
 	}
-	
-	//TODO ===============================
-
-  @GetMapping("/usermanage")
-  public ModelAndView userManage(
-	  @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable,
-	  Model model) {
-
-	  ModelAndView mv = new ModelAndView();
-
-	 	List<UserTb> userList = adminUserService.search(pageable);
-
-	  mv.addObject("userList", userList);
-
-	  mv.setViewName("/admin/userManage");
-	  return mv;
-	}
-	
-	//TODO ===============================
-
-  @GetMapping("/carmanage")
-  public ModelAndView carManage(Model model) {
-
-	  ModelAndView mv = new ModelAndView();
-
-	  mv.setViewName("/admin/carManage");
-	  return mv;
-  }
 
 }
