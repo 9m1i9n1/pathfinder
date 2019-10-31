@@ -7,54 +7,47 @@
       </div>
 
       <div class="modal-body">
-        <form id="exampleForm">
+        <form id="userCreateForm">
           <div class="form-group row">
-            <label for="id" class="col-sm-2 col-form-label-sm">아이디</label>
+            <label for="userId" class="col-sm-2 col-form-label-sm">아이디</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="id" />
+              <input type="text" class="form-control" id="userId" name="userId" />
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label-sm">이름</label>
+            <label for="userName" class="col-sm-2 col-form-label-sm">이름</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="name" />
+              <input type="text" class="form-control" id="userName" name="userName"/>
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="email" class="col-sm-2 col-form-label-sm">이메일</label>
+            <label for="userEmail" class="col-sm-2 col-form-label-sm">이메일</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="email" />
+              <input type="userEmail" class="form-control" id="userEmail" name="userEmail"/>
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="phone" class="col-sm-2 col-form-label-sm">전화번호</label>
+            <label for="userPhone" class="col-sm-2 col-form-label-sm">전화번호</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="phone" />
+              <input type="text" class="form-control" id="userPhone" name="userPhone"/>
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="area" class="col-sm-2 col-form-label-sm">지역</label>
+            <label for="branchIndex" class="col-sm-2 col-form-label-sm">지점</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="area" />
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="branch" class="col-sm-2 col-form-label-sm">지점</label>
-            <div class="col-sm-10">
-              <select class="selectpicker" data-live-search="true" id="branch">
+              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex">
               </select>
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="position" class="col-sm-2 col-form-label-sm">직책</label>
+            <label for="userPosition" class="col-sm-2 col-form-label-sm">직책</label>
             <div class="col-sm-10">
-              <select class="selectpicker" data-live-search="true" id="position">
+              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition">
                 <option>사원</option>
                 <option>대리</option>
                 <option>과장</option>
@@ -66,14 +59,14 @@
           </div>
 
           <div class="form-group row">
-            <label for="auth" class="col-sm-2 col-form-label-sm">권한</label>
+            <label for="userAuth" class="col-sm-2 col-form-label-sm">권한</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="auth" id="authUser" value="user" />
+                <input class="form-check-input" type="radio" name="userAuth" id="authUser" value="0" />
                 <label class="form-check-label" for="authUser">일반 사용자</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="auth" id="authAdmin" value="admin"">
+                <input class="form-check-input" type="radio" name="userAuth" id="authAdmin" value="1">
                 <label class="form-check-label" for="authAdmin">관리자</label>
               </div>
             </div>
@@ -83,7 +76,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary" name="InsertBtn">등록</button>
+        <button type="button" class="btn btn-primary" id="InsertBtn">등록</button>
       </div>
     </div>
   </div>
