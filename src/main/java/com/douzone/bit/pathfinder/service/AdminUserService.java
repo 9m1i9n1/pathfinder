@@ -44,6 +44,11 @@ public class AdminUserService {
     return userRepository.findById(id);
   }
 
+  public List<String> readBranchName() {
+
+    return branchRepository.findBranchName();
+  }
+
   public List<AdminUserResponse> search(Pageable pageable) {
 
     Page<UserTb> users = userRepository.findAll(pageable);
