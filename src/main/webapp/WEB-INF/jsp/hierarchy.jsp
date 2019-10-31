@@ -6,6 +6,12 @@
 </head>
 <body>
 	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">Hierarchy</a></li>
+			<li class="breadcrumb-item active">총인원수 출력</li>
+		</ol>
+	</div>
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3">
 				<div class="card">
