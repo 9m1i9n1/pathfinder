@@ -29,19 +29,50 @@
 	    branchlist();
 	    $('[name=branchInsertBtn]').click(function(){
 	  	  console.log("@@@@@@@@@@@@@@")
-	  	  var insertData = $('[name=branchInsertform]').serialize();
-	  	  console.log(insertData);
-	  	  branchInsert(insertData);
-	  	  console.log(insertData);
+	  	 // var insertData = $('[name=branchInsertform]').serialize();
+	  	  	var b = $('[name=branchInsertform]');
+	  	  var formData = $('[name=branchInsertform]').serializeObject()
+			console.log(formData)
+		//	console.log(JSON.stringify(formData))
+		//	console.log(formData)
+	  	/* let a = fn_formParse();
+	  	console.log(a);
+	  	console.log(a);
+	  	branchinsert(a); */
+	  	console.log(JSON.stringify(formData));
+			branchinsert(JSON.stringify(formData));
 	    })
 	});
-      
   
+//form json 변환1
+$.fn.serializeObject = function() {
+
+  var result = {}
+  var extend = function(i, element) {
+    var node = result[element.name]
+    if ("undefined" !== typeof node && node !== null) {
+      if ($.isArray(node)) {
+        node.push(element.value)
+      } else {
+        result[element.name] = [node, element.value]
+      }
+    } else {
+      result[element.name] = element.value
+    }
+  }
+
+  $.each(this.serializeArray(), extend)
+  return result
+}
+  
+  //insert
 	function branchinsert(insertData){
+		console.log("branchinsert In@@@@@@@@")
 		$.ajax({
 		     type  : "POST",
 			 url : "http://localhost:8181/admin/branchmanage",
 			 data   : insertData,
+			 contentType: 'application/json',
 			 success : function(data){
 				 branchlist();
 			 }
@@ -127,7 +158,7 @@
                      <strong>지점장</strong> <input type="text" name="branchOwner">
                   </p>
                   <p>
-                     <strong>운반비</strong> <input type="text" name="branchValue">
+                     <strong>운반비</strong> <input type="number" name="branchValue">
                   </p>
                   
                   <p>
