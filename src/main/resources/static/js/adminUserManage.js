@@ -15,7 +15,7 @@ $("#insertModal").on("shown.bs.modal", function() {
   branchLoading();
 });
 
-function userLoading() {
+function userLoading(page) {
   $.ajax({
     url: "/admin/usermanage/userlist.do",
     type: "get",

@@ -41,8 +41,7 @@ public class AdminUserController {
   }
 
   @GetMapping("")
-  public ModelAndView userManage(
-      @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable, Model model) {
+  public ModelAndView userManage() {
 
     ModelAndView mv = new ModelAndView();
     mv.setViewName("/admin/userManage");
@@ -52,7 +51,7 @@ public class AdminUserController {
 
   @GetMapping("/userlist.do")
   public List<AdminUserResponse> userList(
-      @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
+      @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
     return adminUserService.search(pageable);
   }
