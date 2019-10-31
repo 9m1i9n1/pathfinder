@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
+import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
 
@@ -44,6 +45,11 @@ public class AdminUserService {
     return userRepository.findById(id);
   }
 
+  public List<String> readBranchName() {
+
+    return branchRepository.findBranchName();
+  }
+
   public List<AdminUserResponse> search(Pageable pageable) {
 
     Page<UserTb> users = userRepository.findAll(pageable);
@@ -66,7 +72,7 @@ public class AdminUserService {
 
     AdminUserResponse adminUserResponse = AdminUserResponse.builder().userIndex(user.getUserIndex())
         .userId(user.getUserId()).userName(user.getUserName()).userEmail(user.getUserEmail())
-        .userPhone(user.getUserPhone()).branchIndex(user.getBranch().getBranchIndex())
+        .userPhone(user.getUserPhone()).branchName(user.getBranch().getBranchName())
         .userPosition(user.getUserPosition()).build();
 
     return adminUserResponse;
