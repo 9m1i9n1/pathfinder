@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
-import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
 
@@ -26,14 +25,10 @@ public class AdminUserService {
 
   public AdminUserResponse create(AdminUserRequest request) {
 
-    System.out.println("#request : " + request);
-
     UserTb user = UserTb.builder().userId(request.getUserId()).userPw("12345").userName(request.getUserName())
         .userEmail(request.getUserEmail()).userPhone(request.getUserPhone()).userCreated(LocalDateTime.now())
         .userAuth(request.getUserAuth()).userPosition(request.getUserPosition())
         .branch(branchRepository.getOne(request.getBranchIndex())).build();
-
-    System.out.println("#response : " + user);
 
     userRepository.save(user);
 
@@ -45,7 +40,7 @@ public class AdminUserService {
     return userRepository.findById(id);
   }
 
-  public List<String> readBranchName() {
+  public List<Object> readBranchName() {
 
     return branchRepository.findBranchName();
   }
@@ -57,6 +52,15 @@ public class AdminUserService {
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
 
     return userResponseList;
+  }
+
+  public Optional<AdminUserResponse> update(Long id) {
+    Optional<UserTb> optional = userRepository.findById(id);
+
+    return optional.map(user -> {
+      user.setUserPw("12345");
+      return user;
+    }).map(updatedUser -> userRepository.save(updatedUser)).map(updatedUser -> response(updatedUser));
   }
 
   public int delete(Long id) {
