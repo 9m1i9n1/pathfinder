@@ -56,11 +56,11 @@ public class AdminUserController {
     return adminUserService.search(pageable);
   }
 
-  @GetMapping("/branchlist.do")
-  public List<AdminUserResponse> branchList() {
+  // @GetMapping("/branchlist.do")
+  // public List<AdminUserResponse> branchList() {
 
-    return adminBranchService.search();
-  }
+  // return adminBranchService.search();
+  // }
 
   @DeleteMapping("/{userIndex}")
   public int userDelete(@PathVariable Long userIndex) {
