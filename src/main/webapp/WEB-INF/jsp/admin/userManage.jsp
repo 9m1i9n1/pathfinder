@@ -30,7 +30,6 @@
     </table>
 
     <%@include file="userManageModal.jsp"%>
+    <script src="/static/js/adminUserManage.js">
   </body>
-
-  <script src="/static/js/adminUserManage.js">
 </html>
