@@ -18,16 +18,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
+import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/usermanage")
 public class AdminUserController {
 
   @Autowired
   AdminUserService adminUserService;
 
-  @PostMapping("/usermanage")
+  @Autowired
+  AdminBranchService adminBranchService;
+
+  @PostMapping("")
   public AdminUserResponse create(@RequestBody AdminUserRequest request) {
 
     System.out.println("#control request : " + request);
@@ -35,7 +39,7 @@ public class AdminUserController {
     return adminUserService.create(request);
   }
 
-  @GetMapping("/usermanage")
+  @GetMapping("")
   public ModelAndView userManage(
       @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable, Model model) {
 
@@ -45,14 +49,20 @@ public class AdminUserController {
     return mv;
   }
 
-  @GetMapping("/usermanage.do")
-  public List<AdminUserResponse> userManageList(
+  @GetMapping("/userlist.do")
+  public List<AdminUserResponse> userList(
       @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
 
     return adminUserService.search(pageable);
   }
 
-  @DeleteMapping("/usermanage/delete/{userIndex}")
+  @GetMapping("/branchlist.do")
+  public List<AdminUserResponse> branchList() {
+
+    return adminBranchService.search();
+  }
+
+  @DeleteMapping("/{userIndex}")
   public int userDelete(@PathVariable Long userIndex) {
 
     return adminUserService.delete(userIndex);
