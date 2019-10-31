@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
+import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
+import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 
@@ -27,37 +29,36 @@ public class AdminBranchService {
     }
 
     // branch create
-    public BranchTb create(BranchTb request) {
+    public AdminBranchResponse create(AdminBranchRequest request) {
 
-        BranchTb branchTb = request;
         System.out.println(request);
         
-        BranchTb branchtb = BranchTb.builder()
-                .branchAddr(branchTb.getBranchAddr())
-                .branchDaddr(branchTb.getBranchDaddr())
-                .branchLat(branchTb.getBranchLat())
-                .branchLng(branchTb.getBranchLng())
-                .branchPhone(branchTb.getBranchPhone())
-                .branchName(branchTb.getBranchName())
-                .branchOwner(branchTb.getBranchOwner())
-                .branchValue(branchTb.getBranchValue())
-                .area(areaRepository.getOne(branchTb.getArea().getAreaIndex()))
+        BranchTb branch = BranchTb.builder()
+                .branchAddr(request.getBranchAddr())
+                .branchDaddr(request.getBranchDaddr())
+                .branchLat(request.getBranchLat())
+                .branchLng(request.getBranchLng())
+                .branchPhone(request.getBranchPhone())
+                .branchName(request.getBranchName())
+                .branchOwner(request.getBranchOwner())
+                .branchValue(request.getBranchValue())
+                .area(areaRepository.getOne(request.getAreaIndex()))
                 .build();
 
-        BranchTb newBranchTb = branchRepository.save(branchtb);
+        branchRepository.save(branch);
 
-        return newBranchTb;
+        return response(branch);
 
     }
 
     // branch page
-    public List<BranchTb> search(Pageable pageable) {
+    public List<AdminBranchResponse> search(Pageable pageable) {
 
         Page<BranchTb> branchs = branchRepository.findAll(pageable);
 
-        List<BranchTb> branchList = branchs.stream().collect(Collectors.toList());
+        List<AdminBranchResponse> branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
 
-        return branchList;
+        return branchResponseList;
     }
 
     // branch update
@@ -80,6 +81,27 @@ public class AdminBranchService {
         return branchRepository.findById(id).map(branch -> {
             branchRepository.delete(branch);
             return 1;
-        }).orElse(0);
+        }).orElseGet(() -> 0);
     }
+    
+    private AdminBranchResponse response(BranchTb branch) {
+    	
+    	AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder()
+    			.branchIndex(branch.getBranchIndex())
+    			.branchName(branch.getBranchName())
+    			.branchOwner(branch.getBranchOwner())
+    			.branchValue(branch.getBranchValue())
+    			.branchAddr(branch.getBranchAddr())
+    			.branchDaddr(branch.getBranchDaddr())
+    			.branchPhone(branch.getBranchPhone())
+    			.branchLat(branch.getBranchLat())
+    			.branchLng(branch.getBranchLng())
+    			.area(branch.getArea().getAreaName())
+    			.build();
+    			
+    	
+    	return adminBranchResponse;
+    }
+    
+    
 }

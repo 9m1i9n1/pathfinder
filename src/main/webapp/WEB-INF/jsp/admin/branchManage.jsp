@@ -28,25 +28,14 @@
 	    branchlist(0);
 	    $('[name=branchInsertBtn]').click(function(){
 	  	  var formData = $('[name=branchInsertform]').serializeObject()
-	 
+	 		
+	  	  console.log(formData)
 	  	let geo = geocoding(formData.branchAddr);
-	  	  console.log(geo);
+	  	  
+	  	  formData.branchLat = geo.y;
+	  	  formData.branchLng = geo.x;
 	   
-	  	  let a = {
-	  			branchIndex: formData.branchIndex,
-	  			branchName: formData.branchName,
-	  			branchOwner: formData.branchOwner,
-	  			branchValue: formData.branchValue,
-	  			branchAddr: formData.branchAddr,
-	  			branchDaddr: formData.branchDaddr,
-	  			branchPhone: formData.branchPhone,
-	  			branchLat: geo.y,
-	  			branchLng: geo.x,
-	  			area:{
-	  				areaIndex: formData.areaIndex
-	  			}
-	  	}
-		branchinsert(JSON.stringify(a));
+		branchinsert(JSON.stringify(formData));
 	    })
 	});
   
@@ -122,7 +111,7 @@
   //list
     function branchlist(idx) {
     		$.ajax({
-    			url:"http://localhost:8181/admin/branchmanage.do?page="+idx,
+    			url:"http://localhost:8181/admin/branchmanage/branchlist.do?page="+idx,
     			data: {},
     			success:function(data){
     			      var str = '<tr>'+

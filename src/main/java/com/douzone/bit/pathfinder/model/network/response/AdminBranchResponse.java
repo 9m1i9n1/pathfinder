@@ -28,4 +28,6 @@ public class AdminBranchResponse {
   private Double branchLat;
 
   private Double branchLng;
+  
+  private String area;
 }

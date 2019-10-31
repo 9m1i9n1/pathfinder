@@ -28,4 +28,6 @@ public class AdminBranchRequest {
   private Double branchLat;
 
   private Double branchLng;
+  
+  private Long areaIndex;
 }
