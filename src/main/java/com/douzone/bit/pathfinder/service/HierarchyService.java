@@ -3,6 +3,10 @@ package com.douzone.bit.pathfinder.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 import com.douzone.bit.pathfinder.model.entity.AreaTb;
@@ -92,5 +96,13 @@ public class HierarchyService {
 		}
 		
 		return jArray;
+	}
+
+	public Page<UserTb> pageRead(Pageable pageable) {
+		
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 10);
+		
+		return userRepository.findAll(pageable);
 	}
 }
