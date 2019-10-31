@@ -15,7 +15,10 @@
 	border: 1px solid #bcbcbc;
 	overflow: auto;
 }
-
+#map {
+    width: 100%;
+    height: 100%;
+}
 #maproute-sidebar {
 	width: 25%;
 	height: 36%;
