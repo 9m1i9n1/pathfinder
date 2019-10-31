@@ -29,7 +29,7 @@ public class HierarchyController {
 		return mv;
 	}
 
-	@GetMapping("/gettree")
+	@GetMapping("/gettree.do")
 	public JsonArray getHierarchyChild(
 			@RequestParam(value = "id", required = false, defaultValue = "#") String id) {
 
@@ -37,7 +37,7 @@ public class HierarchyController {
 			hierarchyService.branchRead(id);
 	}
 	
-	@GetMapping("/getuser")
+	@GetMapping("/getuser.do")
 	public JsonArray getUser(
 			@RequestParam("id") String id) {
 		

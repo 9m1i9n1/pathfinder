@@ -34,14 +34,13 @@
 							style="text-align: center; boarder: 1px solid #ddddd">
 							<thead>
 								<tr>
-									<th style="background-color: #fafafa; text-align: center;">아이디</th>
 									<th style="background-color: #fafafa; text-align: center;">이름</th>
 									<th style="background-color: #fafafa; text-align: center;">직책</th>
 									<th style="background-color: #fafafa; text-align: center;">이메일</th>
 									<th style="background-color: #fafafa; text-align: center;">전화번호</th>
 								</tr>
 							</thead>
-							<tbody id="userTable" style="font-size : 65%"/>
+							<tbody id="userTable" style="font-size : 75%"/>
 						</table>
 					</div>
 				</div>
@@ -51,7 +50,7 @@
 	<script type="text/javascript">
 			function getUser(id) {
 				$.ajax({
-					url : "/hierarchy/getuser",
+					url : "/hierarchy/getuser.do",
 					type : "GET",
 					data : {
 						"id" : id
@@ -61,7 +60,6 @@
 						var str = '<tr>';
 						$.each(data, function(i, s) {
 							str +=  
-							'<td>'+ data[i].userId +'</td>' +
 							'<td>'+ data[i].userName +'</td>' +
 							'<td>'+ data[i].userPosition +'</td>' +
 							'<td>'+ data[i].userEmail +'</td>' +
@@ -85,7 +83,7 @@
 							'reponsive' : true
 						},
 						'data' : {
-							"url" : "/hierarchy/gettree",
+							"url" : "/hierarchy/gettree.do",
 							"data" : function(node) {
 								return {"id" : node.id};
 							}
