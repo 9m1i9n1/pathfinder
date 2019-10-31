@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class adminBranchRequest {
+public class AdminBranchRequest {
 
   private Long branchIndex;
 

@@ -1,5 +1,6 @@
 package com.douzone.bit.pathfinder.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,37 +9,66 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
+import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
+import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
+import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
 
 @Service
 public class AdminUserService {
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    // branch read
-    public Optional<UserTb> read(Long id) {
+  @Autowired
+  private BranchRepository branchRepository;
 
-        return userRepository.findById(id);
-    }
+  public AdminUserResponse create(AdminUserRequest request) {
 
-    // user page
-    public List<UserTb> search(Pageable pageable) {
+    System.out.println("#request : " + request);
 
-        Page<UserTb> users = userRepository.findAll(pageable);
+    UserTb user = UserTb.builder().userId(request.getUserId()).userPw("12345").userName(request.getUserName())
+        .userEmail(request.getUserEmail()).userPhone(request.getUserPhone()).userCreated(LocalDateTime.now())
+        .userAuth(request.getUserAuth()).userPosition(request.getUserPosition())
+        .branch(branchRepository.getOne(request.getBranchIndex())).build();
 
-        System.out.println(users);
-        List<UserTb> userList = users.stream().collect(Collectors.toList());
+    System.out.println("#response : " + user);
 
-        return userList;
-    }
+    userRepository.save(user);
 
-    public int delete(Long id) {
-        Optional<UserTb> optional = userRepository.findById(id);
+    return response(user);
+  }
 
-        return optional.map(user -> {
-            userRepository.delete(user);
-            return 1;
-        }).orElseGet(() -> 0);
-    }
+  public Optional<UserTb> read(Long id) {
+
+    return userRepository.findById(id);
+  }
+
+  public List<AdminUserResponse> search(Pageable pageable) {
+
+    Page<UserTb> users = userRepository.findAll(pageable);
+
+    List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
+
+    return userResponseList;
+  }
+
+  public int delete(Long id) {
+    Optional<UserTb> optional = userRepository.findById(id);
+
+    return optional.map(user -> {
+      userRepository.delete(user);
+      return 1;
+    }).orElseGet(() -> 0);
+  }
+
+  private AdminUserResponse response(UserTb user) {
+
+    AdminUserResponse adminUserResponse = AdminUserResponse.builder().userIndex(user.getUserIndex())
+        .userId(user.getUserId()).userName(user.getUserName()).userEmail(user.getUserEmail())
+        .userPhone(user.getUserPhone()).branchIndex(user.getBranch().getBranchIndex())
+        .userPosition(user.getUserPosition()).build();
+
+    return adminUserResponse;
+  }
 }

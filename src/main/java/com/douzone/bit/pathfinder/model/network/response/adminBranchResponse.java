@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class adminBranchResponse {
+public class AdminBranchResponse {
 
   private Long branchIndex;
 

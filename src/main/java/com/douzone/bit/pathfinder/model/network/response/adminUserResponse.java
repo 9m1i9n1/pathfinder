@@ -1,19 +1,19 @@
 package com.douzone.bit.pathfinder.model.network.response;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-public class adminUserResponse {
+@Accessors(chain = true)
+public class AdminUserResponse {
 
   private Long userIndex;
 
@@ -33,7 +33,5 @@ public class adminUserResponse {
 
   private Boolean userAuth;
 
-  private Long branchId;
-
-  private List<adminBranchResponse> branchResponseList;
+  private Long branchIndex;
 }

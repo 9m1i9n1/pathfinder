@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-public class adminUserRequest {
+public class AdminUserRequest {
 
   private Long userIndex;
 
@@ -32,5 +31,5 @@ public class adminUserRequest {
 
   private Boolean userAuth;
 
-  private Long branchId;
+  private Long branchIndex;
 }
