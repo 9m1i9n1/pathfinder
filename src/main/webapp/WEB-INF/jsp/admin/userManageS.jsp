@@ -9,33 +9,29 @@
     $("#myInput").trigger("focus");
   });
 
-  var page = "page=1";
-
   function userLoading() {
     $.ajax({
       url: "/admin/usermanage.do",
       type: "get",
       success: function(data) {
-        console.log("#data : " + data.userList);
+        console.log("#data : " + data);
 
         var str = "";
 
         $.each(data, function(key, value) {
           str += "<tr>";
-          str += "<td>" + value.user_index + "</td>";
-          str += "<td>" + value.user_id + "</td>";
-          str += "<td>" + value.user_name + "</td>";
-          str += "<td>" + value.user_email + "</td>";
-          str += "<td>" + value.user_phone + "</td>";
-          str += "<td>" + value.branch.branch_name + "</td>";
-          str += "<td>" + value.user_position + "</td>";
+          str += "<td>" + value.userIndex + "</td>";
+          str += "<td>" + value.userId + "</td>";
+          str += "<td>" + value.userName + "</td>";
+          str += "<td>" + value.userEmail + "</td>";
+          str += "<td>" + value.userPhone + "</td>";
+          str += "<td>" + value.branch.branchName + "</td>";
+          str += "<td>" + value.userPosition + "</td>";
           str += "<td>";
           str += "<input type='button' value='초기화' />";
-          str += "<input type='button' onclick='userDelete(" + value.user_index + ")' value='삭제' />";
+          str += "<input type='button' onclick='userDelete(" + value.userIndex + ")' value='삭제' />";
           str += "</td>";
           str += "</tr>";
-
-          console.log("#value : " + value.user_index);
         });
 
         $("#table")

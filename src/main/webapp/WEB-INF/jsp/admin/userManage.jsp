@@ -78,11 +78,6 @@
           <div class="form-group row">
             <label for="id" class="col-sm-2 col-form-label">지점</label>
             <div class="col-sm-10">
-              <select class="selectpicker" data-live-search="true" id="id">
-              <option data-subtext="Rep California">Tom Foolery</option>
-              <option data-subtext="Sen California">Bill Gordon</option>
-              <option data-subtext="Sen Massacusetts">Elizabeth Warren</option>
-              </select>
             </div>
           </div>
 
