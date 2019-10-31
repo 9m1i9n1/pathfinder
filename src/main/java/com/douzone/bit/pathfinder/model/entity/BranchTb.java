@@ -51,7 +51,7 @@ public class BranchTb {
 	@JoinColumn(name = "areaIndex")
 	private AreaTb area;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userId")
 	private List<UserTb> userList;
 }

@@ -29,6 +29,7 @@ public class AdminBranchService {
     public BranchTb create(BranchTb request){
         
         BranchTb branchTb = request;
+        System.out.println(request);
         
         BranchTb branchtb = BranchTb.builder()
                 .branchAddr(branchTb.getBranchAddr())
