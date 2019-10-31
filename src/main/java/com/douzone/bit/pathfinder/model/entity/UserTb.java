@@ -27,6 +27,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+
 @Entity
 @ToString(exclude = { "branch" })
 @EntityListeners(AuditingEntityListener.class)

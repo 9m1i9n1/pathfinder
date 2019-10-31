@@ -30,12 +30,18 @@ public class AdminBranchService {
     public BranchTb create(BranchTb request) {
 
         BranchTb branchTb = request;
-
-        BranchTb branchtb = BranchTb.builder().branchAddr(branchTb.getBranchAddr())
-                .branchDaddr(branchTb.getBranchDaddr()).branchLat(branchTb.getBranchLat())
-                .branchLng(branchTb.getBranchLng()).branchPhone(branchTb.getBranchPhone())
-                .branchName(branchTb.getBranchName()).branchOwner(branchTb.getBranchOwner())
-                .branchValue(branchTb.getBranchValue()).area(areaRepository.getOne(branchTb.getArea().getAreaIndex()))
+        System.out.println(request);
+        
+        BranchTb branchtb = BranchTb.builder()
+                .branchAddr(branchTb.getBranchAddr())
+                .branchDaddr(branchTb.getBranchDaddr())
+                .branchLat(branchTb.getBranchLat())
+                .branchLng(branchTb.getBranchLng())
+                .branchPhone(branchTb.getBranchPhone())
+                .branchName(branchTb.getBranchName())
+                .branchOwner(branchTb.getBranchOwner())
+                .branchValue(branchTb.getBranchValue())
+                .area(areaRepository.getOne(branchTb.getArea().getAreaIndex()))
                 .build();
 
         BranchTb newBranchTb = branchRepository.save(branchtb);
