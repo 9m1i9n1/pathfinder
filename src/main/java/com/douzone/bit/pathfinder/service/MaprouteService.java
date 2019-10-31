@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.RouteDTO;
-import com.douzone.bit.pathfinder.repository.TestDAO;
+import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.service.algorithm.Recursive;
 import com.douzone.bit.pathfinder.service.algorithm.createMap;
 
@@ -47,7 +47,7 @@ public class MaprouteService {
 	}
 	
 	@Autowired
-	TestDAO testDao;
+	BranchRepository testDao;
 	
 	//list
 	public List<BranchTb> search() {
