@@ -10,24 +10,25 @@ import org.springframework.stereotype.Service;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
+
 @Service
 public class AdminBranchService {
-    
+
     @Autowired
     private BranchRepository branchRepository;
-    
+
     @Autowired
     private AreaRepository areaRepository;
-    
-    //branch read
+
+    // branch read
     public Optional<BranchTb> read(Long id) {
-        
+
         return branchRepository.findById(id);
     }
-    
-    //branch create
-    public BranchTb create(BranchTb request){
-        
+
+    // branch create
+    public BranchTb create(BranchTb request) {
+
         BranchTb branchTb = request;
         System.out.println(request);
         
@@ -42,52 +43,43 @@ public class AdminBranchService {
                 .branchValue(branchTb.getBranchValue())
                 .area(areaRepository.getOne(branchTb.getArea().getAreaIndex()))
                 .build();
-        
+
         BranchTb newBranchTb = branchRepository.save(branchtb);
-        
+
         return newBranchTb;
-        
+
     }
-    //branch page
+
+    // branch page
     public List<BranchTb> search(Pageable pageable) {
-        
+
         Page<BranchTb> branchs = branchRepository.findAll(pageable);
-        
-        List<BranchTb> branchList = branchs.stream()
-                .collect(Collectors.toList());
-            
+
+        List<BranchTb> branchList = branchs.stream().collect(Collectors.toList());
+
         return branchList;
     }
-    
-    //branch update
-    public Optional<Object> update(BranchTb request){
-        
+
+    // branch update
+    public Optional<Object> update(BranchTb request) {
+
         BranchTb body = request;
-        
-        return branchRepository.findById(body.getBranchIndex())
-                .map(branch -> {
-                    branch
-                    .setArea(body.getArea())
-                    .setBranchAddr(body.getBranchAddr())
-                    .setBranchDaddr(body.getBranchDaddr())
-                    .setBranchLat(body.getBranchLat())
-                    .setBranchLng(body.getBranchLng())
-                    .setBranchName(body.getBranchName())
-                    .setBranchOwner(body.getBranchOwner())
-                    .setBranchPhone(body.getBranchPhone())
-                    .setBranchValue(body.getBranchValue());
-                    
-                    return branch;
-                })
-                .map(changeBranch -> branchRepository.save(changeBranch));
+
+        return branchRepository.findById(body.getBranchIndex()).map(branch -> {
+            branch.setArea(body.getArea()).setBranchAddr(body.getBranchAddr()).setBranchDaddr(body.getBranchDaddr())
+                    .setBranchLat(body.getBranchLat()).setBranchLng(body.getBranchLng())
+                    .setBranchName(body.getBranchName()).setBranchOwner(body.getBranchOwner())
+                    .setBranchPhone(body.getBranchPhone()).setBranchValue(body.getBranchValue());
+
+            return branch;
+        }).map(changeBranch -> branchRepository.save(changeBranch));
     }
-    
-    //branch delete
+
+    // branch delete
     public int delete(Long id) {
-        return branchRepository.findById(id)
-                .map(branch -> {
-                    branchRepository.delete(branch);
-                    return 1;
-                }).orElse(0);
+        return branchRepository.findById(id).map(branch -> {
+            branchRepository.delete(branch);
+            return 1;
+        }).orElse(0);
     }
 }

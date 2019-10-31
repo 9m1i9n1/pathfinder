@@ -47,7 +47,6 @@ public class AdminBranchController {
 		return "redirect:/admin/branchmanage";
 	}
 	
-
 	// branch read
 	@GetMapping("/branchmanage/read/{branchIndex}")
 	public Optional<BranchTb> read(@PathVariable Long branchIndex) {
@@ -60,8 +59,6 @@ public class AdminBranchController {
 	public ModelAndView branchSearch(
 			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
 		ModelAndView mv = new ModelAndView();
-
-
 		List<BranchTb> b = adminBranchService.search(pageable);
 
 		mv.addObject("initpage", b);
