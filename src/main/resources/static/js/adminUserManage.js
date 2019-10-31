@@ -4,8 +4,6 @@ $(document).ready(function() {
 
 $("#InsertBtn").click(function() {
   var data = $("#userCreateForm").serializeObject();
-  console.log("#create Data : " + data);
-
   $("#userCreateForm")[0].reset();
   userCreate(data);
 
@@ -99,25 +97,33 @@ function userCreate(req) {
 }
 
 function userDelete(userIndex) {
-  $.ajax({
-    url: "/admin/usermanage/" + userIndex,
-    type: "delete",
-    success: function(data) {
-      userLoading();
-    },
-  });
+  var result = confirm("회원 정보를 삭제하시겠습니까?");
 
-  alert("유저를 삭제하였습니다.");
+  if (result) {
+    $.ajax({
+      url: "/admin/usermanage/" + userIndex,
+      type: "delete",
+      success: function(data) {
+        userLoading();
+      },
+    });
+
+    alert("해당 회원을 삭제하였습니다.");
+  }
 }
 
 function userUpdate(userIndex) {
-  $.ajax({
-    url: "/admin/usermanage/" + userIndex,
-    type: "put",
-    success: function(data) {
-      userLoading();
-    },
-  });
+  var result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
 
-  alert("유저의 패스워드를 초기화하였습니다.");
+  if (result) {
+    $.ajax({
+      url: "/admin/usermanage/" + userIndex,
+      type: "put",
+      success: function(data) {
+        userLoading();
+      },
+    });
+
+    alert("해당 회원의 패스워드를 초기화하였습니다.");
+  }
 }
