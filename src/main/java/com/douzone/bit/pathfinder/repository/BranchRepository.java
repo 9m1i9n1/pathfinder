@@ -9,7 +9,7 @@ import com.douzone.bit.pathfinder.model.entity.AreaTb;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 
 @Repository
-public interface BranchRepository extends JpaRepository<BranchTb, Long> {
-
+public interface BranchRepository  extends JpaRepository<BranchTb, Long> {
 	public List<BranchTb> findByArea(AreaTb area);
+
 }
