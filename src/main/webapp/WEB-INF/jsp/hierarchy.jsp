@@ -25,13 +25,13 @@
 					</div>
 				</div>
 			<div class="col-9">
-				<div class="card text-center">
+				<div class="card">
 					<div class="card-header">
 						<b>사용자 리스트</b>
 					</div>
 					<div class="card-body">
 						<table class="table table-hover table-mc-light-blue"
-							style="text-align: center; boarder: 1px solid #ddddd">
+							style="text-align: center;">
 							<thead>
 								<tr>
 									<th style="background-color: #fafafa; text-align: center;">이름</th>
@@ -42,7 +42,9 @@
 							</thead>
 							<tbody id="userTable" style="font-size : 75%"/>
 						</table>
-						<ul class="pagination" id="paging"></ul>
+						<div style="display : table; margin : 0 auto">
+							<ul class="pagination" id="paging"></ul>
+						</div>
 					</div>
 				</div>
 			</div>
