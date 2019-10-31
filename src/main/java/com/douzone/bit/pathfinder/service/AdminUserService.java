@@ -25,14 +25,10 @@ public class AdminUserService {
 
   public AdminUserResponse create(AdminUserRequest request) {
 
-    System.out.println("#request : " + request);
-
     UserTb user = UserTb.builder().userId(request.getUserId()).userPw("12345").userName(request.getUserName())
         .userEmail(request.getUserEmail()).userPhone(request.getUserPhone()).userCreated(LocalDateTime.now())
         .userAuth(request.getUserAuth()).userPosition(request.getUserPosition())
         .branch(branchRepository.getOne(request.getBranchIndex())).build();
-
-    System.out.println("#response : " + user);
 
     userRepository.save(user);
 
@@ -44,6 +40,11 @@ public class AdminUserService {
     return userRepository.findById(id);
   }
 
+  public List<Object> readBranchName() {
+
+    return branchRepository.findBranchName();
+  }
+
   public List<AdminUserResponse> search(Pageable pageable) {
 
     Page<UserTb> users = userRepository.findAll(pageable);
@@ -51,6 +52,15 @@ public class AdminUserService {
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
 
     return userResponseList;
+  }
+
+  public Optional<AdminUserResponse> update(Long id) {
+    Optional<UserTb> optional = userRepository.findById(id);
+
+    return optional.map(user -> {
+      user.setUserPw("12345");
+      return user;
+    }).map(updatedUser -> userRepository.save(updatedUser)).map(updatedUser -> response(updatedUser));
   }
 
   public int delete(Long id) {
@@ -66,7 +76,7 @@ public class AdminUserService {
 
     AdminUserResponse adminUserResponse = AdminUserResponse.builder().userIndex(user.getUserIndex())
         .userId(user.getUserId()).userName(user.getUserName()).userEmail(user.getUserEmail())
-        .userPhone(user.getUserPhone()).branchIndex(user.getBranch().getBranchIndex())
+        .userPhone(user.getUserPhone()).branchName(user.getBranch().getBranchName())
         .userPosition(user.getUserPosition()).build();
 
     return adminUserResponse;
