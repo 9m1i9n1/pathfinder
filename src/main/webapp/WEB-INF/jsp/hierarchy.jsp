@@ -4,7 +4,6 @@
 <html>
 <head>
 </head>
-<body>Hierarchy
 <body>
 	<div class="container-fluid">
 		<div class="row">
