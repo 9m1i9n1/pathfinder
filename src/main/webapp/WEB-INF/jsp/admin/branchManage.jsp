@@ -24,80 +24,107 @@
 
   <script type="text/javascript">
   
-  
   $(document).ready(function(){
-	    branchlist();
+	    branchlist(0);
 	    $('[name=branchInsertBtn]').click(function(){
-	  	  console.log("@@@@@@@@@@@@@@")
-	  	 // var insertData = $('[name=branchInsertform]').serialize();
-	  	  	var b = $('[name=branchInsertform]');
 	  	  var formData = $('[name=branchInsertform]').serializeObject()
-			console.log(formData)
-		//	console.log(JSON.stringify(formData))
-		//	console.log(formData)
-	  	/* let a = fn_formParse();
-	  	console.log(a);
-	  	console.log(a);
-	  	branchinsert(a); */
-	  	console.log(JSON.stringify(formData));
-			branchinsert(JSON.stringify(formData));
+	 
+	  	let geo = geocoding(formData.branchAddr);
+	  	  console.log(geo);
+	   
+	  	  let a = {
+	  			branchIndex: formData.branchIndex,
+	  			branchName: formData.branchName,
+	  			branchOwner: formData.branchOwner,
+	  			branchValue: formData.branchValue,
+	  			branchAddr: formData.branchAddr,
+	  			branchDaddr: formData.branchDaddr,
+	  			branchPhone: formData.branchPhone,
+	  			branchLat: geo.y,
+	  			branchLng: geo.x,
+	  			area:{
+	  				areaIndex: formData.areaIndex
+	  			}
+	  	}
+		branchinsert(JSON.stringify(a));
 	    })
 	});
   
-//form json 변환1
-$.fn.serializeObject = function() {
+	//form json 
+	$.fn.serializeObject = function() {
 
-  var result = {}
-  var extend = function(i, element) {
-    var node = result[element.name]
-    if ("undefined" !== typeof node && node !== null) {
-      if ($.isArray(node)) {
-        node.push(element.value)
-      } else {
-        result[element.name] = [node, element.value]
-      }
-    } else {
-      result[element.name] = element.value
-    }
-  }
-
-  $.each(this.serializeArray(), extend)
-  return result
-}
+ 	 var result = {}
+	  var extend = function(i, element) {
+ 	   var node = result[element.name]
+  	  if ("undefined" !== typeof node && node !== null) {
+  	    if ($.isArray(node)) {
+   	     node.push(element.value)
+    	  } else {
+     	   result[element.name] = [node, element.value]
+    	  }
+  	  } else {
+    	  result[element.name] = element.value
+    	}
+ 	 }
+	  $.each(this.serializeArray(), extend)
+ 	 return result
+	}
   
+	
+  //geocoding
+  function geocoding(addr){
+	  let ab;
+  $.ajax({ 
+	  	 url: 'https://dapi.kakao.com/v2/local/search/address.json?query='+addr,
+		 headers: {'Authorization':'KakaoAK dab56d279c7065ab0223c12e94ad64ea'},
+		 type: 'GET',
+		 async:false,
+		 success : function(r) {
+			 console.log("gecoding123");
+			 console.log(r.documents[0].road_address);
+			 ab = r.documents[0].road_address;
+		 },
+		 error : function(e) {
+			 console.log(e);
+		 }
+		 });
+ 	 return ab;
+  }
+	
+	
   //insert
 	function branchinsert(insertData){
-		console.log("branchinsert In@@@@@@@@")
 		$.ajax({
 		     type  : "POST",
 			 url : "http://localhost:8181/admin/branchmanage",
 			 data   : insertData,
 			 contentType: 'application/json',
 			 success : function(data){
-				 branchlist();
+				 branchlist(0);
 			 }
-		})
+		});
+		
 	}
   
-  
+  //delete
     function branchdelete(idx){
         $.ajax({
            type: "DELETE",
            url : "http://localhost:8181/admin/branchmanage/delete/"+idx,
            data: {},
            success: function(data){
-        	   branchlist();
+        	   branchlist(0);
            }
         });
     }
  
 	
-    function branchlist() {
+  //list
+    function branchlist(idx) {
     		$.ajax({
-    			url:"http://localhost:8181/admin/branchmanage.do",
+    			url:"http://localhost:8181/admin/branchmanage.do?page="+idx,
     			data: {},
     			success:function(data){
-    				console.log(data);
     			      var str = '<tr>'+
     				  '<th>번호</th>'+
                       '<th>지점명</th>'+
@@ -123,8 +150,6 @@ $.fn.serializeObject = function() {
                   }
     		})
     }
-
-    
 
 </script>
 
@@ -252,39 +277,10 @@ $.fn.serializeObject = function() {
          </div>
       </div>
    </div>
-
    <br />
-  <%--  <table border="1">
-      <th>번호</th>
-      <th>지점명</th>
-      <th>지점장</th>
-      <th>운반비</th>
-      <th>주소</th>
-      <th>전화번호</th>
-      <th>수정/삭제</th>
-
-      <c:forEach items="${initpage}" var="list">
-         <tr>
-            <td>${list.branchIndex}</td>
-            <td>${list.branchName}</td>
-            <td>${list.branchOwner}</td>
-            <td>${list.branchValue}</td>
-            <td>${list.branchAddr}</td>
-            <td>${list.branchPhone}</td>
-            <td>
-               <button data-target="#layerpop1" data-toggle="modal">수정</button>
-               <button id="branchDelete">삭제</button>
-            </td>
-         </tr>
-      </c:forEach>
-   </table> --%>
    
-   <div id="Testliset"></div>
    <table id ="tableTest">
    </table>
-   <div id ="test123"></div>
-   
-   
    
 </body>
 
