@@ -27,6 +27,7 @@ public class AdminUserService {
 
         Page<UserTb> users = userRepository.findAll(pageable);
 
+        System.out.println(users);
         List<UserTb> userList = users.stream().collect(Collectors.toList());
 
         return userList;
