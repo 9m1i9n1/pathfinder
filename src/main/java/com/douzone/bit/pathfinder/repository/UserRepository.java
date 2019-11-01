@@ -13,7 +13,7 @@ import com.douzone.bit.pathfinder.model.entity.UserTb;
 @Repository
 public interface UserRepository extends JpaRepository<UserTb, Long> {
   
-	public List<UserTb> findByBranch(BranchTb branch);
+	public Page<UserTb> findByBranch(BranchTb branch, Pageable pageable);
 	
-	public List<UserTb> findByBranchIn(List<BranchTb> branch);
+	public Page<UserTb> findByBranchIn(List<BranchTb> branch, Pageable pageable);
 }

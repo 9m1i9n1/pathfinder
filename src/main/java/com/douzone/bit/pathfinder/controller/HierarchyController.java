@@ -47,20 +47,10 @@ public class HierarchyController {
 	}
 	
 	@GetMapping("/getuser.do")
-	public JsonArray getUser(
-			@RequestParam("id") String id) {
-		
-		return hierarchyService.userRead(id);
-	}
-	
-	@GetMapping("/paging.do")
-	public List<UserTb> getPaging(
+	public JsonObject getUser(
+			@RequestParam("id") String id,
 			@PageableDefault Pageable pageable) {
 		
-		System.out.println("총 개수 : " + hierarchyService.pageRead(pageable).getTotalElements());
-		System.out.println("총 페이지 수 : " + hierarchyService.pageRead(pageable).getTotalPages());
-		System.out.println("현재 페이지 번호 : " + hierarchyService.pageRead(pageable).getNumber());
-		
-		return hierarchyService.pageRead(pageable).toList();
+		return hierarchyService.userRead(id, pageable);
 	}
 }

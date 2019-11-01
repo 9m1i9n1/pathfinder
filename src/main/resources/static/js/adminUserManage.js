@@ -4,10 +4,10 @@ $(document).ready(function() {
 
 $("#InsertBtn").click(function() {
   var data = $("#userCreateForm").serializeObject();
-  console.log("#create form : ");
-  console.log(data);
-
+  $("#userCreateForm")[0].reset();
   userCreate(data);
+
+  alert("새로운 유저를 등록하였습니다.");
 });
 
 $("#insertModal").on("shown.bs.modal", function() {
@@ -32,7 +32,7 @@ function userLoading() {
         str += "<td>" + value.branchName + "</td>";
         str += "<td>" + value.userPosition + "</td>";
         str += "<td>";
-        str += "<input type='button' value='초기화' />";
+        str += "<input type='button' onclick='userUpdate(" + value.userIndex + ")' value='초기화' />";
         str += "<input type='button' onclick='userDelete(" + value.userIndex + ")' value='삭제' />";
         str += "</td>";
         str += "</tr>";
@@ -53,8 +53,8 @@ function branchLoading() {
       var str = "";
 
       $.each(data, function(key, value) {
-        str += "<option value='" + key + "'>";
-        str += value + "</option>";
+        str += "<option value='" + value[0] + "'>";
+        str += value[1] + "</option>";
       });
 
       $("#insertModal")
@@ -97,11 +97,33 @@ function userCreate(req) {
 }
 
 function userDelete(userIndex) {
-  $.ajax({
-    url: "/admin/usermanage/delete/" + userIndex,
-    type: "delete",
-    success: function(data) {
-      userLoading();
-    },
-  });
+  var result = confirm("회원 정보를 삭제하시겠습니까?");
+
+  if (result) {
+    $.ajax({
+      url: "/admin/usermanage/" + userIndex,
+      type: "delete",
+      success: function(data) {
+        userLoading();
+      },
+    });
+
+    alert("해당 회원을 삭제하였습니다.");
+  }
+}
+
+function userUpdate(userIndex) {
+  var result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
+
+  if (result) {
+    $.ajax({
+      url: "/admin/usermanage/" + userIndex,
+      type: "put",
+      success: function(data) {
+        userLoading();
+      },
+    });
+
+    alert("해당 회원의 패스워드를 초기화하였습니다.");
+  }
 }

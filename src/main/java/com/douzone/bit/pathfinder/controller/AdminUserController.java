@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
@@ -33,8 +36,6 @@ public class AdminUserController {
 
   @PostMapping("")
   public AdminUserResponse create(@RequestBody AdminUserRequest request) {
-
-    System.out.println("#control request : " + request);
 
     return adminUserService.create(request);
   }
@@ -57,9 +58,15 @@ public class AdminUserController {
   }
 
   @GetMapping("/branchlist.do")
-  public List<String> branchList() {
+  public List<Object> branchList() {
 
     return adminUserService.readBranchName();
+  }
+
+  @PutMapping("/{userIndex}")
+  public Optional<AdminUserResponse> userUpdate(@PathVariable Long userIndex) {
+
+    return adminUserService.update(userIndex);
   }
 
   @DeleteMapping("/{userIndex}")
