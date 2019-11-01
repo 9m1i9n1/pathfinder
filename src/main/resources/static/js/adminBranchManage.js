@@ -88,7 +88,7 @@ function geocoding(addr) {
 function branchinsert(insertData) {
 	$.ajax({
 		type : "POST",
-		url : "http://localhost:8181/admin/branchmanage",
+		url : "/admin/branchmanage",
 		data : insertData,
 		contentType : 'application/json',
 		success : function(data) {
@@ -115,7 +115,7 @@ function branchgetvalue(data){
 function branchupdate(updateData) {
 	$.ajax({
 		type : "PUT",
-		url : "http://localhost:8181/admin/branchmanage/update",
+		url : "/admin/branchmanage/update",
 		data : updateData,
 		contentType : 'application/json',
 		success : function(data) {
@@ -128,7 +128,7 @@ function branchupdate(updateData) {
 function branchdelete(idx) {
 	$.ajax({
 		type : "DELETE",
-		url : "http://localhost:8181/admin/branchmanage/delete/" + idx,
+		url : "/admin/branchmanage/delete/" + idx,
 		data : {},
 		success : function(data) {
 			branchlist(0);
@@ -140,7 +140,7 @@ function branchdelete(idx) {
 function branchlist(idx) {
 	$
 			.ajax({
-				url : "http://localhost:8181/admin/branchmanage/branchlist.do?page="
+				url : "/admin/branchmanage/branchlist.do?page="
 						+ idx,
 				data : {},
 				success : function(data) {
