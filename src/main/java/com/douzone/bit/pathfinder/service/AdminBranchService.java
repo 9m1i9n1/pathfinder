@@ -12,104 +12,121 @@ import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
+import com.douzone.bit.pathfinder.repository.UserRepository;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 @Service
 public class AdminBranchService {
 
-    @Autowired
-    private BranchRepository branchRepository;
+	@Autowired
+	private BranchRepository branchRepository;
 
-    @Autowired
-    private AreaRepository areaRepository;
+	@Autowired
+	private AreaRepository areaRepository;
 
-    // branch read
-    public Optional<BranchTb> read(Long id) {
+	// branch read
+	public Optional<BranchTb> read(Long id) {
 
-        return branchRepository.findById(id);
-    }
+		return branchRepository.findById(id);
+	}
 
-    // branch create
-    public AdminBranchResponse create(AdminBranchRequest request) {
+	// branch create
+	public AdminBranchResponse create(AdminBranchRequest request) {
 
-        System.out.println(request);
-        
-        BranchTb branch = BranchTb.builder()
-                .branchAddr(request.getBranchAddr())
-                .branchDaddr(request.getBranchDaddr())
-                .branchLat(request.getBranchLat())
-                .branchLng(request.getBranchLng())
-                .branchPhone(request.getBranchPhone())
-                .branchName(request.getBranchName())
-                .branchOwner(request.getBranchOwner())
-                .branchValue(request.getBranchValue())
-                .area(areaRepository.getOne(request.getAreaIndex()))
-                .build();
+		System.out.println(request);
 
-        branchRepository.save(branch);
+		BranchTb branch = BranchTb.builder().branchAddr(request.getBranchAddr()).branchDaddr(request.getBranchDaddr())
+				.branchLat(request.getBranchLat()).branchLng(request.getBranchLng())
+				.branchPhone(request.getBranchPhone()).branchName(request.getBranchName())
+				.branchOwner(request.getBranchOwner()).branchValue(request.getBranchValue())
+				.area(areaRepository.getOne(request.getAreaIndex())).build();
 
-        return response(branch);
+		branchRepository.save(branch);
 
-    }
+		return response(branch);
 
-    // branch page
-    public List<AdminBranchResponse> search(Pageable pageable) {
+	}
 
-        Page<BranchTb> branchs = branchRepository.findAll(pageable);
+	// branch page
+	public List<AdminBranchResponse> listpage(Pageable pageable) {
 
-        List<AdminBranchResponse> branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
+		Page<BranchTb> branchs = branchRepository.findAll(pageable);
 
-        return branchResponseList;
-    }
+		List<AdminBranchResponse> branchResponseList = branchs.stream().map(branch -> response(branch))
+				.collect(Collectors.toList());
 
-    // branch update
-    public Optional<AdminBranchResponse> update(AdminBranchRequest request) {
+		return branchResponseList;
+	}
 
-    	Optional<BranchTb> optional = branchRepository.findById(request.getBranchIndex());
-    	
-    	System.out.println("#optional : " + optional);
-    	System.out.println("#request : " + request);
-    	
-    	return optional.map(branch -> {
-        		branch
-                .setBranchName(request.getBranchName())
-                .setBranchOwner(request.getBranchOwner())
-                .setBranchPhone(request.getBranchPhone())
-                .setBranchValue(request.getBranchValue())
-                .setArea(areaRepository.getOne(request.getAreaIndex()));
-                
-                return branch;
-    	})
-    	.map(newBranch -> branchRepository.save(newBranch))
-    	.map(newBranch -> response(newBranch));
-    }
+	// branch update
+	public Optional<AdminBranchResponse> update(AdminBranchRequest request) {
 
-    // branch delete
-    public int delete(Long id) {
-        return branchRepository.findById(id).map(branch -> {
-            branchRepository.delete(branch);
-            return 1;
-        }).orElseGet(() -> 0);
-    }
-    
-    private AdminBranchResponse response(BranchTb branch) {
-    	
-    	AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder()
-    			.branchIndex(branch.getBranchIndex())
-    			.branchName(branch.getBranchName())
-    			.branchOwner(branch.getBranchOwner())
-    			.branchValue(branch.getBranchValue())
-    			.branchAddr(branch.getBranchAddr())
-    			.branchDaddr(branch.getBranchDaddr())
-    			.branchPhone(branch.getBranchPhone())
-    			.branchLat(branch.getBranchLat())
-    			.branchLng(branch.getBranchLng())
-    			.area(branch.getArea().getAreaName())
-    			.areaIndex(branch.getArea().getAreaIndex())
-    			.build();
-    			
-    	
-    	return adminBranchResponse;
-    }
-    
-    
+		Optional<BranchTb> optional = branchRepository.findById(request.getBranchIndex());
+
+		System.out.println("#optional : " + optional);
+		System.out.println("#request : " + request);
+
+		return optional.map(branch -> {
+			branch.setBranchName(request.getBranchName()).setBranchOwner(request.getBranchOwner())
+					.setBranchPhone(request.getBranchPhone()).setBranchValue(request.getBranchValue())
+					.setArea(areaRepository.getOne(request.getAreaIndex()));
+
+			return branch;
+		}).map(newBranch -> branchRepository.save(newBranch)).map(newBranch -> response(newBranch));
+	}
+
+	// branch delete
+	public int delete(Long id) {
+		return branchRepository.findById(id).map(branch -> {
+			branchRepository.delete(branch);
+			return 1;
+		}).orElseGet(() -> 0);
+	}
+
+	private AdminBranchResponse response(BranchTb branch) {
+
+		AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder().branchIndex(branch.getBranchIndex())
+				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner())
+				.branchValue(branch.getBranchValue()).branchAddr(branch.getBranchAddr())
+				.branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
+				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
+				.areaIndex(branch.getArea().getAreaIndex()).build();
+
+		return adminBranchResponse;
+	}
+
+	// branch search
+	public List<BranchTb> search(Pageable pageable, String searchType, String keyword) {
+
+		List<BranchTb> branchData = null;
+		
+		switch (searchType) {
+		case "branchName":
+			branchData = branchRepository.findByBranchName(keyword);
+			System.out.println(branchData);
+			break;
+	
+		case "areaName":
+			branchData = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(keyword)));
+			System.out.println(branchData+"지역index");
+			break;
+			
+		case "branchAddr":
+			branchData = branchRepository.findByBranchAddr(keyword);
+			System.out.println(branchData);
+			break;
+			
+		default:
+			break;
+		}
+		System.out.println(branchData);
+		return branchData;
+//		Page<BranchTb> branchs = branchRepository.findAll(pageable);
+//
+//		List<AdminBranchResponse> branchResponseList = branchs.stream().map(branch -> response(branch))
+//				.collect(Collectors.toList());
+
+	}
+
 }

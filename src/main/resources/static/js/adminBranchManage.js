@@ -24,6 +24,18 @@ $('[name=branchUpdateSaveBtn]').click(function() {
 	branchupdate(JSON.stringify(formData1));
 })
 
+$('#btnSearch').click(function(e){
+	e.preventDefault();
+	var url = "/admin/branchmanage/search";    // <c:url>로 선언한 url을 사용
+	url = url + "?searchType=" + $('#searchType').val();
+	url = url + "&keyword=" + $('#keyword').val();
+	//location.href = url;//바꿀list 출력
+	console.log(url);
+	branchsearch(url);
+});
+
+
+
 // 주소검색
 function addressFind() {
 	new daum.Postcode({
@@ -60,6 +72,22 @@ $.fn.serializeObject = function() {
 	$.each(this.serializeArray(), extend)
 	return result
 }
+
+
+//search
+function branchsearch(searchUrl) {
+	$.ajax({
+		type : "GET",
+		url : searchUrl,
+		contentType : 'application/json',
+		success : function(data) {
+			console.log(data);
+			//branchlist(0);
+		}
+	});
+
+}
+
 
 // geoCoding
 function geocoding(addr) {
@@ -151,6 +179,9 @@ function branchlist(idx) {
 									function(i, s) {
 										str += '<tr>' + '<td>'
 												+ data[i].branchIndex
+												+ '</td>'
+												+ '<td>'
+												+ data[i].area
 												+ '</td>'
 												+ '<td>'
 												+ data[i].branchName

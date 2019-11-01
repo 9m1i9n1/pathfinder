@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -62,12 +63,22 @@ public class AdminBranchController {
 		
 		return mv;
 	}
+	
+	//branch search
+	@GetMapping("/search")
+	public List<BranchTb> branchSearch(@RequestParam(required = false, defaultValue = "branchName") String searchType
+			,@RequestParam(required = false) String keyword
+			,@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC) Pageable pageable){
+		
+		return adminBranchService.search(pageable, searchType, keyword);
+	}
+	
 
 	//branch data
 	@GetMapping("/branchlist.do")
 	public List<AdminBranchResponse> branchList(
 			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
-		return adminBranchService.search(pageable);
+		return adminBranchService.listpage(pageable);
 	}
 
 	// branch update

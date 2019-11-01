@@ -15,4 +15,14 @@ public interface BranchRepository extends JpaRepository<BranchTb, Long> {
 
 	@Query(value = "select branch_index, branch_name from branch_tb", nativeQuery = true)
 	public List<Object> findBranchName();
+	
+	//지점이름검색
+	public List<BranchTb> findByBranchName(String branchName);
+	
+	//
+	//public List<BranchTb> findByArea1(AreaTb area);
+	
+	//지점주소검색
+	public List<BranchTb> findByBranchAddr(String branchAddr);
+
 }
