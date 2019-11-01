@@ -11,20 +11,36 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
+import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
+import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
+import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/usermanage")
 public class AdminUserController {
 
   @Autowired
   AdminUserService adminUserService;
 
-  @GetMapping("/usermanage")
+  @Autowired
+  AdminBranchService adminBranchService;
+
+  @PostMapping("")
+  public AdminUserResponse create(@RequestBody AdminUserRequest request) {
+
+    return adminUserService.create(request);
+  }
+
+  @GetMapping("")
   public ModelAndView userManage(
       @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable, Model model) {
 
@@ -34,14 +50,26 @@ public class AdminUserController {
     return mv;
   }
 
-  @GetMapping("/usermanage.do")
-  public List<UserTb> userManageList(
+  @GetMapping("/userlist.do")
+  public List<AdminUserResponse> userList(
       @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
 
     return adminUserService.search(pageable);
   }
 
-  @DeleteMapping("/usermanage/delete/{userIndex}")
+  @GetMapping("/branchlist.do")
+  public List<Object> branchList() {
+
+    return adminUserService.readBranchName();
+  }
+
+  @PutMapping("/{userIndex}")
+  public Optional<AdminUserResponse> userUpdate(@PathVariable Long userIndex) {
+
+    return adminUserService.update(userIndex);
+  }
+
+  @DeleteMapping("/{userIndex}")
   public int userDelete(@PathVariable Long userIndex) {
 
     return adminUserService.delete(userIndex);
