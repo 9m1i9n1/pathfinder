@@ -56,8 +56,7 @@ public class AdminBranchController {
 
 	// branch view
 	@GetMapping("")
-	public ModelAndView branchManage(
-			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
+	public ModelAndView branchManage() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/branchManage");
 		
@@ -67,7 +66,7 @@ public class AdminBranchController {
 	//branch data
 	@GetMapping("/branchlist.do")
 	public List<AdminBranchResponse> branchList(
-			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
+			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 		return adminBranchService.search(pageable);
 	}
 

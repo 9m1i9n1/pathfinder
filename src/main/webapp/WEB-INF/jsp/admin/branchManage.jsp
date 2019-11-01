@@ -5,16 +5,43 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<title>지점관리페이지</title>
 
-<title>Document</title>
 </head>
 <body>
-	<h1>Branch</h1>
-	<input type="button" data-toggle="modal" data-target="#insertModal" value="지점 추가" class="btn btn-primary btn-lg" />
-	<table id="tableTest">
-	</table>
-	<%@include file="branchManageModal.jsp"%>
-</body>
-<script src="/static/js/adminBranchManage.js">
+	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">관리자 페이지</li>
+			<li class="breadcrumb-item active">지점 관리</li>
+		</ol>
+	</div>
 
+	<div class="card-header">
+		<b>지점 관리</b> <input type="button" data-toggle="modal"
+			data-target="#insertModal" value="지점 추가" />
+	</div>
+
+	<table class="table table-hover table-mc-light-blue"
+		style="text-align: center; boarder: 1px solid #ddddd" id="tableTest">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>지점명</th>
+				<th>지점장</th>
+				<th>운반비</th>
+				<th>주소</th>
+				<th>전화번호</th>
+				<th>수정/삭제</th>
+			</tr>
+		</thead>
+		<tbody id="tableListBody">
+		</tbody>
+	</table>
+</body>
+<%@include file="branchManageModal.jsp"%>
+<script src="/static/js/adminBranchManage.js">
+	
+</script>
 </html>

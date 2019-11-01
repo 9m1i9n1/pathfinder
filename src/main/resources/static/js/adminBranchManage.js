@@ -144,10 +144,7 @@ function branchlist(idx) {
 						+ idx,
 				data : {},
 				success : function(data) {
-					var str = '<tr>' + '<th>번호</th>' + '<th>지점명</th>'
-							+ '<th>지점장</th>' + '<th>운반비</th>' + '<th>주소</th>'
-							+ '<th>전화번호</th>' + '<th>수정/삭제</th>' + '</tr>';
-
+					var str = "";
 					$
 							.each(
 									data,
@@ -177,7 +174,7 @@ function branchlist(idx) {
 												+ ')">삭제</button></td>'
 												+ '</tr>';
 									});
-					$("#tableTest").html(str);
+					$("#tableListBody").html(str);
 				}
 			})
 }
