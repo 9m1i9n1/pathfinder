@@ -77,6 +77,7 @@
 		var totalprice = 0;
 		var routecnt = 0;
 		var aaaaa= 0;
+		
 		function HighLightTR(target, backColor) {
 			tbody = target.parentNode;
 			var trs = tbody.getElementsByTagName('tr');
@@ -141,9 +142,51 @@
 		}
 
 		//data : encodeURI(JSON.stringify(data)),
-
+		
 		//버튼 누르면 경로 출력
 		$(function() {
+			var mapPlan;
+			var mapControl;
+			var been_routed = false;
+			var prev_size = 0;
+			
+			/* 지도 출력 함수 */
+			function drawMap(mapData) {
+				/* 만약 처음으로 지도를 출력할 경우 Plan객체 생성 및 Control */
+				if (!been_routed) {
+					/* 탐색할 경로 계획 설정 초기화. */
+					mapPlan = L.Routing.plan(mapData, {
+						routeWhileDragging : false,
+						draggableWaypoints : false
+					});
+					
+					/* Routing Controller에 경로 계획 추가 */
+					/* 최적의 경로 출력 */
+					mapControl = L.Routing.control({
+						plan : mapPlan
+					});
+					
+					/* 첫 번째 호출을 true로 설정. */
+					been_routed = true;
+				} else {
+					/* 기존에 존재하던 Waypoints들 수 만큼 mapPlan에서 제거. */
+					mapPlan.spliceWaypoints(0, prev_size,
+							mapPlan.getWaypoints());
+					
+					/* mapPlan에 새로운 경로 추가. */
+					mapPlan.setWaypoints(mapData);
+					
+					/* Controller에 mapPlan 등록. */
+					mapControl.setWaypoints(mapPlan.getWaypoints());
+				}
+				
+				/* 이전에 탐색한 WayPoints 길이를 저장 */
+				prev_size = mapData.length;
+				
+				/* map에 출력. */
+				mapControl.addTo(map);
+			}
+			
 			$("#submitroute").click(
 
 					function() {
@@ -177,19 +220,11 @@
 
 										});
 										str += "</tr>";
-										
-										L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-											attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-										}).addTo(map);
-										
-										L.Routing.control({
-											waypoints : aaarr,
-											routeWhileDragging : false,
-											draggablewaypointsWaypoints : false,
-											draggableWaypoints : false
-										}).addTo(map);
-
+									
 									}
+									
+									drawMap(aaarr);
+									
 									$("#testTable").html(str);
 									
 								},
