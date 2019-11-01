@@ -15,8 +15,6 @@ $(document).ready(function() {
 
 $("#InsertBtn").click(function() {
   var req = $("#userCreateForm").serializeObject();
-
-  $("#userCreateForm")[0].reset();
   userCreate(req);
 
   alert("새로운 유저를 등록하였습니다.");
@@ -24,7 +22,30 @@ $("#InsertBtn").click(function() {
 
 $("#insertModal").on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
-  branchLoading();
+  areaLoading();
+});
+
+$("#insertModal").on("hidden.bs.modal", function() {
+  $("#userCreateForm")[0].reset();
+  var str = "<option value='' disabled selected>선택</option>";
+
+  $("#insertModal")
+    .find("#areaIndex")
+    .html(str)
+    .selectpicker("refresh");
+
+  $("#insertModal")
+    .find("#branchIndex")
+    .html(str)
+    .selectpicker("refresh");
+});
+
+$("#areaIndex").change(function() {
+  var selected = $(this)
+    .children("option:selected")
+    .val();
+
+  branchLoading(selected);
 });
 
 function pageButton(totalPages, currentPage) {
@@ -51,6 +72,7 @@ function userLoading(selectPage) {
 
       $.each(res.data, function(key, value) {
         str += "<tr>";
+        str += "<td><input type='checkbox' name='userCheck' value='" + value.userIndex + "' /></td>";
         str += "<td>" + value.userIndex + "</td>";
         str += "<td>" + value.userId + "</td>";
         str += "<td>" + value.userName + "</td>";
@@ -76,12 +98,14 @@ function userLoading(selectPage) {
   });
 }
 
-function branchLoading() {
+function branchLoading(selected) {
   $.ajax({
-    url: "/admin/usermanage/branchlist.do",
+    url: "/admin/usermanage/branchlist.do?areaIndex=" + selected,
     type: "get",
     success: function(res) {
       var str = "";
+
+      str += "<option value='' disabled selected>선택</option>";
 
       $.each(res.data, function(key, value) {
         str += "<option value='" + value[0] + "'>";
@@ -90,6 +114,33 @@ function branchLoading() {
 
       $("#insertModal")
         .find("#branchIndex")
+        .html(str)
+        .selectpicker("refresh");
+    },
+  });
+}
+
+function areaLoading() {
+  $.ajax({
+    url: "/admin/usermanage/arealist.do",
+    type: "get",
+    success: function(res) {
+      var str = "";
+
+      str += "<option value='' disabled selected>선택</option>";
+
+      $("#insertModal")
+        .find("#branchIndex")
+        .html(str)
+        .selectpicker("refresh");
+
+      $.each(res.data, function(key, value) {
+        str += "<option value='" + value[0] + "'>";
+        str += value[1] + "</option>";
+      });
+
+      $("#insertModal")
+        .find("#areaIndex")
         .html(str)
         .selectpicker("refresh");
     },

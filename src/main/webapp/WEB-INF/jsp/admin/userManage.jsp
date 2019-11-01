@@ -23,6 +23,7 @@
     <table id="table" class="table table-hover table-mc-light-blue" style="text-align: center; boarder: 1px solid #ddddd">
       <thead>
         <tr>
+          <th><input type="checkbox" name="userCheck" value="all" /></th>
           <th>번호</th>
           <th>아이디</th>
           <th>이름</th>

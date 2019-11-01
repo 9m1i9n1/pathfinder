@@ -1,5 +1,5 @@
 body {
-  text-align: center;
+  /* text-align: center; */
   margin: 0 auto;
 }
 #Progress_Loading {
@@ -10,6 +10,6 @@ body {
   bottom: 0;
 
   /* background: #ffffff; */
-  background: rgba(0, 0, 0, 0.2);
-  filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');
+  /* background: rgba(0, 0, 0, 0.2);
+  filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000'); */
 }

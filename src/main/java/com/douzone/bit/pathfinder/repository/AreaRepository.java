@@ -11,7 +11,7 @@ import com.douzone.bit.pathfinder.model.entity.AreaTb;
 @Repository
 public interface AreaRepository extends JpaRepository<AreaTb, Long> {
 
-  @Query(value = "select area_name from area_tb", nativeQuery = true)
-  public List<String> findAreaName();
+  @Query(value = "select area_index, area_name from area_tb", nativeQuery = true)
+  public List<Object> findAreaName();
 
 }

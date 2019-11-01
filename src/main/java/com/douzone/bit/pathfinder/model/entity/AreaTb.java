@@ -25,5 +25,8 @@ public class AreaTb {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long areaIndex;
 	private String areaName;
-	
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "areaIndex")
+	private List<BranchTb> branchList;
 }

@@ -16,6 +16,7 @@ import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
+import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
 
@@ -27,6 +28,9 @@ public class AdminUserService {
 
   @Autowired
   private BranchRepository branchRepository;
+
+  @Autowired
+  private AreaRepository areaRepository;
 
   // 유저 등록 서비스
   public Header<AdminUserResponse> create(AdminUserRequest request) {
@@ -43,13 +47,21 @@ public class AdminUserService {
 
   // 지점 이름 불러오기
   // TODO 지점 service 쪽으로 뺴야함.
-  public Header<List<Object>> readBranchName() {
+  public Header<List<Object>> readBranchName(Long id) {
 
-    return Header.OK(branchRepository.findBranchName());
+    // 이부분 나중에 수정 요망
+    return Header.OK(branchRepository.findValueByArea((areaRepository.getOne(id))));
+  }
+
+  // 지점 이름 불러오기
+  // TODO 지역 service 쪽으로 뺴야함.
+  public Header<List<Object>> readAreaName() {
+
+    return Header.OK(areaRepository.findAreaName());
   }
 
   // 유저 리스트
-  public Header<List<AdminUserResponse>> search(Pageable pageable) {
+  public Header<List<AdminUserResponse>> list(Pageable pageable) {
 
     Page<UserTb> users = userRepository.findAll(pageable);
 
@@ -60,6 +72,11 @@ public class AdminUserService {
         .currentElements(users.getNumberOfElements()).build();
 
     return Header.OK(userResponseList, pagination);
+  }
+
+  public Header<List<AdminUserResponse>> search(Pageable pageable) {
+
+    return null;
   }
 
   // 유저 비밀번호 초기화
