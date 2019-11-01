@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,11 +39,7 @@ public class AdminUserController {
   @PostMapping("")
   public AdminUserResponse create(@RequestBody @Valid AdminUserRequest request, Errors errors) {
 
-    if (errors.hasErrors)) {
-      return R
-    }
-
-      return adminUserService.create(request);
+    return adminUserService.create(request);
   }
 
   // 회원 리스트 뷰

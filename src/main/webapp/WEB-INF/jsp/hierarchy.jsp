@@ -31,7 +31,7 @@
 					</div>
 					<div class="card-body">
 						<table class="table table-hover table-mc-light-blue"
-							style="text-align: center; boarder: 1px solid #ddddd">
+							style="text-align: center;">
 							<thead>
 								<tr>
 									<th style="background-color: #fafafa; text-align: center;">이름</th>
@@ -42,64 +42,15 @@
 							</thead>
 							<tbody id="userTable" style="font-size : 75%"/>
 						</table>
+						<div style="display : table; margin : 0 auto">
+							<ul class="pagination" id="paging"></ul>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-			function getUser(id) {
-				$.ajax({
-					url : "/hierarchy/getuser.do",
-					type : "GET",
-					data : {
-						"id" : id
-					},
-					dataType : "json",
-					success : function(data) {
-						var str = '<tr>';
-						$.each(data, function(i, s) {
-							str +=  
-							'<td>'+ data[i].userName +'</td>' +
-							'<td>'+ data[i].userPosition +'</td>' +
-							'<td>'+ data[i].userEmail +'</td>' +
-							'<td>'+ data[i].userPhone +'</td>' +
-							'</tr>';
-						});
-						$("#userTable").html(str);
-					},
-					error : function(error) {
-						console.log(error);
-					}
-				});
-			}
-			
-			$(function() {
-				$('#jstree').jstree({
-					'plugins': ["wholerow"],
-					'core' : {
-						'themes' : {
-							'name' : 'proton',
-							'reponsive' : true
-						},
-						'data' : {
-							"url" : "/hierarchy/gettree.do",
-							"data" : function(node) {
-								return {"id" : node.id};
-							}
-						}
-					}
-				});
-				
-				$('#jstree').on("changed.jstree", function(e, data) {
-					var i, j, r = [];
-					for (i = 0, j = data.selected.length; i < j; i++) {
-						r.push(data.instance.get_node(data.selected[i]).id);
-					}
-
-					getUser(r.join(', '));
-				});
-			});
-	</script>
+	
+	<script src="/static/js/hierarchy.js">
 </body>
 </html>

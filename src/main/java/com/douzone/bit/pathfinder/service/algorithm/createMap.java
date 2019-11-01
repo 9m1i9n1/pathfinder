@@ -47,12 +47,6 @@ public class createMap {
 				}
 			}
 		}
-		for(int i= 0; i < n; ++i) {
-			for(int j = 0; j < n; ++j) {
-				System.out.printf("%d\t",map[i][j]);
-			}
-			System.out.println();
-		}
 
 		// 비용계산
 		// 직선거리 + (운반비 *(거리 * 0.1))//
@@ -66,12 +60,6 @@ public class createMap {
 					map[i][j] = (int) Math.ceil((distance.getdistance() + (map[i][j] * (distance.getdistance() * 0.1))));
 				}
 			}
-		}
-		for(int i= 0; i < n; ++i) {
-			for(int j = 0; j < n; ++j) {
-				System.out.printf("%d\t",map[i][j]);
-			}
-			System.out.println();
 		}
 		return map;
 	}
