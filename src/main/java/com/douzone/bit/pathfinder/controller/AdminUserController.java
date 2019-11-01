@@ -51,8 +51,6 @@ public class AdminUserController {
   public Header<List<AdminUserResponse>> userList(
       @PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
-    System.out.println("#pageable : " + pageable);
-
     return adminUserService.search(pageable);
   }
 
@@ -65,7 +63,7 @@ public class AdminUserController {
 
   // 회원 등록
   @PostMapping("")
-  public Header<AdminUserResponse> create(@RequestBody Header<AdminUserRequest> request) {
+  public Header<AdminUserResponse> create(@RequestBody AdminUserRequest request) {
 
     return adminUserService.create(request);
   }

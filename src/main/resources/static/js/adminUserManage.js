@@ -1,9 +1,21 @@
+$(document)
+  .ready(function() {
+    $("#Progress_Loading").hide();
+  })
+  .ajaxStart(function() {
+    $("#Progress_Loading").show();
+  })
+  .ajaxStop(function() {
+    $("#Progress_Loading").hide();
+  });
+
 $(document).ready(function() {
   userLoading();
 });
 
 $("#InsertBtn").click(function() {
   var req = $("#userCreateForm").serializeObject();
+
   $("#userCreateForm")[0].reset();
   userCreate(req);
 
@@ -15,13 +27,27 @@ $("#insertModal").on("shown.bs.modal", function() {
   branchLoading();
 });
 
-function userLoading(page) {
+function pageButton(totalPages, currentPage) {
+  $("#page").paging({
+    nowPage: currentPage + 1,
+    pageNum: totalPages,
+    buttonNum: 12,
+    callback: function(currentPage) {
+      userLoading(currentPage - 1);
+    },
+  });
+}
+
+function userLoading(selectPage) {
   $.ajax({
-    url: "/admin/usermanage/userlist.do",
+    url: "/admin/usermanage/userlist.do?page=" + selectPage,
     type: "get",
     success: function(res) {
       var str = "";
-      var count = `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
+      var count = "";
+
+      count += `<li class="breadcrumb-item">관리자 페이지</a></li>`;
+      count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
         str += "<tr>";
@@ -43,7 +69,9 @@ function userLoading(page) {
         .find("#body")
         .html(str);
 
-      $("#headerol").append(count);
+      $("#headerol").html(count);
+
+      pageButton(res.pagination.totalPages, res.pagination.currentPage);
     },
   });
 }

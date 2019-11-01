@@ -4,13 +4,11 @@
 <html>
   <head>
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="/static/css/loadingbar.css">
   </head>
   <body>
     	<div class="container-fluid">
         <ol class="breadcrumb" id=headerol>
-          <li class="breadcrumb-item">관리자 페이지</a></li>
         </ol>
       </div>
   
@@ -37,9 +35,13 @@
       </thead>
 
       <tbody id="body"></tbody>
+      </table>
 
-      <tfoot></tfoot>
-    </table>
+          <div id = "Progress_Loading">
+          <img src="/static/pic/loading.gif"/>
+        </div>
+      <div id="page">
+      </div>
   </div>
 </div>
 

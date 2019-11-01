@@ -29,15 +29,12 @@ public class AdminUserService {
   private BranchRepository branchRepository;
 
   // 유저 등록 서비스
-  public Header<AdminUserResponse> create(@Valid Header<AdminUserRequest> request) {
+  public Header<AdminUserResponse> create(AdminUserRequest request) {
 
-    AdminUserRequest adminUserRequest = request.getData();
-
-    UserTb user = UserTb.builder().userId(adminUserRequest.getUserId()).userPw("12345")
-        .userName(adminUserRequest.getUserName()).userEmail(adminUserRequest.getUserEmail())
-        .userPhone(adminUserRequest.getUserPhone()).userCreated(LocalDateTime.now())
-        .userAuth(adminUserRequest.getUserAuth()).userPosition(adminUserRequest.getUserPosition())
-        .branch(branchRepository.getOne(adminUserRequest.getBranchIndex())).build();
+    UserTb user = UserTb.builder().userId(request.getUserId()).userPw("12345").userName(request.getUserName())
+        .userEmail(request.getUserEmail()).userPhone(request.getUserPhone()).userCreated(LocalDateTime.now())
+        .userAuth(request.getUserAuth()).userPosition(request.getUserPosition())
+        .branch(branchRepository.getOne(request.getBranchIndex())).build();
 
     UserTb newUser = userRepository.save(user);
 
