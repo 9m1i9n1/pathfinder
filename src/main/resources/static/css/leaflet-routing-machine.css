@@ -1,14 +1,9 @@
 .leaflet-routing-container, .leaflet-routing-error {
-    width: 320px;
-    background-color: white;
-    padding-top: 4px;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
+    display : none;
 }
 
 .leaflet-control-container .leaflet-routing-container-hide {
-    width: 32px;
-    height: 32px;
+    display : none;
 }
 
 .leaflet-routing-container h2 {
