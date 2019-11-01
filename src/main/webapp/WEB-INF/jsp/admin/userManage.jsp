@@ -9,9 +9,8 @@
   </head>
   <body>
     	<div class="container-fluid">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" id=headerol>
           <li class="breadcrumb-item">관리자 페이지</a></li>
-          <li class="breadcrumb-item active">총 사용자 출력</li>
         </ol>
       </div>
   

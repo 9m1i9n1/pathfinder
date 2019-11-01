@@ -3,9 +3,9 @@ $(document).ready(function() {
 });
 
 $("#InsertBtn").click(function() {
-  var data = $("#userCreateForm").serializeObject();
+  var req = $("#userCreateForm").serializeObject();
   $("#userCreateForm")[0].reset();
-  userCreate(data);
+  userCreate(req);
 
   alert("새로운 유저를 등록하였습니다.");
 });
@@ -19,10 +19,11 @@ function userLoading(page) {
   $.ajax({
     url: "/admin/usermanage/userlist.do",
     type: "get",
-    success: function(data) {
+    success: function(res) {
       var str = "";
+      var count = `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
 
-      $.each(data, function(key, value) {
+      $.each(res.data, function(key, value) {
         str += "<tr>";
         str += "<td>" + value.userIndex + "</td>";
         str += "<td>" + value.userId + "</td>";
@@ -41,6 +42,8 @@ function userLoading(page) {
       $("#table")
         .find("#body")
         .html(str);
+
+      $("#headerol").append(count);
     },
   });
 }
@@ -49,10 +52,10 @@ function branchLoading() {
   $.ajax({
     url: "/admin/usermanage/branchlist.do",
     type: "get",
-    success: function(data) {
+    success: function(res) {
       var str = "";
 
-      $.each(data, function(key, value) {
+      $.each(res.data, function(key, value) {
         str += "<option value='" + value[0] + "'>";
         str += value[1] + "</option>";
       });
@@ -90,7 +93,7 @@ function userCreate(req) {
     type: "post",
     contentType: "application/json",
     data: req,
-    success: function(data) {
+    success: function(res) {
       userLoading();
     },
   });
@@ -103,7 +106,7 @@ function userDelete(userIndex) {
     $.ajax({
       url: "/admin/usermanage/" + userIndex,
       type: "delete",
-      success: function(data) {
+      success: function(res) {
         userLoading();
       },
     });
@@ -119,7 +122,7 @@ function userUpdate(userIndex) {
     $.ajax({
       url: "/admin/usermanage/" + userIndex,
       type: "put",
-      success: function(data) {
+      success: function(res) {
         userLoading();
       },
     });
