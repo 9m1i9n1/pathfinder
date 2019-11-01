@@ -8,11 +8,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
   </head>
   <body>
-    <h1>User</h1>
+    	<div class="container-fluid">
+        <ol class="breadcrumb" id=headerol>
+          <li class="breadcrumb-item">관리자 페이지</a></li>
+        </ol>
+      </div>
+  
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        <b>사용자 관리</b>
 
-    <input type="button" data-toggle="modal" data-target="#insertModal" value="사용자 추가" />
+        <input type="button" data-toggle="modal" data-target="#insertModal" value="사용자 추가" />
+      </div>
 
-    <table id="table" width="100%" border="1">
+    <table id="table" class="table table-hover table-mc-light-blue" style="text-align: center; boarder: 1px solid #ddddd">
       <thead>
         <tr>
           <th>번호</th>
@@ -27,7 +37,11 @@
       </thead>
 
       <tbody id="body"></tbody>
+
+      <tfoot></tfoot>
     </table>
+  </div>
+</div>
 
     <%@include file="userManageModal.jsp"%>
     <script src="/static/js/adminUserManage.js">
