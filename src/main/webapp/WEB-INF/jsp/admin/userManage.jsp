@@ -37,6 +37,8 @@
       </thead>
 
       <tbody id="body"></tbody>
+
+      <tfoot></tfoot>
     </table>
   </div>
 </div>

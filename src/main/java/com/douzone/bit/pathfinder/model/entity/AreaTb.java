@@ -26,6 +26,4 @@ public class AreaTb {
 	private Long areaIndex;
 	private String areaName;
 	
-
-	
 }

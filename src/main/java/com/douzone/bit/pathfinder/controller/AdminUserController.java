@@ -65,7 +65,7 @@ public class AdminUserController {
 
   // 회원 등록
   @PostMapping("")
-  public Header<AdminUserResponse> create(@RequestBody @Valid Header<AdminUserRequest> request, Errors errors) {
+  public Header<AdminUserResponse> create(@RequestBody Header<AdminUserRequest> request) {
 
     return adminUserService.create(request);
   }

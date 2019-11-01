@@ -19,30 +19,21 @@ public class AdminUserRequest {
 
   private Long userIndex;
 
-  @NotBlank
   private String userId;
 
-  @NotBlank
   private String userPw;
 
-  @NotBlank
   private String userName;
 
-  @NotBlank
   private String userPosition;
 
-  @NotBlank
-  @Email
   private String userEmail;
 
-  @NotBlank
   private String userPhone;
 
   private LocalDateTime userCreated;
 
-  @NotBlank
   private Boolean userAuth;
 
-  @NotBlank
   private Long branchIndex;
 }
