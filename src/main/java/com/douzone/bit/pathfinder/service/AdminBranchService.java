@@ -62,18 +62,25 @@ public class AdminBranchService {
     }
 
     // branch update
-    public Optional<Object> update(BranchTb request) {
+    public Optional<AdminBranchResponse> update(AdminBranchRequest request) {
 
-        BranchTb body = request;
-
-        return branchRepository.findById(body.getBranchIndex()).map(branch -> {
-            branch.setArea(body.getArea()).setBranchAddr(body.getBranchAddr()).setBranchDaddr(body.getBranchDaddr())
-                    .setBranchLat(body.getBranchLat()).setBranchLng(body.getBranchLng())
-                    .setBranchName(body.getBranchName()).setBranchOwner(body.getBranchOwner())
-                    .setBranchPhone(body.getBranchPhone()).setBranchValue(body.getBranchValue());
-
-            return branch;
-        }).map(changeBranch -> branchRepository.save(changeBranch));
+    	Optional<BranchTb> optional = branchRepository.findById(request.getBranchIndex());
+    	
+    	System.out.println("#optional : " + optional);
+    	System.out.println("#request : " + request);
+    	
+    	return optional.map(branch -> {
+        		branch
+                .setBranchName(request.getBranchName())
+                .setBranchOwner(request.getBranchOwner())
+                .setBranchPhone(request.getBranchPhone())
+                .setBranchValue(request.getBranchValue())
+                .setArea(areaRepository.getOne(request.getAreaIndex()));
+                
+                return branch;
+    	})
+    	.map(newBranch -> branchRepository.save(newBranch))
+    	.map(newBranch -> response(newBranch));
     }
 
     // branch delete
@@ -97,6 +104,7 @@ public class AdminBranchService {
     			.branchLat(branch.getBranchLat())
     			.branchLng(branch.getBranchLng())
     			.area(branch.getArea().getAreaName())
+    			.areaIndex(branch.getArea().getAreaIndex())
     			.build();
     			
     	

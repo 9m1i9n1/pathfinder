@@ -1,5 +1,7 @@
 package com.douzone.bit.pathfinder.model.network.request;
 
+import com.douzone.bit.pathfinder.model.entity.AreaTb;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,4 +32,6 @@ public class AdminBranchRequest {
   private Double branchLng;
   
   private Long areaIndex;
+  
+  
 }

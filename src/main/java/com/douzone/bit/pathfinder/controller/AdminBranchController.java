@@ -73,7 +73,7 @@ public class AdminBranchController {
 
 	// branch update
 	@PutMapping("/update")
-	public Optional<Object> branchUpdate(@RequestBody BranchTb request) {
+	public Optional<AdminBranchResponse> branchUpdate(@RequestBody AdminBranchRequest request) {
 		System.out.println(adminBranchService.update(request));
 		return adminBranchService.update(request);
 	}

@@ -30,4 +30,6 @@ public class AdminBranchResponse {
   private Double branchLng;
   
   private String area;
+  
+  private Long areaIndex;
 }
