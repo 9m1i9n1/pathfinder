@@ -2,11 +2,13 @@ package com.douzone.bit.pathfinder.controller;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.douzone.bit.pathfinder.model.entity.BranchTb;
-import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
@@ -34,12 +34,18 @@ public class AdminUserController {
   @Autowired
   AdminBranchService adminBranchService;
 
+  // 회원 등록
   @PostMapping("")
-  public AdminUserResponse create(@RequestBody AdminUserRequest request) {
+  public AdminUserResponse create(@RequestBody @Valid AdminUserRequest request, Errors errors) {
 
-    return adminUserService.create(request);
+    if (errors.hasErrors)) {
+      return R
+    }
+
+      return adminUserService.create(request);
   }
 
+  // 회원 리스트 뷰
   @GetMapping("")
   public ModelAndView userManage() {
 
@@ -49,6 +55,7 @@ public class AdminUserController {
     return mv;
   }
 
+  // 회원 리스트 불러오기
   @GetMapping("/userlist.do")
   public List<AdminUserResponse> userList(
       @PageableDefault(sort = "userIndex", direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
@@ -56,18 +63,21 @@ public class AdminUserController {
     return adminUserService.search(pageable);
   }
 
+  // 지점 리스트 불러오기
   @GetMapping("/branchlist.do")
   public List<Object> branchList() {
 
     return adminUserService.readBranchName();
   }
 
+  // 비밀번호 초기화
   @PutMapping("/{userIndex}")
   public Optional<AdminUserResponse> userUpdate(@PathVariable Long userIndex) {
 
     return adminUserService.update(userIndex);
   }
 
+  // 회원 삭제
   @DeleteMapping("/{userIndex}")
   public int userDelete(@PathVariable Long userIndex) {
 
