@@ -57,7 +57,7 @@ public class UserTb {
 
 	private Boolean userAuth;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "branchIndex")
 	private BranchTb branch;
 }

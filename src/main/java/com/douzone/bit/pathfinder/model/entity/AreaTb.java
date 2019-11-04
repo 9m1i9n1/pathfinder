@@ -26,7 +26,6 @@ public class AreaTb {
 	private Long areaIndex;
 	private String areaName;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "areaIndex")
+	@OneToMany(mappedBy = "area")
 	private List<BranchTb> branchList;
 }
