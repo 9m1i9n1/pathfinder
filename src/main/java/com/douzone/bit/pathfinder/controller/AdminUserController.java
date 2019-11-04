@@ -66,7 +66,6 @@ public class AdminUserController {
       @RequestParam(value = "id", required = false, defaultValue = "#") String id) {
 
     return (id.equals("#")) ? treeService.readArea() : treeService.readBranch(id);
-
   }
 
   // 지점 리스트 불러오기

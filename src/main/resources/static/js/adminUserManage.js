@@ -1,3 +1,4 @@
+// 로딩바 구현
 $(document)
   .ready(function() {
     $("#Progress_Loading").hide();
@@ -9,11 +10,13 @@ $(document)
     $("#Progress_Loading").hide();
   });
 
+// 첫 시작
 $(document).ready(function() {
   userLoading();
   treeLoading();
 });
 
+// 사용자 추가 버튼 클릭
 $("#InsertBtn").click(function() {
   var req = $("#userCreateForm").serializeObject();
   userCreate(req);
@@ -21,11 +24,13 @@ $("#InsertBtn").click(function() {
   alert("새로운 유저를 등록하였습니다.");
 });
 
+// insertModal 열릴 시
 $("#insertModal").on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
   areaLoading();
 });
 
+// insertModal 닫힐 시
 $("#insertModal").on("hidden.bs.modal", function() {
   $("#userCreateForm")[0].reset();
   var str = "<option value='' disabled selected>선택</option>";
@@ -41,6 +46,7 @@ $("#insertModal").on("hidden.bs.modal", function() {
     .selectpicker("refresh");
 });
 
+// 모달 내에서 지역 선택 시
 $("#areaIndex").change(function() {
   var selected = $(this)
     .children("option:selected")
@@ -49,23 +55,7 @@ $("#areaIndex").change(function() {
   branchLoading(selected);
 });
 
-function treeData() {
-  var result = "";
-
-  $.ajax({
-    url: "/admin/usermanage/treelist.do",
-    type: "get",
-    async: false,
-    success: function(res) {
-      console.log("#res : " + res.data);
-
-      result = res.data;
-    },
-  });
-
-  return result;
-}
-
+// jstree 로딩
 function treeLoading() {
   $("#jstree").jstree({
     plugins: ["wholerow"],
@@ -75,12 +65,30 @@ function treeLoading() {
         reponsive: true,
       },
       data: function(node, callback) {
-        callback(treeData());
+        callback(treeData(node.id));
       },
     },
   });
 }
 
+// jstree 값 받아오기
+function treeData(id) {
+  var result = "";
+
+  $.ajax({
+    url: "/admin/usermanage/treelist.do",
+    type: "get",
+    data: { id: id },
+    async: false,
+    success: function(res) {
+      result = res.data;
+    },
+  });
+
+  return result;
+}
+
+// 페이지 버튼 생성
 function pageButton(totalPages, currentPage) {
   $("#page").paging({
     nowPage: currentPage + 1,
@@ -92,10 +100,12 @@ function pageButton(totalPages, currentPage) {
   });
 }
 
+// 유저 로딩
 function userLoading(selectPage) {
   $.ajax({
-    url: "/admin/usermanage/userlist.do?page=" + selectPage,
+    url: "/admin/usermanage/userlist.do",
     type: "get",
+    data: { page: selectPage },
     success: function(res) {
       var str = "";
       var count = "";
@@ -131,10 +141,12 @@ function userLoading(selectPage) {
   });
 }
 
+// 모달 내 지점 로딩
 function branchLoading(selected) {
   $.ajax({
-    url: "/admin/usermanage/branchlist.do?areaIndex=" + selected,
+    url: "/admin/usermanage/branchlist.do",
     type: "get",
+    data: { areaIndex: selected },
     success: function(res) {
       var str = "";
 
@@ -153,6 +165,7 @@ function branchLoading(selected) {
   });
 }
 
+//모달 내 지역 로딩
 function areaLoading() {
   $.ajax({
     url: "/admin/usermanage/arealist.do",
@@ -180,6 +193,7 @@ function areaLoading() {
   });
 }
 
+// 폼 내용 Json으로 변경
 $.fn.serializeObject = function() {
   var result = {};
   var extend = function(i, element) {
@@ -199,6 +213,7 @@ $.fn.serializeObject = function() {
   return JSON.stringify(result);
 };
 
+// 회원 생성
 function userCreate(req) {
   $.ajax({
     url: "/admin/usermanage",
@@ -211,6 +226,7 @@ function userCreate(req) {
   });
 }
 
+// 회원 삭제
 function userDelete(userIndex) {
   var result = confirm("회원 정보를 삭제하시겠습니까?");
 
@@ -227,6 +243,7 @@ function userDelete(userIndex) {
   }
 }
 
+// 회원 수정
 function userUpdate(userIndex) {
   var result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
 

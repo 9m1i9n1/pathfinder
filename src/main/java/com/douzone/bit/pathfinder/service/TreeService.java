@@ -8,6 +8,7 @@ import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
+import com.douzone.bit.pathfinder.repository.BranchRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class TreeService {
 
   @Autowired
   AreaRepository areaRepository;
+
+  @Autowired
+  BranchRepository branchRepository;
 
   public Header<List<TreeResponse>> readArea() {
 
@@ -29,27 +33,17 @@ public class TreeService {
 
   public Header<List<TreeResponse>> readBranch(String id) {
 
-    return null;
+    Long index = Long.parseLong(id.split(":")[1]);
+
+    System.out.println("#index");
+    System.out.println(index);
+
+    List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(index));
+
+    List<TreeResponse> branchList = branchs.stream().map(branch -> branchResponse(branch)).collect(Collectors.toList());
+
+    return Header.OK(branchList);
   }
-
-  // public JsonArray readBranch(String id) {
-
-  // String index[] = id.split(":");
-
-  // List<BranchTb> branchData =
-  // branchRepository.findByArea(areaRepository.getOne(Long.parseLong(index[1])));
-
-  // JsonArray jArray = new JsonArray();
-
-  // for (int i = 0; i < branchData.size(); i++) {
-  // JsonObject sObject = new JsonObject();
-  // sObject.addProperty("id", "branch:" + branchData.get(i).getBranchIndex());
-  // sObject.addProperty("text", branchData.get(i).getBranchName());
-  // jArray.add(sObject);
-  // }
-
-  // return jArray;
-  // }
 
   // Response 데이터 파싱
   private TreeResponse areaResponse(AreaTb area) {
