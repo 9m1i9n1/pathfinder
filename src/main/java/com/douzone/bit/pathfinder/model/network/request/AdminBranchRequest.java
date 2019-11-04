@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
+
 public class AdminBranchRequest {
 
   private Long branchIndex;
