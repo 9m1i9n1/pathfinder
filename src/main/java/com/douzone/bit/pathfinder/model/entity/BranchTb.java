@@ -52,7 +52,6 @@ public class BranchTb {
 	@JoinColumn(name = "areaIndex")
 	private AreaTb area;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
+	@OneToMany(mappedBy = "branch")
 	private List<UserTb> userList;
 }

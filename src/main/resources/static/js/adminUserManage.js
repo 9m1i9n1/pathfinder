@@ -1,3 +1,4 @@
+// 로딩바 구현
 $(document)
   .ready(function() {
     $("#Progress_Loading").hide();
@@ -9,10 +10,13 @@ $(document)
     $("#Progress_Loading").hide();
   });
 
+// 첫 시작
 $(document).ready(function() {
-  userLoading();
+  // userLoading();
+  treeLoading();
 });
 
+// 사용자 추가 버튼 클릭
 $("#InsertBtn").click(function() {
   var req = $("#userCreateForm").serializeObject();
   userCreate(req);
@@ -20,11 +24,13 @@ $("#InsertBtn").click(function() {
   alert("새로운 유저를 등록하였습니다.");
 });
 
+// insertModal 열릴 시
 $("#insertModal").on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
   areaLoading();
 });
 
+// insertModal 닫힐 시
 $("#insertModal").on("hidden.bs.modal", function() {
   $("#userCreateForm")[0].reset();
   var str = "<option value='' disabled selected>선택</option>";
@@ -40,6 +46,7 @@ $("#insertModal").on("hidden.bs.modal", function() {
     .selectpicker("refresh");
 });
 
+// 모달 내에서 지역 선택 시
 $("#areaIndex").change(function() {
   var selected = $(this)
     .children("option:selected")
@@ -48,6 +55,7 @@ $("#areaIndex").change(function() {
   branchLoading(selected);
 });
 
+// 페이지 버튼 생성
 function pageButton(totalPages, currentPage) {
   $("#page").paging({
     nowPage: currentPage + 1,
@@ -59,10 +67,12 @@ function pageButton(totalPages, currentPage) {
   });
 }
 
+// 유저 로딩
 function userLoading(selectPage) {
   $.ajax({
-    url: "/admin/usermanage/userlist.do?page=" + selectPage,
+    url: "/admin/usermanage/userlist.do",
     type: "get",
+    data: { page: selectPage },
     success: function(res) {
       var str = "";
       var count = "";
@@ -81,7 +91,7 @@ function userLoading(selectPage) {
         str += "<td>" + value.branchName + "</td>";
         str += "<td>" + value.userPosition + "</td>";
         str += "<td>";
-        str += "<input type='button' onclick='userUpdate(" + value.userIndex + ")' value='초기화' />";
+        str += "<input type='button' onclick='userUpdate(" + value.userIndex + ")' value='수정' />";
         str += "<input type='button' onclick='userDelete(" + value.userIndex + ")' value='삭제' />";
         str += "</td>";
         str += "</tr>";
@@ -98,10 +108,12 @@ function userLoading(selectPage) {
   });
 }
 
+// 모달 내 지점 로딩
 function branchLoading(selected) {
   $.ajax({
-    url: "/admin/usermanage/branchlist.do?areaIndex=" + selected,
+    url: "/admin/usermanage/branchlist.do",
     type: "get",
+    data: { areaIndex: selected },
     success: function(res) {
       var str = "";
 
@@ -120,6 +132,7 @@ function branchLoading(selected) {
   });
 }
 
+//모달 내 지역 로딩
 function areaLoading() {
   $.ajax({
     url: "/admin/usermanage/arealist.do",
@@ -147,6 +160,7 @@ function areaLoading() {
   });
 }
 
+// 폼 내용 Json으로 변경
 $.fn.serializeObject = function() {
   var result = {};
   var extend = function(i, element) {
@@ -166,6 +180,7 @@ $.fn.serializeObject = function() {
   return JSON.stringify(result);
 };
 
+// 회원 생성
 function userCreate(req) {
   $.ajax({
     url: "/admin/usermanage",
@@ -178,6 +193,7 @@ function userCreate(req) {
   });
 }
 
+// 회원 삭제
 function userDelete(userIndex) {
   var result = confirm("회원 정보를 삭제하시겠습니까?");
 
@@ -194,6 +210,7 @@ function userDelete(userIndex) {
   }
 }
 
+// 회원 수정
 function userUpdate(userIndex) {
   var result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
 
@@ -208,4 +225,45 @@ function userUpdate(userIndex) {
 
     alert("해당 회원의 패스워드를 초기화하였습니다.");
   }
+}
+
+// jstree 로딩
+function treeLoading() {
+  $("#jstree").jstree({
+    plugins: ["wholerow"],
+    core: {
+      themes: {
+        name: "proton",
+        reponsive: true,
+      },
+      data: function(node, callback) {
+        callback(treeData(node.id));
+      },
+    },
+  });
+
+  $("#jstree").on("select_node.jstree", function(e, data) {
+    if (data.node.children.length > 0) {
+      $("#jstree")
+        .jstree(true)
+        .toggle_node(data.node);
+    }
+  });
+}
+
+// jstree 값 받아오기
+function treeData(id) {
+  var result = "";
+
+  $.ajax({
+    url: "/admin/usermanage/treelist.do",
+    type: "get",
+    data: { id: id },
+    async: false,
+    success: function(res) {
+      result = res.data;
+    },
+  });
+
+  return result;
 }
