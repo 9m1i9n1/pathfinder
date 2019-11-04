@@ -30,7 +30,7 @@ $('#btnSearch').click(function(e){
 	url = url + "?searchType=" + $('#searchType').val();
 	url = url + "&keyword=" + $('#keyword').val();
 	//location.href = url;//바꿀list 출력
-	console.log(url);
+	console.log("이거도?"+url);
 	branchsearch(url);
 });
 
@@ -81,6 +81,7 @@ function branchsearch(searchUrl) {
 		url : searchUrl,
 		contentType : 'application/json',
 		success : function(data) {
+			console.log("제발");
 			console.log(data);
 			//branchlist(0);
 		}
