@@ -39,7 +39,6 @@ public class Header<T> {
   }
 
   public static <T> Header<T> OK(T data, Pagination pagination) {
-    System.out.println("#pagenation" + pagination);
 
     return (Header<T>) Header.builder().transactionTime(LocalDateTime.now()).resultCode("OK").description("OK")
         .data(data).pagination(pagination).build();

@@ -4,13 +4,11 @@
 <html>
   <head>
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="/static/css/loadingbar.css">
   </head>
   <body>
     	<div class="container-fluid">
         <ol class="breadcrumb" id=headerol>
-          <li class="breadcrumb-item">관리자 페이지</a></li>
         </ol>
       </div>
   
@@ -25,6 +23,7 @@
     <table id="table" class="table table-hover table-mc-light-blue" style="text-align: center; boarder: 1px solid #ddddd">
       <thead>
         <tr>
+          <th><input type="checkbox" name="userCheck" value="all" /></th>
           <th>번호</th>
           <th>아이디</th>
           <th>이름</th>
@@ -37,7 +36,13 @@
       </thead>
 
       <tbody id="body"></tbody>
-    </table>
+      </table>
+
+          <div id = "Progress_Loading">
+          <img src="/static/pic/loading.gif"/>
+        </div>
+      <div id="page">
+      </div>
   </div>
 </div>
 
