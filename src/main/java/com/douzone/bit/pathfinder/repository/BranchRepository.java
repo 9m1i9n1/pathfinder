@@ -14,20 +14,20 @@ import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 
 @Repository
 public interface BranchRepository extends JpaRepository<BranchTb, Long> {
+
 	public List<BranchTb> findByArea(AreaTb area);
-
-
+	
 	@Query(value = "select branch_index, branch_name from branch_tb", nativeQuery = true)
 	public List<Object> findBranchName();
 	
 	//지점이름검색
-	public List<BranchTb> findByBranchName(String branchName);
+	public List<BranchTb> findByBranchNameLike(String branchName);
 	
-	//
+	
 	//public List<BranchTb> findByArea1(AreaTb area);
 	
 	//지점주소검색
-	public List<BranchTb> findByBranchAddr(String branchAddr);
+	public List<BranchTb> findByBranchAddrLike(String branchAddr);
 
 
 	@Query(value = "select b.branchIndex, b.branchName from BranchTb b where area = ?1")

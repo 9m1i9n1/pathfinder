@@ -5,13 +5,10 @@ $(document).ready(function() {
 // 지점추가버튼
 $('[name=branchInsertBtn]').click(function() {
 	var formData = $('[name=branchInsertform]').serializeObject()
-
 	console.log(formData)
 	let geo = geocoding(formData.branchAddr);
-
 	formData.branchLat = geo.y;
 	formData.branchLng = geo.x;
-
 	branchinsert(JSON.stringify(formData));
 })
 
@@ -24,17 +21,34 @@ $('[name=branchUpdateSaveBtn]').click(function() {
 	branchupdate(JSON.stringify(formData1));
 })
 
+// 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
-	var url = "/admin/branchmanage/search";    // <c:url>로 선언한 url을 사용
+	var url = "/admin/branchmanage/search";    
+	if($('#searchType').val() == "areaName"){
+		switch($('#keyword').val()){
+		case "경기도" : $('#keyword').val("1"); break;
+		case "강원도" : $('#keyword').val("2"); break;
+		case "충청남도" : $('#keyword').val("3"); break;
+		case "충청북도" : $('#keyword').val("4"); break;
+		case "경상북도" : $('#keyword').val("5"); break;
+		case "경상남도" : $('#keyword').val("6"); break;
+		case "전라남도" : $('#keyword').val("7"); break;
+		case "전라북도" : $('#keyword').val("8"); break;
+		default: console.log("안댐");
+		}
+	}
 	url = url + "?searchType=" + $('#searchType').val();
 	url = url + "&keyword=" + $('#keyword').val();
-	//location.href = url;//바꿀list 출력
-	console.log("이거도?"+url);
 	branchsearch(url);
+	
 });
 
-
+// 전체보기
+function allSearch(){
+	branchlist(0);
+	$('#seachAll').remove();
+}
 
 // 주소검색
 function addressFind() {
@@ -44,12 +58,11 @@ function addressFind() {
 			var extraAddr = '';
 			if (data.userSelectedType === 'R') {
 				addr = data.roadAddress;
-			} else { // 사용자가 지번 주소를 선택했을 경우(J)
+			} else { 
 				addr = data.jibunAddress;
 			}
 			document.getElementById("branch_address").value = addr;
 			document.getElementById("branch_detailAddress").focus();
-
 		}
 	}).open();
 }
@@ -81,9 +94,43 @@ function branchsearch(searchUrl) {
 		url : searchUrl,
 		contentType : 'application/json',
 		success : function(data) {
-			console.log("제발");
-			console.log(data);
-			//branchlist(0);
+			var str = "";
+			$
+					.each(
+							data,
+							function(i, s) {
+								str += '<tr>' + '<td>'
+										+ data[i].branchIndex
+										+ '</td>'
+										+ '<td>'
+										+ data[i].area
+										+ '</td>'
+										+ '<td>'
+										+ data[i].branchName
+										+ '</td>'
+										+ '<td>'
+										+ data[i].branchOwner
+										+ '</td>'
+										+ '<td>'
+										+ data[i].branchValue
+										+ '</td>'
+										+ '<td>'
+										+ data[i].branchAddr
+										+ '</td>'
+										+ '<td>'
+										+ data[i].branchPhone
+										+ '</td>'
+										+ "<td>"
+										+ `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(data[i])})' />`
+										+ '<button onclick="branchdelete('
+										+ data[i].branchIndex
+										+ ')">삭제</button></td>'
+										+ '</tr>';
+							});
+			$("#tableListBody").html(str);
+			var buttonAll = "";
+			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
+			$("#seachAll").html(buttonAll)
 		}
 	});
 

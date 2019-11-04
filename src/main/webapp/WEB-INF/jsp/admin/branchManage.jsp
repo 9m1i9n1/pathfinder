@@ -21,6 +21,7 @@
 	<div class="card-header">
 		<b>지점 관리</b> <input type="button" data-toggle="modal"
 			data-target="#insertModal" value="지점 추가" />
+		<span id="seachAll"></span>
 	</div>
 
 	<table class="table table-hover table-mc-light-blue"

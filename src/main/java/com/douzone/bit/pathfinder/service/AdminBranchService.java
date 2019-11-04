@@ -96,42 +96,39 @@ public class AdminBranchService {
 		return adminBranchResponse;
 	}
 
-	// branch search
+	// 지점 검색
 	public List<AdminBranchResponse> search(Pageable pageable, String searchType, String keyword) {
 		
 		List<BranchTb> branchs;
 		List<AdminBranchResponse> branchResponseList = null;
+		
 		switch (searchType) {
 		case "branchName":
-			branchs = branchRepository.findByBranchName(keyword);
+			branchs = branchRepository.findByBranchNameLike("%"+keyword+"%");
 			branchResponseList = branchs.stream().map(branch -> response(branch))
 					.collect(Collectors.toList());
-			//System.out.println(branchData);
 			break;
 	
-//		case "areaName":
-//			branchData = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(keyword)));
-//			System.out.println(branchData+"지역index");
-//			break;
+		case "areaName":
 			
-//		case "branchAddr":
-//			branchs = branchRepository.findByBranchAddr(keyword);
-//			branchResponseList = branchs.stream().map(branch -> response(branch))
-//					.collect(Collectors.toList());
-//			break;
+			branchs = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(keyword)));
+			branchResponseList = branchs.stream().map(branch -> response(branch))
+					.collect(Collectors.toList());
+			break;
+			
+		case "branchAddr":
+			branchs = branchRepository.findByBranchAddrLike("%"+keyword+"%");
+			branchResponseList = branchs.stream().map(branch -> response(branch))
+					.collect(Collectors.toList());
+			break;
 			
 		default:
 			break;
 		}
 		
-		//System.out.println(branchData);
+		System.out.println(branchResponseList);
 		
 		return branchResponseList;
-
-//		Page<BranchTb> branchs = branchRepository.findAll(pageable);
-//
-//		List<AdminBranchResponse> branchResponseList = branchs.stream().map(branch -> response(branch))
-//				.collect(Collectors.toList());
 
 	}
 
