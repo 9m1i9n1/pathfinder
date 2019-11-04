@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -51,21 +52,26 @@ public class AdminUserController {
   public Header<List<AdminUserResponse>> userList(
       @PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
-    System.out.println("#pageable : " + pageable);
-
-    return adminUserService.search(pageable);
+    return adminUserService.list(pageable);
   }
 
   // 지점 리스트 불러오기
   @GetMapping("/branchlist.do")
-  public Header<List<Object>> branchList() {
+  public Header<List<Object>> branchList(@RequestParam("areaIndex") Long areaIndex) {
 
-    return adminUserService.readBranchName();
+    return adminUserService.readBranchName(areaIndex);
+  }
+
+  // 지역 리스트 불러오기
+  @GetMapping("/arealist.do")
+  public Header<List<Object>> areaList() {
+
+    return adminUserService.readAreaName();
   }
 
   // 회원 등록
   @PostMapping("")
-  public Header<AdminUserResponse> create(@RequestBody @Valid Header<AdminUserRequest> request, Errors errors) {
+  public Header<AdminUserResponse> create(@RequestBody AdminUserRequest request) {
 
     return adminUserService.create(request);
   }
