@@ -66,7 +66,7 @@ public class AdminBranchController {
 	
 	//branch search
 	@GetMapping("/search")
-	public List<BranchTb> branchSearch(@RequestParam(required = false, defaultValue = "branchName") String searchType
+	public List<AdminBranchResponse> branchSearch(@RequestParam(required = false, defaultValue = "branchName") String searchType
 			,@RequestParam(required = false) String keyword
 			,@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC) Pageable pageable){
 		
