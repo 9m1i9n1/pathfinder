@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	branchlist(0);
 });
-
 // 지점추가버튼
 $('[name=branchInsertBtn]').click(function() {
 	var formData = $('[name=branchInsertform]').serializeObject()
@@ -11,7 +10,6 @@ $('[name=branchInsertBtn]').click(function() {
 	formData.branchLng = geo.x;
 	branchinsert(JSON.stringify(formData));
 })
-
 // 지점수정버튼
 $('[name=branchUpdateSaveBtn]').click(function() {
 	var formData1 = $('[name=branchUpdateForm]').serializeObject()
@@ -20,7 +18,6 @@ $('[name=branchUpdateSaveBtn]').click(function() {
 	console.log(JSON.stringify(formData1))
 	branchupdate(JSON.stringify(formData1));
 })
-
 // 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
@@ -35,22 +32,26 @@ $('#btnSearch').click(function(e){
 		case "경상남도" : $('#keyword').val("6"); break;
 		case "전라남도" : $('#keyword').val("7"); break;
 		case "전라북도" : $('#keyword').val("8"); break;
-		default: console.log("안댐");
 		}
 	}
 	url = url + "?searchType=" + $('#searchType').val();
 	url = url + "&keyword=" + $('#keyword').val();
 	branchsearch(url);
-	
 });
-
-// 전체보기
+//전체보기
 function allSearch(){
 	branchlist(0);
 	$('#seachAll').remove();
 }
-
-// 주소검색
+//페이징
+function pageButton(totalPages, currentPage) {
+	  $("#page1").paging({
+	    nowPage: currentPage + 1,
+	    pageNum: totalPages,
+	    buttonNum: 12
+	  });
+	}
+//주소검색
 function addressFind() {
 	new daum.Postcode({
 		oncomplete : function(data) {
@@ -66,7 +67,6 @@ function addressFind() {
 		}
 	}).open();
 }
-
 // form => json
 $.fn.serializeObject = function() {
 	var result = {}
@@ -85,8 +85,6 @@ $.fn.serializeObject = function() {
 	$.each(this.serializeArray(), extend)
 	return result
 }
-
-
 //search
 function branchsearch(searchUrl) {
 	$.ajax({
@@ -95,48 +93,28 @@ function branchsearch(searchUrl) {
 		contentType : 'application/json',
 		success : function(data) {
 			var str = "";
-			$
-					.each(
-							data,
-							function(i, s) {
-								str += '<tr>' + '<td>'
-										+ data[i].branchIndex
-										+ '</td>'
-										+ '<td>'
-										+ data[i].area
-										+ '</td>'
-										+ '<td>'
-										+ data[i].branchName
-										+ '</td>'
-										+ '<td>'
-										+ data[i].branchOwner
-										+ '</td>'
-										+ '<td>'
-										+ data[i].branchValue
-										+ '</td>'
-										+ '<td>'
-										+ data[i].branchAddr
-										+ '</td>'
-										+ '<td>'
-										+ data[i].branchPhone
-										+ '</td>'
-										+ "<td>"
-										+ `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(data[i])})' />`
-										+ '<button onclick="branchdelete('
-										+ data[i].branchIndex
-										+ ')">삭제</button></td>'
-										+ '</tr>';
-							});
+			$.each(data,function(i, s) {
+				str += '<tr><td>'+ data[i].branchIndex + '</td>';
+				str += '<td>' + data[i].area +'</td>';
+				str += '<td>' + data[i].branchName +'</td>';
+				str += '<td>' + data[i].branchOwner +'</td>';
+				str += '<td>' + data[i].branchValue +'</td>'
+				str += '<td>' + data[i].branchAddr +'</td>';
+				str	+= '<td>' + data[i].branchPhone + '</td>';
+				str += "<td>" + `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(data[i])})' />`;
+				str += '<button onclick="branchdelete('+ data[i].branchIndex +' , '+ data[i].branchName +')">삭제</button></td>'
+				str += '</tr>';
+				});
 			$("#tableListBody").html(str);
 			var buttonAll = "";
 			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
-			$("#seachAll").html(buttonAll)
+			$("#seachAll").html(buttonAll);
+			
+		    pageButton(data.pagination.totalPages, data.pagination.currentPage);
 		}
 	});
 
 }
-
-
 // geoCoding
 function geocoding(addr) {
 	let ab;
@@ -159,9 +137,11 @@ function geocoding(addr) {
 	});
 	return ab;
 }
-
 // insert
 function branchinsert(insertData) {
+	let branchName = $('[name=branchName]').val()
+	var result = confirm(branchName +" 지점을 저장하겠습니까?");
+	if(result){
 	$.ajax({
 		type : "POST",
 		url : "/admin/branchmanage",
@@ -171,13 +151,11 @@ function branchinsert(insertData) {
 			branchlist(0);
 		}
 	});
-
+	alert("해당 지점 정보를 추가하였습니다.");
+	}
 }
-
 //updateGetValue
 function branchgetvalue(data){
-	console.log("data")
-	console.log(data);
 	document.getElementById("areaIndex").value = data.areaIndex;;
 	document.getElementById("updateAreaIndex").value = data.branchIndex;
 	document.getElementById("branchArea1").value = data.area;
@@ -186,9 +164,10 @@ function branchgetvalue(data){
 	document.getElementById("branchValue1").value = data.branchValue;
 	document.getElementById("branchPhone1").value = data.branchPhone;
 }
-
 // update
 function branchupdate(updateData) {
+	var result = confirm("지점을 수정 하시겠습니까?");
+	if(result){
 	$.ajax({
 		type : "PUT",
 		url : "/admin/branchmanage/update",
@@ -198,10 +177,13 @@ function branchupdate(updateData) {
 			branchlist(0);
 		}
 	});
+	alert("해당 지점 정보를 수정하였습니다.");
+	}
 }
-
 // delete
-function branchdelete(idx) {
+function branchdelete(idx, bname) {
+	var result = confirm(bname +" 지점을 삭제하시겠습니까?");
+	if(result){
 	$.ajax({
 		type : "DELETE",
 		url : "/admin/branchmanage/delete/" + idx,
@@ -210,50 +192,29 @@ function branchdelete(idx) {
 			branchlist(0);
 		}
 	});
+	alert("해당 지점 정보를 삭제하였습니다.");
+	}
 }
-
 // list
 function branchlist(idx) {
-	$
-			.ajax({
-				url : "/admin/branchmanage/branchlist.do?page="
-						+ idx,
-				data : {},
-				success : function(data) {
-					var str = "";
-					$
-							.each(
-									data,
-									function(i, s) {
-										str += '<tr>' + '<td>'
-												+ data[i].branchIndex
-												+ '</td>'
-												+ '<td>'
-												+ data[i].area
-												+ '</td>'
-												+ '<td>'
-												+ data[i].branchName
-												+ '</td>'
-												+ '<td>'
-												+ data[i].branchOwner
-												+ '</td>'
-												+ '<td>'
-												+ data[i].branchValue
-												+ '</td>'
-												+ '<td>'
-												+ data[i].branchAddr
-												+ '</td>'
-												+ '<td>'
-												+ data[i].branchPhone
-												+ '</td>'
-												+ "<td>"
-												+ `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(data[i])})' />`
-												+ '<button onclick="branchdelete('
-												+ data[i].branchIndex
-												+ ')">삭제</button></td>'
-												+ '</tr>';
-									});
-					$("#tableListBody").html(str);
-				}
-			})
+	$.ajax({
+		url : "/admin/branchmanage/branchlist.do?page="+ idx,
+		data : {},
+		success : function(data) {
+				var str = "";
+			$.each(data,function(i, s) {
+				str += '<tr><td>'+ data[i].branchIndex+ '</td>';
+				str += '<td>'+ data[i].area+ '</td>';
+				str += '<td>'+ data[i].branchName+ '</td>';
+				str += '<td>'+ data[i].branchOwner+ '</td>';
+				str += '<td>'+ data[i].branchValue+ '</td>';
+				str += '<td>'+ data[i].branchAddr+ '</td>';
+				str += '<td>'+ data[i].branchPhone+ '</td>';
+				str += "<td>"+ `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(data[i])})' />`
+				+ '<button onclick="branchdelete('+ data[i].branchIndex +`, '`+ data[i].branchName + `')">삭제</button></td>'+ '</tr>`;
+				
+			});
+			$("#tableListBody").html(str);
+		}
+	})
 }

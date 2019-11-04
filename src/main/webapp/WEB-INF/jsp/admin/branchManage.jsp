@@ -56,10 +56,9 @@
 			<div>
 				<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
 			</div>
+			
 		</div>
-
-
-
+		<div id="page1"></div>
 </body>
 <%@include file="branchManageModal.jsp"%>
 <script src="/static/js/adminBranchManage.js">
