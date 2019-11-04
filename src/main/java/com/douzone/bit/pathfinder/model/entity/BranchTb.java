@@ -1,6 +1,7 @@
 package com.douzone.bit.pathfinder.model.entity;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +23,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Data
 @Entity
-@ToString(exclude = {"userList", "area"})
+@ToString(exclude = { "userList", "area" })
 @Builder
 @Accessors(chain = true)
 public class BranchTb {
@@ -30,28 +31,28 @@ public class BranchTb {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long branchIndex;
-	
+
 	private String branchName;
-	
+
 	private String branchOwner;
-	
+
 	private Integer branchValue;
-	
+
 	private String branchAddr;
-	
+
 	private String branchDaddr;
-	
+
 	private String branchPhone;
-	
+
 	private Double branchLat;
-	
+
 	private Double branchLng;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "areaIndex")
 	private AreaTb area;
-	
-	@OneToMany(fetch = FetchType.EAGER)
+
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
 	private List<UserTb> userList;
 }
