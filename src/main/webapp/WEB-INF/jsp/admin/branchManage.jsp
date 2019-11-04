@@ -21,6 +21,7 @@
 	<div class="card-header">
 		<b>지점 관리</b> <input type="button" data-toggle="modal"
 			data-target="#insertModal" value="지점 추가" />
+		<span id="seachAll"></span>
 	</div>
 
 	<table class="table table-hover table-mc-light-blue"
@@ -28,6 +29,7 @@
 		<thead>
 			<tr>
 				<th>번호</th>
+				<th>지역</th>
 				<th>지점명</th>
 				<th>지점장</th>
 				<th>운반비</th>
@@ -39,6 +41,24 @@
 		<tbody id="tableListBody">
 		</tbody>
 	</table>
+	
+	<div class="form-group row justify-content-center">
+			<div class="w100" style="padding-right:10px">
+				<select class="form-control form-control-sm" name="searchType" id="searchType">
+					<option value="branchName">지점명</option>
+					<option value="areaName">지역</option>
+					<option value="branchAddr">주소</option>
+				</select>
+			</div>
+			<div class="w300" style="padding-right:10px">
+				<input type="text" class="form-control form-control-sm" name="keyword" id="keyword">
+			</div>
+			<div>
+				<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
+			</div>
+			
+		</div>
+		<div id="page1"></div>
 </body>
 <%@include file="branchManageModal.jsp"%>
 <script src="/static/js/adminBranchManage.js">
