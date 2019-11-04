@@ -30,4 +30,5 @@ public interface BranchRepository extends JpaRepository<BranchTb, Long> {
 
 	@Query(value = "select b.branchIndex, b.branchName from BranchTb b where area = ?1")
 	public List<Object> findValueByArea(AreaTb area);
+
 }
