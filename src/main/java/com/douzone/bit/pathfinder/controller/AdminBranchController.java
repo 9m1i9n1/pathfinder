@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
+import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
@@ -38,7 +39,7 @@ public class AdminBranchController {
 
 	// branch create
 	@PostMapping("")
-	public AdminBranchResponse branchCreate(@RequestBody AdminBranchRequest request) {
+	public Header<AdminBranchResponse> branchCreate(@RequestBody AdminBranchRequest request) {
 		
 		System.out.println(request);
 		
@@ -73,21 +74,21 @@ public class AdminBranchController {
 
 	//branch data
 	@GetMapping("/branchlist.do")
-	public List<AdminBranchResponse> branchList(
+	public Header<List<AdminBranchResponse>> branchList(
 			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 		return adminBranchService.listpage(pageable);
 	}
 
 	// branch update
 	@PutMapping("/update")
-	public Optional<AdminBranchResponse> branchUpdate(@RequestBody AdminBranchRequest request) {
+	public Header<AdminBranchResponse> branchUpdate(@RequestBody AdminBranchRequest request) {
 		System.out.println(adminBranchService.update(request));
 		return adminBranchService.update(request);
 	}
 
 	// branch delete
 	@DeleteMapping("/delete/{branchIndex}")
-	public int branchDelete(@PathVariable Long branchIndex) {
+	public Header branchDelete(@PathVariable Long branchIndex) {
 		return adminBranchService.delete(branchIndex);
 	}
 }
