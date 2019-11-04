@@ -12,7 +12,7 @@ $(document)
 
 // 첫 시작
 $(document).ready(function() {
-  userLoading();
+  // userLoading();
   treeLoading();
 });
 
@@ -55,39 +55,6 @@ $("#areaIndex").change(function() {
   branchLoading(selected);
 });
 
-// jstree 로딩
-function treeLoading() {
-  $("#jstree").jstree({
-    plugins: ["wholerow"],
-    core: {
-      themes: {
-        name: "proton",
-        reponsive: true,
-      },
-      data: function(node, callback) {
-        callback(treeData(node.id));
-      },
-    },
-  });
-}
-
-// jstree 값 받아오기
-function treeData(id) {
-  var result = "";
-
-  $.ajax({
-    url: "/admin/usermanage/treelist.do",
-    type: "get",
-    data: { id: id },
-    async: false,
-    success: function(res) {
-      result = res.data;
-    },
-  });
-
-  return result;
-}
-
 // 페이지 버튼 생성
 function pageButton(totalPages, currentPage) {
   $("#page").paging({
@@ -124,7 +91,7 @@ function userLoading(selectPage) {
         str += "<td>" + value.branchName + "</td>";
         str += "<td>" + value.userPosition + "</td>";
         str += "<td>";
-        str += "<input type='button' onclick='userUpdate(" + value.userIndex + ")' value='초기화' />";
+        str += "<input type='button' onclick='userUpdate(" + value.userIndex + ")' value='수정' />";
         str += "<input type='button' onclick='userDelete(" + value.userIndex + ")' value='삭제' />";
         str += "</td>";
         str += "</tr>";
@@ -258,4 +225,45 @@ function userUpdate(userIndex) {
 
     alert("해당 회원의 패스워드를 초기화하였습니다.");
   }
+}
+
+// jstree 로딩
+function treeLoading() {
+  $("#jstree").jstree({
+    plugins: ["wholerow"],
+    core: {
+      themes: {
+        name: "proton",
+        reponsive: true,
+      },
+      data: function(node, callback) {
+        callback(treeData(node.id));
+      },
+    },
+  });
+
+  $("#jstree").on("select_node.jstree", function(e, data) {
+    if (data.node.children.length > 0) {
+      $("#jstree")
+        .jstree(true)
+        .toggle_node(data.node);
+    }
+  });
+}
+
+// jstree 값 받아오기
+function treeData(id) {
+  var result = "";
+
+  $.ajax({
+    url: "/admin/usermanage/treelist.do",
+    type: "get",
+    data: { id: id },
+    async: false,
+    success: function(res) {
+      result = res.data;
+    },
+  });
+
+  return result;
 }

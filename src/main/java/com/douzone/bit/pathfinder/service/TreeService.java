@@ -22,34 +22,39 @@ public class TreeService {
   @Autowired
   BranchRepository branchRepository;
 
-  public Header<List<TreeResponse>> readArea() {
+  public Header<TreeResponse> readCompany() {
+    TreeResponse company = TreeResponse.builder()
+    .id("company:1")
+    .text("더존마트")
+    .children(readArea())
+    .build();
+
+    return Header.OK(company);
+  }
+
+  public List<TreeResponse> readArea() {
 
     List<AreaTb> areas = areaRepository.findAll();
 
     List<TreeResponse> areaList = areas.stream().map(area -> areaResponse(area)).collect(Collectors.toList());
 
-    return Header.OK(areaList);
+    return areaList;
   }
 
-  public Header<List<TreeResponse>> readBranch(String id) {
+  public List<TreeResponse> readBranch(Long areaIndex) {
 
-    Long index = Long.parseLong(id.split(":")[1]);
-
-    System.out.println("#index");
-    System.out.println(index);
-
-    List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(index));
+    List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(areaIndex));
 
     List<TreeResponse> branchList = branchs.stream().map(branch -> branchResponse(branch)).collect(Collectors.toList());
 
-    return Header.OK(branchList);
+    return branchList;
   }
 
   // Response 데이터 파싱
   private TreeResponse areaResponse(AreaTb area) {
 
     TreeResponse treeResponse = TreeResponse.builder().id("area:" + area.getAreaIndex()).text(area.getAreaName())
-        .children(true).build();
+        .children(readBranch(area.getAreaIndex())).build();
 
     return treeResponse;
   }
@@ -57,7 +62,7 @@ public class TreeService {
   private TreeResponse branchResponse(BranchTb branch) {
 
     TreeResponse treeResponse = TreeResponse.builder().id("branch:" + branch.getBranchIndex())
-        .text(branch.getBranchName()).children(false).build();
+        .text(branch.getBranchName()).build();
 
     return treeResponse;
   }

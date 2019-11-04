@@ -1,5 +1,7 @@
 package com.douzone.bit.pathfinder.model.network.response;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +19,5 @@ public class TreeResponse {
 
   private String text;
 
-  private Boolean children;
+  private List<TreeResponse> children;
 }

@@ -62,10 +62,9 @@ public class AdminUserController {
 
   // 트리 불러오기
   @GetMapping("/treelist.do")
-  public Header<List<TreeResponse>> treeList(
-      @RequestParam(value = "id", required = false, defaultValue = "#") String id) {
+  public Header<TreeResponse> treeList() {
 
-    return (id.equals("#")) ? treeService.readArea() : treeService.readBranch(id);
+    return treeService.readCompany();
   }
 
   // 지점 리스트 불러오기
