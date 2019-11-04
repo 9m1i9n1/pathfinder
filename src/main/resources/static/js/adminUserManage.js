@@ -11,6 +11,7 @@ $(document)
 
 $(document).ready(function() {
   userLoading();
+  treeLoading();
 });
 
 $("#InsertBtn").click(function() {
@@ -47,6 +48,38 @@ $("#areaIndex").change(function() {
 
   branchLoading(selected);
 });
+
+function treeData() {
+  var result = "";
+
+  $.ajax({
+    url: "/admin/usermanage/treelist.do",
+    type: "get",
+    async: false,
+    success: function(res) {
+      console.log("#res : " + res.data);
+
+      result = res.data;
+    },
+  });
+
+  return result;
+}
+
+function treeLoading() {
+  $("#jstree").jstree({
+    plugins: ["wholerow"],
+    core: {
+      themes: {
+        name: "proton",
+        reponsive: true,
+      },
+      data: function(node, callback) {
+        callback(treeData());
+      },
+    },
+  });
+}
 
 function pageButton(totalPages, currentPage) {
   $("#page").paging({

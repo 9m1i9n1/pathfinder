@@ -22,7 +22,7 @@ public class Header<T> {
   // api 부가 설명
   private String description;
 
-  private T data;
+  private T data, children;
 
   // pagination
   private Pagination pagination;

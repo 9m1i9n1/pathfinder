@@ -24,8 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
+import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
+import com.douzone.bit.pathfinder.service.TreeService;
 
 @RestController
 @RequestMapping("/admin/usermanage")
@@ -36,6 +38,9 @@ public class AdminUserController {
 
   @Autowired
   AdminBranchService adminBranchService;
+
+  @Autowired
+  TreeService treeService;
 
   // 회원 리스트 뷰
   @GetMapping("")
@@ -53,6 +58,15 @@ public class AdminUserController {
       @PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
     return adminUserService.list(pageable);
+  }
+
+  // 트리 불러오기
+  @GetMapping("/treelist.do")
+  public Header<List<TreeResponse>> treeList(
+      @RequestParam(value = "id", required = false, defaultValue = "#") String id) {
+
+    return (id.equals("#")) ? treeService.readArea() : treeService.readBranch(id);
+
   }
 
   // 지점 리스트 불러오기
