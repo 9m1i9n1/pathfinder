@@ -129,8 +129,8 @@ public class AdminUserService {
 
     AdminUserResponse adminUserResponse = AdminUserResponse.builder().userIndex(user.getUserIndex())
         .userId(user.getUserId()).userName(user.getUserName()).userEmail(user.getUserEmail())
-        .userPhone(user.getUserPhone()).branchName(user.getBranch().getBranchName())
-        .userPosition(user.getUserPosition()).build();
+        .userPhone(user.getUserPhone()).branchIndex(user.getBranch().getBranchIndex())
+        .branchName(user.getBranch().getBranchName()).userPosition(user.getUserPosition()).build();
 
     return adminUserResponse;
   }

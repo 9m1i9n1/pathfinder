@@ -44,6 +44,10 @@ $("#insertModal").on("hidden.bs.modal", function() {
     .find("#branchIndex")
     .html(str)
     .selectpicker("refresh");
+
+  $("#insertModal")
+    .find("#userPosition")
+    .selectpicker("refresh");
 });
 
 // 모달 내에서 지역 선택 시
@@ -85,13 +89,13 @@ function userLoading(treeId, selectPage) {
       $.each(res.data, function(key, value) {
         str += "<tr>";
         str += "<td><input type='checkbox' name='userCheck' value='" + value.userIndex + "' /></td>";
-        str += "<td>" + value.userIndex + "</td>";
-        str += "<td>" + value.userId + "</td>";
+        str += "<td style='display:none;'>" + value.userIndex + "</td>";
         str += "<td>" + value.userName + "</td>";
-        str += "<td>" + value.userEmail + "</td>";
-        str += "<td>" + value.userPhone + "</td>";
         str += "<td>" + value.branchName + "</td>";
         str += "<td>" + value.userPosition + "</td>";
+        str += "<td>" + value.userId + "</td>";
+        str += "<td>" + value.userEmail + "</td>";
+        str += "<td>" + value.userPhone + "</td>";
         str += "<td>";
         str += "<input type='button' onclick='userUpdate(" + value.userIndex + ")' value='수정' />";
         str += "<input type='button' onclick='userDelete(" + value.userIndex + ")' value='삭제' />";
@@ -190,7 +194,10 @@ function userCreate(req) {
     contentType: "application/json",
     data: req,
     success: function(res) {
-      userLoading();
+      console.log("#res : ");
+      console.log(res);
+
+      userLoading(`branch:${res.data.branchIndex}`, 0);
     },
   });
 }

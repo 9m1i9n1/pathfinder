@@ -37,13 +37,13 @@
       <thead>
         <tr>
           <th><input type="checkbox" name="userCheck" value="all" /></th>
-          <th>번호</th>
-          <th>아이디</th>
+          <th style="display:none;">번호</th>
           <th>이름</th>
-          <th>이메일</th>
-          <th>전화번호</th>
           <th>지점</th>
           <th>직책</th>
+          <th>아이디</th>
+          <th>이메일</th>
+          <th>전화번호</th>
           <th>수정/삭제</th>
         </tr>
       </thead>
