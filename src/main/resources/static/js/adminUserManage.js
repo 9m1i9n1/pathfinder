@@ -265,7 +265,6 @@ function treeLoading() {
 
   $("#jstree").on("select_node.jstree", function(e, data) {
     var id = data.instance.get_node(data.selected).id;
-
     if (data.node.children.length > 0) {
       $("#jstree")
         .jstree(true)

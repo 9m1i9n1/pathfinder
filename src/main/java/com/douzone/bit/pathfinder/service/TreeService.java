@@ -31,7 +31,17 @@ public class TreeService {
 
     return Header.OK(company);
   }
+  
+  public Header<TreeResponse> readAreaB() {
+	    TreeResponse company = TreeResponse.builder()
+	    .id("company:1")
+	    .text("더존마트")
+	    .children(readArea())
+	    .build();
 
+	    return Header.OK(company);
+	  }
+  
   public List<TreeResponse> readArea() {
 
     List<AreaTb> areas = areaRepository.findAll();

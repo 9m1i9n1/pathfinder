@@ -22,8 +22,10 @@ import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
+import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
+import com.douzone.bit.pathfinder.service.TreeService;
 
 @RestController
 @RequestMapping("/admin/branchmanage")
@@ -35,14 +37,15 @@ public class AdminBranchController {
 	@Autowired
 	AdminUserService adminUserService;
 
-
-
+	@Autowired
+	TreeService treeService;
+	
 	// branch create
 	@PostMapping("")
 	public Header<AdminBranchResponse> branchCreate(@RequestBody AdminBranchRequest request) {
-		
+
 		System.out.println(request);
-		
+
 		return adminBranchService.create(request);
 	}
 
@@ -58,21 +61,27 @@ public class AdminBranchController {
 	public ModelAndView branchManage() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/branchManage");
-		
+
 		return mv;
 	}
-	
-	//branch search
+
+	// branch search
 	@GetMapping("/search")
-	public List<AdminBranchResponse> branchSearch(@RequestParam(required = false, defaultValue = "branchName") String searchType
-			,@RequestParam(required = false) String keyword
-			,@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC) Pageable pageable){
-		
+	public List<AdminBranchResponse> branchSearch(
+			@RequestParam(required = false, defaultValue = "branchName") String searchType,
+			@RequestParam(required = false) String keyword,
+			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC) Pageable pageable) {
+
 		return adminBranchService.search(pageable, searchType, keyword);
 	}
-	
 
-	//branch data
+	// 트리 불러오기
+	@GetMapping("/treelist.do")
+	public Header<TreeResponse> treeList() {
+		return treeService.readCompany();
+	}
+
+	// branch data
 	@GetMapping("/branchlist.do")
 	public Header<List<AdminBranchResponse>> branchList(
 			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 10) Pageable pageable) {

@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	branchlist();
+	treeLoading();
 });
 // 지점추가버튼
 $('[name=branchInsertBtn]').click(function() {
@@ -222,3 +223,41 @@ function branchlist(selectPage) {
 		}
 	})
 }
+//jstree 로딩
+function treeLoading() {
+  $("#jstree").jstree({
+    plugins: ["wholerow"],
+    core: {
+      themes: {
+        name: "proton",
+        reponsive: true,
+      },
+      data: function(node, callback) {
+    	  console.log(node)
+        callback(treeData(node.id));
+      },
+    },
+  });
+
+  // jstree 값 받아오기
+  function treeData(id) {
+    var result = "";
+
+    $.ajax({
+      url: "/admin/branchmanage/treelist.do",
+      type: "get",
+      data: { id: id },
+      async: false,
+      success: function(res) {
+        result = res.data;
+         console.log(res.data);
+      },
+    });
+
+    return result;
+  }
+
+ 
+}
+
+
