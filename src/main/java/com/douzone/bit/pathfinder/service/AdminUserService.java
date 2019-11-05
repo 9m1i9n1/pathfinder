@@ -32,6 +32,12 @@ public class AdminUserService {
   @Autowired
   private AreaRepository areaRepository;
 
+  public Header<AdminUserResponse> read(Long id) {
+    Optional<UserTb> optional = userRepository.findById(id);
+
+    return optional.map(user -> response(user)).map(Header::OK).orElseGet(() -> Header.ERROR("데이터 없음"));
+  }
+
   // 유저 등록 서비스
   public Header<AdminUserResponse> create(AdminUserRequest request) {
 
@@ -102,14 +108,17 @@ public class AdminUserService {
   }
 
   // 유저 비밀번호 초기화
-  public Header<AdminUserResponse> update(Long id) {
-
-    Optional<UserTb> optional = userRepository.findById(id);
+  public Header<AdminUserResponse> update(AdminUserRequest request) {
+    Optional<UserTb> optional = userRepository.findById(request.getUserIndex());
 
     return optional.map(user -> {
-      user.setUserPw("12345");
+
+      user.setUserName(request.getUserName()).setUserEmail(request.getUserEmail()).setUserPhone(request.getUserPhone())
+          .setUserPosition(request.getUserPosition()).setUserAuth(request.getUserAuth())
+          .setBranch(branchRepository.getOne(request.getBranchIndex()));
+
       return user;
-    }).map(updatedUser -> userRepository.save(updatedUser)).map(updatedUser -> response(updatedUser)).map(Header::OK)
+    }).map(user -> userRepository.save(user)).map(user -> response(user)).map(Header::OK)
         .orElseGet(() -> Header.ERROR("데이터 없음"));
   }
 
@@ -130,7 +139,8 @@ public class AdminUserService {
     AdminUserResponse adminUserResponse = AdminUserResponse.builder().userIndex(user.getUserIndex())
         .userId(user.getUserId()).userName(user.getUserName()).userEmail(user.getUserEmail())
         .userPhone(user.getUserPhone()).branchIndex(user.getBranch().getBranchIndex())
-        .branchName(user.getBranch().getBranchName()).userPosition(user.getUserPosition()).build();
+        .branchName(user.getBranch().getBranchName()).areaIndex(user.getBranch().getArea().getAreaIndex())
+        .userPosition(user.getUserPosition()).userAuth(user.getUserAuth()).build();
 
     return adminUserResponse;
   }

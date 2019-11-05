@@ -52,6 +52,12 @@ public class AdminUserController {
     return mv;
   }
 
+  @GetMapping("/userread.do")
+  public Header<AdminUserResponse> userRead(@RequestParam("userIndex") Long userIndex) {
+
+    return adminUserService.read(userIndex);
+  }
+
   // 회원 리스트 불러오기
   @GetMapping("/userlist.do")
   public Header<List<AdminUserResponse>> userList(@RequestParam("id") String id,
@@ -89,10 +95,10 @@ public class AdminUserController {
   }
 
   // 비밀번호 초기화
-  @PutMapping("/{userIndex}")
-  public Header<AdminUserResponse> userUpdate(@PathVariable Long userIndex) {
+  @PutMapping("")
+  public Header<AdminUserResponse> userUpdate(@RequestBody AdminUserRequest request) {
 
-    return adminUserService.update(userIndex);
+    return adminUserService.update(request);
   }
 
   // 회원 삭제

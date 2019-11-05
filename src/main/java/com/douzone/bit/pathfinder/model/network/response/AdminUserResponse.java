@@ -36,4 +36,6 @@ public class AdminUserResponse {
   private Long branchIndex;
 
   private String branchName;
+
+  private Long areaIndex;
 }
