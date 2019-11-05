@@ -56,13 +56,15 @@ $("#areaIndex").change(function() {
 });
 
 // 페이지 버튼 생성
-function pageButton(nodeId, totalPages, currentPage) {
+function pageButton(nodeType, nodeIndex, totalPages, currentPage) {
   $("#page").paging({
     nowPage: currentPage + 1,
     pageNum: totalPages,
     buttonNum: 12,
     callback: function(currentPage) {
-      userLoading(currentPage - 1);
+      console.log(`${nodeType}:${nodeIndex}`);
+
+      userLoading(`${nodeType}:${nodeIndex}`, currentPage - 1);
     },
   });
 }
@@ -103,7 +105,7 @@ function userLoading(treeId, selectPage) {
 
       $("#headerol").html(count);
 
-      pageButton(res.pagination.totalPages, res.pagination.currentPage);
+      pageButton(res.pagination.nodeType, res.pagination.nodeIndex, res.pagination.totalPages, res.pagination.currentPage);
     },
   });
 }
