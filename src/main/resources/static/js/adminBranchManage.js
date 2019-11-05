@@ -216,7 +216,6 @@ function branchlist(selectPage) {
 				str += '<td>'+ value.branchPhone+ '</td>';
 				str += "<td>"+ `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`
 				+ '<button onclick="branchdelete('+ value.branchIndex +`, '`+ value.branchName + `')">삭제</button></td>'+ '</tr>`;
-				
 			});
 			$("#tableListBody").html(str);
 			pageButton(res.pagination.totalPages, res.pagination.currentPage);
