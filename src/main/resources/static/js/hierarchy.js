@@ -1,108 +1,90 @@
-function paging(id, index, totalPage, totalCount) {
-  $("#paging").empty();
-  var getPerPageNum = 5.0;
-  var displayPageNum = 10.0;
-  var endPage = Math.ceil((index + 1.0) / displayPageNum) * displayPageNum;
-  var startPage = endPage - displayPageNum + 1;
+$(document).ready(function() {
+	treeLoading();
+})
 
-  var tempEndPage = Math.ceil(totalCount / 5.0);
-
-  var nextPage = Math.ceil((index + 1.0) / displayPageNum) * 10 + 1;
-  var prevPage = Math.ceil((index + 1.0) / displayPageNum) * 10 - 10;
-
-  if (startPage <= 0) startPage = 1;
-
-  if (endPage > tempEndPage) {
-    endPage = tempEndPage;
-  }
-
-  var prev = startPage === 1 ? false : true;
-  var next = endPage * getPerPageNum >= totalCount ? false : true;
-
-  if (prev) {
-    $("#paging").append('<li class="page-item"><a class="page-link" onClick="getUser(\'' + id + "' ," + prevPage + ')">' + "<<" + "&nbsp;</a></li>");
-  }
-
-  for (var i = startPage; i <= endPage; i++) {
-    if (index + 1 === i) {
-      $("#paging").append('<li class="page-item active">' + `<span class="page-link" onClick="getUser(id, i)">` + i + '<span class="sr-only">(current)</span></span>' + "&nbsp;</li>");
-    } else {
-      $("#paging").append('<li class="page-item"><a class="page-link" onClick="getUser(\'' + id + "' ," + i + ')">' + i + "&nbsp;</a></li>");
-    }
-  }
-
-  if (next) {
-    $("#paging").append('<li class="page-item"><a class="page-link" onClick="getUser(\'' + id + "' ," + nextPage + ')">' + ">>" + "&nbsp;</a></li>");
-  }
+function pageButton(nodeType, nodeIndex, totalPages, currentPage) {
+	$("#page").paging({
+		nowPage : currentPage + 1,
+		pageNum : totalPages,
+		buttonNum : 12,
+		callback : function(currentPage) {
+			getUser(`${nodeType}:${nodeIndex}`, currentPage - 1);
+		}
+	});
 }
 
-function getUser(id, page) {
-  $.ajax({
-    url: "/hierarchy/getuser.do",
-    type: "GET",
-    data: {
-      id: id,
-      page: page,
-    },
-    dataType: "json",
-    success: function(data) {
-      var userData = "<tr>";
-      var pageData = "";
-      $.each(data.contents, function(i, s) {
-        userData +=
-          "<td>" +
-          data.contents[i].userName +
-          "</td>" +
-          "<td>" +
-          data.contents[i].userPosition +
-          "</td>" +
-          "<td>" +
-          data.contents[i].userEmail +
-          "</td>" +
-          "<td>" +
-          data.contents[i].userPhone +
-          "</td>" +
-          "</tr>";
-      });
-
-      $("#userTable").html(userData);
-
-      paging(id, data.index, data.totalPage, data.totalCount);
-    },
-    error: function(error) {
-      console.log(error);
-    },
-  });
+function getUser(treeId, selectPage) {
+	$.ajax({
+		url : "/hierarchy/userlist.do",
+		type : "get",
+		data : { id : treeId, page : selectPage},
+		success : function(res) {
+			var str = "";
+			var count = "";
+			
+			count += `<li class="breadcrumb-item">조직도 패이지</a></li>`;
+			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
+			
+			$.each(res.data, function(key, value) {
+				str += "<tr>";
+		        str += "<td>" + value.userName + "</td>";
+		        str += "<td>" + value.userEmail + "</td>";
+		        str += "<td>" + value.userPhone + "</td>";
+		        str += "<td>" + value.branchName + "</td>";
+		        str += "<td>" + value.userPosition + "</td>";
+		        str += "</tr>";
+			});
+			
+			$("#userTable").html(str);
+			
+			$("#headInfo").html(count);
+			
+			pageButton(res.pagination.nodeType, res.pagination.nodeIndex, res.pagination.totalPages, res.pagination.currentPage)
+		}
+	})
 }
 
-$(function() {
-  $("#jstree").jstree({
-    plugins: ["wholerow"],
-    core: {
-      themes: {
-        name: "proton",
-        reponsive: true,
-      },
-      data: {
-        url: "/hierarchy/gettree.do",
-        data: function(node) {
-          console.log("#node id : " + node);
+function treeLoading() {
+	$("#jstree").jstree({
+		plugins : [ "wholerow" ],
+		core : {
+			themes : {
+				name : "proton",
+				reponsive : true
+			},
+			data : function(node, callback) {
+				callback(treeData(node.id));
+			}
+		}
+	});
 
-          return { id: node.id };
-        },
-      },
-    },
-  });
+	function treeData(id) {
+		var result = "";
 
-  $("#jstree").on("changed.jstree", function(e, data) {
-    var i,
-      j,
-      r = [];
+		$.ajax({
+			url : "/hierarchy/treelist.do",
+			type : "get",
+			data : {
+				id : id
+			},
+			async : false,
+			success : function(res) {
+				result = res.data;
+			}
+		});
 
-    for (i = 0, j = data.selected.length; i < j; i++) {
-      r.push(data.instance.get_node(data.selected[i]).id);
-    }
-
-    getUser(r.join(", "), 0);
-  });
-});
+		return result;
+	}
+	
+	$("#jstree").on("select_node.jstree", function(e, data) {
+		var id = data.instance.get_node(data.selected).id;
+		
+		if (data.node.children.length > 0) {
+			$("#jstree")
+				.jstree(true)
+				.toggle_node(data.node);
+		}
+		
+		getUser(id, 0);
+	})
+}
