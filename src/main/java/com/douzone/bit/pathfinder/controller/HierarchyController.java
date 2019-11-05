@@ -59,7 +59,7 @@ public class HierarchyController {
 	@GetMapping("/userlist.do")
 	public Header<List<AdminUserResponse>> userList(
 			@RequestParam("id") String id,
-			@PageableDefault(size = 5) Pageable pageable) {
+			@PageableDefault(size = 10) Pageable pageable) {
 		
 		return hierarchyService.userList(id, pageable);
 	}
