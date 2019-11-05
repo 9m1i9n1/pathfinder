@@ -58,7 +58,7 @@
 			</div>
 			
 		</div>
-		<div id="page1"></div>
+		<div id="page"></div>
 </body>
 <%@include file="branchManageModal.jsp"%>
 <script src="/static/js/adminBranchManage.js">

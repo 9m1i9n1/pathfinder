@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
+import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
@@ -32,7 +34,7 @@ public class AdminBranchService {
 	}
 
 	// branch create
-	public AdminBranchResponse create(AdminBranchRequest request) {
+	public Header<AdminBranchResponse> create(AdminBranchRequest request) {
 
 		System.out.println(request);
 
@@ -42,30 +44,31 @@ public class AdminBranchService {
 				.branchOwner(request.getBranchOwner()).branchValue(request.getBranchValue())
 				.area(areaRepository.getOne(request.getAreaIndex())).build();
 
-		branchRepository.save(branch);
+		BranchTb newBranch = branchRepository.save(branch);
 
-		return response(branch);
+		return Header.OK(response(newBranch));
 
 	}
 
 	// branch page
-	public List<AdminBranchResponse> listpage(Pageable pageable) {
+	public Header<List<AdminBranchResponse>> listpage(Pageable pageable) {
 
 		Page<BranchTb> branchs = branchRepository.findAll(pageable);
 
 		List<AdminBranchResponse> branchResponseList = branchs.stream().map(branch -> response(branch))
 				.collect(Collectors.toList());
 
-		return branchResponseList;
+		 Pagination pagination = Pagination.builder().totalPages(branchs.getTotalPages())
+			        .totalElements(branchs.getTotalElements()).currentPage(branchs.getNumber())
+			        .currentElements(branchs.getNumberOfElements()).build();
+		return Header.OK(branchResponseList, pagination);
 	}
 
 	// branch update
-	public Optional<AdminBranchResponse> update(AdminBranchRequest request) {
+	public Header<AdminBranchResponse> update(AdminBranchRequest request) {
 
 		Optional<BranchTb> optional = branchRepository.findById(request.getBranchIndex());
 
-		System.out.println("#optional : " + optional);
-		System.out.println("#request : " + request);
 
 		return optional.map(branch -> {
 			branch.setBranchName(request.getBranchName()).setBranchOwner(request.getBranchOwner())
@@ -73,15 +76,16 @@ public class AdminBranchService {
 					.setArea(areaRepository.getOne(request.getAreaIndex()));
 
 			return branch;
-		}).map(newBranch -> branchRepository.save(newBranch)).map(newBranch -> response(newBranch));
+		}).map(newBranch -> branchRepository.save(newBranch)).map(newBranch -> response(newBranch)).map(Header::OK)
+				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
 	// branch delete
-	public int delete(Long id) {
+	public Header delete(Long id) {
 		return branchRepository.findById(id).map(branch -> {
 			branchRepository.delete(branch);
-			return 1;
-		}).orElseGet(() -> 0);
+			return Header.OK();
+		}).orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
 	private AdminBranchResponse response(BranchTb branch) {

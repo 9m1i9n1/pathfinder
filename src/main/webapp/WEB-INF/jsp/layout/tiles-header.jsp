@@ -43,3 +43,7 @@
 <%-- paging --%>
 <link rel="stylesheet" href="/static/css/paging.css">
 <script src="/static/js/paging.js"></script>
+
+<%-- Scroll --%>
+<link rel="stylesheet" href="/static/css/bootstrap/scroll.css">
+<link rel="stylesheet" href="/static/js/bootstrap/scroll.js">
