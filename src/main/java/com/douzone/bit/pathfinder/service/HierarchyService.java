@@ -187,13 +187,6 @@ public class HierarchyService {
 		return adminUserResponse;
 	}
 	
-	private TreeResponse areaOnlyResponse(AreaTb area) {
-		TreeResponse treeResponse = TreeResponse.builder().id("area:" + area.getAreaIndex())
-				.text(area.getAreaName()).build();
-		
-		return treeResponse;
-	}
-	
 	private TreeResponse areaResponse(AreaTb area) {
 		TreeResponse treeResponse = TreeResponse.builder().id("area:" + area.getAreaIndex())
 				.text(area.getAreaName())

@@ -67,7 +67,7 @@ public class AdminBranchController {
 
 	// branch search
 	@GetMapping("/search")
-	public List<AdminBranchResponse> branchSearch(
+	public Header<List<AdminBranchResponse>> branchSearch(
 			@RequestParam(required = false, defaultValue = "branchName") String searchType,
 			@RequestParam(required = false) String keyword,
 			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -78,7 +78,7 @@ public class AdminBranchController {
 	// 트리 불러오기
 	@GetMapping("/treelist.do")
 	public Header<TreeResponse> treeList() {
-		return treeService.readCompany();
+		return adminBranchService.readCompany();
 	}
 
 	// branch data

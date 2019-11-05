@@ -5,7 +5,6 @@ $(document).ready(function() {
 // 지점추가버튼
 $('[name=branchInsertBtn]').click(function() {
 	var formData = $('[name=branchInsertform]').serializeObject()
-	console.log(formData)
 	let geo = geocoding(formData.branchAddr);
 	formData.branchLat = geo.y;
 	formData.branchLng = geo.x;
@@ -15,28 +14,15 @@ $('[name=branchInsertBtn]').click(function() {
 $('[name=branchUpdateSaveBtn]').click(function() {
 	var formData1 = $('[name=branchUpdateForm]').serializeObject()
 
-	console.log(formData1)
-	console.log(JSON.stringify(formData1))
 	branchupdate(JSON.stringify(formData1));
 })
 // 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
-	var url = "/admin/branchmanage/search";    
-	if($('#searchType').val() == "areaName"){
-		switch($('#keyword').val()){
-		case "경기도" : $('#keyword').val("1"); break;
-		case "강원도" : $('#keyword').val("2"); break;
-		case "충청남도" : $('#keyword').val("3"); break;
-		case "충청북도" : $('#keyword').val("4"); break;
-		case "경상북도" : $('#keyword').val("5"); break;
-		case "경상남도" : $('#keyword').val("6"); break;
-		case "전라남도" : $('#keyword').val("7"); break;
-		case "전라북도" : $('#keyword').val("8"); break;
-		}
-	}
+	var url = "";    
 	url = url + "?searchType=" + $('#searchType').val();
 	url = url + "&keyword=" + $('#keyword').val();
+	console.log(url)
 	branchsearch(url);
 });
 //전체보기
@@ -93,20 +79,20 @@ $.fn.serializeObject = function() {
 function branchsearch(searchUrl) {
 	$.ajax({
 		type : "GET",
-		url : searchUrl,
+		url : "/admin/branchmanage/search" + searchUrl,
 		contentType : 'application/json',
-		success : function(data) {
+		success : function(res) {
 			var str = "";
-			$.each(data,function(i, s) {
-				str += '<tr><td>'+ data[i].branchIndex + '</td>';
-				str += '<td>' + data[i].area +'</td>';
-				str += '<td>' + data[i].branchName +'</td>';
-				str += '<td>' + data[i].branchOwner +'</td>';
-				str += '<td>' + data[i].branchValue +'</td>'
-				str += '<td>' + data[i].branchAddr +'</td>';
-				str	+= '<td>' + data[i].branchPhone + '</td>';
-				str += "<td>" + `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(data[i])})' />`;
-				str += '<button onclick="branchdelete('+ data[i].branchIndex +' , '+ data[i].branchName +')">삭제</button></td>'
+			$.each(res.data,function(key, value) {
+				str += '<tr><td>'+ value.branchIndex + '</td>';
+				str += '<td>' + value.area +'</td>';
+				str += '<td>' + value.branchName +'</td>';
+				str += '<td>' + value.branchOwner +'</td>';
+				str += '<td>' + value.branchValue +'</td>'
+				str += '<td>' + value.branchAddr +'</td>';
+				str	+= '<td>' + value.branchPhone + '</td>';
+				str += "<td>" + `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`;
+				str += '<button onclick="branchdelete('+ value.branchIndex +' , '+ value.branchName +')">삭제</button></td>'
 				str += '</tr>';
 				});
 			$("#tableListBody").html(str);
@@ -131,12 +117,9 @@ function geocoding(addr) {
 		type : 'GET',
 		async : false,
 		success : function(r) {
-			console.log("gecoding123");
-			console.log(r.documents[0].road_address);
 			ab = r.documents[0].road_address;
 		},
 		error : function(e) {
-			console.log(e);
 		}
 	});
 	return ab;
@@ -256,8 +239,18 @@ function treeLoading() {
 
     return result;
   }
-
- 
+  $("#jstree").on("select_node.jstree", function(e, data) {
+	    var id = data.instance.get_node(data.selected).id;
+	    id = id.slice(5)
+	    console.log(id)
+	    if (data.node.children.length > 0) {
+	      $("#jstree")
+	        .jstree(true)
+	        .toggle_node(data.node);
+	    }
+	    var url = "";   
+	    url = url + "?searchType=area&keyword="+id;
+	    branchsearch(url)
+	  });
 }
-
 

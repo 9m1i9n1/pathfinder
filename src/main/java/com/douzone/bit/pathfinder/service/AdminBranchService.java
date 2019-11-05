@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.douzone.bit.pathfinder.model.entity.AreaTb;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
+import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
@@ -58,9 +61,9 @@ public class AdminBranchService {
 		List<AdminBranchResponse> branchResponseList = branchs.stream().map(branch -> response(branch))
 				.collect(Collectors.toList());
 
-		 Pagination pagination = Pagination.builder().totalPages(branchs.getTotalPages())
-			        .totalElements(branchs.getTotalElements()).currentPage(branchs.getNumber())
-			        .currentElements(branchs.getNumberOfElements()).build();
+		Pagination pagination = Pagination.builder().totalPages(branchs.getTotalPages())
+				.totalElements(branchs.getTotalElements()).currentPage(branchs.getNumber())
+				.currentElements(branchs.getNumberOfElements()).build();
 		return Header.OK(branchResponseList, pagination);
 	}
 
@@ -68,7 +71,6 @@ public class AdminBranchService {
 	public Header<AdminBranchResponse> update(AdminBranchRequest request) {
 
 		Optional<BranchTb> optional = branchRepository.findById(request.getBranchIndex());
-
 
 		return optional.map(branch -> {
 			branch.setBranchName(request.getBranchName()).setBranchOwner(request.getBranchOwner())
@@ -89,50 +91,74 @@ public class AdminBranchService {
 	}
 
 	private AdminBranchResponse response(BranchTb branch) {
-
 		AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder().branchIndex(branch.getBranchIndex())
 				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner())
 				.branchValue(branch.getBranchValue()).branchAddr(branch.getBranchAddr())
 				.branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
 				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
 				.areaIndex(branch.getArea().getAreaIndex()).build();
-
 		return adminBranchResponse;
 	}
 
+	 public Header<TreeResponse> readCompany() {
+		    TreeResponse company = TreeResponse.builder()
+		    .id("company:1")
+		    .text("더존마트")
+		    .children(readArea())
+		    .build();
+
+		    return Header.OK(company);
+		  }
+	
+	//지점 조직도 
+	public List<TreeResponse> readArea() {
+
+		List<AreaTb> areas = areaRepository.findAll();
+		List<TreeResponse> areaList = areas.stream().map(area -> areaOnlyResponse(area)).collect(Collectors.toList());
+		return areaList;
+	}
+
+	
+	// jsTree response
+	private TreeResponse areaOnlyResponse(AreaTb area) {
+		TreeResponse treeResponse = TreeResponse.builder().id("area:" + area.getAreaIndex()).text(area.getAreaName())
+				.build();
+
+		return treeResponse;
+	}
+
 	// 지점 검색
-	public List<AdminBranchResponse> search(Pageable pageable, String searchType, String keyword) {
-		
-		List<BranchTb> branchs;
+	public Header<List<AdminBranchResponse>> search(Pageable pageable, String searchType, String keyword) {
+
+		Page<BranchTb> branchs = null;
 		List<AdminBranchResponse> branchResponseList = null;
-		
 		switch (searchType) {
 		case "branchName":
-			branchs = branchRepository.findByBranchNameLike("%"+keyword+"%");
-			branchResponseList = branchs.stream().map(branch -> response(branch))
-					.collect(Collectors.toList());
+			branchs = branchRepository.findByBranchNameLike("%" + keyword + "%", pageable);
+			System.out.println(branchs);
+			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
 			break;
-	
-		case "areaName":
-			
-			branchs = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(keyword)));
-			branchResponseList = branchs.stream().map(branch -> response(branch))
-					.collect(Collectors.toList());
+
+		case "area":
+			//http://localhost:8181/admin/branchmanage/search?searchType=area&keyword=1
+			branchs = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(keyword)),pageable);
+			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
 			break;
-			
+
 		case "branchAddr":
-			branchs = branchRepository.findByBranchAddrLike("%"+keyword+"%");
-			branchResponseList = branchs.stream().map(branch -> response(branch))
-					.collect(Collectors.toList());
+			branchs = branchRepository.findByBranchAddrLike("%" + keyword + "%", pageable);
+			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
 			break;
-			
+
 		default:
 			break;
 		}
 		
-		System.out.println(branchResponseList);
-		
-		return branchResponseList;
+		Pagination pagination = Pagination.builder().totalPages(branchs.getTotalPages())
+				.totalElements(branchs.getTotalElements()).currentPage(branchs.getNumber())
+				.currentElements(branchs.getNumberOfElements()).build();
+
+		return Header.OK(branchResponseList, pagination);
 
 	}
 

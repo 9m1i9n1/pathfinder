@@ -65,7 +65,6 @@
 							<select class="form-control form-control-sm" name="searchType"
 								id="searchType">
 								<option value="branchName">지점명</option>
-								<option value="areaName">지역</option>
 								<option value="branchAddr">주소</option>
 							</select>
 						</div>
