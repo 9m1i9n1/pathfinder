@@ -22,15 +22,14 @@ $('#btnSearch').click(function(e){
 	var url = "";    
 	url = url + "?searchType=" + $('#searchType').val();
 	url = url + "&keyword=" + $('#keyword').val();
-	console.log(url)
 	branchsearch(url);
 });
-//전체보기
+// 전체보기
 function allSearch(){
 	branchlist();
 	$('#seachAll').remove();
 }
-//페이징
+// 페이징
 function pageButton(totalPages, currentPage) {
 	  $("#page").paging({
 	    nowPage: currentPage + 1,
@@ -41,7 +40,19 @@ function pageButton(totalPages, currentPage) {
 	      }
 	  });
 	}
-//주소검색
+
+// 검색페이징
+function pageButton1(totalPages, currentPage, url) {
+	  $("#page").paging({
+	    nowPage: currentPage + 1,
+	    pageNum: totalPages,
+	    buttonNum: 12,
+	    callback: function(currentPage) {
+	    	branchsearch(url, currentPage - 1);
+	      }
+	  });
+	}
+// 주소검색
 function addressFind() {
 	new daum.Postcode({
 		oncomplete : function(data) {
@@ -57,7 +68,7 @@ function addressFind() {
 		}
 	}).open();
 }
-// form => json
+// 폼 json변환
 $.fn.serializeObject = function() {
 	var result = {}
 	var extend = function(i, element) {
@@ -75,11 +86,11 @@ $.fn.serializeObject = function() {
 	$.each(this.serializeArray(), extend)
 	return result
 }
-//search
-function branchsearch(searchUrl) {
+// 검색뷰
+function branchsearch(searchUrl, searchpage=0) {
 	$.ajax({
 		type : "GET",
-		url : "/admin/branchmanage/search" + searchUrl,
+		url : "/admin/branchmanage/search" + searchUrl +"&page=" +searchpage ,
 		contentType : 'application/json',
 		success : function(res) {
 			var str = "";
@@ -99,11 +110,9 @@ function branchsearch(searchUrl) {
 			var buttonAll = "";
 			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
 			$("#seachAll").html(buttonAll);
-			pageButton(res.pagination.totalPages, res.pagination.currentPage);
-
+			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
 		}
 	});
-
 }
 // geoCoding
 function geocoding(addr) {
@@ -124,7 +133,7 @@ function geocoding(addr) {
 	});
 	return ab;
 }
-// insert
+// 추가
 function branchinsert(insertData) {
 	let branchName = $('[name=branchName]').val()
 	var result = confirm(branchName +" 지점을 저장하겠습니까?");
@@ -141,7 +150,7 @@ function branchinsert(insertData) {
 	alert("해당 지점 정보를 추가하였습니다.");
 	}
 }
-//updateGetValue
+// 수정 초기값
 function branchgetvalue(data){
 	document.getElementById("areaIndex").value = data.areaIndex;;
 	document.getElementById("updateAreaIndex").value = data.branchIndex;
@@ -151,7 +160,7 @@ function branchgetvalue(data){
 	document.getElementById("branchValue1").value = data.branchValue;
 	document.getElementById("branchPhone1").value = data.branchPhone;
 }
-// update
+// 수정
 function branchupdate(updateData) {
 	var result = confirm("지점을 수정 하시겠습니까?");
 	if(result){
@@ -167,7 +176,7 @@ function branchupdate(updateData) {
 	alert("해당 지점 정보를 수정하였습니다.");
 	}
 }
-// delete
+// 삭제
 function branchdelete(idx, bname) {
 	var result = confirm(bname +" 지점을 삭제하시겠습니까?");
 	if(result){
@@ -182,7 +191,7 @@ function branchdelete(idx, bname) {
 	alert("해당 지점 정보를 삭제하였습니다.");
 	}
 }
-// list
+// 첫페이지
 function branchlist(selectPage) {
 	$.ajax({
 		url : "/admin/branchmanage/branchlist.do?page="+ selectPage,
@@ -206,7 +215,7 @@ function branchlist(selectPage) {
 		}
 	})
 }
-//jstree 로딩
+// jstree 로딩
 function treeLoading() {
   $("#jstree").jstree({
     plugins: ["wholerow"],
@@ -216,7 +225,6 @@ function treeLoading() {
         reponsive: true,
       },
       data: function(node, callback) {
-    	  console.log(node)
         callback(treeData(node.id));
       },
     },
@@ -233,16 +241,13 @@ function treeLoading() {
       async: false,
       success: function(res) {
         result = res.data;
-         console.log(res.data);
       },
     });
-
     return result;
   }
   $("#jstree").on("select_node.jstree", function(e, data) {
 	    var id = data.instance.get_node(data.selected).id;
 	    id = id.slice(5)
-	    console.log(id)
 	    if (data.node.children.length > 0) {
 	      $("#jstree")
 	        .jstree(true)
