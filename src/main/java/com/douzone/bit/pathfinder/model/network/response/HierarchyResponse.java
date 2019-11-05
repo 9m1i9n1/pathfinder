@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Builder
 @Accessors(chain = true)
-public class TreeResponse {
+public class HierarchyResponse {
 
   private String id;
   
@@ -22,5 +22,5 @@ public class TreeResponse {
   
   private Map<String, Boolean> state;
 
-  private List<TreeResponse> children;
+  private List<HierarchyResponse> children;
 }

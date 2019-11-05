@@ -19,9 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
-import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
+import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.service.HierarchyService;
-import com.douzone.bit.pathfinder.service.TreeService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -51,7 +50,7 @@ public class HierarchyController {
 //	}
 	
 	@GetMapping("/treelist.do")
-	public Header<TreeResponse> treeList() {
+	public Header<HierarchyResponse> treeList() {
 		
 		return hierarchyService.readCompany();
 	}

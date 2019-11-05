@@ -18,7 +18,7 @@ import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
-import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
+import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
@@ -71,13 +71,13 @@ public class HierarchyService {
 		return Header.OK(userResponseList, pagination);
 	}
 	
-	public Header<TreeResponse> readCompany() {
+	public Header<HierarchyResponse> readCompany() {
 		Map<String, Boolean> state = new HashMap<String, Boolean>();
 		
 		state.put("opened", true);
 		state.put("selected", true);
 		
-		TreeResponse company = TreeResponse.builder()
+		HierarchyResponse company = HierarchyResponse.builder()
 				.id("company:1")
 				.text("더존공장")
 				.state(state)
@@ -88,20 +88,20 @@ public class HierarchyService {
 	}
 	
 	
-	public List<TreeResponse> readArea() {
+	public List<HierarchyResponse> readArea() {
 		
 		List<AreaTb> areas = areaRepository.findAll();
 		
-		List<TreeResponse> areaList = areas.stream().map(area -> areaResponse(area)).collect(Collectors.toList());
+		List<HierarchyResponse> areaList = areas.stream().map(area -> areaResponse(area)).collect(Collectors.toList());
 		
 		return areaList;
 	}
 	
-	public List<TreeResponse> readBranch(Long areaIndex, String parent) {
+	public List<HierarchyResponse> readBranch(Long areaIndex, String parent) {
 		
 		List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(areaIndex));
 		
-		List<TreeResponse> branchList = branchs.stream().map(branch -> branchResponse(branch)).collect(Collectors.toList());
+		List<HierarchyResponse> branchList = branchs.stream().map(branch -> branchResponse(branch)).collect(Collectors.toList());
 		
 		return branchList;
 	}
@@ -116,25 +116,25 @@ public class HierarchyService {
 		return adminUserResponse;
 	}
 	
-	private TreeResponse areaOnlyResponse(AreaTb area) {
-		TreeResponse treeResponse = TreeResponse.builder().id("area:" + area.getAreaIndex())
+	private HierarchyResponse areaOnlyResponse(AreaTb area) {
+		HierarchyResponse treeResponse = HierarchyResponse.builder().id("area:" + area.getAreaIndex())
 				.text(area.getAreaName()).build();
 		
 		return treeResponse;
 	}
 	
-	private TreeResponse areaResponse(AreaTb area) {
+	private HierarchyResponse areaResponse(AreaTb area) {
 		String childParent = "area:" + area.getAreaIndex();
 		
-		TreeResponse treeResponse = TreeResponse.builder().id("area:" + area.getAreaIndex())
+		HierarchyResponse treeResponse = HierarchyResponse.builder().id("area:" + area.getAreaIndex())
 				.text(area.getAreaName())
 				.children(readBranch(area.getAreaIndex(), childParent)).build();
 		
 		return treeResponse;
 	}
 	
-	private TreeResponse branchResponse(BranchTb branch) {
-		TreeResponse treeResponse = TreeResponse.builder().id("branch:" + branch.getBranchIndex())
+	private HierarchyResponse branchResponse(BranchTb branch) {
+		HierarchyResponse treeResponse = HierarchyResponse.builder().id("branch:" + branch.getBranchIndex())
 				.text(branch.getBranchName())
 				.build();
 		
