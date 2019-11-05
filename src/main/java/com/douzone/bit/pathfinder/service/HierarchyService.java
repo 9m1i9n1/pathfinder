@@ -29,13 +29,13 @@ public class HierarchyService {
 	private BranchRepository branchRepository;
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	public JsonArray areaRead() {
-		
+
 		List<AreaTb> areaData = areaRepository.findAll();
-		
+
 		JsonArray jArray = new JsonArray();
-		
+
 		for (int i = 0; i < areaData.size(); i++) {
 			JsonObject sObject = new JsonObject();
 			sObject.addProperty("id", "area:" + areaData.get(i).getAreaIndex());
@@ -43,72 +43,69 @@ public class HierarchyService {
 			sObject.addProperty("children", true);
 			jArray.add(sObject);
 		}
-		
+
 		return jArray;
 	}
-	
+
 	public JsonArray branchRead(String id) {
-		
+
 		String index[] = id.split(":");
-		
-		List<BranchTb> branchData = branchRepository.findByArea(
-				areaRepository.getOne(Long.parseLong(index[1])));	
-		
+
+		List<BranchTb> branchData = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(index[1])));
+
 		JsonArray jArray = new JsonArray();
-		
+
 		for (int i = 0; i < branchData.size(); i++) {
 			JsonObject sObject = new JsonObject();
 			sObject.addProperty("id", "branch:" + branchData.get(i).getBranchIndex());
 			sObject.addProperty("text", branchData.get(i).getBranchName());
 			jArray.add(sObject);
 		}
-		
+
 		return jArray;
 	}
-	
+
 	public JsonObject userRead(String id, Pageable pageable) {
-		
+
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 5);
-		
+
 		JsonObject jObject = new JsonObject();
 		JsonArray jArray = new JsonArray();
-		
+
 		Page<UserTb> userData;
 		List<BranchTb> branchIdData;
-		
+
 		String index[] = id.split(":");
-		
+
 		if (index[0].equals("area")) {
-			branchIdData = branchRepository.findByArea(
-					areaRepository.getOne(Long.parseLong(index[1])));
-			
+			branchIdData = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(index[1])));
+
 			userData = userRepository.findByBranchIn(branchIdData, pageable);
 		} else {
-			userData = userRepository.findByBranch(
-					branchRepository.getOne(Long.parseLong(index[1])), pageable);
+			userData = userRepository.findByBranch(branchRepository.getOne(Long.parseLong(index[1])), pageable);
 		}
-		
+
 		jObject.addProperty("totalCount", userData.getTotalElements());
 		jObject.addProperty("totalPage", userData.getTotalPages());
 		jObject.addProperty("index", userData.getNumber());
 		jObject.addProperty("next", userData.hasNext());
 		jObject.addProperty("prev", userData.hasPrevious());
-		
+
 		List<UserTb> userList = userData.toList();
-		
+
 		for (int i = 0; i < userList.size(); i++) {
 			JsonObject sObject = new JsonObject();
 			sObject.addProperty("userName", userList.get(i).getUserName());
 			sObject.addProperty("userPosition", userList.get(i).getUserPosition());
 			sObject.addProperty("userEmail", userList.get(i).getUserEmail());
 			sObject.addProperty("userPhone", userList.get(i).getUserPhone());
-			
+
 			jArray.add(sObject);
 		}
-		
+
 		jObject.add("contents", jArray);
-		
+
 		return jObject;
 	}
 }
