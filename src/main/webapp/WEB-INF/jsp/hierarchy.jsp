@@ -6,9 +6,7 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item">Hierarchy</a></li>
-			<li class="breadcrumb-item active">총인원수 출력</li>
+		<ol id = "headInfo" class="breadcrumb">
 		</ol>
 	</div>
 	<div class="container-fluid">
@@ -35,15 +33,15 @@
 							<thead>
 								<tr>
 									<th style="background-color: #fafafa; text-align: center;">이름</th>
-									<th style="background-color: #fafafa; text-align: center;">직책</th>
 									<th style="background-color: #fafafa; text-align: center;">이메일</th>
 									<th style="background-color: #fafafa; text-align: center;">전화번호</th>
+									<th style="background-color: #fafafa; text-align: center;">지점명</th>
+									<th style="background-color: #fafafa; text-align: center;">직책</th>
 								</tr>
 							</thead>
 							<tbody id="userTable" style="font-size : 75%"/>
 						</table>
-						<div style="display : table; margin : 0 auto">
-							<ul class="pagination" id="paging"></ul>
+						<div id = "page">
 						</div>
 					</div>
 				</div>
