@@ -56,23 +56,25 @@ $("#areaIndex").change(function() {
 });
 
 // 페이지 버튼 생성
-function pageButton(totalPages, currentPage) {
+function pageButton(nodeType, nodeIndex, totalPages, currentPage) {
   $("#page").paging({
     nowPage: currentPage + 1,
     pageNum: totalPages,
     buttonNum: 12,
     callback: function(currentPage) {
-      userLoading(currentPage - 1);
+      console.log(`${nodeType}:${nodeIndex}`);
+
+      userLoading(`${nodeType}:${nodeIndex}`, currentPage - 1);
     },
   });
 }
 
 // 유저 로딩
-function userLoading(selectPage) {
+function userLoading(treeId, selectPage) {
   $.ajax({
     url: "/admin/usermanage/userlist.do",
     type: "get",
-    data: { page: selectPage },
+    data: { id: treeId, page: selectPage },
     success: function(res) {
       var str = "";
       var count = "";
@@ -103,7 +105,7 @@ function userLoading(selectPage) {
 
       $("#headerol").html(count);
 
-      pageButton(res.pagination.totalPages, res.pagination.currentPage);
+      pageButton(res.pagination.nodeType, res.pagination.nodeIndex, res.pagination.totalPages, res.pagination.currentPage);
     },
   });
 }
@@ -227,6 +229,8 @@ function userUpdate(userIndex) {
   }
 }
 
+//! JSTREE 부분 ====================
+
 // jstree 로딩
 function treeLoading() {
   $("#jstree").jstree({
@@ -242,28 +246,32 @@ function treeLoading() {
     },
   });
 
+  // jstree 값 받아오기
+  function treeData(id) {
+    var result = "";
+
+    $.ajax({
+      url: "/admin/usermanage/treelist.do",
+      type: "get",
+      data: { id: id },
+      async: false,
+      success: function(res) {
+        result = res.data;
+      },
+    });
+
+    return result;
+  }
+
   $("#jstree").on("select_node.jstree", function(e, data) {
+    var id = data.instance.get_node(data.selected).id;
+
     if (data.node.children.length > 0) {
       $("#jstree")
         .jstree(true)
         .toggle_node(data.node);
     }
+
+    userLoading(id, 0);
   });
-}
-
-// jstree 값 받아오기
-function treeData(id) {
-  var result = "";
-
-  $.ajax({
-    url: "/admin/usermanage/treelist.do",
-    type: "get",
-    data: { id: id },
-    async: false,
-    success: function(res) {
-      result = res.data;
-    },
-  });
-
-  return result;
 }

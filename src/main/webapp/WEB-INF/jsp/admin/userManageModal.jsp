@@ -56,6 +56,7 @@
             <label for="userPosition" class="col-sm-3 col-form-label-sm">직책</label>
             <div class="col-sm-8">
               <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition">
+                <option value='' disabled selected>선택</option>
                 <option>사원</option>
                 <option>대리</option>
                 <option>과장</option>
