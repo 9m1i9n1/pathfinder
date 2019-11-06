@@ -35,9 +35,10 @@
 			<div class="col-9">
 				<div class="card">
 					<div class="card-header">
-						<div class="form-group row justify-content-end">
-							<b>지점 관리</b> <input type="button" data-toggle="modal"
+					<b>지점 관리</b><input type="button" data-toggle="modal"
 								data-target="#insertModal" value="지점 추가" />
+						<div class="form-group row justify-content-end">
+							 
 							<div class="w100" style="padding-right: 10px">
 								<select class="form-control form-control-sm" name="searchType"
 									id="searchType">

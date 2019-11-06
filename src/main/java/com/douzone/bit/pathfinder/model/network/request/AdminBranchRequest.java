@@ -1,5 +1,8 @@
 package com.douzone.bit.pathfinder.model.network.request;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.douzone.bit.pathfinder.model.entity.AreaTb;
 
 import lombok.AllArgsConstructor;
@@ -15,9 +18,11 @@ import lombok.NoArgsConstructor;
 public class AdminBranchRequest {
 
   private Long branchIndex;
-
+  @NotNull(message = "@@@@@@@@@Name cannot be null")
+  @NotBlank(message = "@@@@@@@@Name cannot be null")
   private String branchName;
 
+  @NotBlank(message = "OWNER ERROR")
   private String branchOwner;
 
   private Integer branchValue;

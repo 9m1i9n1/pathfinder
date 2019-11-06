@@ -24,15 +24,14 @@ $('#btnSearch').click(function(e){
 	url = url + "&keyword=" + $('#keyword').val();
 	branchsearch(url);
 });
-
-//지역이름 숫자변환
+// 지역이름 숫자변환
 function areaNameTrans(formData){
 	switch (formData.areaIndex){
 case "서울" : return 1; case "부산" : return 2;	case "대구" : return 3;case "인천" : return 4;
 case "광주" : return 5; case "대전" : return 6;	case "울산" : return 7;case "경기" : return 8;
 case "강원" : return 9; case "충북" : return 10; case "충남" : return 11;case "전북" : return 12;
 case "전남" : return 13; case "경북" : return 14; case "경남" : return 15;case "제주" : return 16;	case "세종" : return 17;} 
-	}
+}
 // 페이징
 function pageButton(totalPages, currentPage) {
 	  $("#page").paging({
@@ -249,19 +248,33 @@ function treeLoading() {
   }
   $("#jstree").on("select_node.jstree", function(e, data) {
 	    var id = data.instance.get_node(data.selected).id;
-	    id = id.slice(5)
-	    if(id != "ny:1"){
+	    let vid = id.slice(5)
+	    if(vid != "ny:1"){
 	    if (data.node.children.length > 0) {
 	      $("#jstree")
 	        .jstree(true)
 	        .toggle_node(data.node);
 	    }
 	    var url = "";   
-	    url = url + "?searchType=area&keyword="+id;
+	    url = url + "?searchType=area&keyword="+vid;
 	    branchsearch(url)
 	    }else{
 	    	branchlist()
 	    }
-	  });
+	  })
+	  .bind("open_node.jstree", function(e, data) {
+	      var nodesToKeepOpen = [];
+	     
+	      nodesToKeepOpen.push(data.node.id);
+	      nodesToKeepOpen.push(data.node.parent);
+
+	      $(".jstree-node").each(function() {
+	        if (nodesToKeepOpen.indexOf(this.id) === -1) {
+	          $("#jstree")
+	            .jstree()
+	            .close_node(this.id);
+	        }
+	      });
+	    });
 }
 
