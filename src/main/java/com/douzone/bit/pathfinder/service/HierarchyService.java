@@ -74,6 +74,7 @@ public class HierarchyService {
 		return adminUserResponse;
 	}
 
+
 	private HierarchyResponse areaResponse(AreaTb area) {
 		String childParent = "area:" + area.getAreaIndex();
 
