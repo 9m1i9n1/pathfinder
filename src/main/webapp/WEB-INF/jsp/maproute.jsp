@@ -19,56 +19,77 @@
 <title>CSS</title>
 <link href="/static/css/maproute.css" rel="stylesheet">
 <link rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+	href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
 <link rel="stylesheet" href="/static/css/leaflet-routing-machine.css" />
 </head>
 <body>
-	<div id="maproute-container">
-		<div id="maproute-content">
-			    <div id="map">   	
-			    </div>    
-		</div>
-		<div id="maproute-sidebar">
-			<h6>검색</h6>
-			<div id="fuckingmin2">
-				<table border="1" align=center id="allDataTable"
-					style="height: 200px; width: 90%; overflow: hidden;">
-					<tr>
-						<th onclick="event.cancelBubble=true">branch_name(지역이름)</th>
-						<th onclick="event.cancelBubble=true"
-							onclick="event.cancelBubble=true" style="display: none">branch_value(교통비)</th>
-						<th onclick="event.cancelBubble=true" style="display: none">branch_lat(위도)</th>
-						<th onclick="event.cancelBubble=true" style="display: none">branch_lng(경도)</th>
-					</tr>
-					<c:forEach items="${datalist}" var="list">
-						<tr onClick="HighLightTR(this, 'rgb(201, 204, 153)');">
-							<td>${list.branchName}</td>
-							<td style="display: none">${list.branchValue}</td>
-							<td style="display: none">${list.branchLat}</td>
-							<td style="display: none">${list.branchLng}</td>
-						</tr>
-					</c:forEach>
-				</table>
+	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">경로탐색</a></li>
+		</ol>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-9">
+				<div id="map"></div>
+			</div>
+			<div class="col-3">
+				<div class="card">
+					<div class="card-header">
+						<b>검색</b>
+						<input type="text" style="text-align: center; width:60%"/>
+						<input type="button" value="확인" style="text-align: right; width:20% "/>
+					</div>
+					
+					<div id = "fuckingmin2">
+						<table class="table table-hover table-mc-light-blue"
+									style="text-align: center;" id="allDataTable">
+							<tr onclick="event.cancelBubble=true">
+								<th onclick="event.cancelBubble=true" style="background-color: #fafafa; text-align: center;">branch_name(지역이름)</th>
+								<th onclick="event.cancelBubble=true" style="display: none">branch_value(교통비)</th>
+								<th onclick="event.cancelBubble=true" style="display: none">branch_lat(위도)</th>
+								<th onclick="event.cancelBubble=true" style="display: none">branch_lng(경도)</th>
+							</tr>
+		
+							<c:forEach items="${datalist}" var="list">
+								<tr onClick="HighLightTR(this, 'rgb(201, 204, 153)');">
+									<td>${list.branchName}</td>
+									<td style="display: none">${list.branchValue}</td>
+									<td style="display: none">${list.branchLat}</td>
+									<td style="display: none">${list.branchLng}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+					<div class="card" >
+						<div class="card-header">
+							<b>검색누른거</b>
+						</div>
+						<div id="fuckingmin2">
+							<table  class="table table-hover table-mc-light-blue"
+										style="text-align: center;" id="selectRoute"></table>
+						</div>
+						<button type="button" id="submitroute">전송</button>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div id="maproute-sidebar">
-			<h6>검색 누른거</h6>
-			<div id="fuckingmin2">
-				<table border="1" id="selectRoute"></table>
-			</div>
-				<button type="button" id="submitroute">전송</button>
-		</div>
-		<div id="maproute-footer">
-			<p>경로</p>
-			<div id="fuckingmin">
-				<table border="1" id="testTable"></table>
+		<div class = "row" style=" margin-top: 20px;">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<b>경로</b>
+					</div>
+					<div class="card-body" style="min-height: 80px">
+						<div id="testTable"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
 	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-		<script src="/static/js/leaflet-routing-machine.js"></script>
-		<script type="text/javascript">
+	<script src="/static/js/leaflet-routing-machine.js"></script>
+	<script type="text/javascript">
 		var tbody;
 		var orgBColor = '#ffffff';
 		var route = new Array();
@@ -77,6 +98,11 @@
 		var totalprice = 0;
 		var routecnt = 0;
 		var aaaaa= 0;
+		var trs = null;
+		
+		var Acnt = 0;
+		arr = new Array;
+		var Astr;
 		
 		/* Map Data */
 		/* Route Plan 초기화 */
@@ -97,8 +123,10 @@
 		
 		function HighLightTR(target, backColor) {
 			tbody = target.parentNode;
-			var trs = tbody.getElementsByTagName('tr');
-			
+			trs = tbody.getElementsByTagName('tr');
+			console.log(target);
+			console.log(tbody);
+			console.log(trs);
 			/* 기존 경로결과를 초기화하고 남아있던 Marker 출력. */
 			if (bool_routed){
 				bool_routed = false;
@@ -208,8 +236,9 @@
 		//data : encodeURI(JSON.stringify(data)),
 		
 		//버튼 누르면 경로 출력
-		$(function() {	
-			
+		$(function() {
+			var distance;
+			var time;
 			/* 지도 출력 함수 */
 			function drawMap(mapInfoData) {
 				bool_routed = true;
@@ -227,8 +256,16 @@
 				mapPlan.setWaypoints(mapInfoData);
 					
 				/* Controller에 mapPlan 등록. */
-				mapControl.setWaypoints(mapPlan.getWaypoints());
+				test = mapControl.setWaypoints(mapPlan.getWaypoints());
 				
+				test.on('routesfound', function (e) {
+				    distance = e.routes[0].summary.totalDistance;
+				    time = e.routes[0].summary.totalTime;
+				    console.log("e가 뭐게요", e);
+				    console.log("---", e.routes[0]);
+				    console.log('totalDdistance: ' + distance);
+				    console.log('totalTime: ' + time);
+				});
 				/* 이전에 탐색한 WayPoints 길이를 저장 */
 				prev_size = mapPlan.getWaypoints().length;
 				
@@ -243,6 +280,7 @@
 					} else if (routecnt > 15) {
 						alert("경유지가 너무 MP염");
 					} else {
+								var str = "출발";
 						$.ajax({
 							url : "/maproute/maproutesend",
 							type : 'post',
@@ -250,31 +288,27 @@
 								"data" : data
 							}),
 							contentType : "application/json; charset=UTF-8",
+							async: false,
 
 							success : function(data) {
-								
-								var str = "<tr>";/*  '<tr>' + '<th>전달된 a</th>'
-										+ '<th>전달된 b</th>' + '<th>전달된 c</th>'
-										+ '<th>전달된 d</th>' + '</tr>';
- 										*/
+
  								var mapInfoData = [];
+								
+								
 								if (data.length > 0) {
 									$.each(data, function(i, s) {
+										/* data[i].branch_value
+										data[i].branch_lat
+										data[i].branch_lng */
 										mapInfoData.push (L.latLng(data[i].branch_lat, data[i].branch_lng));
-										str +=	'<th>' + data[i].branch_name + '</th>' + 
-										'<th style="display: none">' + data[i].branch_value + '</th>' + 
-										'<th style="display: none">' + data[i].branch_lat + '</th>' + 
-										'<th style="display: none">' + data[i].branch_lng + '</th>';
-
+										str +=	'->' + data[i].branch_name; 
 									});
-									str += "</tr>";
-								
+									
+									console.log('totalDdistance: ', distance);
+								    console.log('totalTime: ' + time);
+								    
 								}
-								
 								drawMap(mapInfoData);
-								
-								$("#testTable").html(str);
-								
 							},
 							
 							error : function(jqXHR, textStatus, errorThrown) {
@@ -282,22 +316,24 @@
 										+ errorThrown);
 						}
 					});
+								str += "  ->  도착 총 걸리는 시간 : " + time + "총 거리 : " + distance;
+								$("#testTable").html(str);
 				}
 			})
 		})
 
-		$(function() {
-				arr = new Array;
+		$(function () {
 				tdArr = new Array(); // 배열 선언
 				// 테이블의 Row 클릭시 값 가져오기
 				$("#allDataTable tr").click(
 						function() {
-							var str = "";
+							Astr = "";
+							Acnt = 0;
 	
 							// 현재 클릭된 Row(<tr>)
 							var tr = $(this);
+							console.log("티알입니다.",tr);
 							var td = tr.children();
-							var cnt = 0;
 	
 							var branch_name = td.eq(0).text();
 							var branch_value = td.eq(1).text();
@@ -308,15 +344,15 @@
 								if (arr.length > 0) {
 									routecnt++;
 									$.each(arr, function(i) {
-										cnt++;
-										if (cnt == 1)
-											str += '<tr>' + 
+										Acnt++;
+										if (Acnt == 1)
+											Astr += '<tr onClick="cancelRoute(this)">' + 
 												'<td>' + '출발지' + '</td>' +
 												'<td>' + (i + 1) + '</td>' + 
 												'<td>' + arr[i] + '</td>' + 
 												'</tr>';
 										else
-											str += '<tr>' + 
+											Astr += '<tr onClick="cancelRoute(this)">' + 
 											'<td>' + '경유지' + '</td>' + 
 											'<td>' + (i + 1) + '</td>' + 
 											'<td>' + arr[i] + '</td>' +
@@ -327,22 +363,22 @@
 								routecnt--;
 								arr.splice(arr.indexOf(branch_name), 1);
 								$.each(arr, function(i) {
-									cnt++;
-									if (cnt == 1)
-										str += '<tr>' + 
+									Acnt++;
+									if (Acnt == 1)
+										Astr += '<tr onClick="cancelRoute(this)">' + 
 											'<td>' + '출발지' + '</td>' +
 											'<td>' + (i + 1) + '</td>' + 
 											'<td>' + arr[i] + '</td>' + 
 											'</tr>';
 									else
-										str += '<tr>' + 
+										Astr += '<tr onClick="cancelRoute(this)">' + 
 										'<td>' + '경유지' + '</td>' + 
 										'<td>' + (i + 1) + '</td>' + 
 										'<td>' + arr[i] + '</td>' +
 										'</tr>';
 								});
 							}
-							$("#selectRoute").html(str);
+							$("#selectRoute").html(Astr);
 						});
 					})
 		//맵을 클릭할 때마다 포인트를 add해주는 ajax를 만들어야함.
@@ -362,6 +398,48 @@
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(map);
+		
+
+
+
+		function cancelRoute(target) {
+			for (var i = 0; i < data.length; i++) {
+				if (target.childNodes[2].innerHTML === data[i].branch_name) {
+					var ttt = data[i].branch_name;
+				}
+			}
+			for (var i = 0; i < trs.length; i++) {
+				if(i == 0)
+					continue;
+				
+				if (ttt == trs[i].getElementsByTagName('td')[0].innerHTML){
+					HighLightTR(trs[i], 'rgb(201, 204, 153)');
+					
+						Astr = "";
+						Acnt = 0;
+
+						routecnt--;
+						arr.splice(arr.indexOf(ttt), 1);
+						$.each(arr, function(ii) {
+							Acnt++;
+							if (Acnt == 1)
+								Astr += '<tr onClick="cancelRoute(this)">' + 
+									'<td>' + '출발지' + '</td>' +
+									'<td>' + (ii + 1) + '</td>' + 
+									'<td>' + arr[ii] + '</td>' + 
+									'</tr>';
+							else
+								Astr += '<tr onClick="cancelRoute(this)">' + 
+								'<td>' + '경유지' + '</td>' + 
+								'<td>' + (ii + 1) + '</td>' + 
+								'<td>' + arr[ii] + '</td>' +
+								'</tr>';
+						});
+					$("#selectRoute").html(Astr);
+
+				}
+			}
+		}
 	</script>
 </body>
 </html>
