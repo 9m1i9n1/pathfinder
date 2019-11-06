@@ -28,6 +28,14 @@
 				<div class="card" style="height: 100%;">
 					<div class="card-header">
 						<b>사용자 리스트</b>
+						<div style = "float : right;">
+							<select id = "searchType">
+								<option selected value="name">이름</option>
+								<option value="position">직책</option>
+							</select>
+							<input id = "searchInput"/>
+							<button type="button" id = "searchButton">검색</button>
+						</div>
 					</div>
 					<div class="card-body">
 						<table class="table table-hover table-mc-light-blue"

@@ -2,15 +2,63 @@ $(document).ready(function() {
   treeLoading();
 });
 
-function pageButton(nodeType, nodeIndex, totalPages, currentPage) {
+function pageButton(nodeType, nodeIndex, totalPages, currentPage, type) {
   $("#page").paging({
     nowPage: currentPage + 1,
     pageNum: totalPages,
     buttonNum: 12,
     callback: function(currentPage) {
-      getUser(`${nodeType}:${nodeIndex}`, currentPage - 1);
+    	if (type === "list")
+    		getUser(`${nodeType}:${nodeIndex}`, currentPage - 1);
+    	else 
+    		getSearch(`${nodeType}:${nodeIndex}`, currentPage - 1);
     },
   });
+}
+
+function userSearch(treeId, selectPage) {
+	$("#searchButton").unbind().bind('click', function (e) {		
+		getSearch(treeId, selectPage);
+	});
+}
+
+function getSearch(treeId, selectPage) {
+	let type = $("select#searchType").val();
+	let value = $("#searchInput").val();
+	
+	$.ajax({
+		url : "/hierarchy/userlist.do",
+		type : "get",
+		data : { 
+					id : treeId,
+					page : selectPage,
+					searchType : type,
+					searchValue : value
+				},
+		success: function(res) {
+	      let str = "";
+	      let count = "";
+
+	      count += `<li class="breadcrumb-item">조직도 패이지 /&nbsp</a></li>`;
+	      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
+
+	      $.each(res.data, function(key, value) {
+	        str += "<tr>";
+	        str += "<td>" + value.userName + "</td>";
+	        str += "<td>" + value.userEmail + "</td>";
+	        str += "<td>" + value.userPhone + "</td>";
+	        str += "<td>" + value.branchName + "</td>";
+	        str += "<td>" + value.userPosition + "</td>";
+	        str += "</tr>";
+	      });
+
+	      $("#userTable").html(str);
+	      $("#headInfo").html(count);
+
+	      pageButton(res.pagination.nodeType, res.pagination.nodeIndex,
+	    		  res.pagination.totalPages, res.pagination.currentPage, "search");
+		}
+	});
 }
 
 function getUser(treeId, selectPage) {
@@ -19,8 +67,8 @@ function getUser(treeId, selectPage) {
     type: "get",
     data: { id: treeId, page: selectPage },
     success: function(res) {
-      var str = "";
-      var count = "";
+      let str = "";
+      let count = "";
 
       count += `<li class="breadcrumb-item">조직도 패이지 /&nbsp</a></li>`;
       count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
@@ -39,8 +87,9 @@ function getUser(treeId, selectPage) {
 
       $("#headInfo").html(count);
 
-      pageButton(res.pagination.nodeType, res.pagination.nodeIndex, res.pagination.totalPages, res.pagination.currentPage);
-    },
+      pageButton(res.pagination.nodeType, res.pagination.nodeIndex,
+    		  res.pagination.totalPages, res.pagination.currentPage, "list");
+    }
   });
 }
 
@@ -59,7 +108,7 @@ function treeLoading() {
       },
     })
     .bind("changed.jstree", function(e, data) {
-      var data = data.instance.get_node(data.selected);
+      let data = data.instance.get_node(data.selected);
 
       if (data.children.length > 0) {
         $("#jstree")
@@ -68,9 +117,10 @@ function treeLoading() {
       }
 
       getUser(data.id, 0);
+      userSearch(data.id, 0);
     })
     .bind("open_node.jstree", function(e, data) {
-      var nodesToKeepOpen = [];
+      let nodesToKeepOpen = [];
 
       nodesToKeepOpen.push(data.node.id);
       nodesToKeepOpen.push(data.node.parent);
@@ -85,7 +135,7 @@ function treeLoading() {
     });
 
   function treeData(id) {
-    var result = "";
+    let result = "";
 
     $.ajax({
       url: "/hierarchy/treelist.do",
