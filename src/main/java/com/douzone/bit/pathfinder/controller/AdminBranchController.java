@@ -22,7 +22,7 @@ import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
-import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
+import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
 import com.douzone.bit.pathfinder.service.TreeService;
@@ -77,7 +77,7 @@ public class AdminBranchController {
 
 	// 트리 불러오기
 	@GetMapping("/treelist.do")
-	public Header<TreeResponse> treeList() {
+	public Header<HierarchyResponse> treeList() {
 		return adminBranchService.readCompany();
 	}
 

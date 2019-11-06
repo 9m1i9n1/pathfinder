@@ -22,7 +22,7 @@ function getUser(treeId, selectPage) {
 			var str = "";
 			var count = "";
 			
-			count += `<li class="breadcrumb-item">조직도 패이지</a></li>`;
+			count += `<li class="breadcrumb-item">조직도 패이지 /&nbsp</a></li>`;
 			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 			
 			$.each(res.data, function(key, value) {
@@ -56,6 +56,29 @@ function treeLoading() {
 				callback(treeData(node.id));
 			}
 		}
+	}).bind("changed.jstree", function(e, data) {
+		var data = data.instance.get_node(data.selected);
+		var id = data.id;
+		var node = data.node;
+		
+		if (data.length > 0) {
+			$("#jstree")
+				.jstree(true)
+				.toggle_node(node);
+		}
+		
+		getUser(id, 0);
+	}).bind("open_node.jstree", function(e, data) {
+		var nodesToKeepOpen = [];
+		
+		nodesToKeepOpen.push(data.node.id);
+		nodesToKeepOpen.push(data.node.parent);
+		
+		$('.jstree-node').each(function () {
+			if(nodesToKeepOpen.indexOf(this.id) === -1) {
+				$("#jstree").jstree().close_node(this.id);
+			}
+		})
 	});
 
 	function treeData(id) {
@@ -64,9 +87,7 @@ function treeLoading() {
 		$.ajax({
 			url : "/hierarchy/treelist.do",
 			type : "get",
-			data : {
-				id : id
-			},
+			data : { id	},
 			async : false,
 			success : function(res) {
 				result = res.data;
@@ -75,16 +96,4 @@ function treeLoading() {
 
 		return result;
 	}
-	
-	$("#jstree").on("select_node.jstree", function(e, data) {
-		var id = data.instance.get_node(data.selected).id;
-		
-		if (data.node.children.length > 0) {
-			$("#jstree")
-				.jstree(true)
-				.toggle_node(data.node);
-		}
-		
-		getUser(id, 0);
-	})
 }

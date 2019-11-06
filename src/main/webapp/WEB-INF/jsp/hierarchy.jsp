@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -6,24 +7,25 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<ol id = "headInfo" class="breadcrumb">
+		<ol id="headInfo" class="breadcrumb">
 		</ol>
 	</div>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3">
-				<div class="card">
+				<div class="card" style="height: 100%;">
 					<div class="card-header">
 						<b>부서 조직도</b>
 					</div>
-					<div class="card-body">
-							<div id="jstree">
-							</div>
-					</div>
+					<div class="scrollable">
+						<div class="card-body">
+							<div style="font-size: 13.5px;" id="jstree"></div>
+						</div>
 					</div>
 				</div>
+			</div>
 			<div class="col-9">
-				<div class="card">
+				<div class="card" style="height: 100%;">
 					<div class="card-header">
 						<b>사용자 리스트</b>
 					</div>
@@ -39,16 +41,16 @@
 									<th style="background-color: #fafafa; text-align: center;">직책</th>
 								</tr>
 							</thead>
-							<tbody id="userTable" style="font-size : 75%"/>
+							<tbody id="userTable" style="font-size: 75%" />
 						</table>
-						<div id = "page">
-						</div>
+						<div id="page"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<script src="/static/js/hierarchy.js"/>
+		</body>
+		</html>
 	
-	<script src="/static/js/hierarchy.js">
-</body>
-</html>

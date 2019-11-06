@@ -14,7 +14,7 @@ import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
-import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
+import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
@@ -100,8 +100,8 @@ public class AdminBranchService {
 		return adminBranchResponse;
 	}
 
-	 public Header<TreeResponse> readCompany() {
-		    TreeResponse company = TreeResponse.builder()
+	 public Header<HierarchyResponse> readCompany() {
+		 HierarchyResponse company = HierarchyResponse.builder()
 		    .id("company:1")
 		    .text("더존마트")
 		    .children(readArea())
@@ -111,17 +111,17 @@ public class AdminBranchService {
 		  }
 	
 	//지점 조직도 
-	public List<TreeResponse> readArea() {
+	public List<HierarchyResponse> readArea() {
 
 		List<AreaTb> areas = areaRepository.findAll();
-		List<TreeResponse> areaList = areas.stream().map(area -> areaOnlyResponse(area)).collect(Collectors.toList());
+		List<HierarchyResponse> areaList = areas.stream().map(area -> areaOnlyResponse(area)).collect(Collectors.toList());
 		return areaList;
 	}
 
 	
 	// jsTree response
-	private TreeResponse areaOnlyResponse(AreaTb area) {
-		TreeResponse treeResponse = TreeResponse.builder().id("area:" + area.getAreaIndex()).text(area.getAreaName())
+	private HierarchyResponse areaOnlyResponse(AreaTb area) {
+		HierarchyResponse treeResponse = HierarchyResponse.builder().id("area:" + area.getAreaIndex()).text(area.getAreaName())
 				.build();
 
 		return treeResponse;

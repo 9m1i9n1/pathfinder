@@ -19,9 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
-import com.douzone.bit.pathfinder.model.network.response.TreeResponse;
+import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
+import com.douzone.bit.pathfinder.service.AdminUserService;
 import com.douzone.bit.pathfinder.service.HierarchyService;
-import com.douzone.bit.pathfinder.service.TreeService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -29,9 +29,12 @@ import com.google.gson.JsonObject;
 @RestController
 @RequestMapping("/hierarchy")
 public class HierarchyController {
-	
+
 	@Autowired
 	HierarchyService hierarchyService;
+
+	@Autowired
+	AdminUserService adminUserService;
 
 	@GetMapping({ "", "/" })
 	public ModelAndView getHierarchy() {
@@ -42,33 +45,16 @@ public class HierarchyController {
 		return mv;
 	}
 
-//	@GetMapping("/gettree.do")
-//	public JsonArray getHierarchyChild(
-//			@RequestParam(value = "id", required = false, defaultValue = "#") String id) {
-//
-//		return (id.equals("#")) ? hierarchyService.areaRead() :
-//			hierarchyService.branchRead(id);
-//	}
-	
 	@GetMapping("/treelist.do")
-	public Header<TreeResponse> treeList() {
-		
+	public Header<HierarchyResponse> treeList() {
+
 		return hierarchyService.readCompany();
 	}
-	
+
 	@GetMapping("/userlist.do")
-	public Header<List<AdminUserResponse>> userList(
-			@RequestParam("id") String id,
-			@PageableDefault(size = 5) Pageable pageable) {
-		
-		return hierarchyService.userList(id, pageable);
+	public Header<List<AdminUserResponse>> userList(@RequestParam("id") String id,
+			@PageableDefault(size = 10) Pageable pageable) {
+
+		return adminUserService.list(id, pageable);
 	}
-	
-//	@GetMapping("/getuser.do")
-//	public JsonObject getUser(
-//			@RequestParam("id") String id,
-//			@PageableDefault Pageable pageable) {
-//		
-//		return hierarchyService.userRead(id, pageable);
-//	}
 }

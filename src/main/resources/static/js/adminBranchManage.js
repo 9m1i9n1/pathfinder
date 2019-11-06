@@ -13,7 +13,6 @@ $('[name=branchInsertBtn]').click(function() {
 // 지점수정버튼
 $('[name=branchUpdateSaveBtn]').click(function() {
 	var formData1 = $('[name=branchUpdateForm]').serializeObject()
-
 	branchupdate(JSON.stringify(formData1));
 })
 // 검색버튼
@@ -40,7 +39,6 @@ function pageButton(totalPages, currentPage) {
 	      }
 	  });
 	}
-
 // 검색페이징
 function pageButton1(totalPages, currentPage, url) {
 	  $("#page").paging({
