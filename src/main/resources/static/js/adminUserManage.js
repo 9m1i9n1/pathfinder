@@ -339,15 +339,30 @@ function treeLoading() {
     return result;
   }
 
-  $("#jstree").on("select_node.jstree", function(e, data) {
-    var id = data.instance.get_node(data.selected).id;
+  $("#jstree")
+    .on("changed.jstree", function(e, data) {
+      var data = data.instance.get_node(data.selected);
 
-    if (data.node.children.length > 0) {
-      $("#jstree")
-        .jstree(true)
-        .toggle_node(data.node);
-    }
+      if (data.children.length > 0) {
+        $("#jstree")
+          .jstree(true)
+          .toggle_node(data);
+      }
 
-    userLoading(id, 0);
-  });
+      userLoading(data.id, 0);
+    })
+    .bind("open_node.jstree", function(e, data) {
+      var nodesToKeepOpen = [];
+
+      nodesToKeepOpen.push(data.node.id);
+      nodesToKeepOpen.push(data.node.parent);
+
+      $(".jstree-node").each(function() {
+        if (nodesToKeepOpen.indexOf(this.id) === -1) {
+          $("#jstree")
+            .jstree()
+            .close_node(this.id);
+        }
+      });
+    });
 }
