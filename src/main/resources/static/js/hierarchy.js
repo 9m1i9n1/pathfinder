@@ -108,16 +108,16 @@ function treeLoading() {
       },
     })
     .bind("changed.jstree", function(e, data) {
-      let data = data.instance.get_node(data.selected);
+      let selectedData = data.instance.get_node(data.selected);
 
-      if (data.children.length > 0) {
+      if (selectedData.children.length > 0) {
         $("#jstree")
           .jstree(true)
-          .toggle_node(data);
+          .toggle_node(selectedData);
       }
 
-      getUser(data.id, 0);
-      userSearch(data.id, 0);
+      getUser(selectedData.id, 0);
+      userSearch(selectedData.id, 0);
     })
     .bind("open_node.jstree", function(e, data) {
       let nodesToKeepOpen = [];
