@@ -10,6 +10,13 @@ $(document)
     $("#Progress_Loading").hide();
   });
 
+window.onpopstate = function(event) {
+  alert(document);
+  alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+
+  loadStateContent(event.state);
+};
+
 // 첫 시작
 $(document).ready(function() {
   // userLoading();
@@ -38,25 +45,31 @@ function userLoading(treeId, selectPage) {
       let str = "";
       let count = "";
 
+      let state = { id: treeId, page: selectPage };
+      let title = "pathfinder";
+      let url = "/admin/usermanage/userlist.do";
+
       count += `<li class="breadcrumb-item">관리자 페이지</a></li>`;
       count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
-        str += "<tr class='tr-shadow'>";
-        str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
+        str += "<tr>";
+        str += "<td><input type='checkbox' name='userCheck' value='" + value.userIndex + "' /></td>";
         str += "<td style='display:none;'>" + value.userIndex + "</td>";
         str += "<td>" + value.userName + "</td>";
         str += "<td>" + value.branchName + "</td>";
         str += "<td>" + value.userPosition + "</td>";
-        str += "<td class='desc'>" + value.userId + "</td>";
-        str += "<td><span class='block-email'>" + value.userEmail + "</span></td>";
+        str += "<td>" + value.userId + "</td>";
+        str += "<td>" + value.userEmail + "</td>";
         str += "<td>" + value.userPhone + "</td>";
         str += "<td>" + (value.userAuth ? "관리자" : "사용자") + "</td>";
-        str += "<td><div class='table-data-feature'>";
-        str += `<button class="item" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="zmdi zmdi-edit"></i></button>`;
-        str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="zmdi zmdi-delete"></i></button>`;
-        str += "</div></td>";
+        str += "<td>";
+        str += "<input type='button' data-toggle='modal' data-target='#modifyModal' onclick='modalUserLoading(" + value.userIndex + ")' value='수정' />";
+        str += "<input type='button' onclick='userDelete(" + value.userIndex + ")' value='삭제' />";
+        str += "</td>";
         str += "</tr>";
+
+        history.pushState(state, "", url);
       });
 
       $("#table")
@@ -108,25 +121,6 @@ function userUpdate(req) {
     $.ajax({
       url: "/admin/usermanage",
       type: "put",
-      contentType: "application/json",
-      data: req,
-      success: function(res) {
-        userLoading();
-      },
-    });
-
-    alert("해당 회원의 패스워드를 초기화하였습니다.");
-  }
-}
-
-// 비밀번호 초기화
-function userPwReset(req) {
-  let result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
-
-  if (result) {
-    $.ajax({
-      url: "/admin/usermanage",
-      type: "patch",
       contentType: "application/json",
       data: req,
       success: function(res) {

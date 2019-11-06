@@ -5,15 +5,24 @@
   <head>
     <title>Document</title>
     <link rel="stylesheet" href="/static/css/loadingbar.css">
+
+<!-- Fontfaces CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.css" rel="stylesheet" media="all">
+
+<!-- Main CSS-->
+    <link href="/static/css/theme.css" rel="stylesheet" media="all">
   </head>
+
   <body>
     <div class="container-fluid">
-      <ol class="breadcrumb" id=headerol></ol>
+      <ol class="breadcrumb" id=headerol>
+        <li class="breadcrumb-item">관리자 페이지 : 사용자 관리</a></li>
+      </ol>
     </div>
 
   <div class="container-fluid">
 		<div class="row">
-			<div class="col-3">
+			<div class="col-2">
 				<div class="card">
 					<div class="card-header">
 						<b>조직도</b>
@@ -24,19 +33,22 @@
 				</div>
 			</div>
   
-    <div class="col-9">
+    <div class="col-10">
       <div class="card">
         <div class="card-header">
           <b>사용자 관리</b>
 
-        <input type="button" data-toggle="modal" data-target="#insertModal" value="사용자 추가" />
+        <input type="button" class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#insertModal" value="사용자 추가"></input>
       </div>
 
-    <div class="card-body">
-      <table id="table" class="table table-hover table-mc-light-blue" style="text-align: center;">
+    <div class="table-responsive table-responsive-data2">
+      <table id="table" class="table table-data2">
       <thead>
         <tr>
-          <th><input type="checkbox" name="userCheck" value="all" /></th>
+          <th><label class="au-checkbox">
+              <input type="checkbox">
+              <span class="au-checkmark"></span>
+          </label></th>
           <th style="display:none;">번호</th>
           <th>이름</th>
           <th>지점</th>
@@ -51,10 +63,7 @@
 
       <tbody id="body"></tbody>
       </table>
-
-        <div id = "Progress_Loading">
-          <img src="/static/pic/loading.gif"/>
-        </div>
+      
       <div id="page">
       </div>
     </div>
@@ -63,5 +72,6 @@
 
     <%@include file="userManageModal.jsp"%>
     <script src="/static/js/adminUserManage.js">
+
   </body>
 </html>
