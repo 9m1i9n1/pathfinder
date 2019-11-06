@@ -39,10 +39,11 @@ public class AdminBranchController {
 
 	@Autowired
 	AdminUserService adminUserService;
-	
+
 	// branch create
 	@PostMapping("")
-	public Header<AdminBranchResponse> branchCreate(@RequestBody @Valid AdminBranchRequest request, BindingResult bindingResult) {
+	public Header<AdminBranchResponse> branchCreate(@RequestBody @Valid AdminBranchRequest request,
+			BindingResult bindingResult) {
 		System.out.println(request);
 		return adminBranchService.create(request);
 	}
