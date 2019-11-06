@@ -61,16 +61,13 @@ function treeLoading() {
     .bind("changed.jstree", function(e, data) {
       var data = data.instance.get_node(data.selected);
 
-      var id = data.id;
-      var node = data.node;
-
       if (data.children.length > 0) {
         $("#jstree")
           .jstree(true)
           .toggle_node(data);
       }
 
-      getUser(id, 0);
+      getUser(data.id, 0);
     })
     .bind("open_node.jstree", function(e, data) {
       var nodesToKeepOpen = [];
