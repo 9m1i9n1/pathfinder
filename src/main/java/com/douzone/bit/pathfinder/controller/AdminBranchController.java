@@ -25,7 +25,6 @@ import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
-import com.douzone.bit.pathfinder.service.TreeService;
 
 @RestController
 @RequestMapping("/admin/branchmanage")
@@ -36,9 +35,6 @@ public class AdminBranchController {
 
 	@Autowired
 	AdminUserService adminUserService;
-
-	@Autowired
-	TreeService treeService;
 	
 	// branch create
 	@PostMapping("")

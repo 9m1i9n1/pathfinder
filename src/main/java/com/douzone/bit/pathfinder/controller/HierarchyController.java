@@ -51,10 +51,21 @@ public class HierarchyController {
 		return hierarchyService.readCompany();
 	}
 
-	@GetMapping("/userlist.do")
-	public Header<List<AdminUserResponse>> userList(@RequestParam("id") String id,
+	@GetMapping(value = "/userlist.do", params = {"id"})
+	public Header<List<AdminUserResponse>> userList(
+			@RequestParam("id") String id,
 			@PageableDefault(size = 10) Pageable pageable) {
 
 		return adminUserService.list(id, pageable);
+	}
+	
+	@GetMapping(value = "/userlist.do", params = {"id", "searchType", "searchValue"})
+	public Header<List<AdminUserResponse>> userList(
+			@RequestParam("id") String id,
+			@RequestParam("searchType") String searchType,
+			@RequestParam("searchValue") String searchValue,
+			@PageableDefault(size = 10) Pageable pageable) {
+
+		return adminUserService.search(id, searchType, searchValue, pageable);
 	}
 }

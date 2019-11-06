@@ -73,25 +73,27 @@ public class AdminUserService {
     String nodeType = treeId[0];
     Long nodeIndex = Long.parseLong(treeId[1]);
 
-    Page<UserTb> users = null;
-
-    switch (nodeType) {
-    case "company":
-      users = userRepository.findAll(pageable);
-      break;
-
-    case "area":
-      List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(nodeIndex));
-      users = userRepository.findByBranchIn(branchs, pageable);
-      break;
-
-    case "branch":
-      users = userRepository.findByBranch(branchRepository.getOne(nodeIndex), pageable);
-      break;
-
-    default:
-      return Header.ERROR("잘못된 TreeIndex 입니다.");
-    }
+//    Page<UserTb> users = null;
+//
+//    switch (nodeType) {
+//    case "company":
+//      users = userRepository.findAll(pageable);
+//      break;
+//
+//    case "area":
+//      List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(nodeIndex));
+//      users = userRepository.findByBranchIn(branchs, pageable);
+//      break;
+//
+//    case "branch":
+//      users = userRepository.findByBranch(branchRepository.getOne(nodeIndex), pageable);
+//      break;
+//
+//    default:
+//      return Header.ERROR("잘못된 TreeIndex 입니다.");
+//    }
+	  
+	Page<UserTb> users = mappingUser(nodeType, nodeIndex, "", "", pageable);
 
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
 
@@ -102,9 +104,21 @@ public class AdminUserService {
     return Header.OK(userResponseList, pagination);
   }
 
-  public Header<List<AdminUserResponse>> search(Pageable pageable) {
+  public Header<List<AdminUserResponse>> search(String id, String type, String value, Pageable pageable) {
 
-    return null;
+	    String treeId[] = id.split(":");
+	    String nodeType = treeId[0];
+	    Long nodeIndex = Long.parseLong(treeId[1]);
+	    
+	    Page<UserTb> users = mappingUser(nodeType, nodeIndex, type, value, pageable);
+
+	    List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
+
+	    Pagination pagination = Pagination.builder().totalPages(users.getTotalPages())
+	        .totalElements(users.getTotalElements()).currentPage(users.getNumber())
+	        .currentElements(users.getNumberOfElements()).nodeType(nodeType).nodeIndex(nodeIndex).build();
+
+	    return Header.OK(userResponseList, pagination);
   }
 
   // 유저 비밀번호 초기화
@@ -131,6 +145,54 @@ public class AdminUserService {
       userRepository.delete(user);
       return Header.OK();
     }).orElseGet(() -> Header.ERROR("데이터 없음"));
+  }
+  
+  // 검색 Type별 분기
+  public Page<UserTb> mappingUser(String nodeType, Long nodeIndex, String type, 
+		  String value, Pageable pageable) {
+
+	    Page<UserTb> users = null;
+	    
+	    String searchValue = "%" + value + "%";
+
+	    switch (nodeType) {
+		    case "company":
+		    	if (type.equals("name")) {
+		    		users = userRepository.findByUserNameLike(searchValue, pageable);
+		    	} else if(type.equals("position")) {
+		    		users = userRepository.findByUserPositionLike(searchValue, pageable);
+		    	} else {
+			    	users = userRepository.findAll(pageable);
+		    	}
+	
+		    	break;
+	
+		    case "area":
+		    	List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(nodeIndex));
+		    	
+		    	if (type.equals("name")) {
+		    		users = userRepository.findByBranchInAndUserNameLike(branchs, searchValue, pageable);
+		    	} else if(type.equals("position")) {
+		    		users = userRepository.findByBranchInAndUserPositionLike(branchs, searchValue, pageable);
+		    	} else {
+			    	users = userRepository.findByBranchIn(branchs, pageable);
+		    	}
+		    	
+		    	break;
+	
+		    case "branch":
+		    	if (type.equals("name")) {
+		    		users = userRepository.findByBranchAndUserNameLike(branchRepository.getOne(nodeIndex), searchValue, pageable);
+		    	} else if(type.equals("position")) {
+		    		users = userRepository.findByBranchAndUserPositionLike(branchRepository.getOne(nodeIndex), searchValue, pageable);
+		    	} else {
+			    	users = userRepository.findByBranch(branchRepository.getOne(nodeIndex), pageable);
+		    	}
+	
+		    	break;
+	    }
+	    
+	  return users;
   }
 
   // Response 데이터 파싱
