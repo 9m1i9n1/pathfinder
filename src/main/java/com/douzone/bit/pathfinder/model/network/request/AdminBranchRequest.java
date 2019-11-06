@@ -34,5 +34,4 @@ public class AdminBranchRequest {
   
   private Long areaIndex;
   
-  
 }

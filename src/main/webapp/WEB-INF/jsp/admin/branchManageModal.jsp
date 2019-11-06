@@ -55,7 +55,13 @@
 						</div>
 					</div>
 
-
+					<div class="form-group row">
+						<label for="b7" class="col-sm-2 col-form-label-sm"> 지역</label>
+						<div class="col-sm-10">
+							<input readonly type="text" id="branch_Area" name="areaIndex">
+						</div>
+					</div>
+					
 					<div class="form-group row">
 						<label for="b6" class="col-sm-2 col-form-label-sm"> 전화번호</label>
 						<div class="col-sm-10">
@@ -63,21 +69,7 @@
 						</div>
 					</div>
 
-					<div class="form-group row">
-						<label for="b7" class="col-sm-2 col-form-label-sm"> 지역</label>
-						<div class="col-sm-10">
-							<select class="selectpicker" name="areaIndex">
-								<option value=1>경기도</option>
-								<option value=2>강원도</option>
-								<option value=3>충청남도</option>
-								<option value=4>충청북도</option>
-								<option value=5>경상북도</option>
-								<option value=6>경상남도</option>
-								<option value=7>전라남도</option>
-								<option value=8>전라북도</option>
-							</select>
-						</div>
-					</div>
+
 					<input hidden type="text" name="branchLat"> <input hidden
 						type="text" name="branchLng">
 

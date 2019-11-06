@@ -43,9 +43,7 @@ public class AdminBranchController {
 	// branch create
 	@PostMapping("")
 	public Header<AdminBranchResponse> branchCreate(@RequestBody AdminBranchRequest request) {
-
 		System.out.println(request);
-
 		return adminBranchService.create(request);
 	}
 
