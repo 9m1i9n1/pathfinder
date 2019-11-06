@@ -3,6 +3,7 @@ package com.douzone.bit.pathfinder.repository;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,4 +30,10 @@ public interface BranchRepository extends JpaRepository<BranchTb, Long> {
 	@Query(value = "select b.branchIndex, b.branchName from BranchTb b where area = ?1")
 	public List<Object> findValueByArea(AreaTb area);
 
+	
+	public Page<BranchTb> findByBranchAddrLike(String branchAddr, Pageable pageable);
+	public Page<BranchTb> findByBranchNameLike(String branchName, Pageable pageable);
+	public Page<BranchTb> findByArea(AreaTb area, Pageable pageable);
+
+	
 }
