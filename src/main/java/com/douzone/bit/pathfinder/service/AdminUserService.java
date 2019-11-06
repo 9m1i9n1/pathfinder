@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
@@ -29,6 +31,12 @@ public class AdminUserService {
 
   @Autowired
   private AreaRepository areaRepository;
+
+  public Header<AdminUserResponse> read(Long id) {
+    Optional<UserTb> optional = userRepository.findById(id);
+
+    return optional.map(user -> response(user)).map(Header::OK).orElseGet(() -> Header.ERROR("데이터 없음"));
+  }
 
   // 유저 등록 서비스
   public Header<AdminUserResponse> create(AdminUserRequest request) {
@@ -59,15 +67,37 @@ public class AdminUserService {
   }
 
   // 유저 리스트
-  public Header<List<AdminUserResponse>> list(Pageable pageable) {
+  public Header<List<AdminUserResponse>> list(String id, Pageable pageable) {
 
-    Page<UserTb> users = userRepository.findAll(pageable);
+    String treeId[] = id.split(":");
+    String nodeType = treeId[0];
+    Long nodeIndex = Long.parseLong(treeId[1]);
+
+    Page<UserTb> users = null;
+
+    switch (nodeType) {
+    case "company":
+      users = userRepository.findAll(pageable);
+      break;
+
+    case "area":
+      List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(nodeIndex));
+      users = userRepository.findByBranchIn(branchs, pageable);
+      break;
+
+    case "branch":
+      users = userRepository.findByBranch(branchRepository.getOne(nodeIndex), pageable);
+      break;
+
+    default:
+      return Header.ERROR("잘못된 TreeIndex 입니다.");
+    }
 
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
 
     Pagination pagination = Pagination.builder().totalPages(users.getTotalPages())
         .totalElements(users.getTotalElements()).currentPage(users.getNumber())
-        .currentElements(users.getNumberOfElements()).build();
+        .currentElements(users.getNumberOfElements()).nodeType(nodeType).nodeIndex(nodeIndex).build();
 
     return Header.OK(userResponseList, pagination);
   }
@@ -78,14 +108,17 @@ public class AdminUserService {
   }
 
   // 유저 비밀번호 초기화
-  public Header<AdminUserResponse> update(Long id) {
-
-    Optional<UserTb> optional = userRepository.findById(id);
+  public Header<AdminUserResponse> update(AdminUserRequest request) {
+    Optional<UserTb> optional = userRepository.findById(request.getUserIndex());
 
     return optional.map(user -> {
-      user.setUserPw("12345");
+
+      user.setUserName(request.getUserName()).setUserEmail(request.getUserEmail()).setUserPhone(request.getUserPhone())
+          .setUserPosition(request.getUserPosition()).setUserAuth(request.getUserAuth())
+          .setBranch(branchRepository.getOne(request.getBranchIndex()));
+
       return user;
-    }).map(updatedUser -> userRepository.save(updatedUser)).map(updatedUser -> response(updatedUser)).map(Header::OK)
+    }).map(user -> userRepository.save(user)).map(user -> response(user)).map(Header::OK)
         .orElseGet(() -> Header.ERROR("데이터 없음"));
   }
 
@@ -105,8 +138,9 @@ public class AdminUserService {
 
     AdminUserResponse adminUserResponse = AdminUserResponse.builder().userIndex(user.getUserIndex())
         .userId(user.getUserId()).userName(user.getUserName()).userEmail(user.getUserEmail())
-        .userPhone(user.getUserPhone()).branchName(user.getBranch().getBranchName())
-        .userPosition(user.getUserPosition()).build();
+        .userPhone(user.getUserPhone()).branchIndex(user.getBranch().getBranchIndex())
+        .branchName(user.getBranch().getBranchName()).areaIndex(user.getBranch().getArea().getAreaIndex())
+        .userPosition(user.getUserPosition()).userAuth(user.getUserAuth()).build();
 
     return adminUserResponse;
   }

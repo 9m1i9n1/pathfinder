@@ -1,0 +1,5 @@
+.scrollable {
+	posotion: relative;
+	overflow-y : auto;
+	max-height : 100%;
+}

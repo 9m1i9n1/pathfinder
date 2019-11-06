@@ -24,7 +24,9 @@
       var buttonNum = this.options.buttonNum;
       var content = [];
       content.push("<ul>");
-      content.push("<li class='xl-prevPage'>이전</li>");
+      if (pageNum !== 1 && pageNum !== 0){
+    	  content.push("<li class='xl-prevPage'>이전</li>");
+      }
 
       // 보여줄 버튼개수보다 페이지 버튼 수가 작으면 모두 보여줌
       if (pageNum <= buttonNum) {
@@ -91,7 +93,9 @@
           content.push("<li>" + pageNum + "</li>");
         }
       }
-      content.push("<li class='xl-nextPage'>다음</li>");
+      if (pageNum !== 1 && pageNum !== 0){
+    	  content.push("<li class='xl-nextPage'>다음</li>");
+      }
       content.push("</ul>");
       me.element.html(content.join(""));
       // DOM 재생성 후 매번 button 사용 금지 여부

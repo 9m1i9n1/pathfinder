@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.entity.UserTb;
+import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
+import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
+import com.douzone.bit.pathfinder.service.AdminUserService;
 import com.douzone.bit.pathfinder.service.HierarchyService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -29,6 +33,9 @@ public class HierarchyController {
 	@Autowired
 	HierarchyService hierarchyService;
 
+	@Autowired
+	AdminUserService adminUserService;
+
 	@GetMapping({ "", "/" })
 	public ModelAndView getHierarchy() {
 
@@ -38,19 +45,16 @@ public class HierarchyController {
 		return mv;
 	}
 
-	@GetMapping("/gettree.do")
-	public JsonArray getHierarchyChild(
-			@RequestParam(value = "id", required = false, defaultValue = "#") String id) {
+	@GetMapping("/treelist.do")
+	public Header<HierarchyResponse> treeList() {
 
-		return (id.equals("#")) ? hierarchyService.areaRead() :
-			hierarchyService.branchRead(id);
+		return hierarchyService.readCompany();
 	}
-	
-	@GetMapping("/getuser.do")
-	public JsonObject getUser(
-			@RequestParam("id") String id,
-			@PageableDefault Pageable pageable) {
-		
-		return hierarchyService.userRead(id, pageable);
+
+	@GetMapping("/userlist.do")
+	public Header<List<AdminUserResponse>> userList(@RequestParam("id") String id,
+			@PageableDefault(size = 10) Pageable pageable) {
+
+		return adminUserService.list(id, pageable);
 	}
 }

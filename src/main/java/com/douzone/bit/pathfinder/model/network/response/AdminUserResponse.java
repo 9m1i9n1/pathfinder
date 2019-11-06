@@ -33,5 +33,9 @@ public class AdminUserResponse {
 
   private Boolean userAuth;
 
+  private Long branchIndex;
+
   private String branchName;
+
+  private Long areaIndex;
 }
