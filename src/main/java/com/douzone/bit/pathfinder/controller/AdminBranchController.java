@@ -60,7 +60,6 @@ public class AdminBranchController {
 	public ModelAndView branchManage() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/branchManage");
-
 		return mv;
 	}
 

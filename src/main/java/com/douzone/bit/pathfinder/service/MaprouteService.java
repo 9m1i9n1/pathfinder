@@ -3,18 +3,26 @@ package com.douzone.bit.pathfinder.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.RouteDTO;
+import com.douzone.bit.pathfinder.model.entity.UserTb;
+import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
+import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.service.algorithm.Recursive;
 import com.douzone.bit.pathfinder.service.algorithm.createMap;
 
 @Service
 public class MaprouteService {
+	Logger logger = LoggerFactory.getLogger(MaprouteService.class);
 
 	@SuppressWarnings({ "rawtypes" })
 	public List<RouteDTO> tryCalc(ArrayList<Map> list) {
@@ -47,15 +55,23 @@ public class MaprouteService {
 	BranchRepository testDao;
 	
 	//list
-	public List<BranchTb> search() {
-		
+	public  Header<List<AdminBranchResponse>> search() {
 		   List<BranchTb> branchs = testDao.findAll();
-	        
-		
-		 // List<BranchTb> branchList = branchs.stream() .collect(Collectors.toList());
-		 
-	            
-	        return branchs;
-		
+		   
+		   List<AdminBranchResponse> branchList = branchs.stream().map(branch -> response(branch))
+					.collect(Collectors.toList());
+		   
+		   return Header.OK(branchList);
+	}
+	
+	  // Response 데이터 파싱
+	private AdminBranchResponse response(BranchTb branch) {
+		AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder().branchIndex(branch.getBranchIndex())
+				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner())
+				.branchValue(branch.getBranchValue()).branchAddr(branch.getBranchAddr())
+				.branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
+				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
+				.areaIndex(branch.getArea().getAreaIndex()).build();
+		return adminBranchResponse;
 	}
 }
