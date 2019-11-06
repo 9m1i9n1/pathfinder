@@ -1,8 +1,6 @@
 package com.douzone.bit.pathfinder.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.RouteDTO;
+import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.service.MaprouteService;
 
 @RestController
@@ -30,7 +30,7 @@ public class MaprouteController {
 
 	@RequestMapping(value = "/maproutesend")
 	public List<RouteDTO> test(@RequestBody Map<String, Object> map, Model model) throws Exception {
-
+		
 		// 넘어온 것은 jsonObject이다!!
 		// 그리고 그 jsonObject의 key값이 data이고
 		// value값이 우리가 값을 만들어 넣어준(amu)객체들이 담겨있는 "배열" 이다.
@@ -39,18 +39,30 @@ public class MaprouteController {
 		@SuppressWarnings("unchecked")
 		ArrayList<Map> list = new ArrayList<Map>(((ArrayList<Map>)map.get("data")));
 		
-			return MaprouteService.tryCalc(list);
+		System.out.println("asdasdsdaasdsadasdasd" + list);
+		return MaprouteService.tryCalc(list);
 	}
 	
   @GetMapping({"","/"})
-  public ModelAndView search() {
+  public ModelAndView routeMapView() {
 	  ModelAndView mv = new ModelAndView();
-	  List<BranchTb> b = MaprouteService.search();
-	  mv.addObject("datalist", b);
 	  mv.setViewName("/maproute");
-	  
 	  return mv;
 
+  }
+  
+  @GetMapping({"/search"})
+  public Header<List<AdminBranchResponse>> search() {
+	  
+//	  Map<String, Object> map = new HashMap<String, Object>();
+//	  map.put("list",  map);
+//	  System.out.println(map.isEmpty());
+//	  mv.addObject("dat1aist", b);
+	  //json형태의 객체들을 가지고있는 리스트를 반환
+	  //null인 이유가 받을 때 json으로 못받아서
+//	  Header.OK(b)
+	  
+	  return MaprouteService.search();
   }
 }
 

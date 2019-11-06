@@ -1,3 +1,64 @@
+$(document).ready(function() {
+	branchlist();
+	
+	$("#allDataTable tr").click(
+			function() {
+				console.log("하이염");
+				selectRouteStr = "";
+				selectRouteCnt = 0;
+
+				// 현재 클릭된 Row(<tr>)
+				var tr = $(this);
+				console.log("티알입니다.",tr);
+				var td = tr.children();
+				
+				var branch_name = td.eq(0).text().trim();
+				var branch_value = td.eq(1).text().trim();
+				var branch_lat = td.eq(2).text().trim();
+				var branch_lng = td.eq(3).text().trim();
+				if (arr.indexOf(branch_name) == -1) {
+					arr.push(branch_name);
+					if (arr.length > 0) {
+						routecnt++;
+						$.each(arr, function(i) {
+							selectRouteCnt++;
+							if (selectRouteCnt == 1)
+								selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
+									'<td>' + '출발지' + '</td>' +
+									'<td>' + (i + 1) + '</td>' + 
+									'<td>' + arr[i] + '</td>' + 
+									'</tr>';
+							else
+								selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
+								'<td>' + '경유지' + '</td>' + 
+								'<td>' + (i + 1) + '</td>' + 
+								'<td>' + arr[i] + '</td>' +
+								'</tr>';
+						});
+					}
+				} else {
+					routecnt--;
+					arr.splice(arr.indexOf(branch_name), 1);
+					$.each(arr, function(i) {
+						selectRouteCnt++;
+						if (selectRouteCnt == 1)
+							selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
+								'<td>' + '출발지' + '</td>' +
+								'<td>' + (i + 1) + '</td>' + 
+								'<td>' + arr[i] + '</td>' + 
+								'</tr>';
+						else
+							selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
+							'<td>' + '경유지' + '</td>' + 
+							'<td>' + (i + 1) + '</td>' + 
+							'<td>' + arr[i] + '</td>' +
+							'</tr>';
+					});
+				}
+				$("#selectRoute").html(selectRouteStr);
+			});
+});
+
 var tbody;
 var orgBColor = '#ffffff';
 var route = new Array();
@@ -30,9 +91,6 @@ var bool_routed = false;
 function HighLightTR(target, backColor) {
 	tbody = target.parentNode;
 	trs = tbody.getElementsByTagName('tr');
-	console.log(target);
-	console.log(tbody);
-	console.log(trs);
 	/* 기존 경로결과를 초기화하고 남아있던 Marker 출력. */
 	if (bool_routed){
 		bool_routed = false;
@@ -83,12 +141,11 @@ function HighLightTR(target, backColor) {
 		if (route.length == 0 && trs[i] == target) {
 			trs[i].style.backgroundColor = 'rgb(45, 180, 0)';
 			route.push(target);
-
 			branchObject = new Object;
-			branchObject.branch_name = target.childNodes[1].innerHTML;
-			branchObject.branch_value = target.childNodes[3].innerHTML;
-			branchObject.branch_lat = target.childNodes[5].innerHTML;
-			branchObject.branch_lng = target.childNodes[7].innerHTML;
+			branchObject.branch_name = target.childNodes[0].innerHTML.trim();
+			branchObject.branch_value = target.childNodes[1].innerHTML.trim();
+			branchObject.branch_lat = target.childNodes[2].innerHTML.trim();
+			branchObject.branch_lng = target.childNodes[3].innerHTML.trim();
 			branchObjectDataArray.push(branchObject);
 			
 			/* 위경도정보추가 */
@@ -123,10 +180,10 @@ function HighLightTR(target, backColor) {
 				trs[i].style.backgroundColor = backColor;
 
 				branchObject = new Object();
-				branchObject.branch_name = target.childNodes[1].innerHTML;
-				branchObject.branch_value = target.childNodes[3].innerHTML;
-				branchObject.branch_lat = target.childNodes[5].innerHTML;
-				branchObject.branch_lng = target.childNodes[7].innerHTML;
+				branchObject.branch_name = target.childNodes[0].innerHTML.trim();
+				branchObject.branch_value = target.childNodes[1].innerHTML.trim();
+				branchObject.branch_lat = target.childNodes[2].innerHTML.trim();
+				branchObject.branch_lng = target.childNodes[3].innerHTML.trim();
 				branchObjectDataArray.push(branchObject);
 				route.push(target);
 				
@@ -171,14 +228,16 @@ $(function() {
 		return test;
 	}
 	
-	$("#submitroute").click(
+	$("#submitroute").click(	
 		function() {
+			console.log($("#allDataTable #2"));
+			
 			if (routecnt <= 2) {
 				alert("출발지와 목적지를 포함한 경로가 세개 이상이어야 합니다.");
 			} else if (routecnt > 15) {
 				alert("경유지가 너무 MP염");
 			} else {
-						var str = "출발";
+				var str = "출발";
 				$.ajax({
 					url : "/maproute/maproutesend",
 					type : 'post',
@@ -230,11 +289,15 @@ $(function() {
 	})
 })
 
+
+
 $(function () {
 		tdArr = new Array(); // 배열 선언
 		// 테이블의 Row 클릭시 값 가져오기
-		$("#allDataTable tr").click(
+		
+		$("#allDataTable").find("#2").click(
 				function() {
+					console.log("하이염");
 					selectRouteStr = "";
 					selectRouteCnt = 0;
 
@@ -242,11 +305,11 @@ $(function () {
 					var tr = $(this);
 					console.log("티알입니다.",tr);
 					var td = tr.children();
-
-					var branch_name = td.eq(0).text();
-					var branch_value = td.eq(1).text();
-					var branch_lat = td.eq(2).text();
-					var branch_lng = td.eq(3).text();
+					
+					var branch_name = td.eq(0).text().trim();
+					var branch_value = td.eq(1).text().trim();
+					var branch_lat = td.eq(2).text().trim();
+					var branch_lng = td.eq(3).text().trim();
 					if (arr.indexOf(branch_name) == -1) {
 						arr.push(branch_name);
 						if (arr.length > 0) {
@@ -288,6 +351,7 @@ $(function () {
 					}
 					$("#selectRoute").html(selectRouteStr);
 				});
+		
 			})
 // 맵을 클릭할 때마다 포인트를 add해주는 ajax를 만들어야함.
 
@@ -344,4 +408,84 @@ function cancelRoute(target) {
 
 		}
 	}
+}
+
+// 검색버튼
+$('#btnSearch').click(function(e){
+	e.preventDefault();
+	var url = "";    
+	url = url + "?searchType=branchName";
+	url = url + "&keyword=" + $('#keyword').val();
+	branchsearch(url);
+});
+
+// 검색뷰
+function branchsearch(searchUrl, searchpage=0) {
+	$.ajax({
+		type : "GET",
+		url : "/admin/branchmanage/search" + searchUrl +"&page=" +searchpage ,
+		contentType : 'application/json',
+		success : function(res) {
+			var str = "";
+			$.each(res.data,function(key, value) {
+				str += '<tr><td>'+ value.branchIndex + '</td>';
+				str += '<td>' + value.area +'</td>';
+				str += '<td>' + value.branchName +'</td>';
+				str += '<td>' + value.branchOwner +'</td>';
+				str += '<td>' + value.branchValue +'</td>'
+				str += '<td>' + value.branchAddr +'</td>';
+				str	+= '<td>' + value.branchPhone + '</td>';
+				str += "<td>" + `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`;
+				str += '<button onclick="branchdelete('+ value.branchIndex +' , '+ value.branchName +')">삭제</button></td>'
+				str += '</tr>';
+				});
+			$("#tableListBody").html(str);
+			var buttonAll = "";
+			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
+			$("#seachAll").html(buttonAll);
+			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
+		}
+	});
+}
+/*
+ * <tr onclick="event.cancelBubble=true"> <th onclick="event.cancelBubble=true"
+ * style="background-color: #fafafa; text-align: center;">branch_name(지역이름)</th>
+ * <th onclick="event.cancelBubble=true" style="display: none">branch_value(교통비)</th>
+ * <th onclick="event.cancelBubble=true" style="display: none">branch_lat(위도)</th>
+ * <th onclick="event.cancelBubble=true" style="display: none">branch_lng(경도)</th>
+ * </tr>
+ * 
+ * <c:forEach items="${datalist}" var="list">
+ * <tr onClick="HighLightTR(this, 'rgb(201, 204, 153)');"> <td>${list.branchName}</td>
+ * <td style="display: none">${list.branchValue}</td>
+ * <td style="display: none">${list.branchLat}</td> <td style="display: none">${list.branchLng}</td>
+ * </tr> </c:forEach>
+ */
+
+// 첫페이지
+function branchlist(selectPage) {
+	$.ajax({
+		url : "/maproute/search",
+		type: "get",
+		async: false,
+		success : function(res) {
+			console.log(res);
+			var str = '<tr onclick=\"event.cancelBubble=true\">';
+				str += '<th onclick=\"event.cancelBubble=true\"';
+				str += 'style=\"background-color: #fafafa; text-align: center;\">branch_name(지역이름)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_value(교통비)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lat(위도)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lng(경도)</th>';
+			$.each(res.data, function(key, value) {
+				console.log(key)
+				str += '<tr id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
+				str += '<td>'+ value.branchName+ '</td>';
+				str += '<td style=\"display: none\"> '+ value.branchValue+ '</td>';
+				str += '<td style=\"display: none\">'+ value.branchLat+ '</td>';
+				str += '<td style=\"display: none\">'+ value.branchLng+ '</td>';
+				str += '</tr>'
+			});
+			$("#allDataTable").html(str);
+		}
+	})
 }

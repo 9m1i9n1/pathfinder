@@ -36,30 +36,14 @@
 			<div class="col-3">
 				<div class="card">
 					<div class="card-header">
-						<b>검색</b> <input type="text"
-							style="text-align: center; width: 60%" /> <input type="button"
-							value="확인" style="text-align: right; width: 20%" />
+						<b>검색</b> 
+						<input type="text" style="text-align: center; width: 60%" /> 
+						<input type="button" name="btnSearch" id="btnSearch" value="확인" style="text-align: right; width: 20%"/>
 					</div>
 
 					<div id="tableEdge">
 						<table class="table table-hover table-mc-light-blue"
 							style="text-align: center;" id="allDataTable">
-							<tr onclick="event.cancelBubble=true">
-								<th onclick="event.cancelBubble=true"
-									style="background-color: #fafafa; text-align: center;">branch_name(지역이름)</th>
-								<th onclick="event.cancelBubble=true" style="display: none">branch_value(교통비)</th>
-								<th onclick="event.cancelBubble=true" style="display: none">branch_lat(위도)</th>
-								<th onclick="event.cancelBubble=true" style="display: none">branch_lng(경도)</th>
-							</tr>
-
-							<c:forEach items="${datalist}" var="list">
-								<tr onClick="HighLightTR(this, 'rgb(201, 204, 153)');">
-									<td>${list.branchName}</td>
-									<td style="display: none">${list.branchValue}</td>
-									<td style="display: none">${list.branchLat}</td>
-									<td style="display: none">${list.branchLng}</td>
-								</tr>
-							</c:forEach>
 						</table>
 					</div>
 					<div class="card">
