@@ -1,6 +1,8 @@
 package com.douzone.bit.pathfinder.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,9 +103,14 @@ public class AdminBranchService {
 	}
 
 	 public Header<HierarchyResponse> readCompany() {
+		 Map<String, Boolean> state = new HashMap<String, Boolean>();
+
+			state.put("opened", true);
+			state.put("selected", true);
 		 HierarchyResponse company = HierarchyResponse.builder()
 		    .id("company:1")
-		    .text("더존마트")
+		    .text("더존 공장")
+		    .state(state)
 		    .children(readArea())
 		    .build();
 
