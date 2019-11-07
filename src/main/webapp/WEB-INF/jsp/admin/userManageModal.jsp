@@ -120,7 +120,7 @@
           <div class="form-group row">
             <label for="userPw" class="col-sm-3 col-form-label-sm">비밀번호</label>
             <div class="col-sm-8">
-              <input type="button" class="form-control" id="userPw" name="userPw"/>
+              <input type="button" class="btn btn-danger" id="userPw" name="userPw" value="초기화"/>
             </div>
           </div>
 
