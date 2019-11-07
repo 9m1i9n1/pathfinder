@@ -60,10 +60,10 @@ public class AdminUserController {
 
   // 회원 리스트 불러오기
   @GetMapping("/userlist.do")
-  public Header<List<AdminUserResponse>> userList(@RequestParam("id") String id,
+  public Header<List<AdminUserResponse>> userList(@RequestParam("treeId") String treeId,
       @PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
-    return adminUserService.list(id, pageable);
+    return adminUserService.list(treeId, pageable);
   }
 
   // 트리 불러오기

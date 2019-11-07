@@ -17,23 +17,29 @@ $(document).ready(function() {
 });
 
 // 페이지 버튼 생성
-function pageButton(nodeType, nodeIndex, totalPages, currentPage) {
+function pageButton(totalPages, currentPage) {
   $("#page").paging({
     nowPage: currentPage + 1,
     pageNum: totalPages,
     buttonNum: 12,
-    callback: function(currentPage) {
-      userLoading(`${nodeType}:${nodeIndex}`, currentPage - 1);
+    callback: function() {
+      treeId = sessionStorage.getItem("treeId");
+      sessionStorage.setItem("page", currentPage);
+
+      userLoading(treeId, currentPage - 1);
     },
   });
 }
 
 // 유저 로딩
-function userLoading(treeId, selectPage) {
+function userLoading() {
+  let treeId = sessionStorage.getItem("treeId");
+  let selectPage = sessionStorage.getItem("page");
+
   $.ajax({
     url: "/admin/usermanage/userlist.do",
     type: "get",
-    data: { id: treeId, page: selectPage },
+    data: { treeId: treeId, page: selectPage },
     success: function(res) {
       let str = "";
       let count = "";
@@ -65,7 +71,7 @@ function userLoading(treeId, selectPage) {
 
       $("#headerol").html(count);
 
-      pageButton(res.pagination.nodeType, res.pagination.nodeIndex, res.pagination.totalPages, res.pagination.currentPage);
+      pageButton(res.pagination.totalPages, res.pagination.currentPage);
     },
   });
 }
@@ -91,8 +97,8 @@ function userDelete(userIndex) {
     $.ajax({
       url: "/admin/usermanage/" + userIndex,
       type: "delete",
-      success: function(res) {
-        userLoading(`branch:${res.data.branchIndex}`, 0);
+      success: function() {
+        userLoading();
       },
     });
 
@@ -102,21 +108,15 @@ function userDelete(userIndex) {
 
 // 회원 수정
 function userUpdate(req) {
-  let result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
-
-  if (result) {
-    $.ajax({
-      url: "/admin/usermanage",
-      type: "put",
-      contentType: "application/json",
-      data: req,
-      success: function(res) {
-        userLoading();
-      },
-    });
-
-    alert("해당 회원의 패스워드를 초기화하였습니다.");
-  }
+  $.ajax({
+    url: "/admin/usermanage",
+    type: "put",
+    contentType: "application/json",
+    data: req,
+    success: function(res) {
+      userLoading();
+    },
+  });
 }
 
 // 비밀번호 초기화
@@ -360,13 +360,16 @@ function treeLoading() {
     .on("changed.jstree", function(e, data) {
       let selectData = data.instance.get_node(data.selected);
 
+      sessionStorage.setItem("treeId", selectData.id);
+      sessionStorage.setItem("page", 0);
+
       if (selectData.children.length > 0) {
         $("#jstree")
           .jstree(true)
           .toggle_node(selectData);
       }
 
-      userLoading(selectData.id, 0);
+      userLoading();
     })
     .bind("open_node.jstree", function(e, data) {
       let nodesToKeepOpen = [];
