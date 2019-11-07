@@ -16,15 +16,12 @@ function pageButton(nodeType, nodeIndex, totalPages, currentPage, type) {
   });
 }
 
-function userSearch(treeId, selectPage) {
-	$("#searchButton").unbind().bind('click', function (e) {		
-		getSearch(treeId, selectPage);
-	});
-}
-
-function getSearch(treeId, selectPage) {
+function getSearch() {
 	let type = $("select#searchType").val();
 	let value = $("#searchInput").val();
+	
+	let treeId = sessionStorage.getItem("treeId");
+	let selectPage = sessionStorage.getItem("pageNum");
 	
 	$.ajax({
 		url : "/hierarchy/userlist.do",
@@ -116,15 +113,20 @@ function treeLoading() {
           .toggle_node(selectedData);
       }
 
+      sessionStorage.setItem("treeId", selectedData.id);
+      sessionStorage.setItem("pageNum", 0);
+      
       getUser(selectedData.id, 0);
-      userSearch(selectedData.id, 0);
     })
-    .bind("open_node.jstree", function(e, data) {
+    .bind("select_node.jstree", function(e, data) {
       let nodesToKeepOpen = [];
 
       nodesToKeepOpen.push(data.node.id);
-      nodesToKeepOpen.push(data.node.parent);
-
+      
+      for (let i = 0; i < data.node.parents.length; i++) {
+    	  nodesToKeepOpen.push(data.node.parents[i]);
+      }
+      
       $(".jstree-node").each(function() {
         if (nodesToKeepOpen.indexOf(this.id) === -1) {
           $("#jstree")
