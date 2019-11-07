@@ -34,7 +34,7 @@
 								<option value="position">직책</option>
 							</select>
 							<input id = "searchInput"/>
-							<button type="button" id = "searchButton">검색</button>
+							<button type="button" id = "searchButton" onclick = "getSearch()">검색</button>
 						</div>
 					</div>
 					<div class="card-body">
