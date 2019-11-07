@@ -22,11 +22,10 @@ function pageButton(totalPages, currentPage) {
     nowPage: currentPage + 1,
     pageNum: totalPages,
     buttonNum: 12,
-    callback: function() {
-      treeId = sessionStorage.getItem("treeId");
-      sessionStorage.setItem("page", currentPage);
+    callback: function(page) {
+      sessionStorage.setItem("page", page - 1);
 
-      userLoading(treeId, currentPage - 1);
+      userLoading();
     },
   });
 }
