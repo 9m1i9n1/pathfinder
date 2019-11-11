@@ -234,7 +234,7 @@ $(function() {
 			
 			if (routecnt <= 2) {
 				alert("출발지와 목적지를 포함한 경로가 세개 이상이어야 합니다.");
-			} else if (routecnt > 15) {
+			} else if (routecnt > 100) {
 				alert("경유지가 너무 MP염");
 			} else {
 				var str = "출발";
