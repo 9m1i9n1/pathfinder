@@ -13,10 +13,12 @@
 
 </head>
 <body>
+
 	<div class="container-fluid">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">관리자 페이지</li>
 			<li class="breadcrumb-item active">지점 관리</li>
+		
 		</ol>
 	</div>
 	<div class="container-fluid">
@@ -35,8 +37,8 @@
 			<div class="col-9">
 				<div class="card">
 					<div class="card-header">
-					<input type="button" data-toggle="modal"
-								data-target="#insertModal" value="지점 추가" />
+						<input type="button" data-toggle="modal"
+							data-target="#insertModal" value="지점 추가" />
 						<div class="form-group row justify-content-end">
 							<div class="w100" style="padding-right: 10px">
 								<select class="form-control form-control-sm" name="searchType"
