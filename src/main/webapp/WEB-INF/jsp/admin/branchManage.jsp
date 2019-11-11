@@ -27,13 +27,13 @@
 				<div class="card">
 					<div class="card-header">
 						<b>조직도</b>
-					</div>
-					<div class="card-body">
-						<div id="jstree"></div>
+						<div class="card-body">
+							<div id="jstree"></div>
+						</div>
 					</div>
 				</div>
-			</div>
 
+<<<<<<< HEAD
 			<div class="col-9">
 				<div class="card">
 					<div class="card-header">
@@ -56,33 +56,34 @@
 									id="btnSearch">검색</button>
 							</div>
 
+
+							</div>
 						</div>
+
+						<table class="table table-hover table-mc-light-blue"
+							style="text-align: center; boarder: 1px solid #ddddd"
+							id="tableTest">
+							<thead>
+								<tr>
+									<th>지역</th>
+									<th>지점명</th>
+									<th>지점장</th>
+									<th>주소</th>
+									<th>전화번호</th>
+									<th>운반비</th>
+									<th>수정/삭제</th>
+								</tr>
+							</thead>
+							<tbody id="tableListBody">
+							</tbody>
+						</table>
+
+
+						<div id="page"></div>
 					</div>
-
-					<table class="table table-hover table-mc-light-blue"
-						style="text-align: center; boarder: 1px solid #ddddd"
-						id="tableTest">
-						<thead>
-							<tr>
-								<th>지역</th>
-								<th>지점명</th>
-								<th>지점장</th>
-								<th>주소</th>
-								<th>전화번호</th>
-								<th>운반비</th>
-								<th>수정/삭제</th>
-							</tr>
-						</thead>
-						<tbody id="tableListBody">
-						</tbody>
-					</table>
-
-
-					<div id="page"></div>
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 <%@include file="branchManageModal.jsp"%>
 <script src="/static/js/adminBranchManage.js">

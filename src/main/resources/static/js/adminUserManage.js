@@ -1,15 +1,3 @@
-// 로딩바 구현
-$(document)
-  .ready(function() {
-    $("#Progress_Loading").hide();
-  })
-  .ajaxStart(function() {
-    $("#Progress_Loading").show();
-  })
-  .ajaxStop(function() {
-    $("#Progress_Loading").hide();
-  });
-
 // 첫 시작
 $(document).ready(function() {
   // userLoading();
@@ -17,28 +5,33 @@ $(document).ready(function() {
 });
 
 // 페이지 버튼 생성
-function pageButton(nodeType, nodeIndex, totalPages, currentPage) {
+function pageButton(totalPages, currentPage) {
   $("#page").paging({
     nowPage: currentPage + 1,
     pageNum: totalPages,
     buttonNum: 12,
-    callback: function(currentPage) {
-      userLoading(`${nodeType}:${nodeIndex}`, currentPage - 1);
+    callback: function(page) {
+      sessionStorage.setItem("page", page - 1);
+
+      userLoading();
     },
   });
 }
 
 // 유저 로딩
-function userLoading(treeId, selectPage) {
+function userLoading() {
+  let treeId = sessionStorage.getItem("treeId");
+  let selectPage = sessionStorage.getItem("page");
+
   $.ajax({
     url: "/admin/usermanage/userlist.do",
     type: "get",
-    data: { id: treeId, page: selectPage },
+    data: { treeId: treeId, page: selectPage },
     success: function(res) {
       let str = "";
       let count = "";
 
-      count += `<li class="breadcrumb-item">관리자 페이지</a></li>`;
+      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
       count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
@@ -65,7 +58,10 @@ function userLoading(treeId, selectPage) {
 
       $("#headerol").html(count);
 
-      pageButton(res.pagination.nodeType, res.pagination.nodeIndex, res.pagination.totalPages, res.pagination.currentPage);
+      pageButton(res.pagination.totalPages, res.pagination.currentPage);
+    },
+    error: function(e) {
+      alert("서버가 응답하지 않습니다!");
     },
   });
 }
@@ -89,10 +85,11 @@ function userDelete(userIndex) {
 
   if (result) {
     $.ajax({
-      url: "/admin/usermanage/" + userIndex,
+      url: "/admin/usermanage",
       type: "delete",
-      success: function(res) {
-        userLoading(`branch:${res.data.branchIndex}`, 0);
+      data: { userIndex: userIndex },
+      success: function() {
+        userLoading();
       },
     });
 
@@ -102,40 +99,28 @@ function userDelete(userIndex) {
 
 // 회원 수정
 function userUpdate(req) {
-  let result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
-
-  if (result) {
-    $.ajax({
-      url: "/admin/usermanage",
-      type: "put",
-      contentType: "application/json",
-      data: req,
-      success: function(res) {
-        userLoading();
-      },
-    });
-
-    alert("해당 회원의 패스워드를 초기화하였습니다.");
-  }
+  $.ajax({
+    url: "/admin/usermanage",
+    type: "put",
+    contentType: "application/json",
+    data: req,
+    success: function(res) {
+      userLoading();
+    },
+  });
 }
 
 // 비밀번호 초기화
-function userPwReset(req) {
-  let result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
-
-  if (result) {
-    $.ajax({
-      url: "/admin/usermanage",
-      type: "patch",
-      contentType: "application/json",
-      data: req,
-      success: function(res) {
-        userLoading();
-      },
-    });
-
-    alert("해당 회원의 패스워드를 초기화하였습니다.");
-  }
+function userPwReset(userIndex) {
+  $.ajax({
+    url: "/admin/usermanage",
+    type: "patch",
+    contentType: "application/json",
+    data: userIndex,
+    success: function(res) {
+      userLoading();
+    },
+  });
 }
 
 function modalUserLoading(userIndex) {
@@ -302,6 +287,20 @@ $("#ModifyBtn").click(function() {
   alert("해당 유저 정보를 수정하였습니다.");
 });
 
+// 모달 내 패스워드 초기화 버튼 클릭
+$("#modifyModal")
+  .find("#userPw")
+  .click(function() {
+    let userIndex = $("#userModifyForm").find("#userIndex");
+
+    let result = confirm("해당 회원의 비밀번호를 초기화하시겠습니까?");
+
+    if (result) {
+      userPwReset(userIndex);
+      alert("해당 회원의 패스워드를 초기화하였습니다.");
+    }
+  });
+
 // 폼 내용 Json으로 변경
 $.fn.serializeObject = function() {
   let result = {};
@@ -360,13 +359,16 @@ function treeLoading() {
     .on("changed.jstree", function(e, data) {
       let selectData = data.instance.get_node(data.selected);
 
+      sessionStorage.setItem("treeId", selectData.id);
+      sessionStorage.setItem("page", 0);
+
       if (selectData.children.length > 0) {
         $("#jstree")
           .jstree(true)
           .toggle_node(selectData);
       }
 
-      userLoading(selectData.id, 0);
+      userLoading();
     })
     .bind("open_node.jstree", function(e, data) {
       let nodesToKeepOpen = [];

@@ -51,6 +51,7 @@ public class Recursive {
 
 		// Run the solver
 		int state = 1 << START_NODE;
+		
 		int[][] memo = new int[N][1 << N];
 		Integer[][] prev = new Integer[N][1 << N];
 		minTourCost = tsp(START_NODE, state, memo, prev);
@@ -66,12 +67,11 @@ public class Recursive {
 			state = nextState;
 			index = nextIndex;
 		}
-//		tour.add(START_NODE);
+		tour.add(START_NODE);
 		ranSolver = true;
 	}
 
 	private int tsp(int i, int state, int[][] memo, Integer[][] prev) {
-
 		// Done this tour. Return cost of going back to start node.
 		if (state == FINISHED_STATE)
 			return distance[0][START_NODE];
