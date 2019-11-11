@@ -102,14 +102,16 @@ function branchsearch(searchUrl, searchpage=0) {
 		success : function(res) {
 			var str = "";
 			$.each(res.data,function(key, value) {
-				str += '<tr><td>' + value.area +'</td>';
+				str += `<tr class="tr-shadow"><td>` + value.area +'</td>';
 				str += '<td>' + value.branchName +'</td>';
 				str += '<td>' + value.branchOwner +'</td>';
 				str += '<td>' + value.branchAddr +'</td>';
 				str	+= '<td>' + value.branchPhone + '</td>';
 				str += '<td>' + value.branchValue+" 원" +'</td>';
-				str += "<td>" + `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`;
-				str += '<button onclick="branchdelete('+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')">삭제</button></td>'+ '</tr>`;
+				str += "<td><div class='table-data-feature'>"
+				str	+= `<button class="item" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="zmdi zmdi-edit"></i><button>`;
+				str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="zmdi zmdi-delete"></i></button>`;
+				str += `</td>'+ '</tr>`;
 				});
 			$("#tableListBody").html(str);
 			var buttonAll = "";
@@ -233,14 +235,15 @@ function branchlist(selectPage) {
 		success : function(res) {
 				var str = "";
 			$.each(res.data, function(key, value) {
-				str += '<tr><td>'+ value.area+ '</td>';
+				str += `<tr class="tr-shadow"><td>`+ value.area+ '</td>';
 				str += '<td>'+ value.branchName+ '</td>';
 				str += '<td>'+ value.branchOwner+ '</td>';
 				str += '<td>'+ value.branchAddr+ '</td>';
 				str += '<td>'+ value.branchPhone+ '</td>';
 				str += '<td>'+ value.branchValue+ " 원"+'</td>';
-				str += "<td>"+ `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`
-				+ '<button onclick="branchdelete('+ value.branchIndex +`, '`+ value.branchName + `')">삭제</button></td>'+ '</tr>`;
+				str += "<td><div class='table-data-feature'>";
+				str += `<button class="item" data-toggle='modal' data-target='#updateModal' data-placement="top" title="Edit" value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="zmdi zmdi-edit"></i></button>`;
+				str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '`+ value.branchName + `')"><i class="zmdi zmdi-delete"></button></div></td>'+ '</tr>`;
 			});
 			$("#tableListBody").html(str);
 			pageButton(res.pagination.totalPages, res.pagination.currentPage);
