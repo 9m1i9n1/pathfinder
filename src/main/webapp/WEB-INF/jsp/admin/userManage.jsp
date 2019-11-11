@@ -39,9 +39,12 @@
 			<div class="col-10">
 				<div class="card">
 					<div class="card-header">
-						<b>사용자 관리</b> <input type="button"
-							class="au-btn au-btn-icon au-btn--green au-btn--small"
-							data-toggle="modal" data-target="#insertModal" value="사용자 추가"></input>
+						<b>사용자 목록</b>
+
+						<button class="au-btn au-btn-icon au-btn--blue au-btn--small"
+							data-toggle="modal" data-target="#insertModal">
+							<i class="zmdi zmdi-plus"></i>사용자 추가
+						</button>
 					</div>
 
 					<div class="table-responsive table-responsive-data2">

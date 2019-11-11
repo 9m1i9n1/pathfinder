@@ -86,8 +86,8 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="InsertBtn">등록</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" id="InsertBtn"><i class="fa fa-dot-circle-o"></i>등록</button>
       </div>
     </div>
   </div>
@@ -114,6 +114,13 @@
             <label for="userId" class="col-sm-3 col-form-label-sm">아이디</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" id="userId" name="userId" readonly />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="userPw" class="col-sm-3 col-form-label-sm">비밀번호</label>
+            <div class="col-sm-8">
+              <input type="button" class="btn btn-danger" id="userPw" name="userPw" value="초기화"/>
             </div>
           </div>
 
