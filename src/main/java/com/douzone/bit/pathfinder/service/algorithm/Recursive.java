@@ -51,9 +51,7 @@ public class Recursive {
 		
 		// Run the solver
 		int state = 1 << START_NODE;
-		System.out.println("N = " + N);
-		System.out.println("1<<N" + (1<<N));
-		System.out.println(N* (1<<N));
+		
 		int[][] memo = new int[N][1 << N];
 		Integer[][] prev = new Integer[N][1 << N];
 		System.out.println(N);
@@ -70,13 +68,12 @@ public class Recursive {
 			state = nextState;
 			index = nextIndex;
 		}
-//		tour.add(START_NODE);
+		tour.add(START_NODE);
 		ranSolver = true;
 		
 	}
 
 	private int tsp(int i, int state, int[][] memo, Integer[][] prev) {
-
 		// Done this tour. Return cost of going back to start node.
 //		System.out.println(cnt++);
 		if (state == FINISHED_STATE)

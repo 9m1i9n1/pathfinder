@@ -1,15 +1,3 @@
-// 로딩바 구현
-$(document)
-  .ready(function() {
-    $("#Progress_Loading").hide();
-  })
-  .ajaxStart(function() {
-    $("#Progress_Loading").show();
-  })
-  .ajaxStop(function() {
-    $("#Progress_Loading").hide();
-  });
-
 // 첫 시작
 $(document).ready(function() {
   // userLoading();
@@ -17,47 +5,50 @@ $(document).ready(function() {
 });
 
 // 페이지 버튼 생성
-function pageButton(nodeType, nodeIndex, totalPages, currentPage) {
+function pageButton(totalPages, currentPage) {
   $("#page").paging({
     nowPage: currentPage + 1,
     pageNum: totalPages,
     buttonNum: 12,
-    callback: function(currentPage) {
-      console.log(`${nodeType}:${nodeIndex}`);
+    callback: function(page) {
+      sessionStorage.setItem("page", page - 1);
 
-      userLoading(`${nodeType}:${nodeIndex}`, currentPage - 1);
+      userLoading();
     },
   });
 }
 
 // 유저 로딩
-function userLoading(treeId, selectPage) {
+function userLoading() {
+  let treeId = sessionStorage.getItem("treeId");
+  let selectPage = sessionStorage.getItem("page");
+
   $.ajax({
     url: "/admin/usermanage/userlist.do",
     type: "get",
-    data: { id: treeId, page: selectPage },
+    data: { treeId: treeId, page: selectPage },
     success: function(res) {
-      var str = "";
-      var count = "";
+      let str = "";
+      let count = "";
 
-      count += `<li class="breadcrumb-item">관리자 페이지</a></li>`;
+      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
       count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
-        str += "<tr>";
-        str += "<td><input type='checkbox' name='userCheck' value='" + value.userIndex + "' /></td>";
+        str += "<tr class='tr-shadow'>";
+        str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
         str += "<td style='display:none;'>" + value.userIndex + "</td>";
         str += "<td>" + value.userName + "</td>";
         str += "<td>" + value.branchName + "</td>";
         str += "<td>" + value.userPosition + "</td>";
-        str += "<td>" + value.userId + "</td>";
-        str += "<td>" + value.userEmail + "</td>";
+        str += "<td class='desc'>" + value.userId + "</td>";
+        str += "<td><span class='block-email'>" + value.userEmail + "</span></td>";
         str += "<td>" + value.userPhone + "</td>";
-        str += "<td>" + value.userAuth + "</td>";
-        str += "<td>";
-        str += "<input type='button' data-toggle='modal' data-target='#modifyModal' onclick='modalUserLoading(" + value.userIndex + ")' value='수정' />";
-        str += "<input type='button' onclick='userDelete(" + value.userIndex + ")' value='삭제' />";
-        str += "</td>";
+        str += "<td>" + (value.userAuth ? "관리자" : "사용자") + "</td>";
+        str += "<td><div class='table-data-feature'>";
+        str += `<button class="item" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="zmdi zmdi-edit"></i></button>`;
+        str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="zmdi zmdi-delete"></i></button>`;
+        str += "</div></td>";
         str += "</tr>";
       });
 
@@ -67,7 +58,10 @@ function userLoading(treeId, selectPage) {
 
       $("#headerol").html(count);
 
-      pageButton(res.pagination.nodeType, res.pagination.nodeIndex, res.pagination.totalPages, res.pagination.currentPage);
+      pageButton(res.pagination.totalPages, res.pagination.currentPage);
+    },
+    error: function(e) {
+      alert("서버가 응답하지 않습니다!");
     },
   });
 }
@@ -87,14 +81,15 @@ function userCreate(req) {
 
 // 회원 삭제
 function userDelete(userIndex) {
-  var result = confirm("회원 정보를 삭제하시겠습니까?");
+  let result = confirm("회원 정보를 삭제하시겠습니까?");
 
   if (result) {
     $.ajax({
-      url: "/admin/usermanage/" + userIndex,
+      url: "/admin/usermanage",
       type: "delete",
-      success: function(res) {
-        userLoading(`branch:${res.data.branchIndex}`, 0);
+      data: { userIndex: userIndex },
+      success: function() {
+        userLoading();
       },
     });
 
@@ -104,21 +99,28 @@ function userDelete(userIndex) {
 
 // 회원 수정
 function userUpdate(req) {
-  var result = confirm("회원의 비밀번호를 초기화하시겠습니까?");
+  $.ajax({
+    url: "/admin/usermanage",
+    type: "put",
+    contentType: "application/json",
+    data: req,
+    success: function(res) {
+      userLoading();
+    },
+  });
+}
 
-  if (result) {
-    $.ajax({
-      url: "/admin/usermanage",
-      type: "put",
-      contentType: "application/json",
-      data: req,
-      success: function(res) {
-        userLoading();
-      },
-    });
-
-    alert("해당 회원의 패스워드를 초기화하였습니다.");
-  }
+// 비밀번호 초기화
+function userPwReset(userIndex) {
+  $.ajax({
+    url: "/admin/usermanage",
+    type: "patch",
+    contentType: "application/json",
+    data: userIndex,
+    success: function(res) {
+      userLoading();
+    },
+  });
 }
 
 function modalUserLoading(userIndex) {
@@ -158,7 +160,7 @@ function modalUserLoading(userIndex) {
 
 // insertModal 열릴 시
 $("#insertModal").on("shown.bs.modal", function() {
-  var name = $(this).get(0).id;
+  let name = $(this).get(0).id;
 
   $("#myInput").trigger("focus");
   areaLoading(`#${name}`);
@@ -168,8 +170,8 @@ $("#insertModal").on("shown.bs.modal", function() {
 $("#insertModal").on("hidden.bs.modal", function() {
   $("#userCreateForm")[0].reset();
 
-  var name = $(this).get(0).id;
-  var str = "<option value='' disabled selected>선택</option>";
+  let name = $(this).get(0).id;
+  let str = "<option value='' disabled selected>선택</option>";
 
   $(`#${name}`)
     .find("#areaIndex")
@@ -188,7 +190,7 @@ $("#insertModal").on("hidden.bs.modal", function() {
 
 // modifyModal 열릴 시
 $("#modifyModal").on("shown.bs.modal", function() {
-  var name = $(this).get(0).id;
+  let name = $(this).get(0).id;
 
   $("#myInput").trigger("focus");
   // areaLoading(`#${name}`);
@@ -198,7 +200,7 @@ $("#modifyModal").on("shown.bs.modal", function() {
 $("#insertModal")
   .find("#areaIndex")
   .change(function() {
-    var selected = $(this)
+    let selected = $(this)
       .children("option:selected")
       .val();
 
@@ -208,7 +210,7 @@ $("#insertModal")
 $("#modifyModal")
   .find("#areaIndex")
   .change(function() {
-    var selected = $(this)
+    let selected = $(this)
       .children("option:selected")
       .val();
 
@@ -222,7 +224,7 @@ function areaLoading(name) {
     type: "get",
     async: false,
     success: function(res) {
-      var str = "";
+      let str = "";
 
       str += "<option value='' disabled selected>선택</option>";
 
@@ -252,7 +254,7 @@ function branchLoading(name, selected) {
     data: { areaIndex: selected },
     async: false,
     success: function(res) {
-      var str = "";
+      let str = "";
 
       str += "<option value='' disabled selected>선택</option>";
 
@@ -271,7 +273,7 @@ function branchLoading(name, selected) {
 
 // 모달 내 등록 버튼 클릭
 $("#InsertBtn").click(function() {
-  var req = $("#userCreateForm").serializeObject();
+  let req = $("#userCreateForm").serializeObject();
   userCreate(req);
 
   alert("새로운 유저를 등록하였습니다.");
@@ -279,17 +281,31 @@ $("#InsertBtn").click(function() {
 
 // 모달 내 수정 버튼 클릭
 $("#ModifyBtn").click(function() {
-  var req = $("#userModifyForm").serializeObject();
+  let req = $("#userModifyForm").serializeObject();
   userUpdate(req);
 
   alert("해당 유저 정보를 수정하였습니다.");
 });
 
+// 모달 내 패스워드 초기화 버튼 클릭
+$("#modifyModal")
+  .find("#userPw")
+  .click(function() {
+    let userIndex = $("#userModifyForm").find("#userIndex");
+
+    let result = confirm("해당 회원의 비밀번호를 초기화하시겠습니까?");
+
+    if (result) {
+      userPwReset(userIndex);
+      alert("해당 회원의 패스워드를 초기화하였습니다.");
+    }
+  });
+
 // 폼 내용 Json으로 변경
 $.fn.serializeObject = function() {
-  var result = {};
-  var extend = function(i, element) {
-    var node = result[element.name];
+  let result = {};
+  let extend = function(i, element) {
+    let node = result[element.name];
     if ("undefined" !== typeof node && node !== null) {
       if ($.isArray(node)) {
         node.push(element.value);
@@ -324,7 +340,7 @@ function treeLoading() {
 
   // jstree 값 받아오기
   function treeData(id) {
-    var result = "";
+    let result = "";
 
     $.ajax({
       url: "/admin/usermanage/treelist.do",
@@ -341,18 +357,21 @@ function treeLoading() {
 
   $("#jstree")
     .on("changed.jstree", function(e, data) {
-      var data = data.instance.get_node(data.selected);
+      let selectData = data.instance.get_node(data.selected);
 
-      if (data.children.length > 0) {
+      sessionStorage.setItem("treeId", selectData.id);
+      sessionStorage.setItem("page", 0);
+
+      if (selectData.children.length > 0) {
         $("#jstree")
           .jstree(true)
-          .toggle_node(data);
+          .toggle_node(selectData);
       }
 
-      userLoading(data.id, 0);
+      userLoading();
     })
     .bind("open_node.jstree", function(e, data) {
-      var nodesToKeepOpen = [];
+      let nodesToKeepOpen = [];
 
       nodesToKeepOpen.push(data.node.id);
       nodesToKeepOpen.push(data.node.parent);
