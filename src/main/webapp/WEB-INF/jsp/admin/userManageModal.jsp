@@ -29,7 +29,7 @@
           <div class="form-group row">
             <label for="userEmail" class="col-sm-3 col-form-label-sm">이메일</label>
             <div class="col-sm-8">
-              <input type="userEmail" class="form-control" id="userEmail" name="userEmail"required/>
+              <input type="text" class="form-control" id="userEmail" name="userEmail"required/>
             </div>
             <div class="formCheck" id="userEmailCheck"></div>
           </div>
@@ -90,13 +90,14 @@
             </div>
             <div class="formCheck" id="userAuthCheck"></div>
           </div>
-        </form>
-      </div>
-      <div class="formCheck" id="serverFormCheck"></div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-success" id="InsertBtn"><i class="fa fa-dot-circle-o"></i>등록</button>
+          <div class="formCheck" id="serverFormCheck"></div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+            <input type="submit" class="btn btn-success" id="InsertBtn" value="등록">
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -146,7 +147,7 @@
           <div class="form-group row">
             <label for="userEmail" class="col-sm-3 col-form-label-sm">이메일</label>
             <div class="col-sm-8">
-              <input type="userEmail" class="form-control" id="userEmail" name="userEmail" required/>
+              <input type="text" class="form-control" id="userEmail" name="userEmail" required/>
             </div>
             <div class="formCheck" id="userEmailCheck"></div>
           </div>

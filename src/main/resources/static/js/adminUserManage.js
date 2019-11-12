@@ -149,7 +149,7 @@ function userUpdate(req) {
     data: req,
     success: function(res) {
       if (res.resultCode === "ERROR") {
-        insertModal.find(".formError").html("[log]잘못된 값을 요청하였습니다.");
+        modifyModal.find(".formError").html("잘못된 값을 요청하였습니다.");
 
         for (var key in res.description) {
           console.log(key + " : " + res.description[key]);
@@ -339,10 +339,10 @@ function branchLoading(modal, selected) {
 }
 
 // 모달 내 등록 버튼 클릭
-$("#InsertBtn").click(function() {
-  let req = $("#userCreateForm").serializeObject();
-  userCreate(req);
-});
+// $("#InsertBtn").click(function() {
+//   let req = $("#userCreateForm").serializeObject();
+//   userCreate(req);
+// });
 
 // 모달 내 수정 버튼 클릭
 $("#ModifyBtn").click(function() {
@@ -510,7 +510,17 @@ function treeLoading() {
 }
 
 //! validation ====================
+
+jQuery.validator.addMethod(
+  "selectcheck",
+  function(value) {
+    return value != "선택";
+  },
+  "값을 선택해주세요."
+);
+
 const userValid = $("#userCreateForm").validate({
+  onkeyup: false,
   rules: {
     userId: {
       required: true,
@@ -527,16 +537,16 @@ const userValid = $("#userCreateForm").validate({
     },
     userPhone: {
       required: true,
-      pattern: /^(?:(010-?\d{4})|(01[1|6|7|8|9]-?\d{3,4}))-?\d{4}$/
+      pattern: /^\d{3}-\d{4}-\d{4}$/
     },
     areaIndex: {
-      required: true
+      selectcheck: "선택"
     },
     branchIndex: {
-      required: true
+      selectcheck: "선택"
     },
     userPosition: {
-      required: true
+      selectcheck: "선택"
     },
     userAuth: {
       required: true
@@ -565,16 +575,34 @@ const userValid = $("#userCreateForm").validate({
       pattern: "연락처 형식이 맞지 않습니다."
     },
     areaIndex: {
-      required: "지역을 선택하세요."
+      required: "지역을 선택하세요.",
+      selectcheck: "지역을 선택하세요."
     },
     branchIndex: {
-      required: "지점을 선택하세요."
+      required: "지점을 선택하세요.",
+      selectcheck: "지점을 선택하세요."
     },
     userPosition: {
-      required: "직책을 선택하세요."
+      required: "직책을 선택하세요.",
+      selectcheck: "직책을 선택하세요."
     },
     userAuth: {
       required: "권한을 선택하세요."
+    },
+    invalidHandler: function(form, validator) {
+      var errors = validator.numberOfInvalids();
+
+      if (errors) {
+        alert(validator.errorList[0].message);
+        validator.errorList[0].element.focus();
+      }
+    },
+
+    submitHandler: function(form) {
+      console.log("인서트 접속");
+
+      let req = $(form).serializeObject();
+      userCreate(req);
     }
   }
 });
