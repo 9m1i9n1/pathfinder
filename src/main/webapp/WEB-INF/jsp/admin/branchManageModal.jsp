@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<style>
+    .error {
+        color: red; font-weight: bold;
+    }
+</style>
+
 <!-- Modal -->
 <!-- 추가모달 -->
 <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
@@ -9,6 +17,12 @@
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">지점 추가</h4>
 			</div>
+<<<<<<< HEAD
+=======
+			
+			<div class="modal-body">
+				<form:form name="branchInsertform">
+>>>>>>> origin/master
 
 			<div class="modal-body">
 				<form name="branchInsertform" id="branchInsertform">
@@ -80,17 +94,20 @@
 					<input hidden type="text" name="branchLat"> <input hidden
 						type="text" name="branchLng">
 
-				</form>
+				</form:form>
 			</div>
 
 			<div class="modal-footer">
 				<input type="button" class="btn btn-default" data-dismiss="modal"
 					value="취소"> <input type="button" name="branchInsertBtn"
 					id="branchInsertBtn" class="btn btn-primary" value="등록">
+
 			</div>
 		</div>
 	</div>
 </div>
+
+<%-- data-dismiss="modal" --%>
 
 <!-- 수정 모달 -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
