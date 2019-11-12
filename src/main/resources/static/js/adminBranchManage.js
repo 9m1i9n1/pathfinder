@@ -38,6 +38,60 @@ $('#btnSearch').click(function(e){
 	url = url + "&keyword=" + $('#keyword').val();
 	branchsearch(url);
 });
+
+// 추가 유효성검사 지점명
+$('[name=branchName]').on('blur',function(){
+	var NameForm =  /^[가-힣a-zA-Z]+$/;
+	document.getElementById('branchNameVaild').innerHTML ="";
+	if(NameForm.test($('[name=branchName]').val())===false){
+		document.getElementById('branchNameVaild').innerHTML ="지점명 형식을 맞춰주세요."
+	}
+});
+
+//추가 유효성검사 지점장
+$('[name=branchOwner]').on('blur',function(){
+	var OwnerForm =  /^[가-힣a-zA-Z]+$/;
+	document.getElementById('branchOwnerVaild').innerHTML ="";
+	if(OwnerForm.test($('[name=branchOwner]').val())===false){
+		document.getElementById('branchOwnerVaild').innerHTML ="지점장 형식을 맞춰주세요."
+	}
+});
+
+//추가 유효성검사 운반비
+$('[name=branchValue]').on('blur',function(){
+	var ValueForm = /^[0-9]{4,8}$/;
+	document.getElementById('branchValueVaild').innerHTML ="";
+	if(ValueForm.test($('[name=branchValue]').val())===false){
+		document.getElementById('branchValueVaild').innerHTML ="운반비 4~8자리 사이로 입력하세요."
+	}
+});
+
+//추가 유효성검사 주소
+$('[name=branchAddr]').on('blur',function(){
+	document.getElementById('branchAddrVaild').innerHTML ="";
+	if($('[name=branchAddr]').val()==""){
+		document.getElementById('branchAddrVaild').innerHTML ="주소를 입력하지 않았습니다."
+	}
+});
+
+//추가 유효성검사 상세주소
+$('[name=branchDaddr]').on('blur',function(){
+	document.getElementById('branchDaddrVaild').innerHTML ="";
+	if($('[name=branchDaddr]').val()==""){
+		document.getElementById('branchDaddrVaild').innerHTML ="주소를 입력하지 않았습니다."
+	}
+});
+
+//추가 유효성검사 전화번호
+$('[name=branchPhone]').on('blur',function(){
+	var PhoneForm = /^\d{3}-\d{4}-\d{4}$/;
+	document.getElementById('branchPhoneVaild').innerHTML ="";
+	if(PhoneForm.test($('[name=branchPhone]').val())===false){
+		document.getElementById('branchPhoneVaild').innerHTML ="전화번호 형식을 맞춰주세요."
+	}
+});
+
+
 // 지역이름 숫자변환
 function areaNameTrans(areaIndex){
 	switch (areaIndex){
@@ -82,7 +136,7 @@ function addressFind() {
 			document.getElementById("branch_address").value = addr;
 			console.log(addr.substr(0,2))
 			document.getElementById("branch_Area").value = addr.substr(0,2);
-			document.getElementById("branch_detailAddress").focus();
+			document.getElementById('branchAddrVaild').innerHTML ="";
 		}
 	}).open();
 }
@@ -203,26 +257,20 @@ function branchInsertValid(){
         errorValue = false;
     }
 	
-	// 주소
-	if (bAddr.value == "") {
+	// 상세주소
+	if (!!bAddr.value == false) {
 		 document.getElementById('branchAddrVaild').innerHTML ="주소를 입력하지 않았습니다."
          bAddr.focus()
          errorValue = false;
      }
 	
 	// 상세주소
-	if (bDaddr.value == "") {
-		 document.getElementById('branchDaddrVaild').innerHTML ="상세주소를 입력해주세요."
+	if (!!bDaddr.value == false) {
+		 document.getElementById('branchDaddrVaild').innerHTML ="상세주소를 입력하지 않았습니다."
          bDaddr.focus()
          errorValue = false;
      }
 	
-	// 지역
-	if (bArea.value == "") {
-		 document.getElementById('branchAreaVaild').innerHTML ="지역이 맞지 않습니다!."
-         bArea.focus()
-         errorValue = false;
-     }
 	
     // 폰번호
     if (PhoneForm.test(bPhone.value)===false) {
