@@ -5,7 +5,6 @@
 <html>
 <head>
 <title>Document</title>
-<link rel="stylesheet" href="/static/css/loadingbar.css">
 
 <!-- Fontfaces CSS-->
 <link

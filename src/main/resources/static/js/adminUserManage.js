@@ -1,6 +1,5 @@
 // 첫 시작
 $(document).ready(function() {
-  // userLoading();
   treeLoading();
 });
 
@@ -14,7 +13,7 @@ function pageButton(totalPages, currentPage) {
       sessionStorage.setItem("page", page - 1);
 
       userLoading();
-    },
+    }
   });
 }
 
@@ -36,33 +35,44 @@ function userLoading() {
 
       $.each(res.data, function(key, value) {
         str += "<tr class='tr-shadow'>";
+
         str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
         str += "<td style='display:none;'>" + value.userIndex + "</td>";
         str += "<td>" + value.userName + "</td>";
         str += "<td>" + value.branchName + "</td>";
         str += "<td>" + value.userPosition + "</td>";
         str += "<td class='desc'>" + value.userId + "</td>";
-        str += "<td><span class='block-email'>" + value.userEmail + "</span></td>";
+        str +=
+          "<td><span class='block-email'>" + value.userEmail + "</span></td>";
         str += "<td>" + value.userPhone + "</td>";
         str += "<td>" + (value.userAuth ? "관리자" : "사용자") + "</td>";
+
         str += "<td><div class='table-data-feature'>";
         str += `<button class="item" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="zmdi zmdi-edit"></i></button>`;
         str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="zmdi zmdi-delete"></i></button>`;
         str += "</div></td>";
+
         str += "</tr>";
       });
 
-      $("#table")
-        .find("#body")
-        .html(str);
+      $("#table #body").html(str);
 
       $("#headerol").html(count);
 
       pageButton(res.pagination.totalPages, res.pagination.currentPage);
     },
-    error: function(e) {
-      alert("서버가 응답하지 않습니다!");
-    },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    }
   });
 }
 
@@ -74,8 +84,29 @@ function userCreate(req) {
     contentType: "application/json",
     data: req,
     success: function(res) {
-      userLoading(`branch:${res.data.branchIndex}`, 0);
+      if (res.resultCode === "ERROR") {
+        insertModal.find("#serverFormCheck").html("잘못된 값 요청");
+
+        for (var key in res.errorList) {
+          console.log(key + " : " + res.errorList[key]);
+        }
+      } else {
+        userLoading();
+        alert("새로운 유저를 등록하였습니다.");
+      }
     },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    }
   });
 }
 
@@ -91,6 +122,18 @@ function userDelete(userIndex) {
       success: function() {
         userLoading();
       },
+      error: function(request, status, error) {
+        alert(
+          "code:" +
+            request.status +
+            "\n" +
+            "message:" +
+            request.responseText +
+            "\n" +
+            "error:" +
+            error
+        );
+      }
     });
 
     alert("해당 회원을 삭제하였습니다.");
@@ -105,8 +148,29 @@ function userUpdate(req) {
     contentType: "application/json",
     data: req,
     success: function(res) {
-      userLoading();
+      if (res.resultCode === "ERROR") {
+        insertModal.find(".formError").html("[log]잘못된 값을 요청하였습니다.");
+
+        for (var key in res.description) {
+          console.log(key + " : " + res.description[key]);
+        }
+      } else {
+        userLoading();
+        alert("해당 유저 정보를 수정하였습니다.");
+      }
     },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    }
   });
 }
 
@@ -120,105 +184,82 @@ function userPwReset(userIndex) {
     success: function(res) {
       userLoading();
     },
-  });
-}
-
-function modalUserLoading(userIndex) {
-  $.ajax({
-    url: "/admin/usermanage/userread.do",
-    data: { userIndex: userIndex },
-    type: "get",
-    success: function(res) {
-      areaLoading("#modifyModal");
-
-      $("#modifyModal #userIndex").val(res.data.userIndex);
-      $("#modifyModal #userId").val(res.data.userId);
-      $("#modifyModal #userName").val(res.data.userName);
-      $("#modifyModal #userEmail").val(res.data.userEmail);
-      $("#modifyModal #userPhone").val(res.data.userPhone);
-
-      $("#modifyModal [name=userAuth][value=" + res.data.userAuth + "]").prop("checked", true);
-
-      $("#modifyModal #areaIndex")
-        .val(res.data.areaIndex)
-        .selectpicker("refresh");
-
-      branchLoading("#modifyModal", res.data.areaIndex);
-
-      $("#modifyModal #branchIndex")
-        .val(res.data.branchIndex)
-        .selectpicker("refresh");
-
-      $("#modifyModal #userPosition")
-        .val(res.data.userPosition)
-        .selectpicker("refresh");
-    },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    }
   });
 }
 
 //! Modal 관련 =======================
 
-// insertModal 열릴 시
-$("#insertModal").on("shown.bs.modal", function() {
-  let name = $(this).get(0).id;
+const insertModal = $("#insertModal");
+const modifyModal = $("#modifyModal");
 
+// insertModal 열릴 시
+insertModal.on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
-  areaLoading(`#${name}`);
+  areaLoading(insertModal);
 });
 
 // insertModal 닫힐 시
-$("#insertModal").on("hidden.bs.modal", function() {
+insertModal.on("hidden.bs.modal", function() {
   $("#userCreateForm")[0].reset();
+  insertModal.find(".formCheck").html("");
 
-  let name = $(this).get(0).id;
   let str = "<option value='' disabled selected>선택</option>";
 
-  $(`#${name}`)
+  insertModal
     .find("#areaIndex")
     .html(str)
     .selectpicker("refresh");
 
-  $(`#${name}`)
+  insertModal
     .find("#branchIndex")
     .html(str)
     .selectpicker("refresh");
 
-  $(`#${name}`)
-    .find("#userPosition")
-    .selectpicker("refresh");
+  insertModal.find("#userPosition").selectpicker("refresh");
 });
 
 // modifyModal 열릴 시
-$("#modifyModal").on("shown.bs.modal", function() {
-  let name = $(this).get(0).id;
-
+modifyModal.on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
-  // areaLoading(`#${name}`);
+});
+
+// modifyModal 닫힐 시
+modifyModal.on("hidden.bs.modal", function() {
+  $("#userCreateForm")[0].reset();
+  modifyModal.find(".formCheck").html("");
 });
 
 // 모달 내에서 지역 선택 시
-$("#insertModal")
-  .find("#areaIndex")
-  .change(function() {
-    let selected = $(this)
-      .children("option:selected")
-      .val();
+insertModal.find("#areaIndex").change(function() {
+  let selected = $(this)
+    .children("option:selected")
+    .val();
 
-    branchLoading("#insertModal", selected);
-  });
+  branchLoading(insertModal, selected);
+});
 
-$("#modifyModal")
-  .find("#areaIndex")
-  .change(function() {
-    let selected = $(this)
-      .children("option:selected")
-      .val();
+modifyModal.find("#areaIndex").change(function() {
+  let selected = $(this)
+    .children("option:selected")
+    .val();
 
-    branchLoading("#modifyModal", selected);
-  });
+  branchLoading(modifyModal, selected);
+});
 
 //모달 내 지역 로딩
-function areaLoading(name) {
+function areaLoading(modal) {
   $.ajax({
     url: "/admin/usermanage/arealist.do",
     type: "get",
@@ -228,7 +269,7 @@ function areaLoading(name) {
 
       str += "<option value='' disabled selected>선택</option>";
 
-      $(name)
+      modal
         .find("#branchIndex")
         .html(str)
         .selectpicker("refresh");
@@ -238,16 +279,28 @@ function areaLoading(name) {
         str += value[1] + "</option>";
       });
 
-      $(name)
+      modal
         .find("#areaIndex")
         .html(str)
         .selectpicker("refresh");
     },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    }
   });
 }
 
 // 모달 내 지점 로딩
-function branchLoading(name, selected) {
+function branchLoading(modal, selected) {
   $.ajax({
     url: "/admin/usermanage/branchlist.do",
     type: "get",
@@ -263,11 +316,23 @@ function branchLoading(name, selected) {
         str += value[1] + "</option>";
       });
 
-      $(name)
+      modal
         .find("#branchIndex")
         .html(str)
         .selectpicker("refresh");
     },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    }
   });
 }
 
@@ -275,31 +340,75 @@ function branchLoading(name, selected) {
 $("#InsertBtn").click(function() {
   let req = $("#userCreateForm").serializeObject();
   userCreate(req);
-
-  alert("새로운 유저를 등록하였습니다.");
 });
 
 // 모달 내 수정 버튼 클릭
 $("#ModifyBtn").click(function() {
   let req = $("#userModifyForm").serializeObject();
   userUpdate(req);
-
-  alert("해당 유저 정보를 수정하였습니다.");
 });
 
 // 모달 내 패스워드 초기화 버튼 클릭
-$("#modifyModal")
-  .find("#userPw")
-  .click(function() {
-    let userIndex = $("#userModifyForm").find("#userIndex");
+modifyModal.find("#userPw").click(function() {
+  let userIndex = $("#userModifyForm").find("#userIndex");
 
-    let result = confirm("해당 회원의 비밀번호를 초기화하시겠습니까?");
+  let result = confirm("해당 회원의 비밀번호를 초기화하시겠습니까?");
 
-    if (result) {
-      userPwReset(userIndex);
-      alert("해당 회원의 패스워드를 초기화하였습니다.");
+  if (result) {
+    userPwReset(userIndex);
+    alert("해당 회원의 패스워드를 초기화하였습니다.");
+  }
+});
+
+// 수정 폼 모달 데이터 로딩
+function modalUserLoading(userIndex) {
+  $.ajax({
+    url: "/admin/usermanage/userread.do",
+    data: { userIndex: userIndex },
+    type: "get",
+    success: function(res) {
+      modifyModal.find("#userIndex").val(res.data.userIndex);
+      modifyModal.find("#userId").val(res.data.userId);
+      modifyModal.find("#userName").val(res.data.userName);
+      modifyModal.find("#userEmail").val(res.data.userEmail);
+      modifyModal.find("#userPhone").val(res.data.userPhone);
+      modifyModal
+        .find("[name=userAuth][value=" + res.data.userAuth + "]")
+        .prop("checked", true);
+
+      areaLoading(modifyModal);
+
+      modifyModal
+        .find("#areaIndex")
+        .val(res.data.areaIndex)
+        .selectpicker("refresh");
+
+      branchLoading(modifyModal, res.data.areaIndex);
+
+      modifyModal
+        .find("#branchIndex")
+        .val(res.data.branchIndex)
+        .selectpicker("refresh");
+
+      modifyModal
+        .find("#userPosition")
+        .val(res.data.userPosition)
+        .selectpicker("refresh");
+    },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
     }
   });
+}
 
 // 폼 내용 Json으로 변경
 $.fn.serializeObject = function() {
@@ -321,6 +430,9 @@ $.fn.serializeObject = function() {
   return JSON.stringify(result);
 };
 
+//! Modal validation 관련 ==========
+function userValid() {}
+
 //! JSTREE 부분 ====================
 
 // jstree 로딩
@@ -330,12 +442,12 @@ function treeLoading() {
     core: {
       themes: {
         name: "proton",
-        reponsive: true,
+        reponsive: true
       },
       data: function(node, callback) {
         callback(treeData(node.id));
-      },
-    },
+      }
+    }
   });
 
   // jstree 값 받아오기
@@ -350,6 +462,18 @@ function treeLoading() {
       success: function(res) {
         result = res.data;
       },
+      error: function(request, status, error) {
+        alert(
+          "code:" +
+            request.status +
+            "\n" +
+            "message:" +
+            request.responseText +
+            "\n" +
+            "error:" +
+            error
+        );
+      }
     });
 
     return result;
@@ -385,3 +509,33 @@ function treeLoading() {
       });
     });
 }
+
+//! validation ====================
+function userManageValid() {}
+
+insertModal.find("#userId").blur(function() {
+  $.ajax({
+    url: "/admin/usermanage/idcheck.do",
+    type: "get",
+    data: { userId: insertModal.find("#userId").val() },
+    success: function(res) {
+      if (res.data === true) {
+        insertModal.find("#userIdCheck").html("중복된 아이디 입니다.");
+      } else {
+        insertModal.find("#userIdCheck").html("");
+      }
+    },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    }
+  });
+});

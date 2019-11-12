@@ -15,6 +15,7 @@
             <div class="col-sm-8">
               <input type="text" class="form-control" id="userId" name="userId" />
             </div>
+            <div class="formCheck" id="userIdCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -22,6 +23,7 @@
             <div class="col-sm-8">
               <input type="text" class="form-control" id="userName" name="userName"/>
             </div>
+            <div class="formCheck" id="userNameCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -29,6 +31,7 @@
             <div class="col-sm-8">
               <input type="userEmail" class="form-control" id="userEmail" name="userEmail"/>
             </div>
+            <div class="formCheck" id="userEmailCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -36,6 +39,7 @@
             <div class="col-sm-8">
               <input type="text" class="form-control" id="userPhone" name="userPhone"/>
             </div>
+            <div class="formCheck" id="userPhoneCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -44,6 +48,7 @@
               <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex">
               </select>
             </div>
+            <div class="formCheck" id="areaIndexCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -52,6 +57,7 @@
               <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex">
               </select>
             </div>
+            <div class="formCheck" id="branchIndexCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -67,6 +73,7 @@
                 <option value="임원">임원</option>
               </select>
             </div>
+            <div class="formCheck" id="userPositionCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -81,13 +88,15 @@
                 <label class="form-check-label" for="authAdmin">관리자</label>
               </div>
             </div>
+            <div class="formCheck" id="userAuthCheck"></div>
           </div>
         </form>
       </div>
+      <div class="formCheck" id="serverFormCheck"></div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-success" data-dismiss="modal" id="InsertBtn"><i class="fa fa-dot-circle-o"></i>등록</button>
+        <button type="button" class="btn btn-success" id="InsertBtn"><i class="fa fa-dot-circle-o"></i>등록</button>
       </div>
     </div>
   </div>
@@ -108,6 +117,7 @@
             <div class="col-sm-8">
               <input type="text" class="form-control" id="userIndex" name="userIndex" readonly />
             </div>
+            <div class="formCheck" id="userIndexCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -115,6 +125,7 @@
             <div class="col-sm-8">
               <input type="text" class="form-control" id="userId" name="userId" readonly />
             </div>
+            <div class="formCheck" id="userIdCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -129,6 +140,7 @@
             <div class="col-sm-8">
               <input type="text" class="form-control" id="userName" name="userName"/>
             </div>
+            <div class="formCheck" id="userNameCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -136,6 +148,7 @@
             <div class="col-sm-8">
               <input type="userEmail" class="form-control" id="userEmail" name="userEmail"/>
             </div>
+            <div class="formCheck" id="userEmailCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -143,6 +156,7 @@
             <div class="col-sm-8">
               <input type="text" class="form-control" id="userPhone" name="userPhone"/>
             </div>
+            <div class="formCheck" id="userPhoneCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -151,6 +165,7 @@
               <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex">
               </select>
             </div>
+            <div class="formCheck" id="areaIndexCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -159,6 +174,7 @@
               <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex">
               </select>
             </div>
+            <div class="formCheck" id="branchIndexCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -174,6 +190,7 @@
                 <option>임원</option>
               </select>
             </div>
+            <div class="formCheck" id="userPositionCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -188,13 +205,17 @@
                 <label class="form-check-label" for="authAdmin">관리자</label>
               </div>
             </div>
+            <div class="formCheck" id="userAuthCheck"></div>
           </div>
         </form>
       </div>
+      <div class="formCheck" id="serverFormCheck"></div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="ModifyBtn">수정</button>
+        <button type="button" class="btn btn-primary" id="ModifyBtn">수정</button>
+
+         <%-- data-dismiss="modal" --%>
       </div>
     </div>
   </div>
