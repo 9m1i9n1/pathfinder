@@ -3,13 +3,11 @@ $(document).ready(function() {
 	
 	$("#allDataTable tr").click(
 			function() {
-				console.log("하이염");
 				selectRouteStr = "";
 				selectRouteCnt = 0;
 
 				// 현재 클릭된 Row(<tr>)
 				var tr = $(this);
-				console.log("티알입니다.",tr);
 				var td = tr.children();
 				
 				var branch_name = td.eq(0).text().trim();
@@ -230,14 +228,13 @@ $(function() {
 	
 	$("#submitroute").click(	
 		function() {
-			console.log($("#allDataTable #2"));
 			
 			if (routecnt <= 2) {
 				alert("출발지와 목적지를 포함한 경로가 세개 이상이어야 합니다.");
-			} else if (routecnt > 15) {
+			} else if (routecnt > 100) {
 				alert("경유지가 너무 MP염");
 			} else {
-				var str = "출발";
+				var str = "출발 : ";
 				$.ajax({
 					url : "/maproute/maproutesend",
 					type : 'post',
@@ -258,7 +255,7 @@ $(function() {
 								 * data[i].branch_lng
 								 */
 								mapInfoData.push (L.latLng(branchObjectDataArray[i].branch_lat, branchObjectDataArray[i].branch_lng));
-								str +=	'->' + branchObjectDataArray[i].branch_name; 
+								str +=	branchObjectDataArray[i].branch_name + '->'; 
 							});
 						}
 						
@@ -274,7 +271,7 @@ $(function() {
 							    var s = parseInt(time%60);
 							    var m = parseInt(m%60);
 							    var km = (distance/1000).toFixed(1);
-							    str += "  ->  도착 <br/> 총 걸리는 시간 : " + h + "시간 " + m + "분 " + s +"초 <br/> 총 거리 : " + km +"Km";
+							    str += "  도착 <br/> 총 걸리는 시간 : " + h + "시간 " + m + "분 " + s +"초 <br/> 총 거리 : " + km +"Km";
 							    $("#finalPathDiv").html(str);
 							});
 						})
@@ -296,14 +293,12 @@ $(function () {
 		// 테이블의 Row 클릭시 값 가져오기
 		
 		$("#allDataTable").find("#2").click(
-				function() {
-					console.log("하이염");
+				function(){
 					selectRouteStr = "";
 					selectRouteCnt = 0;
 
 					// 현재 클릭된 Row(<tr>)
 					var tr = $(this);
-					console.log("티알입니다.",tr);
 					var td = tr.children();
 					
 					var branch_name = td.eq(0).text().trim();
@@ -420,56 +415,13 @@ $('#btnSearch').click(function(e){
 });
 
 // 검색뷰
-function branchsearch(searchUrl, searchpage=0) {
+function branchsearch(searchUrl, searchpage) {
 	$.ajax({
 		type : "GET",
-		url : "/admin/branchmanage/search" + searchUrl +"&page=" +searchpage ,
+		url : "/maproute/search" + searchUrl +"&page=" + 0 ,
 		contentType : 'application/json',
-		success : function(res) {
-			var str = "";
-			$.each(res.data,function(key, value) {
-				str += '<tr><td>'+ value.branchIndex + '</td>';
-				str += '<td>' + value.area +'</td>';
-				str += '<td>' + value.branchName +'</td>';
-				str += '<td>' + value.branchOwner +'</td>';
-				str += '<td>' + value.branchValue +'</td>'
-				str += '<td>' + value.branchAddr +'</td>';
-				str	+= '<td>' + value.branchPhone + '</td>';
-				str += "<td>" + `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`;
-				str += '<button onclick="branchdelete('+ value.branchIndex +' , '+ value.branchName +')">삭제</button></td>'
-				str += '</tr>';
-				});
-			$("#tableListBody").html(str);
-			var buttonAll = "";
-			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
-			$("#seachAll").html(buttonAll);
-			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
-		}
-	});
-}
-/*
- * <tr onclick="event.cancelBubble=true"> <th onclick="event.cancelBubble=true"
- * style="background-color: #fafafa; text-align: center;">branch_name(지역이름)</th>
- * <th onclick="event.cancelBubble=true" style="display: none">branch_value(교통비)</th>
- * <th onclick="event.cancelBubble=true" style="display: none">branch_lat(위도)</th>
- * <th onclick="event.cancelBubble=true" style="display: none">branch_lng(경도)</th>
- * </tr>
- * 
- * <c:forEach items="${datalist}" var="list">
- * <tr onClick="HighLightTR(this, 'rgb(201, 204, 153)');"> <td>${list.branchName}</td>
- * <td style="display: none">${list.branchValue}</td>
- * <td style="display: none">${list.branchLat}</td> <td style="display: none">${list.branchLng}</td>
- * </tr> </c:forEach>
- */
-
-// 첫페이지
-function branchlist(selectPage) {
-	$.ajax({
-		url : "/maproute/search",
-		type: "get",
 		async: false,
 		success : function(res) {
-			console.log(res);
 			var str = '<tr onclick=\"event.cancelBubble=true\">';
 				str += '<th onclick=\"event.cancelBubble=true\"';
 				str += 'style=\"background-color: #fafafa; text-align: center;\">branch_name(지역이름)</th>';
@@ -477,7 +429,35 @@ function branchlist(selectPage) {
 				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lat(위도)</th>';
 				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lng(경도)</th>';
 			$.each(res.data, function(key, value) {
-				console.log(key)
+				str += '<tr id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
+				str += '<td>'+ value.branchName+ '</td>';
+				str += '<td style=\"display: none\"> '+ value.branchValue+ '</td>';
+				str += '<td style=\"display: none\">'+ value.branchLat+ '</td>';
+				str += '<td style=\"display: none\">'+ value.branchLng+ '</td>';
+				str += '</tr>'
+			});
+			$("#allDataTable").html(str);
+//			var buttonAll = "";
+//			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
+//			$("#seachAll").html(buttonAll);
+		}
+	});
+}
+
+// 첫페이지
+function branchlist() {
+	$.ajax({
+		url : "/maproute/allData",
+		type: "get",
+		async: false,
+		success : function(res) {
+			var str = '<tr onclick=\"event.cancelBubble=true\">';
+				str += '<th onclick=\"event.cancelBubble=true\"';
+				str += 'style=\"background-color: #fafafa; text-align: center;\">branch_name(지역이름)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_value(교통비)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lat(위도)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lng(경도)</th>';
+			$.each(res.data, function(key, value) {
 				str += '<tr id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
 				str += '<td>'+ value.branchName+ '</td>';
 				str += '<td style=\"display: none\"> '+ value.branchValue+ '</td>';

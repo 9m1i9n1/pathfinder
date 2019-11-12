@@ -8,12 +8,15 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.RouteDTO;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
@@ -55,7 +58,7 @@ public class MaprouteService {
 	BranchRepository testDao;
 	
 	//list
-	public  Header<List<AdminBranchResponse>> search() {
+	public  Header<List<AdminBranchResponse>> allData() {
 		   List<BranchTb> branchs = testDao.findAll();
 		   
 		   List<AdminBranchResponse> branchList = branchs.stream().map(branch -> response(branch))
@@ -73,5 +76,21 @@ public class MaprouteService {
 				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
 				.areaIndex(branch.getArea().getAreaIndex()).build();
 		return adminBranchResponse;
+	}
+
+	public Header<List<AdminBranchResponse>> search(String searchType, String keyword) {
+		// TODO Auto-generated method stub
+		List<BranchTb> branchs = null;
+		List<AdminBranchResponse> branchResponseList = null;
+		switch (searchType) {
+		case "branchName":{
+			branchs = testDao.findByBranchNameLike("%" + keyword + "%");
+			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
+			break;
+		}
+		default:
+			break;
+		}
+		return Header.OK(branchResponseList);
 	}
 }
