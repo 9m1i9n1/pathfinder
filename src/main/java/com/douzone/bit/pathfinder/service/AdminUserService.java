@@ -66,9 +66,9 @@ public class AdminUserService {
     return Header.OK(areaRepository.findAreaName());
   }
 
-  public Header<Boolean> idCheck(String userId) {
-    
-    return Header.OK(userRepository.existsByuserId(userId));
+  public Boolean idCheck(String userId) {
+
+    return !(userRepository.existsByuserId(userId));
   }
 
   // 유저 리스트

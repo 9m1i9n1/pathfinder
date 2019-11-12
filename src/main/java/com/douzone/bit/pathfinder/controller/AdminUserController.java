@@ -71,7 +71,9 @@ public class AdminUserController {
   }
 
   @GetMapping("/idcheck.do")
-  public Header<Boolean> idCheck(@RequestParam String userId) {
+  public Boolean idCheck(@RequestParam String userId) {
+    System.out.println("접속");
+
     return adminUserService.idCheck(userId);
   }
 

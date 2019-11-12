@@ -228,6 +228,8 @@ insertModal.on("hidden.bs.modal", function() {
     .selectpicker("refresh");
 
   insertModal.find("#userPosition").selectpicker("refresh");
+
+  userValid.resetForm();
 });
 
 // modifyModal 열릴 시
@@ -430,9 +432,6 @@ $.fn.serializeObject = function() {
   return JSON.stringify(result);
 };
 
-//! Modal validation 관련 ==========
-function userValid() {}
-
 //! JSTREE 부분 ====================
 
 // jstree 로딩
@@ -511,31 +510,71 @@ function treeLoading() {
 }
 
 //! validation ====================
-function userManageValid() {}
-
-insertModal.find("#userId").blur(function() {
-  $.ajax({
-    url: "/admin/usermanage/idcheck.do",
-    type: "get",
-    data: { userId: insertModal.find("#userId").val() },
-    success: function(res) {
-      if (res.data === true) {
-        insertModal.find("#userIdCheck").html("중복된 아이디 입니다.");
-      } else {
-        insertModal.find("#userIdCheck").html("");
-      }
+const userValid = $("#userCreateForm").validate({
+  rules: {
+    userId: {
+      required: true,
+      rangelength: [3, 15],
+      remote: "/admin/usermanage/idcheck.do"
     },
-    error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
+    userName: {
+      required: true,
+      rangelength: [2, 10]
+    },
+    userEmail: {
+      required: true,
+      email: true
+    },
+    userPhone: {
+      required: true,
+      pattern: /^(?:(010-?\d{4})|(01[1|6|7|8|9]-?\d{3,4}))-?\d{4}$/
+    },
+    areaIndex: {
+      required: true
+    },
+    branchIndex: {
+      required: true
+    },
+    userPosition: {
+      required: true
+    },
+    userAuth: {
+      required: true
     }
-  });
+  },
+  messages: {
+    userId: {
+      required: "아이디를 입력하세요.",
+      rangelength: jQuery.validator.format(
+        "아이디는 {0}자 이상 {1}자 이하로 입력해주세요."
+      ),
+      remote: "이미 존재하는 아이디입니다."
+    },
+    userName: {
+      required: "이름을 입력하세요.",
+      rangelength: jQuery.validator.format(
+        "이름은 {0}자 이상 {1}자 이하로 입력해주세요."
+      )
+    },
+    userEmail: {
+      required: "이메일을 입력하세요.",
+      email: "이메일 형식이 맞지 않습니다."
+    },
+    userPhone: {
+      required: "연락처를 입력하세요.",
+      pattern: "연락처 형식이 맞지 않습니다."
+    },
+    areaIndex: {
+      required: "지역을 선택하세요."
+    },
+    branchIndex: {
+      required: "지점을 선택하세요."
+    },
+    userPosition: {
+      required: "직책을 선택하세요."
+    },
+    userAuth: {
+      required: "권한을 선택하세요."
+    }
+  }
 });

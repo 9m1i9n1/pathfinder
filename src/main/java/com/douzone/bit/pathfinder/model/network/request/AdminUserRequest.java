@@ -24,6 +24,7 @@ public class AdminUserRequest {
 
   @NotEmpty
   @NotBlank(message = "아이디를 입력해주세요.")
+  @Length(min = 3, max = 15)
   private String userId;
 
   private String userPw;
