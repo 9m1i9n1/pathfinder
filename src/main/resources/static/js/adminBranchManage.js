@@ -5,19 +5,30 @@ $(document).ready(function() {
 // 지점추가버튼
 $('[name=branchInsertBtn]').click(function() {
 	var formData = $('[name=branchInsertform]').serializeObject()
-	let Barea = formData.areaIndex;
-	let geo = geocoding(formData.branchAddr);
-	formData.branchLat = geo.y;
-	formData.branchLng = geo.x;
-	formData.areaIndex = areaNameTrans(formData.areaIndex);
-	console.log(Barea);
-	branchinsert(JSON.stringify(formData), Barea);
+	let exitModal =document.getElementById('branchInsertBtn');
+	if(branchInsertValid()===false){
+		return false;
+	}else{
+		let Barea = formData.areaIndex;
+		let geo = geocoding(formData.branchAddr);
+		formData.branchLat = geo.y;
+		formData.branchLng = geo.x;
+		formData.areaIndex = areaNameTrans(Barea);
+		branchinsert(JSON.stringify(formData), Barea)
+		exitModal.setAttribute("data-dismiss","modal")
+		};
 })
 // 지점수정버튼
 $('[name=branchUpdateSaveBtn]').click(function() {
 	var formData1 = $('[name=branchUpdateForm]').serializeObject();
 	let Barea =formData1.branchArea;
-	branchupdate(JSON.stringify(formData1), Barea);
+	let exitModal1 = document.getElementById('branchUpdateBtn');
+	if(branchUpdateValid()===false){
+		return false;
+	}else{
+		branchupdate(JSON.stringify(formData1), Barea);
+		exitModal1.setAttribute("data-dismiss","modal")
+	}
 })
 // 검색버튼
 $('#btnSearch').click(function(e){
@@ -93,6 +104,136 @@ $.fn.serializeObject = function() {
 	$.each(this.serializeArray(), extend)
 	return result
 }
+// 지점수정 유효성검사
+function branchUpdateValid(){
+	var bName = document.branchUpdateForm.branchName1;
+	var bOwner = document.branchUpdateForm.branchOwner1;
+	var bValue = document.branchUpdateForm.branchValue1;
+	var bPhone = document.branchUpdateForm.branchPhone1;
+	
+	document.getElementById('branchNameVaild1').innerHTML ="";
+	document.getElementById('branchOwnerVaild1').innerHTML ="";
+	document.getElementById('branchValueVaild1').innerHTML ="";
+	document.getElementById('branchPhoneVaild1').innerHTML ="";
+	
+	var NameForm =  /^[가-힣a-zA-Z]+$/;
+	var OwnerForm =  /^[가-힣a-zA-Z]+$/;
+	var ValueForm = /^[0-9]{4,8}$/;
+	var PhoneForm = /^\d{3}-\d{4}-\d{4}$/;
+	var errorValue= true;
+
+	// 지점명
+	if (NameForm.test(bName.value)===false) {
+        document.getElementById('branchNameVaild1').innerHTML ="지점명 형식을 맞춰주세요."
+        bName.focus()
+        bName.select()
+        errorValue = false;
+    }
+	
+	// 지점장
+	if (OwnerForm.test(bOwner.value)===false) {
+		document.getElementById('branchOwnerVaild1').innerHTML ="지점장 형식을 맞춰주세요. "
+        bOwner.focus()
+        bOwner.select()
+        errorValue = false;
+    }
+	
+	// 운반비
+	if (ValueForm.test(bValue.value)===false) {
+		document.getElementById('branchValueVaild1').innerHTML ="운반비 4~8자리가지 입력가능합니다."
+        bValue.focus()
+        bValue.select()
+        errorValue = false;
+    }
+    // 폰번호
+    if (PhoneForm.test(bPhone.value)===false) {
+		 document.getElementById('branchPhoneVaild1').innerHTML ="전화번호 형식을 맞춰주세요."
+        bPhone.focus()
+        bPhone.select()
+        errorValue = false;
+    }
+    return errorValue;
+}
+
+// 지점추가 유효성검사
+function branchInsertValid(){
+	var bName = document.branchInsertform.branchName;
+	var bOwner = document.branchInsertform.branchOwner;
+	var bValue = document.branchInsertform.branchValue;
+	var bAddr = document.branchInsertform.branch_address;
+	var bDaddr = document.branchInsertform.branch_detailAddress;
+	var bArea = document.branchInsertform.branch_Area;
+	var bPhone = document.branchInsertform.branchPhone;
+	
+	document.getElementById('branchNameVaild').innerHTML ="";
+	document.getElementById('branchOwnerVaild').innerHTML ="";
+	document.getElementById('branchValueVaild').innerHTML ="";
+	document.getElementById('branchAddrVaild').innerHTML ="";
+	document.getElementById('branchDaddrVaild').innerHTML ="";
+	document.getElementById('branchAreaVaild').innerHTML ="";
+	document.getElementById('branchPhoneVaild').innerHTML ="";
+	
+	var NameForm =  /^[가-힣a-zA-Z]+$/;
+	var OwnerForm =  /^[가-힣a-zA-Z]+$/;
+	var ValueForm = /^[0-9]{4,8}$/;
+	var PhoneForm = /^\d{3}-\d{4}-\d{4}$/;
+	var errorValue= true;
+	
+	// 지점명
+	if (NameForm.test(bName.value)===false) {
+        document.getElementById('branchNameVaild').innerHTML ="지점명 형식을 맞춰주세요."
+        bName.focus()
+        bName.select()
+        errorValue = false;
+    }
+	
+	// 지점장
+	if (OwnerForm.test(bOwner.value)===false) {
+		document.getElementById('branchOwnerVaild').innerHTML ="지점장 형식을 맞춰주세요. "
+        bOwner.focus()
+        bOwner.select()
+        errorValue = false;
+    }
+	
+	// 운반비
+	if (ValueForm.test(bValue.value)===false) {
+		document.getElementById('branchValueVaild').innerHTML ="운반비 4~8자리가지 입력가능합니다."
+        bValue.focus()
+        bValue.select()
+        errorValue = false;
+    }
+	
+	// 주소
+	if (bAddr.value == "") {
+		 document.getElementById('branchAddrVaild').innerHTML ="주소를 입력하지 않았습니다."
+         bAddr.focus()
+         errorValue = false;
+     }
+	
+	// 상세주소
+	if (bDaddr.value == "") {
+		 document.getElementById('branchDaddrVaild').innerHTML ="상세주소를 입력해주세요."
+         bDaddr.focus()
+         errorValue = false;
+     }
+	
+	// 지역
+	if (bArea.value == "") {
+		 document.getElementById('branchAreaVaild').innerHTML ="지역이 맞지 않습니다!."
+         bArea.focus()
+         errorValue = false;
+     }
+	
+    // 폰번호
+    if (PhoneForm.test(bPhone.value)===false) {
+		 document.getElementById('branchPhoneVaild').innerHTML ="전화번호 형식을 맞춰주세요."
+        bPhone.focus()
+        bPhone.select()
+        errorValue = false;
+    }
+    return errorValue;
+}
+
 // 검색뷰
 function branchsearch(searchUrl, searchpage=0) {
 	$.ajax({
