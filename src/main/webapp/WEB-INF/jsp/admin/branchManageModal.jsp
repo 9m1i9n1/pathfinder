@@ -11,7 +11,7 @@
 			</div>
 
 			<div class="modal-body">
-				<form name="branchInsertform">
+				<form name="branchInsertform" id="branchInsertform">
 					<div class="form-group row">
 						<label for="b1" class="col-sm-2 col-form-label-sm">지점명 </label>
 						<div class="col-sm-8">
@@ -103,7 +103,7 @@
 			</div>
 
 			<div class="modal-body">
-				<form name="branchUpdateForm">
+				<form name="branchUpdateForm" id="branchUpdateForm">
 
 					<input hidden type="text" id="updateAreaIndex" name="branchIndex">
 					<input hidden type="text" id="areaIndex" name="areaIndex">

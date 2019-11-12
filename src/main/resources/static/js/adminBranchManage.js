@@ -18,6 +18,19 @@ $('[name=branchInsertBtn]').click(function() {
 		exitModal.setAttribute("data-dismiss","modal")
 		};
 })
+
+// insertModal 닫힐 시
+$("#insertModal").on("hidden.bs.modal", function() {
+  $("#branchInsertform")[0].reset();
+    $('#branchNameVaild').html("");
+	$('#branchOwnerVaild').html("");
+	$('#branchValueVaild').html("");
+	$('#branchAddrVaild').html("");
+	$('#branchDaddrVaild').html("");
+	$('#branchAreaVaild').html("");
+	$('#branchPhoneVaild').html("");
+});
+
 // 지점수정버튼
 $('[name=branchUpdateSaveBtn]').click(function() {
 	var formData1 = $('[name=branchUpdateForm]').serializeObject();
@@ -40,7 +53,7 @@ $('#btnSearch').click(function(e){
 });
 
 // 추가 유효성검사 지점명
-$('[name=branchName]').on('blur',function(){
+$('[name=branchName]').on('keyup',function(){
 	var NameForm =  /^[가-힣a-zA-Z]+$/;
 	document.getElementById('branchNameVaild').innerHTML ="";
 	if(NameForm.test($('[name=branchName]').val())===false){
@@ -49,7 +62,7 @@ $('[name=branchName]').on('blur',function(){
 });
 
 //추가 유효성검사 지점장
-$('[name=branchOwner]').on('blur',function(){
+$('[name=branchOwner]').on('keyup',function(){
 	var OwnerForm =  /^[가-힣a-zA-Z]+$/;
 	document.getElementById('branchOwnerVaild').innerHTML ="";
 	if(OwnerForm.test($('[name=branchOwner]').val())===false){
@@ -58,7 +71,7 @@ $('[name=branchOwner]').on('blur',function(){
 });
 
 //추가 유효성검사 운반비
-$('[name=branchValue]').on('blur',function(){
+$('[name=branchValue]').on('keyup',function(){
 	var ValueForm = /^[0-9]{4,8}$/;
 	document.getElementById('branchValueVaild').innerHTML ="";
 	if(ValueForm.test($('[name=branchValue]').val())===false){
@@ -67,7 +80,7 @@ $('[name=branchValue]').on('blur',function(){
 });
 
 //추가 유효성검사 주소
-$('[name=branchAddr]').on('blur',function(){
+$('[name=branchAddr]').on('keyup',function(){
 	document.getElementById('branchAddrVaild').innerHTML ="";
 	if($('[name=branchAddr]').val()==""){
 		document.getElementById('branchAddrVaild').innerHTML ="주소를 입력하지 않았습니다."
@@ -75,7 +88,7 @@ $('[name=branchAddr]').on('blur',function(){
 });
 
 //추가 유효성검사 상세주소
-$('[name=branchDaddr]').on('blur',function(){
+$('[name=branchDaddr]').on('keyup',function(){
 	document.getElementById('branchDaddrVaild').innerHTML ="";
 	if($('[name=branchDaddr]').val()==""){
 		document.getElementById('branchDaddrVaild').innerHTML ="주소를 입력하지 않았습니다."
@@ -83,11 +96,20 @@ $('[name=branchDaddr]').on('blur',function(){
 });
 
 //추가 유효성검사 전화번호
-$('[name=branchPhone]').on('blur',function(){
+$('[name=branchPhone]').on('keyup',function(){
 	var PhoneForm = /^\d{3}-\d{4}-\d{4}$/;
 	document.getElementById('branchPhoneVaild').innerHTML ="";
 	if(PhoneForm.test($('[name=branchPhone]').val())===false){
 		document.getElementById('branchPhoneVaild').innerHTML ="전화번호 형식을 맞춰주세요."
+	}
+});
+
+//수정 유효성검사 지점장
+$('[name=branchOwner1]').on('keyup',function(){
+	var OwnerForm =  /^[가-힣a-zA-Z]+$/;
+	document.getElementById('branchOwnerVaild1').innerHTML ="";
+	if(OwnerForm.test($('[name=branchOwner1]').val())===false){
+		document.getElementById('branchOwnerVaild1').innerHTML ="지점장 형식을 맞춰주세요."
 	}
 });
 
@@ -176,111 +198,118 @@ function branchUpdateValid(){
 	var PhoneForm = /^\d{3}-\d{4}-\d{4}$/;
 	var errorValue= true;
 
-	// 지점명
-	if (NameForm.test(bName.value)===false) {
-        document.getElementById('branchNameVaild1').innerHTML ="지점명 형식을 맞춰주세요."
-        bName.focus()
-        bName.select()
-        errorValue = false;
-    }
-	
-	// 지점장
-	if (OwnerForm.test(bOwner.value)===false) {
-		document.getElementById('branchOwnerVaild1').innerHTML ="지점장 형식을 맞춰주세요. "
-        bOwner.focus()
-        bOwner.select()
+	  // 폰번호
+    if (PhoneForm.test(bPhone.value)===false) {
+		$('#branchPhoneVaild1').html("전화번호 형식을 맞춰주세요.");
+        bPhone.focus()
+        bPhone.select()
         errorValue = false;
     }
 	
 	// 운반비
 	if (ValueForm.test(bValue.value)===false) {
-		document.getElementById('branchValueVaild1').innerHTML ="운반비 4~8자리가지 입력가능합니다."
+		$('#branchValueVaild1').html("운반비 4~8자리가지 입력가능합니다.");
         bValue.focus()
         bValue.select()
         errorValue = false;
     }
-    // 폰번호
-    if (PhoneForm.test(bPhone.value)===false) {
-		 document.getElementById('branchPhoneVaild1').innerHTML ="전화번호 형식을 맞춰주세요."
-        bPhone.focus()
-        bPhone.select()
+    
+	// 지점장
+	if (OwnerForm.test(bOwner.value)===false) {
+		$('#branchOwnerVaild1').html("지점장 형식을 맞춰주세요.");
+        bOwner.focus()
+        bOwner.select()
+        errorValue = false;
+    }
+	
+	// 지점명
+	if (NameForm.test(bName.value)===false) {
+        $('#branchNameVaild1').html("지점명 형식을 맞춰주세요.");
+        bName.focus()
+        bName.select()
         errorValue = false;
     }
     return errorValue;
 }
 
-// 지점추가 유효성검사
-function branchInsertValid(){
-	var bName = document.branchInsertform.branchName;
-	var bOwner = document.branchInsertform.branchOwner;
-	var bValue = document.branchInsertform.branchValue;
-	var bAddr = document.branchInsertform.branch_address;
-	var bDaddr = document.branchInsertform.branch_detailAddress;
-	var bArea = document.branchInsertform.branch_Area;
-	var bPhone = document.branchInsertform.branchPhone;
-	
-	document.getElementById('branchNameVaild').innerHTML ="";
-	document.getElementById('branchOwnerVaild').innerHTML ="";
-	document.getElementById('branchValueVaild').innerHTML ="";
-	document.getElementById('branchAddrVaild').innerHTML ="";
-	document.getElementById('branchDaddrVaild').innerHTML ="";
-	document.getElementById('branchAreaVaild').innerHTML ="";
-	document.getElementById('branchPhoneVaild').innerHTML ="";
-	
-	var NameForm =  /^[가-힣a-zA-Z]+$/;
-	var OwnerForm =  /^[가-힣a-zA-Z]+$/;
-	var ValueForm = /^[0-9]{4,8}$/;
-	var PhoneForm = /^\d{3}-\d{4}-\d{4}$/;
-	var errorValue= true;
-	
-	// 지점명
-	if (NameForm.test(bName.value)===false) {
-        document.getElementById('branchNameVaild').innerHTML ="지점명 형식을 맞춰주세요."
-        bName.focus()
-        bName.select()
-        errorValue = false;
-    }
-	
-	// 지점장
-	if (OwnerForm.test(bOwner.value)===false) {
-		document.getElementById('branchOwnerVaild').innerHTML ="지점장 형식을 맞춰주세요. "
-        bOwner.focus()
-        bOwner.select()
-        errorValue = false;
-    }
-	
-	// 운반비
-	if (ValueForm.test(bValue.value)===false) {
-		document.getElementById('branchValueVaild').innerHTML ="운반비 4~8자리가지 입력가능합니다."
-        bValue.focus()
-        bValue.select()
-        errorValue = false;
-    }
-	
-	// 상세주소
-	if (!!bAddr.value == false) {
-		 document.getElementById('branchAddrVaild').innerHTML ="주소를 입력하지 않았습니다."
-         bAddr.focus()
-         errorValue = false;
-     }
-	
-	// 상세주소
-	if (!!bDaddr.value == false) {
-		 document.getElementById('branchDaddrVaild').innerHTML ="상세주소를 입력하지 않았습니다."
-         bDaddr.focus()
-         errorValue = false;
-     }
-	
-	
-    // 폰번호
-    if (PhoneForm.test(bPhone.value)===false) {
-		 document.getElementById('branchPhoneVaild').innerHTML ="전화번호 형식을 맞춰주세요."
-        bPhone.focus()
-        bPhone.select()
-        errorValue = false;
-    }
-    return errorValue;
-}
+$('#branchInsertform').validate({
+	rules : {
+		
+	}
+})
+
+
+//// 지점추가 유효성검사
+//function branchInsertValid(){
+//	var bName = document.branchInsertform.branchName;
+//	var bOwner = document.branchInsertform.branchOwner;
+//	var bValue = document.branchInsertform.branchValue;
+//	var bAddr = document.branchInsertform.branch_address;
+//	var bDaddr = document.branchInsertform.branch_detailAddress;
+//	var bArea = document.branchInsertform.branch_Area;
+//	var bPhone = document.branchInsertform.branchPhone;
+//	
+//	$('#branchNameVaild').html("");
+//	$('#branchOwnerVaild').html("");
+//	$('#branchValueVaild').html("");
+//	$('#branchAddrVaild').html("");
+//	$('#branchDaddrVaild').html("");
+//	$('#branchAreaVaild').html("");
+//	$('#branchPhoneVaild').html("");
+//	
+//	var NameForm =  /^[가-힣a-zA-Z]+$/;
+//	var OwnerForm =  /^[가-힣a-zA-Z]+$/;
+//	var ValueForm = /^[0-9]{4,8}$/;
+//	var PhoneForm = /^\d{3}-\d{4}-\d{4}$/;
+//	var errorValue= true;
+//	
+//	// 폰번호
+//    if (PhoneForm.test(bPhone.value)===false) {
+//		$('#branchPhoneVaild').html("전화번호 형식을 맞춰주세요.");
+//        bPhone.focus()
+//        bPhone.select()
+//        errorValue = false;
+//    }
+//	
+//    // 상세주소
+//	if (!!bDaddr.value == false) {
+//		 $('#branchDaddrVaild').html("상세주소를 입력하지 않았습니다.");
+//         bDaddr.focus()
+//         errorValue = false;
+//     }
+//    
+//	// 주소
+//	if (!!bAddr.value == false) {
+//		 $('#branchAddrVaild').html("주소를 입력하지 않았습니다.");
+//         bAddr.focus()
+//         errorValue = false;
+//     }
+//	
+//	// 운반비
+//	if (ValueForm.test(bValue.value)===false) {
+//		$('#branchValueVaild').html("운반비 4~8자리가지 입력가능합니다.");
+//        bValue.focus()
+//        bValue.select()
+//        errorValue = false;
+//    }
+//	
+//	// 지점장
+//	if (OwnerForm.test(bOwner.value)===false) {
+//		$('#branchOwnerVaild').html("지점장 형식을 맞춰주세요.");
+//        bOwner.focus()
+//        bOwner.select()
+//        errorValue = false;
+//    }
+//	
+//	// 지점명
+//	if (NameForm.test(bName.value)===false) {
+//        $('#branchNameVaild').html("지점명 형식을 맞춰주세요.");
+//        bName.focus()
+//        bName.select()
+//        errorValue = false;
+//    }
+//    return errorValue;
+//}
 
 // 검색뷰
 function branchsearch(searchUrl, searchpage=0) {
@@ -354,6 +383,8 @@ function branchinsert(insertData, barea) {
 	alert("해당 지점 정보를 추가하였습니다.");
 	}
 }
+
+
 // 수정 초기값
 function branchgetvalue(data){
 	document.getElementById("areaIndex").value = data.areaIndex;;
