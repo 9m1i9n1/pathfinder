@@ -2,10 +2,16 @@ $(document).ready(function() {
 	branchlist();
 	treeLoading();
 });
-// 지점추가버튼
+
+//$.validator.setDefaults({
+//    ignore: ':hidden, [readonly=readonly]'
+//});
+
+/*// 지점추가버튼
 $('[name=branchInsertBtn]').click(function() {
-	var formData = $('[name=branchInsertform]').serializeObject()
 	let exitModal =document.getElementById('branchInsertBtn');
+	exitModal.removeAttribute("data-dismiss");
+	var formData = $('[name=branchInsertform]').serializeObject()
 	let Barea = formData.areaIndex;
 	let geo = geocoding(formData.branchAddr);
 	formData.branchLat = geo.y;
@@ -13,7 +19,8 @@ $('[name=branchInsertBtn]').click(function() {
 	formData.areaIndex = areaNameTrans(Barea);
 	branchinsert(JSON.stringify(formData), Barea)
 	exitModal.setAttribute("data-dismiss","modal")
-})
+	branchInsertValid.resetForm();
+})*/
 
 // insertModal 닫힐 시
 $("#insertModal").on("hidden.bs.modal", function() {
@@ -21,13 +28,13 @@ $("#insertModal").on("hidden.bs.modal", function() {
   branchInsertValid.resetForm();
 });
 
-//updateModal 닫힐 시
+// updateModal 닫힐 시
 $("#updateModal").on("hidden.bs.modal", function() {
   branchUpdateValid.resetForm();
 });
 
 
-// 지점수정버튼
+/*// 지점수정버튼
 $('[name=branchUpdateSaveBtn]').click(function() {
 	var formData1 = $('[name=branchUpdateForm]').serializeObject();
 	let Barea =formData1.branchArea;
@@ -35,7 +42,7 @@ $('[name=branchUpdateSaveBtn]').click(function() {
 	branchupdate(JSON.stringify(formData1), Barea);
 	exitModal1.setAttribute("data-dismiss","modal")
 	
-})
+})*/
 // 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
@@ -88,9 +95,12 @@ function addressFind() {
 			} else { 
 				addr = data.jibunAddress;
 			}
-			document.getElementById("branchAddr").value = addr;
-			console.log(addr.substr(0,2))
-			document.getElementById("branchArea").value = addr.substr(0,2);
+			$("#branch_Addr").val(addr);
+			$("#branch_Addr").blur();
+			
+			console.log(addr.substr(0,2));
+			$("#branch_Area").val(addr.substr(0,2));
+			$("#branch_Area").blur();
 		}
 	}).open();
 }
@@ -331,7 +341,16 @@ function treeLoading() {
 	    });
 }
 
-//추가 유효성검사
+$("#branch_Addr").on("propertychange change keyup paste input", function() {
+	console.log("change")
+	
+	 var $el = $(":focus");
+	 $(this).blur();
+	 $el.focus();
+});
+
+
+// 추가 유효성검사
 const branchInsertValid = $('#branchInsertform').validate({
 	onkeyup:false,
 	rules : {
@@ -352,7 +371,8 @@ const branchInsertValid = $('#branchInsertform').validate({
 			
 		},
 		branchAddr:{
-			required: true
+			required: true,
+
 		},
 		branchDaddr:{
 			required: true
@@ -406,17 +426,29 @@ const branchInsertValid = $('#branchInsertform').validate({
 	},
 	invalidHandler: function(form, validator) {
 	     console.log("invaild 접속");
-	     alert("헬로");
 	     var errors = validator.numberOfInvalids();
 	     if (errors) {
 	       alert(validator.errorList[0].message);
 	       validator.errorList[0].element.focus();
 	     }
+	},
+	submitHandler: function(form) {
+	     event.preventDefault();
+	     console.log("인서트 접속");
+	 	 var formData = $('[name=branchInsertform]').serializeObject()
+	 	 let Barea = formData.areaIndex;
+	 	 let geo = geocoding(formData.branchAddr);
+	 	 formData.branchLat = geo.y;
+	 	 formData.branchLng = geo.x;
+	     formData.areaIndex = areaNameTrans(Barea);
+	 	 branchinsert(JSON.stringify(formData), Barea)
+	 	 $('#insertModal').modal("hide");
+	 	 branchInsertValid.resetForm();
+	     return false;
 	   }
-	
 })
 
-//수정 유효성검사
+// 수정 유효성검사
 const branchUpdateValid = $('#branchUpdateForm').validate({
 	onkeyup:false,
 	rules : {
@@ -468,5 +500,23 @@ const branchUpdateValid = $('#branchUpdateForm').validate({
 			pattern:"형식이 맞지않습니다 ex)010-1234-5678"
 				
 		}
-	}
+	},
+	invalidHandler: function(form, validator) {
+	     console.log("invaild 접속");
+	     var errors = validator.numberOfInvalids();
+	     if (errors) {
+	       alert(validator.errorList[0].message);
+	       validator.errorList[0].element.focus();
+	     }
+	},
+	submitHandler: function(form) {
+	     event.preventDefault();
+	     console.log("인서트 접속");
+	 	 var formData1 = $('[name=branchUpdateForm]').serializeObject();
+		 let Barea =formData1.branchArea;
+		 branchupdate(JSON.stringify(formData1), Barea);
+	 	 $('#updateModal').modal("hide");
+	 	 branchUpdateValid.resetForm();
+	     return false;
+	   }
 })

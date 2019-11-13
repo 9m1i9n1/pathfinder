@@ -2,13 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<style>
-.error {
-	color: red;
-	font-weight: bold;
-}
-</style>
-
 <!-- Modal -->
 <!-- 추가모달 -->
 <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
@@ -26,7 +19,7 @@
 						<label for="b1" class="col-sm-2 col-form-label-sm">지점명 </label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" name="branchName"
-								id="branchName">
+								id="branchName" >
 						</div>
 					</div>
 
@@ -34,7 +27,7 @@
 						<label for="b2" class="col-sm-2 col-form-label-sm">지점장 </label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" name="branchOwner"
-								id="branchOwner">
+								id="branchOwner" >
 						</div>
 					</div>
 
@@ -42,7 +35,7 @@
 						<label for="b3" class="col-sm-2 col-form-label-sm">운반비</label>
 						<div class="col-sm-8">
 							<input type="number" class="form-control" name="branchValue"
-								id="branchValue" step="1000">
+								id="branchValue" step="1000" >
 						</div>
 					</div>
 
@@ -50,9 +43,10 @@
 					<div class="form-group row">
 						<label for="b4" class="col-sm-2 col-form-label-sm">주소</label>
 						<div class="col-sm-8">
-							<input type="button" onclick="addressFind()" value="주소 검색" /> <input
-								type="text" class="form-control" id="branchAddr"
-								name="branchAddr" placeholder="주소" readonly />
+							<input type="button" onclick="addressFind()" value="주소 검색" />
+							 <input
+								type="text" class="form-control" id="branch_Addr"
+								name="branchAddr" placeholder="주소" readonly  />
 						</div>
 					</div>
 
@@ -60,15 +54,15 @@
 						<label for="b5" class="col-sm-2 col-form-label-sm">상세주소</label>
 						<div class="col-sm-8">
 							<input type="text" id="branchDaddr" class="form-control"
-								name="branchDaddr" placeholder="상세주소">
+								name="branchDaddr" placeholder="상세주소" >
 						</div>
 					</div>
 
 					<div class="form-group row">
 						<label for="b7" class="col-sm-2 col-form-label-sm"> 지역</label>
 						<div class="col-sm-8">
-							<input readonly type="text" id="branchArea" class="form-control"
-								name="areaIndex">
+							<input readonly type="text" id="branch_Area" class="form-control"
+								name="areaIndex" >
 						</div>
 					</div>
 
@@ -76,7 +70,7 @@
 						<label for="b6" class="col-sm-2 col-form-label-sm"> 전화번호</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" name="branchPhone"
-								id="branchPhone" placeholder="ex) 010-1234-5676">
+								id="branchPhone" placeholder="ex) 010-1234-5676" >
 						</div>
 					</div>
 					<div id="branchPhoneVaild"></div>
@@ -93,8 +87,6 @@
 					</div>
 				</form>
 			</div>
-
-
 		</div>
 	</div>
 </div>
@@ -159,14 +151,14 @@
 								name="branchPhone">
 						</div>
 					</div>
-
+					<div class="modal-footer">
+						<input type="submit" name="branchUpdateSaveBtn"
+							class="btn btn-primary" value="수정" id="branchUpdateBtn">
+						<input type="button" class="btn btn-secondary"
+							data-dismiss="modal" value="닫기">
+					</div>
 				</form>
-				<div class="modal-footer">
-					<input type="button" name="branchUpdateSaveBtn"
-						class="btn btn-primary" value="수정" id="branchUpdateBtn"> <input
-						type="button" class="btn btn-secondary" data-dismiss="modal"
-						value="닫기">
-				</div>
+
 			</div>
 		</div>
 	</div>
