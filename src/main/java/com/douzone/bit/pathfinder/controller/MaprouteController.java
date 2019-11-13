@@ -51,6 +51,13 @@ public class MaprouteController {
 
 	}
 
+	@GetMapping({"/tt"})
+	public ModelAndView tt() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/tt");
+		return mv;
+	}
+	
 	@GetMapping({ "/allData" })
 	public Header<List<AdminBranchResponse>> allData() {
 

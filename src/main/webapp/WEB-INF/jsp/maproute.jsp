@@ -39,7 +39,7 @@
 						<b>검색</b> <input type="text" name="keyword" id="keyword"
 							style="text-align: center; width: 60%" /> <input type="button"
 							name="btnSearch" id="btnSearch" value="확인"
-							style="text-align: right; width: 20%" />
+							style="width: 20%" />
 					</div>
 
 					<div id="tableEdge">
