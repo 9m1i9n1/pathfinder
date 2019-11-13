@@ -3,7 +3,7 @@ package com.douzone.bit.pathfinder.service.algorithm;
 import java.util.*;
 
 public class Recursive {
-
+	
 	private final int N;
 	private final int START_NODE;
 	private final int FINISHED_STATE;
@@ -21,7 +21,7 @@ public class Recursive {
 	}
 
 	public Recursive(int startNode, int[][] distanceMatrix) {
-
+		
 		this.distance = distanceMatrix;
 		N = distanceMatrix.length;
 		START_NODE = startNode;
@@ -46,14 +46,15 @@ public class Recursive {
 			solve();
 		return minTourCost;
 	}
-
+	int cnt = 0;
 	public void solve() {
-
+		
 		// Run the solver
 		int state = 1 << START_NODE;
 		
 		int[][] memo = new int[N][1 << N];
 		Integer[][] prev = new Integer[N][1 << N];
+		System.out.println(N);
 		minTourCost = tsp(START_NODE, state, memo, prev);
 
 		// Regenerate path
@@ -69,10 +70,12 @@ public class Recursive {
 		}
 		tour.add(START_NODE);
 		ranSolver = true;
+		
 	}
 
 	private int tsp(int i, int state, int[][] memo, Integer[][] prev) {
 		// Done this tour. Return cost of going back to start node.
+//		System.out.println(cnt++);
 		if (state == FINISHED_STATE)
 			return distance[0][START_NODE];
 
