@@ -20,7 +20,7 @@
 			</div>
 
 			<div class="modal-body">
-				<form:form name="branchInsertform" id="branchInsertform">
+				<form name="branchInsertform" id="branchInsertform">
 
 					<div class="form-group row">
 						<label for="b1" class="col-sm-2 col-form-label-sm">지점명 </label>
@@ -29,7 +29,6 @@
 								id="branchName">
 						</div>
 					</div>
-					<div id="branchNameVaild"></div>
 
 					<div class="form-group row">
 						<label for="b2" class="col-sm-2 col-form-label-sm">지점장 </label>
@@ -38,7 +37,6 @@
 								id="branchOwner">
 						</div>
 					</div>
-					<div id="branchOwnerVaild"></div>
 
 					<div class="form-group row">
 						<label for="b3" class="col-sm-2 col-form-label-sm">운반비</label>
@@ -47,36 +45,32 @@
 								id="branchValue" step="1000">
 						</div>
 					</div>
-					<div id="branchValueVaild"></div>
 
 
 					<div class="form-group row">
 						<label for="b4" class="col-sm-2 col-form-label-sm">주소</label>
 						<div class="col-sm-8">
 							<input type="button" onclick="addressFind()" value="주소 검색" /> <input
-								type="text" class="form-control" id="branchAddress"
+								type="text" class="form-control" id="branchAddr"
 								name="branchAddr" placeholder="주소" readonly />
 						</div>
 					</div>
-					<div id="branchAddrVaild"></div>
 
 					<div class="form-group row">
 						<label for="b5" class="col-sm-2 col-form-label-sm">상세주소</label>
 						<div class="col-sm-8">
-							<input type="text" id="branchDetailAddress" class="form-control"
+							<input type="text" id="branchDaddr" class="form-control"
 								name="branchDaddr" placeholder="상세주소">
 						</div>
 					</div>
-					<div id="branchDaddrVaild"></div>
 
 					<div class="form-group row">
 						<label for="b7" class="col-sm-2 col-form-label-sm"> 지역</label>
 						<div class="col-sm-8">
-							<input readonly type="text" id="branch_Area" class="form-control"
+							<input readonly type="text" id="branchArea" class="form-control"
 								name="areaIndex">
 						</div>
 					</div>
-					<div id="branchAreaVaild"></div>
 
 					<div class="form-group row">
 						<label for="b6" class="col-sm-2 col-form-label-sm"> 전화번호</label>
@@ -87,18 +81,20 @@
 					</div>
 					<div id="branchPhoneVaild"></div>
 
-					<input hidden type="text" name="branchLat">
-					<input hidden type="text" name="branchLng">
+					<input hidden type="text" name="branchLat"> <input hidden
+						type="text" name="branchLng">
 
-				</form:form>
+
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal"
+							value="취소"> <input type="submit" name="branchInsertBtn"
+							id="branchInsertBtn" class="btn btn-primary" value="등록">
+
+					</div>
+				</form>
 			</div>
 
-			<div class="modal-footer">
-				<input type="button" class="btn btn-default" data-dismiss="modal"
-					value="취소"> <input type="button" name="branchInsertBtn"
-					id="branchInsertBtn" class="btn btn-primary" value="등록">
 
-			</div>
 		</div>
 	</div>
 </div>
@@ -135,7 +131,7 @@
 							지점명 </label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="branchName1"
-								name="branchName" >
+								name="branchName">
 						</div>
 					</div>
 

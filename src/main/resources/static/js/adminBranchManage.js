@@ -13,7 +13,6 @@ $('[name=branchInsertBtn]').click(function() {
 	formData.areaIndex = areaNameTrans(Barea);
 	branchinsert(JSON.stringify(formData), Barea)
 	exitModal.setAttribute("data-dismiss","modal")
-	
 })
 
 // insertModal 닫힐 시
@@ -77,6 +76,7 @@ function pageButton1(totalPages, currentPage, url) {
 	      }
 	  });
 	}
+
 // 주소검색
 function addressFind() {
 	new daum.Postcode({
@@ -88,10 +88,9 @@ function addressFind() {
 			} else { 
 				addr = data.jibunAddress;
 			}
-			document.getElementById("branchAddress").value = addr;
+			document.getElementById("branchAddr").value = addr;
 			console.log(addr.substr(0,2))
-			document.getElementById("branch_Area").value = addr.substr(0,2);
-			document.getElementById('branchAddrVaild').innerHTML ="";
+			document.getElementById("branchArea").value = addr.substr(0,2);
 		}
 	}).open();
 }
@@ -352,7 +351,7 @@ const branchInsertValid = $('#branchInsertform').validate({
 			rangelength:[3, 10]
 			
 		},
-		branchAddress:{
+		branchAddr:{
 			required: true
 		},
 		branchDaddr:{
@@ -390,7 +389,7 @@ const branchInsertValid = $('#branchInsertform').validate({
 		    step:"천 단위로 입력해주세요."
 		   
 		},
-		branchAddress:{
+		branchAddr:{
 			required: "주소를 입력하세요."
 		},
 		branchDaddr:{
@@ -404,7 +403,17 @@ const branchInsertValid = $('#branchInsertform').validate({
 			pattern:"형식이 맞지않습니다 ex)010-1234-5678"
 				
 		}
-	}
+	},
+	invalidHandler: function(form, validator) {
+	     console.log("invaild 접속");
+	     alert("헬로");
+	     var errors = validator.numberOfInvalids();
+	     if (errors) {
+	       alert(validator.errorList[0].message);
+	       validator.errorList[0].element.focus();
+	     }
+	   }
+	
 })
 
 //수정 유효성검사
