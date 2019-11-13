@@ -66,6 +66,11 @@ public class AdminUserService {
     return Header.OK(areaRepository.findAreaName());
   }
 
+  public Boolean idCheck(String userId) {
+
+    return !(userRepository.existsByuserId(userId));
+  }
+
   // 유저 리스트
   public Header<List<AdminUserResponse>> list(String id, Pageable pageable) {
 

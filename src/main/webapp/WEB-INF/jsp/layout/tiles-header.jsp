@@ -47,3 +47,7 @@
 <%-- Scroll --%>
 <link rel="stylesheet" href="/static/css/bootstrap/scroll.css">
 <link rel="stylesheet" href="/static/js/bootstrap/scroll.js">
+
+<%-- jquery validation --%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
