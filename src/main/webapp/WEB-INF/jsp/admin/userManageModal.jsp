@@ -13,57 +13,51 @@
           <div class="form-group row">
             <label for="userId" class="col-sm-3 col-form-label-sm">아이디</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userId" name="userId" required/>
+              <input type="text" class="form-control" id="userId" name="userId" />
             </div>
-            <div class="formCheck" id="userIdCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userName" class="col-sm-3 col-form-label-sm">이름</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userName" name="userName" required/>
+              <input type="text" class="form-control" id="userName" name="userName" />
             </div>
-            <div class="formCheck" id="userNameCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userEmail" class="col-sm-3 col-form-label-sm">이메일</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userEmail" name="userEmail"required/>
+              <input type="text" class="form-control" id="userEmail" name="userEmail"/>
             </div>
-            <div class="formCheck" id="userEmailCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userPhone" class="col-sm-3 col-form-label-sm">전화번호</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userPhone" name="userPhone" required/>
+              <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="(예)010-1234-5678"/>
             </div>
-            <div class="formCheck" id="userPhoneCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="areaIndex" class="col-sm-3 col-form-label-sm">지역</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex" required>
+              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex" >
               </select>
             </div>
-            <div class="formCheck" id="areaIndexCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="branchIndex" class="col-sm-3 col-form-label-sm">지점</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex" required>
+              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex" >
               </select>
             </div>
-            <div class="formCheck" id="branchIndexCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userPosition" class="col-sm-3 col-form-label-sm">직책</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" required>
+              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" >
                 <option value="" disabled selected>선택</option>
                 <option value="사원">사원</option>
                 <option value="대리">대리</option>
@@ -73,7 +67,6 @@
                 <option value="임원">임원</option>
               </select>
             </div>
-            <div class="formCheck" id="userPositionCheck"></div>
           </div>
 
           <div class="form-group row">
@@ -88,7 +81,6 @@
                 <label class="form-check-label" for="authAdmin">관리자</label>
               </div>
             </div>
-            <div class="formCheck" id="userAuthCheck"></div>
           </div>
 
           <div class="formCheck" id="serverFormCheck"></div>
@@ -116,73 +108,66 @@
           <div class="form-group row" style="display:none;">
             <label for="userIndex" class="col-sm-3 col-form-label-sm">번호</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userIndex" name="userIndex" readonly required/>
+              <input type="text" class="form-control" id="userIndex" name="userIndex" readonly />
             </div>
-            <div class="formCheck" id="userIndexCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userId" class="col-sm-3 col-form-label-sm">아이디</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userId" name="userId" readonly required/>
+              <input type="text" class="form-control" id="userId" name="userId" readonly />
             </div>
-            <%-- <div class="formCheck" id="userIdCheck"></div> --%>
           </div>
 
           <div class="form-group row">
             <label for="userPw" class="col-sm-3 col-form-label-sm">비밀번호</label>
             <div class="col-sm-8">
-              <input type="button" class="btn btn-danger" id="userPw" name="userPw" value="초기화" required/>
+              <input type="button" class="btn btn-danger" id="userPw" name="userPw" value="초기화" />
             </div>
           </div>
 
           <div class="form-group row">
             <label for="userName" class="col-sm-3 col-form-label-sm">이름</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userName" name="userName" required/>
+              <input type="text" class="form-control" id="userName" name="userName" />
             </div>
-            <div class="formCheck" id="userNameCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userEmail" class="col-sm-3 col-form-label-sm">이메일</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userEmail" name="userEmail" required/>
+              <input type="text" class="form-control" id="userEmail" name="userEmail" />
             </div>
-            <div class="formCheck" id="userEmailCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userPhone" class="col-sm-3 col-form-label-sm">전화번호</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userPhone" name="userPhone" required/>
+              <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="(예)010-1234-5678"/>
             </div>
-            <div class="formCheck" id="userPhoneCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="areaIndex" class="col-sm-3 col-form-label-sm">지역</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex" required>
+              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex" >
               </select>
             </div>
-            <div class="formCheck" id="areaIndexCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="branchIndex" class="col-sm-3 col-form-label-sm">지점</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex" required>
+              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex" >
               </select>
             </div>
-            <div class="formCheck" id="branchIndexCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userPosition" class="col-sm-3 col-form-label-sm">직책</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" required>
-                <option value='' disabled selected>선택</option>
+              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" >
+                <option value="">선택</option>
                 <option>사원</option>
                 <option>대리</option>
                 <option>과장</option>
@@ -191,14 +176,13 @@
                 <option>임원</option>
               </select>
             </div>
-            <div class="formCheck" id="userPositionCheck"></div>
           </div>
 
           <div class="form-group row">
             <label for="userAuth" class="col-sm-3 col-form-label-sm">권한</label>
             <div class="col-sm-8">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="userAuth" id="authUser" value="false" required/>
+                <input class="form-check-input" type="radio" name="userAuth" id="authUser" value="false" />
                 <label class="form-check-label" for="authUser">일반 사용자</label>
               </div>
               <div class="form-check form-check-inline">
@@ -206,18 +190,18 @@
                 <label class="form-check-label" for="authAdmin">관리자</label>
               </div>
             </div>
-            <div class="formCheck" id="userAuthCheck"></div>
           </div>
+
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" id="ModifyBtn">수정</button>
+          </div>
+
         </form>
       </div>
       <div class="formCheck" id="serverFormCheck"></div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary" id="ModifyBtn">수정</button>
-
-         <%-- data-dismiss="modal" --%>
-      </div>
     </div>
   </div>
 </div>

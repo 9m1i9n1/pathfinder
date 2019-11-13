@@ -82,6 +82,7 @@ function userCreate(req) {
     url: "/admin/usermanage",
     type: "post",
     contentType: "application/json",
+    async: false,
     data: req,
     success: function(res) {
       if (res.resultCode === "ERROR") {
@@ -311,7 +312,7 @@ function branchLoading(modal, selected) {
     success: function(res) {
       let str = "";
 
-      str += "<option value='' disabled selected>선택</option>";
+      str += "<option value=''>선택</option>";
 
       $.each(res.data, function(key, value) {
         str += "<option value='" + value[0] + "'>";
@@ -338,7 +339,7 @@ function branchLoading(modal, selected) {
   });
 }
 
-// 모달 내 등록 버튼 클릭
+// // 모달 내 등록 버튼 클릭
 // $("#InsertBtn").click(function() {
 //   let req = $("#userCreateForm").serializeObject();
 //   userCreate(req);
@@ -511,14 +512,6 @@ function treeLoading() {
 
 //! validation ====================
 
-jQuery.validator.addMethod(
-  "selectcheck",
-  function(value) {
-    return value != "선택";
-  },
-  "값을 선택해주세요."
-);
-
 const userValid = $("#userCreateForm").validate({
   onkeyup: false,
   rules: {
@@ -540,13 +533,13 @@ const userValid = $("#userCreateForm").validate({
       pattern: /^\d{3}-\d{4}-\d{4}$/
     },
     areaIndex: {
-      selectcheck: "선택"
+      required: true
     },
     branchIndex: {
-      selectcheck: "선택"
+      required: true
     },
     userPosition: {
-      selectcheck: "선택"
+      required: true
     },
     userAuth: {
       required: true
@@ -575,34 +568,48 @@ const userValid = $("#userCreateForm").validate({
       pattern: "연락처 형식이 맞지 않습니다."
     },
     areaIndex: {
-      required: "지역을 선택하세요.",
-      selectcheck: "지역을 선택하세요."
+      required: "지역을 선택하세요."
     },
     branchIndex: {
-      required: "지점을 선택하세요.",
-      selectcheck: "지점을 선택하세요."
+      required: "지점을 선택하세요."
     },
     userPosition: {
-      required: "직책을 선택하세요.",
-      selectcheck: "직책을 선택하세요."
+      required: "직책을 선택하세요."
     },
     userAuth: {
       required: "권한을 선택하세요."
-    },
-    invalidHandler: function(form, validator) {
-      var errors = validator.numberOfInvalids();
-
-      if (errors) {
-        alert(validator.errorList[0].message);
-        validator.errorList[0].element.focus();
-      }
-    },
-
-    submitHandler: function(form) {
-      console.log("인서트 접속");
-
-      let req = $(form).serializeObject();
-      userCreate(req);
     }
+  },
+  errorPlacement: function(error, element) {
+    if (element.is(":radio") || element.is("select")) {
+      error.appendTo(element.parents(".col-sm-8"));
+    } else {
+      // This is the default behavior
+      error.insertAfter(element);
+    }
+  },
+
+  invalidHandler: function(form, validator) {
+    event.preventDefault();
+    var errors = validator.numberOfInvalids();
+
+    if (errors) {
+      alert(validator.errorList[0].message);
+      validator.errorList[0].element.focus();
+    }
+  },
+
+  submitHandler: function(form) {
+    let req = $(form).serializeObject();
+    userCreate(req);
+    insertModal.modal("hide");
+
+    return false;
   }
+});
+
+$(".selectpicker").on("change", function() {
+  var $el = $(":focus");
+  $(this).blur();
+  $el.focus();
 });
