@@ -451,7 +451,7 @@ const branchInsertValid = $('#branchInsertform').validate({
 // 수정 유효성검사
 const branchUpdateValid = $('#branchUpdateForm').validate({
 	onkeyup:false,
-	rules : {
+	rules : { 
 		branchName: {
 			required: true,
 			rangelength:[3, 15],
