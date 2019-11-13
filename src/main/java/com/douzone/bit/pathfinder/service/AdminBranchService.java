@@ -133,7 +133,12 @@ public class AdminBranchService {
 
 		return treeResponse;
 	}
+	// 지점 중복 검사
+	  public Boolean branchCheck(String branchName) {
 
+		    return !(branchRepository.existsByBranchName(branchName));
+		  }
+	
 	// 지점 검색
 	public Header<List<AdminBranchResponse>> search(Pageable pageable, String searchType, String keyword) {
 

@@ -14,6 +14,8 @@ import com.douzone.bit.pathfinder.model.entity.BranchTb;
 @Repository
 public interface BranchRepository extends JpaRepository<BranchTb, Long> {
 
+	public Boolean existsByBranchName(String branchName);
+	
 	public List<BranchTb> findByArea(AreaTb area);
 
 	@Query(value = "select branch_index, branch_name from branch_tb", nativeQuery = true)

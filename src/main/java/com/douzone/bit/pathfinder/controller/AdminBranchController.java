@@ -73,6 +73,13 @@ public class AdminBranchController {
 		return adminBranchService.search(pageable, searchType, keyword);
 	}
 
+	//지점추가 중복확인
+	@GetMapping("/branchcheck.do")
+	public Boolean idCheck(@RequestParam String branchName) {
+
+	    return adminBranchService.branchCheck(branchName);
+	}
+	
 	// 트리 불러오기
 	@GetMapping("/treelist.do")
 	public Header<HierarchyResponse> treeList() {
