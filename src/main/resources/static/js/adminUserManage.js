@@ -177,12 +177,14 @@ function userUpdate(req) {
 
 // 비밀번호 초기화
 function userPwReset(userIndex) {
+  console.log(userIndex);
+
   $.ajax({
     url: "/admin/usermanage",
     type: "patch",
-    contentType: "application/json",
-    data: userIndex,
+    data: { userIndex: userIndex },
     success: function(res) {
+      alert("해당 회원의 패스워드를 초기화하였습니다.");
       userLoading();
     },
     error: function(request, status, error) {
@@ -201,7 +203,6 @@ function userPwReset(userIndex) {
 }
 
 //! Modal 관련 =======================
-
 const insertModal = $("#insertModal");
 const modifyModal = $("#modifyModal");
 
@@ -345,27 +346,13 @@ function branchLoading(modal, selected) {
   });
 }
 
-// // 모달 내 등록 버튼 클릭
-// $("#InsertBtn").click(function() {
-//   let req = $("#userCreateForm").serializeObject();
-//   userCreate(req);
-// });
-
-// // 모달 내 수정 버튼 클릭
-// $("#ModifyBtn").click(function() {
-//   let req = $("#userModifyForm").serializeObject();
-//   userUpdate(req);
-// });
-
 // 모달 내 패스워드 초기화 버튼 클릭
 modifyModal.find("#userPw").click(function() {
-  let userIndex = $("#userModifyForm").find("#userIndex");
-
+  let userIndex = $("#userModifyForm #userIndex").val();
   let result = confirm("해당 회원의 비밀번호를 초기화하시겠습니까?");
 
   if (result) {
     userPwReset(userIndex);
-    alert("해당 회원의 패스워드를 초기화하였습니다.");
   }
 });
 
@@ -517,12 +504,12 @@ function treeLoading() {
 }
 
 //! validation ====================
+// select 포커스 문제 해결
 $(".selectpicker").on("change", function() {
-  var $el = $(":focus");
   $(this).blur();
-  $el.focus();
 });
 
+// 모든 폼 valid 적용
 $("form").each(function() {
   $(this).validate({
     onkeyup: false,
@@ -593,15 +580,17 @@ $("form").each(function() {
         required: "권한을 선택하세요."
       }
     },
+
+    // 에러 위치 조정
     errorPlacement: function(error, element) {
       if (element.is(":radio") || element.is("select")) {
         error.appendTo(element.parents(".col-sm-8"));
       } else {
-        // This is the default behavior
         error.insertAfter(element);
       }
     },
 
+    // valid 실패시
     invalidHandler: function(form, validator) {
       var errors = validator.numberOfInvalids();
 
@@ -611,6 +600,7 @@ $("form").each(function() {
       }
     },
 
+    // valid 성공시
     submitHandler: function(form) {
       const formId = $(form).attr("id");
       const req = $(form).serializeObject();
