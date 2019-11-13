@@ -230,7 +230,9 @@ insertModal.on("hidden.bs.modal", function() {
 
   insertModal.find("#userPosition").selectpicker("refresh");
 
-  userValid.resetForm();
+  $("#userCreateForm")
+    .validate()
+    .resetForm();
 });
 
 // modifyModal 열릴 시
@@ -242,6 +244,10 @@ modifyModal.on("shown.bs.modal", function() {
 modifyModal.on("hidden.bs.modal", function() {
   $("#userCreateForm")[0].reset();
   modifyModal.find(".formCheck").html("");
+
+  $("#userModifyForm")
+    .validate()
+    .resetForm();
 });
 
 // 모달 내에서 지역 선택 시
@@ -345,11 +351,11 @@ function branchLoading(modal, selected) {
 //   userCreate(req);
 // });
 
-// 모달 내 수정 버튼 클릭
-$("#ModifyBtn").click(function() {
-  let req = $("#userModifyForm").serializeObject();
-  userUpdate(req);
-});
+// // 모달 내 수정 버튼 클릭
+// $("#ModifyBtn").click(function() {
+//   let req = $("#userModifyForm").serializeObject();
+//   userUpdate(req);
+// });
 
 // 모달 내 패스워드 초기화 버튼 클릭
 modifyModal.find("#userPw").click(function() {
@@ -511,105 +517,120 @@ function treeLoading() {
 }
 
 //! validation ====================
-
-const userValid = $("#userCreateForm").validate({
-  onkeyup: false,
-  rules: {
-    userId: {
-      required: true,
-      rangelength: [3, 15],
-      remote: "/admin/usermanage/idcheck.do"
-    },
-    userName: {
-      required: true,
-      rangelength: [2, 10]
-    },
-    userEmail: {
-      required: true,
-      email: true
-    },
-    userPhone: {
-      required: true,
-      pattern: /^\d{3}-\d{4}-\d{4}$/
-    },
-    areaIndex: {
-      required: true
-    },
-    branchIndex: {
-      required: true
-    },
-    userPosition: {
-      required: true
-    },
-    userAuth: {
-      required: true
-    }
-  },
-  messages: {
-    userId: {
-      required: "아이디를 입력하세요.",
-      rangelength: jQuery.validator.format(
-        "아이디는 {0}자 이상 {1}자 이하로 입력해주세요."
-      ),
-      remote: "이미 존재하는 아이디입니다."
-    },
-    userName: {
-      required: "이름을 입력하세요.",
-      rangelength: jQuery.validator.format(
-        "이름은 {0}자 이상 {1}자 이하로 입력해주세요."
-      )
-    },
-    userEmail: {
-      required: "이메일을 입력하세요.",
-      email: "이메일 형식이 맞지 않습니다."
-    },
-    userPhone: {
-      required: "연락처를 입력하세요.",
-      pattern: "연락처 형식이 맞지 않습니다."
-    },
-    areaIndex: {
-      required: "지역을 선택하세요."
-    },
-    branchIndex: {
-      required: "지점을 선택하세요."
-    },
-    userPosition: {
-      required: "직책을 선택하세요."
-    },
-    userAuth: {
-      required: "권한을 선택하세요."
-    }
-  },
-  errorPlacement: function(error, element) {
-    if (element.is(":radio") || element.is("select")) {
-      error.appendTo(element.parents(".col-sm-8"));
-    } else {
-      // This is the default behavior
-      error.insertAfter(element);
-    }
-  },
-
-  invalidHandler: function(form, validator) {
-    event.preventDefault();
-    var errors = validator.numberOfInvalids();
-
-    if (errors) {
-      alert(validator.errorList[0].message);
-      validator.errorList[0].element.focus();
-    }
-  },
-
-  submitHandler: function(form) {
-    let req = $(form).serializeObject();
-    userCreate(req);
-    insertModal.modal("hide");
-
-    return false;
-  }
-});
-
 $(".selectpicker").on("change", function() {
   var $el = $(":focus");
   $(this).blur();
   $el.focus();
+});
+
+$("form").each(function() {
+  $(this).validate({
+    onkeyup: false,
+    ignore: ":hidden, [readonly]",
+    rules: {
+      userId: {
+        required: true,
+        rangelength: [3, 15],
+        remote: "/admin/usermanage/idcheck.do"
+      },
+      userName: {
+        required: true,
+        rangelength: [2, 10]
+      },
+      userEmail: {
+        required: true,
+        email: true
+      },
+      userPhone: {
+        required: true,
+        pattern: /^\d{3}-\d{4}-\d{4}$/
+      },
+      areaIndex: {
+        required: true
+      },
+      branchIndex: {
+        required: true
+      },
+      userPosition: {
+        required: true
+      },
+      userAuth: {
+        required: true
+      }
+    },
+    messages: {
+      userId: {
+        required: "아이디를 입력하세요.",
+        rangelength: jQuery.validator.format(
+          "아이디는 {0}자 이상 {1}자 이하로 입력해주세요."
+        ),
+        remote: "이미 존재하는 아이디입니다."
+      },
+      userName: {
+        required: "이름을 입력하세요.",
+        rangelength: jQuery.validator.format(
+          "이름은 {0}자 이상 {1}자 이하로 입력해주세요."
+        )
+      },
+      userEmail: {
+        required: "이메일을 입력하세요.",
+        email: "이메일 형식이 맞지 않습니다."
+      },
+      userPhone: {
+        required: "연락처를 입력하세요.",
+        pattern: "연락처 형식이 맞지 않습니다."
+      },
+      areaIndex: {
+        required: "지역을 선택하세요."
+      },
+      branchIndex: {
+        required: "지점을 선택하세요."
+      },
+      userPosition: {
+        required: "직책을 선택하세요."
+      },
+      userAuth: {
+        required: "권한을 선택하세요."
+      }
+    },
+    errorPlacement: function(error, element) {
+      if (element.is(":radio") || element.is("select")) {
+        error.appendTo(element.parents(".col-sm-8"));
+      } else {
+        // This is the default behavior
+        error.insertAfter(element);
+      }
+    },
+
+    invalidHandler: function(form, validator) {
+      var errors = validator.numberOfInvalids();
+
+      if (errors) {
+        alert(validator.errorList[0].message);
+        validator.errorList[0].element.focus();
+      }
+    },
+
+    submitHandler: function(form) {
+      const formId = $(form).attr("id");
+      const req = $(form).serializeObject();
+
+      switch (formId) {
+        case "userCreateForm":
+          userCreate(req);
+          insertModal.modal("hide");
+          break;
+
+        case "userModifyForm":
+          userUpdate(req);
+          modifyModal.modal("hide");
+          break;
+        default:
+          alert("valid 에러");
+          break;
+      }
+
+      return false;
+    }
+  });
 });

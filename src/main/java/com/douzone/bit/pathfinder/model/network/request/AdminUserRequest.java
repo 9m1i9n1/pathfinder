@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -49,6 +49,7 @@ public class AdminUserRequest {
 
   private LocalDateTime userCreated;
 
+  @NotNull(message = "권한을 선택해주세요.")
   private Boolean userAuth;
 
   private Long branchIndex;

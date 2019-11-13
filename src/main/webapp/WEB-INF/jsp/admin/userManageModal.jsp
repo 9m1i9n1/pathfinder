@@ -87,7 +87,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-            <input type="submit" class="btn btn-success" id="InsertBtn" value="등록">
+            <button type="submit" class="btn btn-success" id="InsertBtn">등록</button>
           </div>
         </form>
       </div>
@@ -158,7 +158,7 @@
           <div class="form-group row">
             <label for="branchIndex" class="col-sm-3 col-form-label-sm">지점</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex" >
+              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex">
               </select>
             </div>
           </div>
@@ -167,7 +167,7 @@
             <label for="userPosition" class="col-sm-3 col-form-label-sm">직책</label>
             <div class="col-sm-8">
               <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" >
-                <option value="">선택</option>
+                <option value="" disabled selected>선택</option>
                 <option>사원</option>
                 <option>대리</option>
                 <option>과장</option>
@@ -195,7 +195,7 @@
           
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-primary" id="ModifyBtn">수정</button>
+            <button type="submit" class="btn btn-primary" id="ModifyBtn">수정</button>
           </div>
 
         </form>
