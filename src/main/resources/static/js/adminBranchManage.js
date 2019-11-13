@@ -2,20 +2,47 @@ $(document).ready(function() {
 	branchlist();
 	treeLoading();
 });
-// 지점추가버튼
+
+//$.validator.setDefaults({
+//    ignore: ':hidden, [readonly=readonly]'
+//});
+
+/*// 지점추가버튼
 $('[name=branchInsertBtn]').click(function() {
+	let exitModal =document.getElementById('branchInsertBtn');
+	exitModal.removeAttribute("data-dismiss");
 	var formData = $('[name=branchInsertform]').serializeObject()
+	let Barea = formData.areaIndex;
 	let geo = geocoding(formData.branchAddr);
 	formData.branchLat = geo.y;
 	formData.branchLng = geo.x;
-	formData.areaIndex = areaNameTrans(formData);
-	branchinsert(JSON.stringify(formData));
-})
-// 지점수정버튼
+	formData.areaIndex = areaNameTrans(Barea);
+	branchinsert(JSON.stringify(formData), Barea)
+	exitModal.setAttribute("data-dismiss","modal")
+	branchInsertValid.resetForm();
+})*/
+
+// insertModal 닫힐 시
+$("#insertModal").on("hidden.bs.modal", function() {
+  $("#branchInsertform")[0].reset();
+  branchInsertValid.resetForm();
+});
+
+// updateModal 닫힐 시
+$("#updateModal").on("hidden.bs.modal", function() {
+  branchUpdateValid.resetForm();
+});
+
+
+/*// 지점수정버튼
 $('[name=branchUpdateSaveBtn]').click(function() {
-	var formData1 = $('[name=branchUpdateForm]').serializeObject()
-	branchupdate(JSON.stringify(formData1));
-})
+	var formData1 = $('[name=branchUpdateForm]').serializeObject();
+	let Barea =formData1.branchArea;
+	let exitModal1 = document.getElementById('branchUpdateBtn');
+	branchupdate(JSON.stringify(formData1), Barea);
+	exitModal1.setAttribute("data-dismiss","modal")
+	
+})*/
 // 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
@@ -24,9 +51,11 @@ $('#btnSearch').click(function(e){
 	url = url + "&keyword=" + $('#keyword').val();
 	branchsearch(url);
 });
+
+
 // 지역이름 숫자변환
-function areaNameTrans(formData){
-	switch (formData.areaIndex){
+function areaNameTrans(areaIndex){
+	switch (areaIndex){
 case "서울" : return 1; case "부산" : return 2;	case "대구" : return 3;case "인천" : return 4;
 case "광주" : return 5; case "대전" : return 6;	case "울산" : return 7;case "경기" : return 8;
 case "강원" : return 9; case "충북" : return 10; case "충남" : return 11;case "전북" : return 12;
@@ -54,6 +83,7 @@ function pageButton1(totalPages, currentPage, url) {
 	      }
 	  });
 	}
+
 // 주소검색
 function addressFind() {
 	new daum.Postcode({
@@ -65,10 +95,12 @@ function addressFind() {
 			} else { 
 				addr = data.jibunAddress;
 			}
-			document.getElementById("branch_address").value = addr;
-			console.log(addr.substr(0,2))
-			document.getElementById("branch_Area").value = addr.substr(0,2);
-			document.getElementById("branch_detailAddress").focus();
+			$("#branch_Addr").val(addr);
+			$("#branch_Addr").blur();
+			
+			console.log(addr.substr(0,2));
+			$("#branch_Area").val(addr.substr(0,2));
+			$("#branch_Area").blur();
 		}
 	}).open();
 }
@@ -90,6 +122,7 @@ $.fn.serializeObject = function() {
 	$.each(this.serializeArray(), extend)
 	return result
 }
+
 // 검색뷰
 function branchsearch(searchUrl, searchpage=0) {
 	$.ajax({
@@ -99,14 +132,16 @@ function branchsearch(searchUrl, searchpage=0) {
 		success : function(res) {
 			var str = "";
 			$.each(res.data,function(key, value) {
-				str += '<tr><td>' + value.area +'</td>';
+				str += `<tr class="tr-shadow"><td>` + value.area +'</td>';
 				str += '<td>' + value.branchName +'</td>';
 				str += '<td>' + value.branchOwner +'</td>';
 				str += '<td>' + value.branchAddr +'</td>';
 				str	+= '<td>' + value.branchPhone + '</td>';
-				str += '<td>' + value.branchValue+" 원" +'</td>';
-				str += "<td>" + `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`;
-				str += '<button onclick="branchdelete('+ value.branchIndex +`, '`+ value.branchName + `')">삭제</button></td>'+ '</tr>`;
+				str += '<td>' + (value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 원" +'</td>';
+				str += "<td><div class='table-data-feature'>"
+				str	+= `<button class="item" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="zmdi zmdi-edit"></i><button>`;
+				str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="zmdi zmdi-delete"></i></button>`;
+				str += `</td>'+ '</tr>`;
 				});
 			$("#tableListBody").html(str);
 			var buttonAll = "";
@@ -123,7 +158,7 @@ function geocoding(addr) {
 		url : 'https://dapi.kakao.com/v2/local/search/address.json?query='
 				+ addr,
 		headers : {
-			'Authorization' : 'KakaoAK dab56d279c7065ab0223c12e94ad64ea'
+			'Authorization' : 'KakaoAK bacb8df38d149556e4e1a137db9b8442'
 		},
 		type : 'GET',
 		async : false,
@@ -136,7 +171,7 @@ function geocoding(addr) {
 	return ab;
 }
 // 추가
-function branchinsert(insertData) {
+function branchinsert(insertData, barea) {
 	let branchName = $('[name=branchName]').val()
 	var result = confirm(branchName +" 지점을 저장하겠습니까?");
 	if(result){
@@ -146,12 +181,21 @@ function branchinsert(insertData) {
 		data : insertData,
 		contentType : 'application/json',
 		success : function(data) {
-			branchlist();
+			if(!!barea){
+				let Bname =areaNameTrans(barea);
+				console.log(Bname);
+				 var url = "";   
+				 url = url + "?searchType=area&keyword="+Bname;
+				 branchsearch(url);
+				}else{
+				 branchlist();
+				}
 		}
 	});
 	alert("해당 지점 정보를 추가하였습니다.");
 	}
 }
+
 // 수정 초기값
 function branchgetvalue(data){
 	document.getElementById("areaIndex").value = data.areaIndex;;
@@ -163,7 +207,7 @@ function branchgetvalue(data){
 	document.getElementById("branchPhone1").value = data.branchPhone;
 }
 // 수정
-function branchupdate(updateData) {
+function branchupdate(updateData, barea) {
 	var result = confirm("지점을 수정 하시겠습니까?");
 	if(result){
 	$.ajax({
@@ -171,28 +215,46 @@ function branchupdate(updateData) {
 		url : "/admin/branchmanage/update",
 		data : updateData,
 		contentType : 'application/json',
-		success : function(data) {
-			branchlist();
+		success : function() {
+			if(!!barea){
+				let Bname =areaNameTrans(barea);
+				console.log(Bname);
+				 var url = "";   
+				 url = url + "?searchType=area&keyword="+Bname;
+				 branchsearch(url);
+				}else{
+				 branchlist();
+				}
 		}
 	});
 	alert("해당 지점 정보를 수정하였습니다.");
 	}
 }
 // 삭제
-function branchdelete(idx, bname) {
+function branchdelete(idx, bname, barea) {
 	var result = confirm(bname +" 지점을 삭제하시겠습니까?");
 	if(result){
 	$.ajax({
 		type : "DELETE",
 		url : "/admin/branchmanage/delete/" + idx,
 		data : {},
-		success : function(data) {
-			branchlist();
+		success :
+			function() {
+			if(!!barea){
+			let Bname =areaNameTrans(barea);
+			console.log(Bname);
+			 var url = "";   
+			 url = url + "?searchType=area&keyword="+Bname;
+			 branchsearch(url);
+			}else{
+			 branchlist();
+			}
 		}
 	});
 	alert("해당 지점 정보를 삭제하였습니다.");
 	}
 }
+
 // 첫페이지
 function branchlist(selectPage) {
 	$.ajax({
@@ -202,14 +264,15 @@ function branchlist(selectPage) {
 		success : function(res) {
 				var str = "";
 			$.each(res.data, function(key, value) {
-				str += '<tr><td>'+ value.area+ '</td>';
+				str += `<tr class="tr-shadow"><td>`+ value.area+ '</td>';
 				str += '<td>'+ value.branchName+ '</td>';
 				str += '<td>'+ value.branchOwner+ '</td>';
 				str += '<td>'+ value.branchAddr+ '</td>';
 				str += '<td>'+ value.branchPhone+ '</td>';
-				str += '<td>'+ value.branchValue+ " 원"+'</td>';
-				str += "<td>"+ `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`
-				+ '<button onclick="branchdelete('+ value.branchIndex +`, '`+ value.branchName + `')">삭제</button></td>'+ '</tr>`;
+				str += '<td>'+(value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ " 원"+'</td>';
+				str += "<td><div class='table-data-feature'>";
+				str += `<button class="item" data-toggle='modal' data-target='#updateModal' data-placement="top" title="Edit" value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="zmdi zmdi-edit"></i></button>`;
+				str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '`+ value.branchName + `')"><i class="zmdi zmdi-delete"></button></div></td>'+ '</tr>`;
 			});
 			$("#tableListBody").html(str);
 			pageButton(res.pagination.totalPages, res.pagination.currentPage);
@@ -278,3 +341,182 @@ function treeLoading() {
 	    });
 }
 
+$("#branch_Addr").on("propertychange change keyup paste input", function() {
+	console.log("change")
+	
+	 var $el = $(":focus");
+	 $(this).blur();
+	 $el.focus();
+});
+
+
+// 추가 유효성검사
+const branchInsertValid = $('#branchInsertform').validate({
+	onkeyup:false,
+	rules : {
+		branchName: {
+			required: true,
+			rangelength:[3, 15],
+			pattern:/^[가-힣a-zA-Z]+$/,
+			remote:"/admin/branchmanage/branchcheck.do"
+		},
+		branchOwner: {
+			required: true,
+			rangelength:[2, 10],
+			pattern:/^[가-힣a-zA-Z]+$/
+		},
+		branchValue:{
+			required: true,
+			rangelength:[3, 10]
+			
+		},
+		branchAddr:{
+			required: true,
+
+		},
+		branchDaddr:{
+			required: true
+		},
+		areaIndex:{
+			required: true
+		},
+		branchPhone:{
+			required:true,
+			pattern: /^\d{3}-\d{4}-\d{4}$/
+		}
+	},
+	messages:{
+		branchName:{
+			required:"지점명을 입력하세요",
+			rangelength: jQuery.validator.format(
+			     "지점명을 {0}자 이상 {1}자 이하로 입력해주세요."
+				),
+			pattern:"형식에 다릅니다.",
+			remote: "존재하는 지점명입니다."
+		},
+		branchOwner:{
+			required:"지점장을 입력하세요",
+			rangelength: jQuery.validator.format(
+				  "지점장을 {0}자 이상 {1}자 이하로 입력해주세요."
+			),
+			pattern:"형식에 다릅니다."
+		},
+		branchValue:{
+			required:"운반비를 입력하세요",
+			rangelength:jQuery.validator.format(
+			        "운반비를 {0}자 이상 {1}자 이하로 입력해주세요."
+		      ),
+		    step:"천 단위로 입력해주세요."
+		   
+		},
+		branchAddr:{
+			required: "주소를 입력하세요."
+		},
+		branchDaddr:{
+			required: "상세주소를 입력하세요."
+		},
+		areaIndex:{
+			required: "지역을 입력하세요."
+		},
+		branchPhone:{
+			required: "전화번호를 입역하세요.",
+			pattern:"형식이 맞지않습니다 ex)010-1234-5678"
+				
+		}
+	},
+	invalidHandler: function(form, validator) {
+	     console.log("invaild 접속");
+	     var errors = validator.numberOfInvalids();
+	     if (errors) {
+	       alert(validator.errorList[0].message);
+	       validator.errorList[0].element.focus();
+	     }
+	},
+	submitHandler: function(form) {
+	     event.preventDefault();
+	     console.log("인서트 접속");
+	 	 var formData = $('[name=branchInsertform]').serializeObject()
+	 	 let Barea = formData.areaIndex;
+	 	 let geo = geocoding(formData.branchAddr);
+	 	 formData.branchLat = geo.y;
+	 	 formData.branchLng = geo.x;
+	     formData.areaIndex = areaNameTrans(Barea);
+	 	 branchinsert(JSON.stringify(formData), Barea)
+	 	 $('#insertModal').modal("hide");
+	 	 branchInsertValid.resetForm();
+	     return false;
+	   }
+})
+
+// 수정 유효성검사
+const branchUpdateValid = $('#branchUpdateForm').validate({
+	onkeyup:false,
+	rules : { 
+		branchName: {
+			required: true,
+			rangelength:[3, 15],
+			pattern:/^[가-힣a-zA-Z]+$/,
+			remote:"/admin/branchmanage/branchcheck.do"
+		},
+		branchOwner: {
+			required: true,
+			rangelength:[2, 10],
+			pattern:/^[가-힣a-zA-Z]+$/
+		},
+		branchValue:{
+			required: true,
+			rangelength:[3, 10]
+		},
+		branchPhone:{
+			required:true,
+			pattern: /^\d{3}-\d{4}-\d{4}$/
+		}
+	},
+	messages:{
+		branchName:{
+			required:"지점명을 입력하세요",
+			rangelength: jQuery.validator.format(
+			     "지점명을 {0}자 이상 {1}자 이하로 입력해주세요."
+				),
+			pattern:"형식에 다릅니다.",
+			remote: "존재하는 지점명입니다."
+		},
+		branchOwner:{
+			required:"지점장을 입력하세요",
+			rangelength: jQuery.validator.format(
+				  "지점장을 {0}자 이상 {1}자 이하로 입력해주세요."
+			),
+			pattern:"형식에 다릅니다."
+		},
+		branchValue:{
+			required:"운반비를 입력하세요",
+			rangelength:jQuery.validator.format(
+			        "운반비를 {0}자 이상 {1}자 이하로 입력해주세요."
+		      ),
+		    step:"천 단위로 입력해주세요."
+		},
+		branchPhone:{
+			required: "전화번호를 입역하세요.",
+			pattern:"형식이 맞지않습니다 ex)010-1234-5678"
+				
+		}
+	},
+	invalidHandler: function(form, validator) {
+	     console.log("invaild 접속");
+	     var errors = validator.numberOfInvalids();
+	     if (errors) {
+	       alert(validator.errorList[0].message);
+	       validator.errorList[0].element.focus();
+	     }
+	},
+	submitHandler: function(form) {
+	     event.preventDefault();
+	     console.log("인서트 접속");
+	 	 var formData1 = $('[name=branchUpdateForm]').serializeObject();
+		 let Barea =formData1.branchArea;
+		 branchupdate(JSON.stringify(formData1), Barea);
+	 	 $('#updateModal').modal("hide");
+	 	 branchUpdateValid.resetForm();
+	     return false;
+	   }
+})
