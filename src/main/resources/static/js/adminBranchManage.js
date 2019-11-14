@@ -3,10 +3,6 @@ $(document).ready(function() {
 	treeLoading();
 });
 
-//$.validator.setDefaults({
-//    ignore: ':hidden, [readonly=readonly]'
-//});
-
 /*// 지점추가버튼
 $('[name=branchInsertBtn]').click(function() {
 	let exitModal =document.getElementById('branchInsertBtn');
@@ -382,7 +378,8 @@ const branchInsertValid = $('#branchInsertform').validate({
 		},
 		branchPhone:{
 			required:true,
-			pattern: /^\d{3}-\d{4}-\d{4}$/
+			pattern: /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))-(\d{3,4})-(\d{4})$/
+
 		}
 	},
 	messages:{
@@ -419,8 +416,8 @@ const branchInsertValid = $('#branchInsertform').validate({
 			required: "지역을 입력하세요."
 		},
 		branchPhone:{
-			required: "전화번호를 입역하세요.",
-			pattern:"형식이 맞지않습니다 ex)010-1234-5678"
+			required: "전화번호를 입력하세요.",
+			pattern:"형식이 맞지않습니다 ex)02-123-5678"
 				
 		}
 	},
@@ -451,6 +448,7 @@ const branchInsertValid = $('#branchInsertform').validate({
 // 수정 유효성검사
 const branchUpdateValid = $('#branchUpdateForm').validate({
 	onkeyup:false,
+	ignore: ':hidden, [readonly=readonly]',
 	rules : { 
 		branchName: {
 			required: true,
@@ -469,7 +467,7 @@ const branchUpdateValid = $('#branchUpdateForm').validate({
 		},
 		branchPhone:{
 			required:true,
-			pattern: /^\d{3}-\d{4}-\d{4}$/
+			pattern: /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))-(\d{3,4})-(\d{4})$/
 		}
 	},
 	messages:{
@@ -497,7 +495,7 @@ const branchUpdateValid = $('#branchUpdateForm').validate({
 		},
 		branchPhone:{
 			required: "전화번호를 입역하세요.",
-			pattern:"형식이 맞지않습니다 ex)010-1234-5678"
+			pattern:"형식이 맞지않습니다 ex)02-123-5678"
 				
 		}
 	},

@@ -12,19 +12,13 @@
 	</div>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-3">
-				<div class="d-flex flex-row h-100">
-					<div class="card">
-						<div class="card-header">
-							<b>부서 조직도</b>
-						</div>
-						<div class="scrollable">
-							<div class="test">
-								<div class="card-body">
-									<div class="item" id="jstree"></div>
-								</div>
-							</div>
-						</div>
+			<div class="col-2">
+				<div class="card">
+					<div class="card-header">
+						<b>부서 조직도</b>
+					</div>
+					<div class="card-body">
+						<div id="jstree"></div>
 					</div>
 				</div>
 			</div>
