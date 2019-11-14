@@ -8,7 +8,8 @@
 
 <!-- Fontfaces CSS-->
 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.css" rel="stylesheet" media="all">
+	href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.css"
+	rel="stylesheet" media="all">
 
 <!-- Main CSS-->
 <link href="/static/css/theme.css" rel="stylesheet" media="all">
@@ -22,7 +23,7 @@
 	</div>
 
 	<div class="container-fluid">
-		<div class="row"}>
+		<div class="row">
 			<div class="col-2">
 				<div class="card">
 					<div class="card-header">
@@ -34,9 +35,8 @@
 				</div>
 			</div>
 
-
 			<div class="col-10">
-				<div class="card" style="background-color:#e9ecef">
+				<div class="card" style="background-color: #e9ecef">
 					<div class="card-header">
 						<b>사용자 목록</b>
 
@@ -72,10 +72,11 @@
 					</div>
 				</div>
 			</div>
-
-			<%@include file="userManageModal.jsp"%>
-			<script src="/static/js/adminUserManage.js">
-				
-			</script>
+		</div>
+	</div>
+	<%@include file="userManageModal.jsp"%>
+	<script src="/static/js/adminUserManage.js">
+		
+	</script>
 </body>
 </html>

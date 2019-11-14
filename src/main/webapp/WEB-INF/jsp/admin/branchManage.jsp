@@ -19,45 +19,36 @@
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">관리자 페이지</li>
 			<li class="breadcrumb-item active">지점 관리</li>
-
 		</ol>
 	</div>
-
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-2">
-				<div class="d-flex flex-row h-100">
-					<div class="card">
-						<div class="card-header">
-							<b>조직도</b>
-						</div>
-						<div class="scrollable">
-							<div class="test">
-								<div class="card-body">
-									<div id="jstree" class="item"></div>
-								</div>
-							</div>
-						</div>
+				<div class="card">
+					<div class="card-header">
+						<b>조직도</b>
+					</div>
+					<div class="card-body">
+						<div id="jstree"></div>
 					</div>
 				</div>
 			</div>
-
 			<div class="col-10">
 				<div class="card">
 					<div class="card-header">
 						<b>지점 목록</b>
 						<button class="au-btn au-btn-icon au-btn--blue au-btn--small"
-						 data-toggle="modal" data-target="#insertModal" value="지점 추가" >
-						<i class="zmdi zmdi-plus"></i>지점 추가
+							data-toggle="modal" data-target="#insertModal" value="지점 추가">
+							<i class="zmdi zmdi-plus"></i>지점 추가
 						</button>
 						<div style="float: right;">
 							<select class="selectpicker" name="searchType" id="searchType">
 								<option value="branchName">지점명</option>
 								<option value="branchAddr">주소</option>
 							</select> <input type="text" name="keyword" id="keyword">
-							<button class="btn btn-primary" name="btnSearch"
-								id="btnSearch"><i class="fas fa-search"></i></button>
-								
+							<button class="btn btn-primary" name="btnSearch" id="btnSearch">
+								<i class="fas fa-search"></i>
+							</button>
 						</div>
 					</div>
 					<div class="table-responsive table-responsive-data2">
@@ -81,7 +72,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 </body>

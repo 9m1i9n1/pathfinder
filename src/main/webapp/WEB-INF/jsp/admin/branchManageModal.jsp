@@ -82,7 +82,6 @@
 						<input type="button" class="btn btn-default" data-dismiss="modal"
 							value="취소"> <input type="submit" name="branchInsertBtn"
 							id="branchInsertBtn" class="btn btn-primary" value="등록">
-
 					</div>
 				</form>
 			</div>
