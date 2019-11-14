@@ -12,6 +12,6 @@ public class SignController {
   @GetMapping({ "", "/" })
   public String sign(Model model) {
 
-    return "sample/dashboard/index";
+    return "/home";
   }
 }

@@ -44,9 +44,8 @@ public class AdminBranchService {
 		System.out.println(request);
 
 		BranchTb branch = BranchTb.builder().branchAddr(request.getBranchAddr()).branchDaddr(request.getBranchDaddr())
-				.branchLat(request.getBranchLat()).branchLng(request.getBranchLng())
-				.branchPhone(request.getBranchPhone()).branchName(request.getBranchName())
-				.branchOwner(request.getBranchOwner()).branchValue(request.getBranchValue())
+				.branchLat(request.getBranchLat()).branchLng(request.getBranchLng()).branchPhone(request.getBranchPhone())
+				.branchName(request.getBranchName()).branchOwner(request.getBranchOwner()).branchValue(request.getBranchValue())
 				.area(areaRepository.getOne(request.getAreaIndex())).build();
 
 		BranchTb newBranch = branchRepository.save(branch);
@@ -94,30 +93,25 @@ public class AdminBranchService {
 
 	private AdminBranchResponse response(BranchTb branch) {
 		AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder().branchIndex(branch.getBranchIndex())
-				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner())
-				.branchValue(branch.getBranchValue()).branchAddr(branch.getBranchAddr())
-				.branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
+				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner()).branchValue(branch.getBranchValue())
+				.branchAddr(branch.getBranchAddr()).branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
 				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
 				.areaIndex(branch.getArea().getAreaIndex()).build();
 		return adminBranchResponse;
 	}
 
-	 public Header<HierarchyResponse> readCompany() {
-		 Map<String, Boolean> state = new HashMap<String, Boolean>();
+	public Header<HierarchyResponse> readCompany() {
+		Map<String, Boolean> state = new HashMap<String, Boolean>();
 
-			state.put("opened", true);
-			state.put("selected", true);
-		 HierarchyResponse company = HierarchyResponse.builder()
-		    .id("company:1")
-		    .text("더존 공장")
-		    .state(state)
-		    .children(readArea())
-		    .build();
+		state.put("opened", true);
+		state.put("selected", true);
+		HierarchyResponse company = HierarchyResponse.builder().id("company:1").text("더존 공장").state(state)
+				.children(readArea()).build();
 
-		    return Header.OK(company);
-		  }
-	
-	//지점 조직도 
+		return Header.OK(company);
+	}
+
+	// 지점 조직도
 	public List<HierarchyResponse> readArea() {
 
 		List<AreaTb> areas = areaRepository.findAll();
@@ -125,11 +119,10 @@ public class AdminBranchService {
 		return areaList;
 	}
 
-	
 	// jsTree response
 	private HierarchyResponse areaOnlyResponse(AreaTb area) {
-		HierarchyResponse treeResponse = HierarchyResponse.builder().id("area:" + area.getAreaIndex()).text(area.getAreaName())
-				.build();
+		HierarchyResponse treeResponse = HierarchyResponse.builder().id("area:" + area.getAreaIndex())
+				.text(area.getAreaName()).build();
 
 		return treeResponse;
 	}
@@ -152,8 +145,8 @@ public class AdminBranchService {
 			break;
 
 		case "area":
-			//http://localhost:8181/admin/branchmanage/search?searchType=area&keyword=1
-			branchs = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(keyword)),pageable);
+			// http://localhost:8181/admin/branchmanage/search?searchType=area&keyword=1
+			branchs = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(keyword)), pageable);
 			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
 			break;
 
@@ -165,7 +158,7 @@ public class AdminBranchService {
 		default:
 			break;
 		}
-		
+
 		Pagination pagination = Pagination.builder().totalPages(branchs.getTotalPages())
 				.totalElements(branchs.getTotalElements()).currentPage(branchs.getNumber())
 				.currentElements(branchs.getNumberOfElements()).build();

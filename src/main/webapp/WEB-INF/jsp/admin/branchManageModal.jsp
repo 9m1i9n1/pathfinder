@@ -77,7 +77,13 @@
 
 					<input hidden type="text" name="branchLat"> <input hidden
 						type="text" name="branchLng">
+<<<<<<< HEAD
 
+=======
+5
+				</form:form>
+			</div>
+>>>>>>> origin/min
 
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"

@@ -30,7 +30,7 @@ function userLoading() {
       let str = "";
       let count = "";
 
-      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
+      count += `<li class="breadcrumb-item">관리자 페이지 : 사용자 관리</a></li>`;
       count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
@@ -51,8 +51,9 @@ function userLoading() {
         str += `<button class="item" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="zmdi zmdi-edit"></i></button>`;
         str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="zmdi zmdi-delete"></i></button>`;
         str += "</div></td>";
-
         str += "</tr>";
+
+        str += "<tr class='spacer'></tr>";
       });
 
       $("#table #body").html(str);
@@ -82,6 +83,7 @@ function userCreate(req) {
     url: "/admin/usermanage",
     type: "post",
     contentType: "application/json",
+    async: false,
     data: req,
     success: function(res) {
       if (res.resultCode === "ERROR") {
@@ -149,7 +151,7 @@ function userUpdate(req) {
     data: req,
     success: function(res) {
       if (res.resultCode === "ERROR") {
-        insertModal.find(".formError").html("[log]잘못된 값을 요청하였습니다.");
+        modifyModal.find(".formError").html("잘못된 값을 요청하였습니다.");
 
         for (var key in res.description) {
           console.log(key + " : " + res.description[key]);
@@ -176,12 +178,14 @@ function userUpdate(req) {
 
 // 비밀번호 초기화
 function userPwReset(userIndex) {
+  console.log(userIndex);
+
   $.ajax({
     url: "/admin/usermanage",
     type: "patch",
-    contentType: "application/json",
-    data: userIndex,
+    data: { userIndex: userIndex },
     success: function(res) {
+      alert("해당 회원의 패스워드를 초기화하였습니다.");
       userLoading();
     },
     error: function(request, status, error) {
@@ -200,7 +204,6 @@ function userPwReset(userIndex) {
 }
 
 //! Modal 관련 =======================
-
 const insertModal = $("#insertModal");
 const modifyModal = $("#modifyModal");
 
@@ -229,7 +232,9 @@ insertModal.on("hidden.bs.modal", function() {
 
   insertModal.find("#userPosition").selectpicker("refresh");
 
-  userValid.resetForm();
+  $("#userCreateForm")
+    .validate()
+    .resetForm();
 });
 
 // modifyModal 열릴 시
@@ -241,6 +246,10 @@ modifyModal.on("shown.bs.modal", function() {
 modifyModal.on("hidden.bs.modal", function() {
   $("#userCreateForm")[0].reset();
   modifyModal.find(".formCheck").html("");
+
+  $("#userModifyForm")
+    .validate()
+    .resetForm();
 });
 
 // 모달 내에서 지역 선택 시
@@ -311,7 +320,7 @@ function branchLoading(modal, selected) {
     success: function(res) {
       let str = "";
 
-      str += "<option value='' disabled selected>선택</option>";
+      str += "<option value=''>선택</option>";
 
       $.each(res.data, function(key, value) {
         str += "<option value='" + value[0] + "'>";
@@ -338,27 +347,13 @@ function branchLoading(modal, selected) {
   });
 }
 
-// 모달 내 등록 버튼 클릭
-$("#InsertBtn").click(function() {
-  let req = $("#userCreateForm").serializeObject();
-  userCreate(req);
-});
-
-// 모달 내 수정 버튼 클릭
-$("#ModifyBtn").click(function() {
-  let req = $("#userModifyForm").serializeObject();
-  userUpdate(req);
-});
-
 // 모달 내 패스워드 초기화 버튼 클릭
 modifyModal.find("#userPw").click(function() {
-  let userIndex = $("#userModifyForm").find("#userIndex");
-
+  let userIndex = $("#userModifyForm #userIndex").val();
   let result = confirm("해당 회원의 비밀번호를 초기화하시겠습니까?");
 
   if (result) {
     userPwReset(userIndex);
-    alert("해당 회원의 패스워드를 초기화하였습니다.");
   }
 });
 
@@ -510,71 +505,123 @@ function treeLoading() {
 }
 
 //! validation ====================
-const userValid = $("#userCreateForm").validate({
-  rules: {
-    userId: {
-      required: true,
-      rangelength: [3, 15],
-      remote: "/admin/usermanage/idcheck.do"
+// select 포커스 문제 해결
+$(".selectpicker").on("change", function() {
+  $(this).blur();
+});
+
+// 모든 폼 valid 적용
+$("form").each(function() {
+  $(this).validate({
+    onkeyup: false,
+    ignore: ":hidden, [readonly]",
+    rules: {
+      userId: {
+        required: true,
+        rangelength: [3, 15],
+        remote: "/admin/usermanage/idcheck.do"
+      },
+      userName: {
+        required: true,
+        rangelength: [2, 10]
+      },
+      userEmail: {
+        required: true,
+        email: true
+      },
+      userPhone: {
+        required: true,
+        pattern: /^\d{3}-\d{4}-\d{4}$/
+      },
+      areaIndex: {
+        required: true
+      },
+      branchIndex: {
+        required: true
+      },
+      userPosition: {
+        required: true
+      },
+      userAuth: {
+        required: true
+      }
     },
-    userName: {
-      required: true,
-      rangelength: [2, 10]
+    messages: {
+      userId: {
+        required: "아이디를 입력하세요.",
+        rangelength: jQuery.validator.format(
+          "아이디는 {0}자 이상 {1}자 이하로 입력해주세요."
+        ),
+        remote: "이미 존재하는 아이디입니다."
+      },
+      userName: {
+        required: "이름을 입력하세요.",
+        rangelength: jQuery.validator.format(
+          "이름은 {0}자 이상 {1}자 이하로 입력해주세요."
+        )
+      },
+      userEmail: {
+        required: "이메일을 입력하세요.",
+        email: "이메일 형식이 맞지 않습니다."
+      },
+      userPhone: {
+        required: "연락처를 입력하세요.",
+        pattern: "연락처 형식이 맞지 않습니다."
+      },
+      areaIndex: {
+        required: "지역을 선택하세요."
+      },
+      branchIndex: {
+        required: "지점을 선택하세요."
+      },
+      userPosition: {
+        required: "직책을 선택하세요."
+      },
+      userAuth: {
+        required: "권한을 선택하세요."
+      }
     },
-    userEmail: {
-      required: true,
-      email: true
+
+    // 에러 위치 조정
+    errorPlacement: function(error, element) {
+      if (element.is(":radio") || element.is("select")) {
+        error.appendTo(element.parents(".col-sm-8"));
+      } else {
+        error.insertAfter(element);
+      }
     },
-    userPhone: {
-      required: true,
-      pattern: /^(?:(010-?\d{4})|(01[1|6|7|8|9]-?\d{3,4}))-?\d{4}$/
+
+    // valid 실패시
+    invalidHandler: function(form, validator) {
+      var errors = validator.numberOfInvalids();
+
+      if (errors) {
+        alert(validator.errorList[0].message);
+        validator.errorList[0].element.focus();
+      }
     },
-    areaIndex: {
-      required: true
-    },
-    branchIndex: {
-      required: true
-    },
-    userPosition: {
-      required: true
-    },
-    userAuth: {
-      required: true
+
+    // valid 성공시
+    submitHandler: function(form) {
+      const formId = $(form).attr("id");
+      const req = $(form).serializeObject();
+
+      switch (formId) {
+        case "userCreateForm":
+          userCreate(req);
+          insertModal.modal("hide");
+          break;
+
+        case "userModifyForm":
+          userUpdate(req);
+          modifyModal.modal("hide");
+          break;
+        default:
+          alert("valid 에러");
+          break;
+      }
+
+      return false;
     }
-  },
-  messages: {
-    userId: {
-      required: "아이디를 입력하세요.",
-      rangelength: jQuery.validator.format(
-        "아이디는 {0}자 이상 {1}자 이하로 입력해주세요."
-      ),
-      remote: "이미 존재하는 아이디입니다."
-    },
-    userName: {
-      required: "이름을 입력하세요.",
-      rangelength: jQuery.validator.format(
-        "이름은 {0}자 이상 {1}자 이하로 입력해주세요."
-      )
-    },
-    userEmail: {
-      required: "이메일을 입력하세요.",
-      email: "이메일 형식이 맞지 않습니다."
-    },
-    userPhone: {
-      required: "연락처를 입력하세요.",
-      pattern: "연락처 형식이 맞지 않습니다."
-    },
-    areaIndex: {
-      required: "지역을 선택하세요."
-    },
-    branchIndex: {
-      required: "지점을 선택하세요."
-    },
-    userPosition: {
-      required: "직책을 선택하세요."
-    },
-    userAuth: {
-      required: "권한을 선택하세요."
-    }
-  }
+  });
 });
