@@ -22,7 +22,7 @@
 	</div>
 
 	<div class="container-fluid">
-		<div class="row">
+		<div class="row"}>
 			<div class="col-2">
 				<div class="card">
 					<div class="card-header">
@@ -34,8 +34,9 @@
 				</div>
 			</div>
 
+
 			<div class="col-10">
-				<div class="card">
+				<div class="card" style="background-color:#e9ecef">
 					<div class="card-header">
 						<b>사용자 목록</b>
 

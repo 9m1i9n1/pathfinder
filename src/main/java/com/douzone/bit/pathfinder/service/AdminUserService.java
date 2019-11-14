@@ -46,8 +46,11 @@ public class AdminUserService {
         .userAuth(request.getUserAuth()).userPosition(request.getUserPosition())
         .branch(branchRepository.getOne(request.getBranchIndex())).build();
 
-    UserTb newUser = userRepository.save(user);
+    if (idCheck(user.getUserId())) {
+      Header.ERROR("중복된 ID");
+    }
 
+    UserTb newUser = userRepository.save(user);
     return Header.OK(response(newUser));
   }
 
