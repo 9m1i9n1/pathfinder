@@ -32,8 +32,6 @@ public class HierarchyService {
 	private AreaRepository areaRepository;
 	@Autowired
 	private BranchRepository branchRepository;
-	@Autowired
-	private UserRepository userRepository;
 
 	public Header<HierarchyResponse> readCompany() {
 		Map<String, Boolean> state = new HashMap<String, Boolean>();
@@ -65,15 +63,6 @@ public class HierarchyService {
 
 		return branchList;
 	}
-
-	private AdminUserResponse userResponse(UserTb user) {
-		AdminUserResponse adminUserResponse = AdminUserResponse.builder().userId(user.getUserId())
-				.userName(user.getUserName()).userEmail(user.getUserEmail()).userPhone(user.getUserPhone())
-				.branchName(user.getBranch().getBranchName()).userPosition(user.getUserPosition()).build();
-
-		return adminUserResponse;
-	}
-
 
 	private HierarchyResponse areaResponse(AreaTb area) {
 		String childParent = "area:" + area.getAreaIndex();

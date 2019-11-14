@@ -82,11 +82,4 @@ public class SignController {
 		return mv;
 	}
 
-//	@PostMapping("/login.do")
-//	public Header<SignResponse> doLogin(@RequestParam("id") String userId, @RequestParam("pwd") String userPwd) {
-//
-//		Header<SignResponse> user = SignService.login(userId, userPwd);
-//		
-//		return user;
-//	}
 }

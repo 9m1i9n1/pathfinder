@@ -1,6 +1,8 @@
 package com.douzone.bit.pathfinder.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -12,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -52,18 +55,26 @@ public class AdminUserController {
     return mv;
   }
 
+  // 회원 한명 정보 불러오기 (update에서 사용)
   @GetMapping("/userread.do")
-  public Header<AdminUserResponse> userRead(@RequestParam("userIndex") Long userIndex) {
+  public Header<AdminUserResponse> userRead(@RequestParam Long userIndex) {
 
     return adminUserService.read(userIndex);
   }
 
   // 회원 리스트 불러오기
   @GetMapping("/userlist.do")
-  public Header<List<AdminUserResponse>> userList(@RequestParam("id") String id,
+  public Header<List<AdminUserResponse>> userList(@RequestParam String treeId,
       @PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
-    return adminUserService.list(id, pageable);
+    return adminUserService.list(treeId, pageable);
+  }
+
+  @GetMapping("/idcheck.do")
+  public Boolean idCheck(@RequestParam String userId) {
+    System.out.println("접속");
+
+    return adminUserService.idCheck(userId);
   }
 
   // 트리 불러오기
@@ -75,7 +86,7 @@ public class AdminUserController {
 
   // 지점 리스트 불러오기
   @GetMapping("/branchlist.do")
-  public Header<List<Object>> branchList(@RequestParam("areaIndex") Long areaIndex) {
+  public Header<List<Object>> branchList(@RequestParam Long areaIndex) {
 
     return adminUserService.readBranchName(areaIndex);
   }
@@ -89,21 +100,36 @@ public class AdminUserController {
 
   // 회원 등록
   @PostMapping("")
-  public Header<AdminUserResponse> create(@RequestBody AdminUserRequest request) {
+  public Header<AdminUserResponse> create(@RequestBody @Valid AdminUserRequest request, Errors errors) {
+
+    if (errors.hasErrors()) {
+      return Header.ERROR(errors);
+    }
 
     return adminUserService.create(request);
   }
 
-  // 비밀번호 초기화
+  // 회원 수정
   @PutMapping("")
-  public Header<AdminUserResponse> userUpdate(@RequestBody AdminUserRequest request) {
+  public Header<AdminUserResponse> userUpdate(@RequestBody @Valid AdminUserRequest request, Errors errors) {
+
+    if (errors.hasErrors()) {
+      return Header.ERROR(errors);
+    }
 
     return adminUserService.update(request);
   }
 
+  // 비밀번호 초기화
+  @PatchMapping("")
+  public Header<AdminUserResponse> userPwUpdate(@RequestParam Long userIndex) {
+
+    return adminUserService.updatePw(userIndex);
+  }
+
   // 회원 삭제
-  @DeleteMapping("/{userIndex}")
-  public Header userDelete(@PathVariable Long userIndex) {
+  @DeleteMapping("")
+  public Header userDelete(@RequestParam Long userIndex) {
 
     return adminUserService.delete(userIndex);
   }

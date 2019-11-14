@@ -1,62 +1,6 @@
 $(document).ready(function() {
 	branchlist();
-	
-	$("#allDataTable tr").click(
-			function() {
-				console.log("하이염");
-				selectRouteStr = "";
-				selectRouteCnt = 0;
-
-				// 현재 클릭된 Row(<tr>)
-				var tr = $(this);
-				console.log("티알입니다.",tr);
-				var td = tr.children();
-				
-				var branch_name = td.eq(0).text().trim();
-				var branch_value = td.eq(1).text().trim();
-				var branch_lat = td.eq(2).text().trim();
-				var branch_lng = td.eq(3).text().trim();
-				if (arr.indexOf(branch_name) == -1) {
-					arr.push(branch_name);
-					if (arr.length > 0) {
-						routecnt++;
-						$.each(arr, function(i) {
-							selectRouteCnt++;
-							if (selectRouteCnt == 1)
-								selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
-									'<td>' + '출발지' + '</td>' +
-									'<td>' + (i + 1) + '</td>' + 
-									'<td>' + arr[i] + '</td>' + 
-									'</tr>';
-							else
-								selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
-								'<td>' + '경유지' + '</td>' + 
-								'<td>' + (i + 1) + '</td>' + 
-								'<td>' + arr[i] + '</td>' +
-								'</tr>';
-						});
-					}
-				} else {
-					routecnt--;
-					arr.splice(arr.indexOf(branch_name), 1);
-					$.each(arr, function(i) {
-						selectRouteCnt++;
-						if (selectRouteCnt == 1)
-							selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
-								'<td>' + '출발지' + '</td>' +
-								'<td>' + (i + 1) + '</td>' + 
-								'<td>' + arr[i] + '</td>' + 
-								'</tr>';
-						else
-							selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
-							'<td>' + '경유지' + '</td>' + 
-							'<td>' + (i + 1) + '</td>' + 
-							'<td>' + arr[i] + '</td>' +
-							'</tr>';
-					});
-				}
-				$("#selectRoute").html(selectRouteStr);
-			});
+	showClickRoute();
 });
 
 var tbody;
@@ -78,8 +22,56 @@ var mapPlan = L.Routing.plan({
 	draggableWaypoints : false
 });
 
+var greenIcon = new L.Icon({
+	  iconUrl: '/static/css/test.png',
+	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+	  iconSize: [100, 100],
+	  iconAnchor: [12, 41],
+	  popupAnchor: [1, -34],
+	  shadowSize: [41, 41]
+	});
+
+var blueIcon = new L.Icon({
+	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+	  iconSize: [25, 41],
+	  iconAnchor: [12, 41],
+	  popupAnchor: [1, -34],
+	  shadowSize: [41, 41]
+	});
+
+var redIcon = new L.Icon({
+	  iconUrl: '/static/css/test2.png',
+	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+	  iconSize: [100, 100],
+	  iconAnchor: [12, 41],
+	  popupAnchor: [1, -34],
+	  shadowSize: [41, 41]
+	});
+
 /* Route Control 초기화 */
-var mapControl = L.Routing.control({});
+var mapControl = L.Routing.control({
+	draggableWaypoints: false,
+	addWaypoints:false,
+	  createMarker: function(i, wp, nWps) {
+		    if (i === 0) {
+		      // here change the starting and ending icons
+		      return L.marker(wp.latLng, {
+		        icon: greenIcon // here pass the custom marker icon instance
+		      }).bindPopup("<b>출발</b>").openPopup();
+		    }else if( i === nWps - 1){
+			      // here change the starting and ending icons
+			      return L.marker(wp.latLng, {
+			        icon: redIcon // here pass the custom marker icon instance
+			      }).bindPopup("<b>도착</b>").openPopup();
+		    } else {
+		      // here change all the others
+		      return L.marker(wp.latLng, {
+		        icon: blueIcon
+		      }).bindPopup("<b>asdasd</b>").openPopup();;
+		    }
+	  }
+});
 	
 var marker = new Array(); // 지도에 출력할 Marker 정보 배열
 var latLngInfo = new Array(); // 최종경로 출력 전 기존 경로 데이터 배열
@@ -88,6 +80,68 @@ var removeInfo;
 var prev_size = 0;	
 var bool_routed = false;
 
+var testarr = new Array();
+// tr누르면 밑에 테이블어 show해주는거
+function showClickRoute(){
+	$("#allDataTable tr").click(
+			function() {
+				selectRouteStr = "";
+				selectRouteCnt = 0;
+
+				// 현재 클릭된 Row(<tr>)
+				var tr = $(this);
+				var td = tr.children();
+				
+				var branch_name = td.eq(0).text().trim();
+				var branch_value = td.eq(1).text().trim();
+				var branch_lat = td.eq(2).text().trim();
+				var branch_lng = td.eq(3).text().trim();
+				if (arr.indexOf(branch_name) == -1) {
+					testarr.push(tr);
+					arr.push(branch_name);
+					if (arr.length > 0) {
+						routecnt++;
+						$.each(arr, function(i) {
+							selectRouteCnt++;
+							if (selectRouteCnt == 1)
+								selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
+									'<td>' + '출발지' + '</td>' +
+									'<td>' + (i + 1) + '</td>' + 
+									'<td>' + arr[i] + '</td>' + 
+									'</tr>';
+							else
+								selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
+								'<td>' + '경유지' + '</td>' + 
+								'<td>' + (i + 1) + '</td>' + 
+								'<td>' + arr[i] + '</td>' +
+								'</tr>';
+						});
+					}
+				} else {
+					routecnt--;
+// testarr.splice(tr);
+					arr.splice(arr.indexOf(branch_name), 1);
+					$.each(arr, function(i) {
+						selectRouteCnt++;
+						if (selectRouteCnt == 1)
+							selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
+								'<td>' + '출발지' + '</td>' +
+								'<td>' + (i + 1) + '</td>' + 
+								'<td>' + arr[i] + '</td>' + 
+								'</tr>';
+						else
+							selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
+							'<td>' + '경유지' + '</td>' + 
+							'<td>' + (i + 1) + '</td>' + 
+							'<td>' + arr[i] + '</td>' +
+							'</tr>';
+					});
+				}
+				$("#selectRoute").html(selectRouteStr);
+			});
+}
+
+// 색깔 바꾸기, 마크 찍기
 function HighLightTR(target, backColor) {
 	tbody = target.parentNode;
 	trs = tbody.getElementsByTagName('tr');
@@ -108,7 +162,15 @@ function HighLightTR(target, backColor) {
 		
 		/* 기존에 남은 경로 출력 */
 		for (var i = 0; i < latLngInfo.length; i++) {
-			marker.push(L.marker(latLngInfo[i]).addTo(map));
+			if(i === 0)
+				marker.push(L.marker(latLngInfo[i]).addTo(map).bindPopup("<b>"+branchObjectDataArray[i].branch_name+"</b><br>1비용 - "+branchObjectDataArray[i].branch_value).openPopup());
+
+			else if(i === latLngInfo.length -1)
+				marker.push(L.marker(latLngInfo[i]).addTo(map).bindPopup("<b>"+branchObjectDataArray[i].branch_name+"</b><br>2비용 - "+branchObjectDataArray[i].branch_value).openPopup());
+			
+			else
+				marker.push(L.marker(latLngInfo[i]).addTo(map).bindPopup("<b>"+branchObjectDataArray[i].branch_name+"</b><br>3비용 - "+branchObjectDataArray[i].branch_value).openPopup());
+
 		}
 	}
 	
@@ -120,18 +182,27 @@ function HighLightTR(target, backColor) {
 			trs[i].style.backgroundColor = orgBColor;
 			route = route.splice(1, route.length);
 			branchObjectDataArray = branchObjectDataArray.splice(1, branchObjectDataArray.length);
-			
 			/* 삭제될 마커 정보 저장. */
 			removeMarker = marker;
 			/* removeInfo = latLngInfo; */
 			
-			/* Marker 배열은 삭제된 배열을 제거하고 남은 배열 저장. */
-			marker = marker.splice(1, marker.length);
-			latLngInfo = latLngInfo.splice(1, latLngInfo.length);
-			
-			/* 지도에서 Merker 제거. */
-			map.removeLayer(removeMarker[0]);
-								
+			if(marker.length === 1){
+				/* Marker 배열은 삭제된 배열을 제거하고 남은 배열 저장. */
+				marker = marker.splice(1, marker.length);
+
+				latLngInfo = latLngInfo.splice(1, latLngInfo.length);
+
+				/* 지도에서 Merker 제거. */
+				map.removeLayer(removeMarker[0]);
+			} else{
+				marker = marker.splice(2, marker.length);	
+				latLngInfo = latLngInfo.splice(1, latLngInfo.length);
+				
+				map.removeLayer(removeMarker[0]);
+				map.removeLayer(removeMarker[1]);
+				marker.unshift(L.marker(latLngInfo[0],{icon: greenIcon}).addTo(map).bindPopup("<b>출발!!!!</b>").openPopup());
+			}
+
 			if (route.length != 0)
 				route[0].style.backgroundColor = 'rgb(45, 180, 0)';
 				continue;
@@ -148,10 +219,15 @@ function HighLightTR(target, backColor) {
 			branchObject.branch_lng = target.childNodes[3].innerHTML.trim();
 			branchObjectDataArray.push(branchObject);
 			
-			/* 위경도정보추가 */
-			latLngInfo.push([branchObject.branch_lat, branchObject.branch_lng]);
-			/* 마커추가 */	
-			marker.push(L.marker([branchObject.branch_lat, branchObject.branch_lng]).addTo(map));
+			if(latLngInfo.length === 0){
+				/* 위경도정보추가 */
+				latLngInfo.push([branchObject.branch_lat, branchObject.branch_lng]);
+				/* 마커추가 */	
+				marker.push(L.marker([branchObject.branch_lat, branchObject.branch_lng],{ icon: greenIcon}).addTo(map).bindPopup("<b>출발</b>").openPopup());	
+			}
+// marker.push(L.marker([branchObject.branch_lat,
+// branchObject.branch_lng]).addTo(map).bindPopup("<b>"+branchObject.branch_name+"</b><br>비용
+// - "+branchObject.branch_value).openPopup());
 			continue;
 		}
 
@@ -163,7 +239,7 @@ function HighLightTR(target, backColor) {
 				// var a = route = route.splice(1, route.length);
 				var index = 0;
 				route.forEach(function(item) {
-					if (item === target) {
+					if (item.childNodes[0].innerHTML.trim() === target.childNodes[0].innerHTML.trim()) {
 						var t1 = new Array();
 						t1 = route.splice(index, 1);
 						t1 = branchObjectDataArray.splice(index, 1);
@@ -171,6 +247,7 @@ function HighLightTR(target, backColor) {
 						/* 제거할 마커 정보 Splice */
 						removeMarker = marker.splice(index, 1);
 						latLngInfo.splice(index, 1);
+
 						/* 해당 마커를 Map에서 제거 */
 						map.removeLayer(removeMarker[0]);
 					}
@@ -190,7 +267,7 @@ function HighLightTR(target, backColor) {
 				/* 위경도정보추가 */
 				latLngInfo.push([branchObject.branch_lat, branchObject.branch_lng]);
 				/* Marker 추가 */
-				marker.push(L.marker([branchObject.branch_lat, branchObject.branch_lng]).addTo(map));
+				marker.push(L.marker([branchObject.branch_lat, branchObject.branch_lng]).addTo(map).bindPopup("<b>"+branchObject.branch_name+"</b><br>비용 - "+branchObject.branch_value).openPopup());
 			}
 		}
 	} // endfor i
@@ -198,7 +275,7 @@ function HighLightTR(target, backColor) {
 
 // data : encodeURI(JSON.stringify(data)),
 
-// 버튼 누르면 경로 출력
+// 전송 버튼 누르면 경로 출력
 $(function() {
 	/* 지도 출력 함수 */
 	function drawMap(mapInfoData) {
@@ -215,7 +292,8 @@ $(function() {
 			
 		/* mapPlan에 새로운 경로 추가. */
 		mapPlan.setWaypoints(mapInfoData);
-			
+
+
 		/* Controller에 mapPlan 등록. */
 		test = mapControl.setWaypoints(mapPlan.getWaypoints());
 		
@@ -228,16 +306,14 @@ $(function() {
 		return test;
 	}
 	
-	$("#submitroute").click(	
+	$("#submitroute").click(
 		function() {
-			console.log($("#allDataTable #2"));
-			
 			if (routecnt <= 2) {
 				alert("출발지와 목적지를 포함한 경로가 세개 이상이어야 합니다.");
-			} else if (routecnt > 15) {
+			} else if (routecnt > 100) {
 				alert("경유지가 너무 MP염");
 			} else {
-				var str = "출발";
+				var str = "출발 : ";
 				$.ajax({
 					url : "/maproute/maproutesend",
 					type : 'post',
@@ -258,7 +334,7 @@ $(function() {
 								 * data[i].branch_lng
 								 */
 								mapInfoData.push (L.latLng(branchObjectDataArray[i].branch_lat, branchObjectDataArray[i].branch_lng));
-								str +=	'->' + branchObjectDataArray[i].branch_name; 
+								str +=	branchObjectDataArray[i].branch_name + '->'; 
 							});
 						}
 						
@@ -274,7 +350,7 @@ $(function() {
 							    var s = parseInt(time%60);
 							    var m = parseInt(m%60);
 							    var km = (distance/1000).toFixed(1);
-							    str += "  ->  도착 <br/> 총 걸리는 시간 : " + h + "시간 " + m + "분 " + s +"초 <br/> 총 거리 : " + km +"Km";
+							    str += "  도착 <br/> 총 걸리는 시간 : " + h + "시간 " + m + "분 " + s +"초 <br/> 총 거리 : " + km +"Km";
 							    $("#finalPathDiv").html(str);
 							});
 						})
@@ -289,70 +365,6 @@ $(function() {
 	})
 })
 
-
-
-$(function () {
-		tdArr = new Array(); // 배열 선언
-		// 테이블의 Row 클릭시 값 가져오기
-		
-		$("#allDataTable").find("#2").click(
-				function() {
-					console.log("하이염");
-					selectRouteStr = "";
-					selectRouteCnt = 0;
-
-					// 현재 클릭된 Row(<tr>)
-					var tr = $(this);
-					console.log("티알입니다.",tr);
-					var td = tr.children();
-					
-					var branch_name = td.eq(0).text().trim();
-					var branch_value = td.eq(1).text().trim();
-					var branch_lat = td.eq(2).text().trim();
-					var branch_lng = td.eq(3).text().trim();
-					if (arr.indexOf(branch_name) == -1) {
-						arr.push(branch_name);
-						if (arr.length > 0) {
-							routecnt++;
-							$.each(arr, function(i) {
-								selectRouteCnt++;
-								if (selectRouteCnt == 1)
-									selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
-										'<td>' + '출발지' + '</td>' +
-										'<td>' + (i + 1) + '</td>' + 
-										'<td>' + arr[i] + '</td>' + 
-										'</tr>';
-								else
-									selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
-									'<td>' + '경유지' + '</td>' + 
-									'<td>' + (i + 1) + '</td>' + 
-									'<td>' + arr[i] + '</td>' +
-									'</tr>';
-							});
-						}
-					} else {
-						routecnt--;
-						arr.splice(arr.indexOf(branch_name), 1);
-						$.each(arr, function(i) {
-							selectRouteCnt++;
-							if (selectRouteCnt == 1)
-								selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
-									'<td>' + '출발지' + '</td>' +
-									'<td>' + (i + 1) + '</td>' + 
-									'<td>' + arr[i] + '</td>' + 
-									'</tr>';
-							else
-								selectRouteStr += '<tr onClick="cancelRoute(this)">' + 
-								'<td>' + '경유지' + '</td>' + 
-								'<td>' + (i + 1) + '</td>' + 
-								'<td>' + arr[i] + '</td>' +
-								'</tr>';
-						});
-					}
-					$("#selectRoute").html(selectRouteStr);
-				});
-		
-			})
 // 맵을 클릭할 때마다 포인트를 add해주는 ajax를 만들어야함.
 
 /*
@@ -420,56 +432,13 @@ $('#btnSearch').click(function(e){
 });
 
 // 검색뷰
-function branchsearch(searchUrl, searchpage=0) {
+function branchsearch(searchUrl, searchpage) {
 	$.ajax({
 		type : "GET",
-		url : "/admin/branchmanage/search" + searchUrl +"&page=" +searchpage ,
+		url : "/maproute/search" + searchUrl +"&page=" + 0 ,
 		contentType : 'application/json',
-		success : function(res) {
-			var str = "";
-			$.each(res.data,function(key, value) {
-				str += '<tr><td>'+ value.branchIndex + '</td>';
-				str += '<td>' + value.area +'</td>';
-				str += '<td>' + value.branchName +'</td>';
-				str += '<td>' + value.branchOwner +'</td>';
-				str += '<td>' + value.branchValue +'</td>'
-				str += '<td>' + value.branchAddr +'</td>';
-				str	+= '<td>' + value.branchPhone + '</td>';
-				str += "<td>" + `<input type='button' data-toggle='modal' data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' />`;
-				str += '<button onclick="branchdelete('+ value.branchIndex +' , '+ value.branchName +')">삭제</button></td>'
-				str += '</tr>';
-				});
-			$("#tableListBody").html(str);
-			var buttonAll = "";
-			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
-			$("#seachAll").html(buttonAll);
-			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
-		}
-	});
-}
-/*
- * <tr onclick="event.cancelBubble=true"> <th onclick="event.cancelBubble=true"
- * style="background-color: #fafafa; text-align: center;">branch_name(지역이름)</th>
- * <th onclick="event.cancelBubble=true" style="display: none">branch_value(교통비)</th>
- * <th onclick="event.cancelBubble=true" style="display: none">branch_lat(위도)</th>
- * <th onclick="event.cancelBubble=true" style="display: none">branch_lng(경도)</th>
- * </tr>
- * 
- * <c:forEach items="${datalist}" var="list">
- * <tr onClick="HighLightTR(this, 'rgb(201, 204, 153)');"> <td>${list.branchName}</td>
- * <td style="display: none">${list.branchValue}</td>
- * <td style="display: none">${list.branchLat}</td> <td style="display: none">${list.branchLng}</td>
- * </tr> </c:forEach>
- */
-
-// 첫페이지
-function branchlist(selectPage) {
-	$.ajax({
-		url : "/maproute/search",
-		type: "get",
 		async: false,
 		success : function(res) {
-			console.log(res);
 			var str = '<tr onclick=\"event.cancelBubble=true\">';
 				str += '<th onclick=\"event.cancelBubble=true\"';
 				str += 'style=\"background-color: #fafafa; text-align: center;\">branch_name(지역이름)</th>';
@@ -477,9 +446,53 @@ function branchlist(selectPage) {
 				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lat(위도)</th>';
 				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lng(경도)</th>';
 			$.each(res.data, function(key, value) {
-				console.log(key)
 				str += '<tr id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
-				str += '<td>'+ value.branchName+ '</td>';
+				str += '<td class=\"test\">'+ value.branchName+ '</td>';
+				str += '<td style=\"display: none\"> '+ value.branchValue+ '</td>';
+				str += '<td style=\"display: none\">'+ value.branchLat+ '</td>';
+				str += '<td style=\"display: none\">'+ value.branchLng+ '</td>';
+				str += '</tr>'
+			});
+			$("#allDataTable").html(str);
+			if(trs !== null){
+				for(var i = 0; i < trs.length; ++i){
+					if (arr.includes(trs[i].childNodes[0].innerHTML.trim())) {
+						var index = arr.indexOf(trs[i].childNodes[0].innerHTML.trim());
+						if(index == 0){
+							trs[i].style.backgroundColor = 'rgb(45, 180, 0)';
+						}
+						else{
+							trs[i].style.backgroundColor =  'rgb(201, 204, 153)';
+						}
+						
+					}
+// console.log("arr - ",arr);
+// console.log("trs[i].childNodes.innerHTML[0] - ", );
+// console.log("res.data - ",res.data);
+// console.log("trs - ",trs);
+				}
+			}
+			showClickRoute();
+		}
+	})
+}
+
+// 첫페이지
+function branchlist() {
+	$.ajax({
+		url : "/maproute/allData",
+		type: "get",
+		async: false,
+		success : function(res) {
+			var str = '<tr onclick=\"event.cancelBubble=true\">';
+				str += '<th onclick=\"event.cancelBubble=true\"';
+				str += 'style=\"background-color: #fafafa; text-align: center;\">branch_name(지역이름)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_value(교통비)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lat(위도)</th>';
+				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lng(경도)</th>';
+			$.each(res.data, function(key, value) {
+				str += '<tr id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
+				str += '<td class=\"test\">'+ value.branchName+ '</td>';
 				str += '<td style=\"display: none\"> '+ value.branchValue+ '</td>';
 				str += '<td style=\"display: none\">'+ value.branchLat+ '</td>';
 				str += '<td style=\"display: none\">'+ value.branchLng+ '</td>';

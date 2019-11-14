@@ -20,28 +20,28 @@
           <div class="form-group row">
             <label for="userName" class="col-sm-3 col-form-label-sm">이름</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userName" name="userName"/>
+              <input type="text" class="form-control" id="userName" name="userName" />
             </div>
           </div>
 
           <div class="form-group row">
             <label for="userEmail" class="col-sm-3 col-form-label-sm">이메일</label>
             <div class="col-sm-8">
-              <input type="userEmail" class="form-control" id="userEmail" name="userEmail"/>
+              <input type="text" class="form-control" id="userEmail" name="userEmail"/>
             </div>
           </div>
 
           <div class="form-group row">
             <label for="userPhone" class="col-sm-3 col-form-label-sm">전화번호</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userPhone" name="userPhone"/>
+              <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="(예)010-1234-5678"/>
             </div>
           </div>
 
           <div class="form-group row">
             <label for="areaIndex" class="col-sm-3 col-form-label-sm">지역</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex">
+              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex" >
               </select>
             </div>
           </div>
@@ -49,7 +49,7 @@
           <div class="form-group row">
             <label for="branchIndex" class="col-sm-3 col-form-label-sm">지점</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex">
+              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex" >
               </select>
             </div>
           </div>
@@ -57,7 +57,7 @@
           <div class="form-group row">
             <label for="userPosition" class="col-sm-3 col-form-label-sm">직책</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition">
+              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" >
                 <option value="" disabled selected>선택</option>
                 <option value="사원">사원</option>
                 <option value="대리">대리</option>
@@ -82,12 +82,14 @@
               </div>
             </div>
           </div>
-        </form>
-      </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="InsertBtn">등록</button>
+          <div class="formCheck" id="serverFormCheck"></div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-success" id="InsertBtn">등록</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -118,30 +120,37 @@
           </div>
 
           <div class="form-group row">
+            <label for="userPw" class="col-sm-3 col-form-label-sm">비밀번호</label>
+            <div class="col-sm-8">
+              <input type="button" class="btn btn-danger" id="userPw" name="userPw" value="초기화" />
+            </div>
+          </div>
+
+          <div class="form-group row">
             <label for="userName" class="col-sm-3 col-form-label-sm">이름</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userName" name="userName"/>
+              <input type="text" class="form-control" id="userName" name="userName" />
             </div>
           </div>
 
           <div class="form-group row">
             <label for="userEmail" class="col-sm-3 col-form-label-sm">이메일</label>
             <div class="col-sm-8">
-              <input type="userEmail" class="form-control" id="userEmail" name="userEmail"/>
+              <input type="text" class="form-control" id="userEmail" name="userEmail" />
             </div>
           </div>
 
           <div class="form-group row">
             <label for="userPhone" class="col-sm-3 col-form-label-sm">전화번호</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="userPhone" name="userPhone"/>
+              <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="(예)010-1234-5678"/>
             </div>
           </div>
 
           <div class="form-group row">
             <label for="areaIndex" class="col-sm-3 col-form-label-sm">지역</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex">
+              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex" >
               </select>
             </div>
           </div>
@@ -157,8 +166,8 @@
           <div class="form-group row">
             <label for="userPosition" class="col-sm-3 col-form-label-sm">직책</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition">
-                <option value='' disabled selected>선택</option>
+              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" >
+                <option value="" disabled selected>선택</option>
                 <option>사원</option>
                 <option>대리</option>
                 <option>과장</option>
@@ -182,13 +191,17 @@
               </div>
             </div>
           </div>
+
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary" id="ModifyBtn">수정</button>
+          </div>
+
         </form>
       </div>
+      <div class="formCheck" id="serverFormCheck"></div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="ModifyBtn">수정</button>
-      </div>
     </div>
   </div>
 </div>

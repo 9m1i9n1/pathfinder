@@ -81,6 +81,11 @@ p {
     margin: 0;
 }
 
+.formCheck{
+    color: #961E00;
+    text-shadow: 1px 1px 1px #ccc;
+}
+
 .table-responsive {
     padding-right: 1px;
 }
