@@ -70,7 +70,7 @@
 						<label for="b6" class="col-sm-2 col-form-label-sm"> 전화번호</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" name="branchPhone"
-								id="branchPhone" placeholder="ex) 010-1234-5676" >
+								id="branchPhone" placeholder="ex) 02-123-5676" >
 						</div>
 					</div>
 					<div id="branchPhoneVaild"></div>
@@ -123,7 +123,7 @@
 							지점명 </label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="branchName1"
-								name="branchName">
+								name="branchName" readonly>
 						</div>
 					</div>
 
@@ -148,7 +148,7 @@
 						<label for="branchPhone" class="col-sm-3 col-form-label-sm">전화번호</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="branchPhone1"
-								name="branchPhone">
+								name="branchPhone" placeholder="ex) 02-123-5676">
 						</div>
 					</div>
 					<div class="modal-footer">
