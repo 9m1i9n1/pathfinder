@@ -80,7 +80,7 @@
 
 					<input hidden type="text" name="branchLat"> <input hidden
 						type="text" name="branchLng">
-
+5
 				</form:form>
 			</div>
 

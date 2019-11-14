@@ -51,8 +51,9 @@ function userLoading() {
         str += `<button class="item" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="zmdi zmdi-edit"></i></button>`;
         str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="zmdi zmdi-delete"></i></button>`;
         str += "</div></td>";
-
         str += "</tr>";
+
+        str += "<tr class='spacer'></tr>"
       });
 
       $("#table #body").html(str);
