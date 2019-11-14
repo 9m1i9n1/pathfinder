@@ -162,7 +162,15 @@ function HighLightTR(target, backColor) {
 		
 		/* 기존에 남은 경로 출력 */
 		for (var i = 0; i < latLngInfo.length; i++) {
-			marker.push(L.marker(latLngInfo[i]).addTo(map).bindPopup("<b>"+branchObject.branch_name+"</b><br>비용 - "+branchObject.branch_value).openPopup());
+			if(i === 0)
+				marker.push(L.marker(latLngInfo[i]).addTo(map).bindPopup("<b>"+branchObjectDataArray[i].branch_name+"</b><br>1비용 - "+branchObjectDataArray[i].branch_value).openPopup());
+
+			else if(i === latLngInfo.length -1)
+				marker.push(L.marker(latLngInfo[i]).addTo(map).bindPopup("<b>"+branchObjectDataArray[i].branch_name+"</b><br>2비용 - "+branchObjectDataArray[i].branch_value).openPopup());
+			
+			else
+				marker.push(L.marker(latLngInfo[i]).addTo(map).bindPopup("<b>"+branchObjectDataArray[i].branch_name+"</b><br>3비용 - "+branchObjectDataArray[i].branch_value).openPopup());
+
 		}
 	}
 	
@@ -174,18 +182,27 @@ function HighLightTR(target, backColor) {
 			trs[i].style.backgroundColor = orgBColor;
 			route = route.splice(1, route.length);
 			branchObjectDataArray = branchObjectDataArray.splice(1, branchObjectDataArray.length);
-			
 			/* 삭제될 마커 정보 저장. */
 			removeMarker = marker;
 			/* removeInfo = latLngInfo; */
 			
-			/* Marker 배열은 삭제된 배열을 제거하고 남은 배열 저장. */
-			marker = marker.splice(1, marker.length);
-			latLngInfo = latLngInfo.splice(1, latLngInfo.length);
-			
-			/* 지도에서 Merker 제거. */
-			map.removeLayer(removeMarker[0]);
-								
+			if(marker.length === 1){
+				/* Marker 배열은 삭제된 배열을 제거하고 남은 배열 저장. */
+				marker = marker.splice(1, marker.length);
+
+				latLngInfo = latLngInfo.splice(1, latLngInfo.length);
+
+				/* 지도에서 Merker 제거. */
+				map.removeLayer(removeMarker[0]);
+			} else{
+				marker = marker.splice(2, marker.length);	
+				latLngInfo = latLngInfo.splice(1, latLngInfo.length);
+				
+				map.removeLayer(removeMarker[0]);
+				map.removeLayer(removeMarker[1]);
+				marker.unshift(L.marker(latLngInfo[0],{icon: greenIcon}).addTo(map).bindPopup("<b>출발!!!!</b>").openPopup());
+			}
+
 			if (route.length != 0)
 				route[0].style.backgroundColor = 'rgb(45, 180, 0)';
 				continue;
@@ -202,10 +219,15 @@ function HighLightTR(target, backColor) {
 			branchObject.branch_lng = target.childNodes[3].innerHTML.trim();
 			branchObjectDataArray.push(branchObject);
 			
-			/* 위경도정보추가 */
-			latLngInfo.push([branchObject.branch_lat, branchObject.branch_lng]);
-			/* 마커추가 */	
-			marker.push(L.marker([branchObject.branch_lat, branchObject.branch_lng]).addTo(map).bindPopup("<b>"+branchObject.branch_name+"</b><br>비용 - "+branchObject.branch_value).openPopup());
+			if(latLngInfo.length === 0){
+				/* 위경도정보추가 */
+				latLngInfo.push([branchObject.branch_lat, branchObject.branch_lng]);
+				/* 마커추가 */	
+				marker.push(L.marker([branchObject.branch_lat, branchObject.branch_lng],{ icon: greenIcon}).addTo(map).bindPopup("<b>출발</b>").openPopup());	
+			}
+// marker.push(L.marker([branchObject.branch_lat,
+// branchObject.branch_lng]).addTo(map).bindPopup("<b>"+branchObject.branch_name+"</b><br>비용
+// - "+branchObject.branch_value).openPopup());
 			continue;
 		}
 
