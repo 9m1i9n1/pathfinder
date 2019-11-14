@@ -23,9 +23,9 @@ var mapPlan = L.Routing.plan({
 });
 
 var greenIcon = new L.Icon({
-	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+	  iconUrl: '/static/css/test.png',
 	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
-	  iconSize: [25, 41],
+	  iconSize: [100, 100],
 	  iconAnchor: [12, 41],
 	  popupAnchor: [1, -34],
 	  shadowSize: [41, 41]
@@ -40,16 +40,30 @@ var blueIcon = new L.Icon({
 	  shadowSize: [41, 41]
 	});
 
+var redIcon = new L.Icon({
+	  iconUrl: '/static/css/test2.png',
+	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+	  iconSize: [100, 100],
+	  iconAnchor: [12, 41],
+	  popupAnchor: [1, -34],
+	  shadowSize: [41, 41]
+	});
+
 /* Route Control 초기화 */
 var mapControl = L.Routing.control({
 	draggableWaypoints: false,
 	addWaypoints:false,
 	  createMarker: function(i, wp, nWps) {
-		    if (i === 0 || i === nWps - 1) {
+		    if (i === 0) {
 		      // here change the starting and ending icons
 		      return L.marker(wp.latLng, {
 		        icon: greenIcon // here pass the custom marker icon instance
-		      }).bindPopup("<b>asdasd</b>").openPopup();
+		      }).bindPopup("<b>출발</b>").openPopup();
+		    }else if( i === nWps - 1){
+			      // here change the starting and ending icons
+			      return L.marker(wp.latLng, {
+			        icon: redIcon // here pass the custom marker icon instance
+			      }).bindPopup("<b>도착</b>").openPopup();
 		    } else {
 		      // here change all the others
 		      return L.marker(wp.latLng, {
