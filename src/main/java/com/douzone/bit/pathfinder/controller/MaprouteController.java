@@ -21,7 +21,7 @@ import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.service.MaprouteService;
 
-@Controller
+@RestController
 @RequestMapping(value = "/maproute")
 public class MaprouteController {
 
@@ -29,9 +29,13 @@ public class MaprouteController {
 	private MaprouteService MaprouteService;
 
 	@GetMapping("/ajax")
-	public String AjaxMaproute() {
+	public ModelAndView AjaxMaproute() {
 
-		return "ajax.maproute";
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("ajax.maproute");
+		
+		return mv;
 	}
 
 	@RequestMapping(value = "/maproutesend")

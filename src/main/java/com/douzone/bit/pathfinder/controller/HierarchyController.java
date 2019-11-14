@@ -42,7 +42,7 @@ public class HierarchyController {
 
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("/hierarchy");
+		mv.setViewName("ajax.hierarchy");
 		
 		return mv;
 	}

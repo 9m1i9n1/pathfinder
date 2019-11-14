@@ -37,8 +37,7 @@
 			    },
 		        success : function(res) {
 		        	console.log(res);
-		        	$(document).html(res);
-			      /* $("#content-wrapper").html(res); */
+			        $("#content-wrapper").html(res);
 			    },
 			    error : function(e) {
 			      console.log(e);
