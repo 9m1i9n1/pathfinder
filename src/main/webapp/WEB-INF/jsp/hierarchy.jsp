@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="/static/css/theme.css" rel="stylesheet" media="all">
+<link rel="stylesheet" href="/static/js/bootstrap/table.css">
 </head>
 <body>
 	<div class="container-fluid">
@@ -13,19 +15,18 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3">
-				<div class="card" style="height: 100%;">
+				<div class="card">
 					<div class="card-header">
 						<b>부서 조직도</b>
 					</div>
-					<div class="scrollable">
-						<div class="card-body">
-							<div style="font-size: 13.5px;" id="jstree"></div>
-						</div>
+					<div class="card-body">
+						<div class="item" id="jstree"></div>
 					</div>
 				</div>
 			</div>
-			<div class="col-9">
-				<div class="card" style="height: 100%;">
+
+			<div class="col-md-9">
+				<div class="card">
 					<div class="card-header">
 						<b>사용자 리스트</b>
 						<div style = "float : right;">
@@ -38,20 +39,21 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<table class="table table-hover table-mc-light-blue"
-							style="text-align: center;">
-							<thead>
-								<tr>
-									<th style="background-color: #fafafa; text-align: center;">이름</th>
-									<th style="background-color: #fafafa; text-align: center;">이메일</th>
-									<th style="background-color: #fafafa; text-align: center;">전화번호</th>
-									<th style="background-color: #fafafa; text-align: center;">지점명</th>
-									<th style="background-color: #fafafa; text-align: center;">직책</th>
-								</tr>
-							</thead>
-							<tbody id="userTable" style="font-size: 75%" />
-						</table>
-						<div id="page"></div>
+						<div class="table-responsive table-responsive-data2">
+							<table class="table table-data2">
+								<thead>
+									<tr>
+										<th>이름</th>
+										<th>이메일</th>
+										<th>전화번호</th>
+										<th>지점명</th>
+										<th>직책</th>
+									</tr>
+								</thead>
+								<tbody id="userTable"></tbody>
+							</table>
+							<div id="page"></div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -116,6 +116,18 @@
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
+
+		<!-- Security -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -123,27 +135,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-<!-- 				<configuration>
-					<jvmArguments>
-						-Xms1024m
-						-Xmx8096m
-						-XX:PermSize=128M
-						-XX:MaxPermSize=1024M
-						-Xnoclassgc
-						-XX:NewSize=512M
-						-XX:MaxNewSize=1024M
-						-XX:+UseParNewGC
-						-XX:ParallelGCThreads=4
-						-XX:+UseConcMarkSweepGC
-						-XX:CMSInitiatingOccupancyFraction=50
-						-XX:+PrintGCDetails
-						-XX:+PrintGCTimeStamps
-						-XX:+PrintHeapAtGC
-						-XX:+AggressiveOpts
-						-Djava.net.preferIPv4Stack=true
-						-Djava.awt.headless=true"
-					</jvmArguments>
-				</configuration> -->
+				<!-- <configuration> <jvmArguments> -Xms1024m -Xmx8096m -XX:PermSize=128M 
+					-XX:MaxPermSize=1024M -Xnoclassgc -XX:NewSize=512M -XX:MaxNewSize=1024M -XX:+UseParNewGC 
+					-XX:ParallelGCThreads=4 -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=50 
+					-XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -XX:+AggressiveOpts 
+					-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true" </jvmArguments> 
+					</configuration> -->
 			</plugin>
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>

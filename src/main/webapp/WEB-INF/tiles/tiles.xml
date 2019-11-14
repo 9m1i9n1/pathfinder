@@ -18,6 +18,11 @@
 			value="/WEB-INF/jsp/layout/tiles-footer.jsp" />
 	</definition>
 
+	<definition name="pages" extends="empty">
+		<put-attribute name="content"
+		 value="/WEB-INF/jsp/pages/{1}.jsp"/>
+	</definition>
+
 	<definition name="*" extends="layouts-tiles">
 		<put-attribute name="content"
 			value="/WEB-INF/jsp/{1}.jsp" />
@@ -29,5 +34,18 @@
 	<definition name="*/*/*" extends="layouts-tiles">
 		<put-attribute name="content"
 			value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+	</definition>
+	
+	<!-- Ajax Templage  -->
+	<definition name="ajax.home" template="/WEB-INF/jsp/sample/dashboard/index.jsp">
+	</definition>
+	
+	<definition name="ajax.maproute" template="/WEB-INF/jsp/maproute.jsp">
+	</definition>
+	
+	<definition name="ajax.history" template="/WEB-INF/jsp/history.jsp">
+	</definition>
+	
+	<definition name="ajax.hierarchy" template="/WEB-INF/jsp/hierarchy.jsp">
 	</definition>
 </tiles-definitions>

@@ -6,14 +6,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/history")
 public class HistoryController {
 
-  @GetMapping({ "", "/" })
-  public String history(Model model) {
+	@GetMapping("/ajax")
+	public String AjaxHistory() {
 
-    return "/history";
-  }
+		return "ajax.history";
+	}
+	
+	@GetMapping({ "", "/" })
+	public String history(Model model) {
+
+		return "/history";
+	}
 
 }

@@ -5,7 +5,7 @@
 <tiles:insertAttribute name="header" />
 <html>
 
-<body id="page-top">
+<body id="page-top" class="sidbar-tolled">
 	<tiles:insertAttribute name="nav" />
 	<div id="wrapper">
 
