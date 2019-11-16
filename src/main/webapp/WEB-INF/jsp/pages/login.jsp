@@ -61,44 +61,31 @@
 		</div>
 	</div>
 	
-	<script type="text/javascript">
-	$(document).ready(function () {
-		/* doAuth(); */
-	});
-	
-	function setAjaxHeader() {
-		$.ajaxSetup({
-			beforeSend : function (xhr) {
-				xhr.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
-			}
-		});
-	}
-	
-	function doAuth() {
-		let userId = $("#username").val();
-		let userPwd = $("#password").val();
-		
-		let userData = new Object();
-		
-		userData.id = userId;
-		userData.pwd = userPwd;
-		
-		$("#submit").on("click", function() {
-			$.ajax({
-				url : "/authenticate.do",
-				type : "post",
-				contentType : "application/json",
-				data : JSON.stringify(userData),
-				success : function(res, status, xhr) {
-					setAjaxHeader();
-					console.log(res);
-				},
-				error : function(e) {
-					console.log(e);
-				}
+	<script type="text/javascript">	
+		function doAuth() {
+			let userId = $("#username").val();
+			let userPwd = $("#password").val();
+			
+			let userData = new Object();
+			
+			userData.id = userId;
+			userData.pwd = userPwd;
+			
+			$("#submit").on("click", function() {
+				$.ajax({
+					url : "/authenticate.do",
+					type : "post",
+					contentType : "application/json",
+					data : JSON.stringify(userData),
+					success : function(res, status, xhr) {
+
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				})
 			})
-		})
-	}
+		}
 	</script>
 </body>
 </html>

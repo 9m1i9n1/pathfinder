@@ -18,9 +18,9 @@
 			value="/WEB-INF/jsp/layout/tiles-footer.jsp" />
 	</definition>
 
-	<definition name="pages" extends="empty">
+	<definition name="login" extends="/WEB-INF/jsp/pages/login.jsp">
 		<put-attribute name="content"
-		 value="/WEB-INF/jsp/pages/{1}.jsp"/>
+		 value="/"/>
 	</definition>
 
 	<definition name="*" extends="layouts-tiles">
@@ -37,7 +37,7 @@
 	</definition>
 	
 	<!-- Ajax Templage  -->
-	<definition name="ajax.home" template="/WEB-INF/jsp/sample/dashboard/index.jsp">
+	<definition name="ajax.home" template="/WEB-INF/jsp/home.jsp">
 	</definition>
 	
 	<definition name="ajax.maproute" template="/WEB-INF/jsp/maproute.jsp">

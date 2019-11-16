@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,11 @@ import com.douzone.bit.pathfinder.util.JwtUtil;
 @RequestMapping("/")
 public class SignController {
 
+	/* 로그인한 유저 정보 가져오기
+	 * SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal()
+	 * */
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
@@ -59,13 +65,15 @@ public class SignController {
 		ModelAndView mv = new ModelAndView();
 
 		try {
-			authenticationManager.authenticate(
+			Authentication auth = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
 							request.getId(), request.getPwd()));
-			
+
+			SecurityContextHolder.getContext().setAuthentication(auth);
 		} catch (BadCredentialsException e) {
 			throw new Exception("Incorrect userId or password", e);
 		}
+		
 		UserDetails userDetails = signService
 				.loadUserByUsername(request.getId());
 		
@@ -77,7 +85,7 @@ public class SignController {
 		
 		response.addCookie(cookie);
 		
-		mv.setViewName("/hierarchy");
+		mv.setViewName("/home");
 		
 		return mv;
 	}

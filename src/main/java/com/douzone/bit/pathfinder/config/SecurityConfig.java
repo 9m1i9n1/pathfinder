@@ -38,9 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+			.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
 			.csrf().disable() // CSRF 보안 비설정
 			.authorizeRequests()
-//			.antMatchers("/history/**").hasAnyAuthority("ADMIN", "USER")
+			.antMatchers("/admin/**").access("hasRole('ADMIN')")
 			.antMatchers("/authenticate.do", "/login").permitAll() // 로그인은 누구나 접속할 수 았게 설정
 			.anyRequest().authenticated()
 			.and()
@@ -49,23 +50,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.formLogin() //Login 화면 설정.
 				.loginPage("/login")
-//				.loginProcessingUrl("/loginprocess")
-//				.usernameParameter("id")
-//				.passwordParameter("password")
-//				.defaultSuccessUrl("/maproute", true)
-//				.failureUrl("/login")
+				.failureUrl("/login")
 				.permitAll()
 			.and()
 			.logout()
 				.permitAll();
-		
-		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Override
 	public void configure(WebSecurity web) {
 		web.ignoring()
-			.antMatchers("/static/**");
+			.antMatchers(
+					"/static/**");
 	}
 	
 	@Override

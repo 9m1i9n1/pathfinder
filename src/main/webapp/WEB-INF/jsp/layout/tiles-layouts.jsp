@@ -12,7 +12,7 @@
 
 		<!-- Sidebar -->
 		<tiles:insertAttribute name="left" />
-		<div class="content-wrapper">
+		<div id="layout" class="content-wrapper">
 			<tiles:insertAttribute name="content" />
 			<!-- Sticky Footer -->
 			<tiles:insertAttribute name="footer" />

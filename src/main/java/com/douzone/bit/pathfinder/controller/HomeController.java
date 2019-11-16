@@ -26,7 +26,7 @@ public class HomeController {
 
 		ModelAndView mv = new ModelAndView();
 
-		mv.setViewName("/sample/dashboard/index");
+		mv.setViewName("/home");
 
 		return mv;
 	}
