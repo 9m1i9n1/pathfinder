@@ -30,6 +30,11 @@
 					<div class="card card-primary card-outline">
 						<div class="card-body box-profile">
 							<div class="text-center">
+							<div class="ribbon-wrapper ribbon-rg">
+                        <div class="ribbon bg-info text-rg">
+                          Info
+                        </div>
+                      </div>
 								<img class="profile-user-img img-fluid img-circle elevation-2"
 									src="https://imgnn.seoul.co.kr/img//upload/2017/01/24/SSI_20170124151021_V.jpg"
 									alt="User profile picture">
@@ -92,7 +97,7 @@
 				<!-- /.col -->
 				<div class="col-md-7">
 					<div class="card">
-						<div class="card-header p-2"><div class="nav-link" ><h4><b>Settings</b></h4></div></div>
+						<div class="widget-user-header bg-teal"><div class="nav-link" ><h4><b>Settings</b></h4></div></div>
 						<!-- /.card-header -->
 						
 						<div class="card-body">
