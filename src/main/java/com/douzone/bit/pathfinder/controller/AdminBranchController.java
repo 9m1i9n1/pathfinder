@@ -105,4 +105,12 @@ public class AdminBranchController {
 	public Header branchDelete(@PathVariable Long branchIndex) {
 		return adminBranchService.delete(branchIndex);
 	}
+	
+	// userinfoTest
+		@GetMapping("/user")
+		public ModelAndView userInfo() {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("/userinfo");
+			return mv;
+		}
 }
