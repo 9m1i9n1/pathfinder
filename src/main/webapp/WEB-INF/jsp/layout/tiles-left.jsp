@@ -3,7 +3,7 @@
 
 	  <aside class="main-sidebar elevation-4 sidebar-dark-yellow">
     <!-- Brand Logo -->
-    <a href="/home" class="brand-link navbar-olive">
+    <a href="/home" class="brand-link navbar-indigo">
       <img src="/static/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">PathFinder</span>

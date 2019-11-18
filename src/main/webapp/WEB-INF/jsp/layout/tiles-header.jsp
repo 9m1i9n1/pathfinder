@@ -24,7 +24,7 @@ pageEncoding="UTF-8"%>
 
 <!-- Google Font: Source Sans Pro -->
 <link
-  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
+  href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300&display=swap&subset=korean"
   rel="stylesheet"
 />
 
@@ -37,11 +37,7 @@ pageEncoding="UTF-8"%>
 
 <!-- Theme style -->
 <script src="/static/dist/js/adminlte.js"></script>
-<link rel="stylesheet" href="/static/dist/css/adminlte.min.css" />
-
-<%-- TODO : 지울 것 --%>
-<!-- OPTIONAL SCRIPTS -->
-<script src="/static/dist/js/demo.js"></script>
+<link rel="stylesheet" href="/static/dist/css/adminlte.css" />
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
