@@ -40,7 +40,7 @@ function getSearch() {
 	      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
 	      $.each(res.data, function(key, value) {
-	        str += "<tr>";
+	    	str += `<tr class="tr-shadow">`;
 	        str += "<td>" + value.userName + "</td>";
 	        str += "<td>" + value.userEmail + "</td>";
 	        str += "<td>" + value.userPhone + "</td>";
@@ -71,7 +71,7 @@ function getUser(treeId, selectPage) {
       count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
-        str += "<tr>";
+    	str += `<tr class="tr-shadow">`;
         str += "<td>" + value.userName + "</td>";
         str += "<td>" + value.userEmail + "</td>";
         str += "<td>" + value.userPhone + "</td>";

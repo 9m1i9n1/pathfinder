@@ -12,7 +12,7 @@
 
 		<!-- Sidebar -->
 		<tiles:insertAttribute name="left" />
-		<div class="content-wrapper">
+		<div id="layout" class="content-wrapper">
 			<tiles:insertAttribute name="content" />
 			<!-- Sticky Footer -->
 			<tiles:insertAttribute name="footer" />
@@ -20,6 +20,16 @@
 		<!-- /.content-wrapper -->
 	</div>
 	<!-- /#wrapper -->
+	
+	<script type="text/javascript">
+	$(document).ready(function () {
+		$.ajaxSetup({
+			beforeSend: function(req) {
+		    	req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
+		    }
+		})
+	})
+	</script>
 </body>
 
 </html>

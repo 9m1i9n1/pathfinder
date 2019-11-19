@@ -204,8 +204,8 @@ function userPwReset(userIndex) {
 }
 
 //! Modal 관련 =======================
-const insertModal = $("#insertModal");
-const modifyModal = $("#modifyModal");
+var insertModal = $("#insertModal");
+var modifyModal = $("#modifyModal");
 
 // insertModal 열릴 시
 insertModal.on("shown.bs.modal", function() {
