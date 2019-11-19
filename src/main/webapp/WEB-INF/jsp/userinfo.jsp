@@ -104,56 +104,56 @@
 							<div class="tab-pane" id="settings">
 								<form class="form-horizontal">
 									<div class="form-group row">
-										<label for="inputName" class="col-sm-2 col-form-label">Name</label>
+										<label for="inputName" class="col-sm-2 col-form-label">이름</label>
 										<div class="col-sm-10">
 											<input type="email" class="form-control" id="inputName"
 												placeholder="Name">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputID" class="col-sm-2 col-form-label">ID</label>
+										<label for="inputID" class="col-sm-2 col-form-label">아이디</label>
 										<div class="col-sm-10">
 											<input type="email" class="form-control" id="inputId"
 												placeholder="ID">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+										<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="inputPassword"
 												placeholder="Password">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+										<label for="inputEmail" class="col-sm-2 col-form-label">이메일</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="inputEmail"
 												placeholder="Email">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputPhone" class="col-sm-2 col-form-label">Phone</label>
+										<label for="inputPhone" class="col-sm-2 col-form-label">전화번호</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="inputLocation"
 												placeholder="Phone">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputLocation" class="col-sm-2 col-form-label">Location</label>
+										<label for="inputLocation" class="col-sm-2 col-form-label">지역</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="inputLocation"
 												placeholder="Location">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputBranch" class="col-sm-2 col-form-label">Branch</label>
+										<label for="inputBranch" class="col-sm-2 col-form-label">지점</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="inputBranch"
 												placeholder="Branch">
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputPosition" class="col-sm-2 col-form-label">Position</label>
+										<label for="inputPosition" class="col-sm-2 col-form-label">직책</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="inputPosition"
 												placeholder="Position">
