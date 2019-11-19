@@ -286,8 +286,10 @@ function areaLoading(modal) {
         .selectpicker("refresh");
 
       $.each(res.data, function(key, value) {
-        str += "<option value='" + value[0] + "'>";
-        str += value[1] + "</option>";
+        const [index, name] = value;
+
+        str += "<option value='" + index + "'>";
+        str += name + "</option>";
       });
 
       modal
@@ -323,8 +325,10 @@ function branchLoading(modal, selected) {
       str += "<option value=''>선택</option>";
 
       $.each(res.data, function(key, value) {
-        str += "<option value='" + value[0] + "'>";
-        str += value[1] + "</option>";
+        const [index, name] = value;
+
+        str += "<option value='" + index + "'>";
+        str += name + "</option>";
       });
 
       modal
