@@ -31,6 +31,7 @@ public class SignDTO implements UserDetails {
 	private String userPhone;
 	private String userPosition;
 	private String userBranch;
+	private String userArea;
 	private Collection<GrantedAuthority> authorities;
 	
 	private boolean accountNonExpired;

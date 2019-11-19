@@ -151,11 +151,11 @@ function branchsearch(searchUrl, searchpage=0) {
 function geocoding(addr) {
 	let ab;
 	$.ajax({
+		beforeSend : function(req) {
+			req.setRequestHeader('Authorization', 'KakaoAK bacb8df38d149556e4e1a137db9b8442')
+		},
 		url : 'https://dapi.kakao.com/v2/local/search/address.json?query='
 				+ addr,
-		headers : {
-			'Authorization' : 'KakaoAK bacb8df38d149556e4e1a137db9b8442'
-		},
 		type : 'GET',
 		async : false,
 		success : function(r) {
@@ -436,6 +436,7 @@ var branchInsertValid = $('#branchInsertform').validate({
 	 	 var formData = $('[name=branchInsertform]').serializeObject()
 	 	 let Barea = formData.areaIndex;
 	 	 let geo = geocoding(formData.branchAddr);
+	 	 console.log(geo)
 	 	 formData.branchLat = geo.y;
 	 	 formData.branchLng = geo.x;
 	     formData.areaIndex = areaNameTrans(Barea);

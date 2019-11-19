@@ -37,6 +37,7 @@ public class SignService implements UserDetailsService  {
 				.userFullName(user.getUserName()).userEmail(user.getUserEmail())
 				.userPhone(user.getUserPhone()).userPosition(user.getUserPosition())
 				.userBranch(user.getBranch().getBranchName())
+				.userArea(user.getBranch().getArea().getAreaName())
 				.authorities(setAuthorites(user.getUserAuth()))
 				.accountNonExpired(true).accountNonLocked(true)
 				.credentialsNonExpired(true).enabled(true)

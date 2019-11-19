@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.service.UserinfoService;
 
@@ -12,13 +13,16 @@ import com.douzone.bit.pathfinder.service.UserinfoService;
 @RequestMapping("/userinfo")
 public class UserinfoController {
 
-  @Autowired
-  UserinfoService userinfoService;
-  
-  @GetMapping({ "", "/" })
-  public String userinfo(Model model) {
+	@Autowired
+	UserinfoService userinfoService;
 
-    return "/userinfo";
-  }
-  
+	//userinfoTest
+	@GetMapping("/ajax")
+	public ModelAndView AjaxUserInfo() {
+	ModelAndView mv = new ModelAndView();
+	mv.setViewName("ajax.userinfo");
+	return mv;
+	}
+	
+	
 }

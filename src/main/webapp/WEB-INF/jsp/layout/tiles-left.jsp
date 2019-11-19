@@ -36,7 +36,7 @@
 					class="img-circle elevation-2" alt="User Image">
 			</div>
 			<div class="info">
-				<a href="#" class="d-block">
+				<a id="/userinfo" onClick="changeView(this)" >
 				<!-- 로그인한 유저 정보 가져오기 -->
 				<sec:authentication property="principal.userFullName"/>
 				</a>
