@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.douzone.bit.pathfinder.filter.JwtRequestFilter;
@@ -63,6 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(
 					"/static/**");
 	}
+	
+	
 	
 	@Override
 	@Bean

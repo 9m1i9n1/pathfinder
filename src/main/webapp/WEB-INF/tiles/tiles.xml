@@ -48,4 +48,13 @@
 	
 	<definition name="ajax.hierarchy" template="/WEB-INF/jsp/hierarchy.jsp">
 	</definition>
+	
+	<definition name="ajax.usermanage" template="/WEB-INF/jsp/admin/userManage.jsp">
+	</definition>
+	
+	<definition name="ajax.branchmanage" template="/WEB-INF/jsp/admin/branchManage.jsp">
+	</definition>
+	
+	<definition name="ajax.carmanage" template="/WEB-INF/jsp/admin/carManage.jsp">
+	</definition>
 </tiles-definitions>

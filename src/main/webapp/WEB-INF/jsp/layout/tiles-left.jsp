@@ -10,9 +10,6 @@
 		$.ajax({
 			url : id + "/ajax",
 		    type: "get",
-		    beforeSend: function(req) {
-		  	  req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
-		    },
 	        success : function(res) {
 		        $("#layout").html(res);
 		    },
@@ -84,15 +81,15 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="/admin/usermanage"
+							<li class="nav-item"><a id="/admin/usermanage" onClick="changeView(this)" 
 								class="nav-link"> <i class="far fa-circle nav-icon"></i>
 									<p>사용자 관리</p>
 							</a></li>
-							<li class="nav-item"><a href="/admin/branchmanage"
+							<li class="nav-item"><a id="/admin/branchmanage" onClick="changeView(this)" 
 								class="nav-link"> <i class="far fa-circle nav-icon"></i>
 									<p>지점 관리</p>
 							</a></li>
-							<li class="nav-item"><a href="/admin/carmanage"
+							<li class="nav-item"><a id="/admin/carmanage" onClick="changeView(this)" 
 								class="nav-link"> <i class="far fa-circle nav-icon"></i>
 									<p>차량 관리</p>
 							</a></li>

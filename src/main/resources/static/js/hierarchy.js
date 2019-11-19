@@ -32,9 +32,6 @@ function getSearch() {
 					searchType : type,
 					searchValue : value
 				},
-	    beforeSend: function(req) {
-	    	req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
-	    },
 		success: function(res) {
 	      let str = "";
 	      let count = "";
@@ -65,9 +62,6 @@ function getUser(treeId, selectPage) {
   $.ajax({
     url: "/hierarchy/userlist.do",
     type: "get",
-    beforeSend: function(req) {
-  	  req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
-    },
     data: { id: treeId, page: selectPage },
     success: function(res) {
       let str = "";
@@ -149,9 +143,6 @@ function treeLoading() {
       url: "/hierarchy/treelist.do",
       type: "get",
       data: { id },
-      beforeSend: function(req) {
-    	  req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
-      },
       async: false,
       success: function(res) {
         result = res.data;

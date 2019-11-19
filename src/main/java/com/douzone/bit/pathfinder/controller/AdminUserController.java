@@ -36,101 +36,110 @@ import com.douzone.bit.pathfinder.service.HierarchyService;
 @RequestMapping("/admin/usermanage")
 public class AdminUserController {
 
-  @Autowired
-  AdminUserService adminUserService;
+	@Autowired
+	AdminUserService adminUserService;
 
-  @Autowired
-  AdminBranchService adminBranchService;
+	@Autowired
+	AdminBranchService adminBranchService;
 
-  @Autowired
-  HierarchyService hierarchyService;
+	@Autowired
+	HierarchyService hierarchyService;
 
-  // 회원 리스트 뷰
-  @GetMapping("")
-  public ModelAndView userManage() {
+	@GetMapping("/ajax")
+	public ModelAndView AjaxUserManage() {
 
-    ModelAndView mv = new ModelAndView();
-    mv.setViewName("/admin/userManage");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("ajax.usermanage");
+		
+		return mv;
+	}
 
-    return mv;
-  }
+	// 회원 리스트 뷰
+	@GetMapping("")
+	public ModelAndView userManage() {
 
-  // 회원 한명 정보 불러오기 (update에서 사용)
-  @GetMapping("/userread.do")
-  public Header<AdminUserResponse> userRead(@RequestParam Long userIndex) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/userManage");
 
-    return adminUserService.read(userIndex);
-  }
+		return mv;
+	}
 
-  // 회원 리스트 불러오기
-  @GetMapping("/userlist.do")
-  public Header<List<AdminUserResponse>> userList(@RequestParam String treeId,
-      @PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
+	// 회원 한명 정보 불러오기 (update에서 사용)
+	@GetMapping("/userread.do")
+	public Header<AdminUserResponse> userRead(@RequestParam Long userIndex) {
 
-    return adminUserService.list(treeId, pageable);
-  }
+		return adminUserService.read(userIndex);
+	}
 
-  @GetMapping("/idcheck.do")
-  public Boolean idCheck(@RequestParam String userId) {
-    System.out.println("접속");
+	// 회원 리스트 불러오기
+	@GetMapping("/userlist.do")
+	public Header<List<AdminUserResponse>> userList(@RequestParam String treeId,
+			@PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
-    return adminUserService.idCheck(userId);
-  }
+		return adminUserService.list(treeId, pageable);
+	}
 
-  // 트리 불러오기
-  @GetMapping("/treelist.do")
-  public Header<HierarchyResponse> treeList() {
+	@GetMapping("/idcheck.do")
+	public Boolean idCheck(@RequestParam String userId) {
+		System.out.println("접속");
 
-    return hierarchyService.readCompany();
-  }
+		return adminUserService.idCheck(userId);
+	}
 
-  // 지점 리스트 불러오기
-  @GetMapping("/branchlist.do")
-  public Header<List<Object>> branchList(@RequestParam Long areaIndex) {
+	// 트리 불러오기
+	@GetMapping("/treelist.do")
+	public Header<HierarchyResponse> treeList() {
 
-    return adminUserService.readBranchName(areaIndex);
-  }
+		return hierarchyService.readCompany();
+	}
 
-  // 지역 리스트 불러오기
-  @GetMapping("/arealist.do")
-  public Header<List<Object>> areaList() {
+	// 지점 리스트 불러오기
+	@GetMapping("/branchlist.do")
+	public Header<List<Object>> branchList(@RequestParam Long areaIndex) {
 
-    return adminUserService.readAreaName();
-  }
+		return adminUserService.readBranchName(areaIndex);
+	}
 
-  // 회원 등록
-  @PostMapping("")
-  public Header<AdminUserResponse> create(@RequestBody @Valid AdminUserRequest request, Errors errors) {
+	// 지역 리스트 불러오기
+	@GetMapping("/arealist.do")
+	public Header<List<Object>> areaList() {
 
-    if (errors.hasErrors()) {
-      return Header.ERROR(errors);
-    }
+		return adminUserService.readAreaName();
+	}
 
-    return adminUserService.create(request);
-  }
+	// 회원 등록
+	@PostMapping("")
+	public Header<AdminUserResponse> create(@RequestBody @Valid AdminUserRequest request, Errors errors) {
 
-  // 회원 수정
-  @PutMapping("")
-  public Header<AdminUserResponse> userUpdate(@RequestBody @Valid AdminUserRequest request, Errors errors) {
+		if (errors.hasErrors()) {
+			return Header.ERROR(errors);
+		}
 
-    if (errors.hasErrors()) {
-      return Header.ERROR(errors);
-    }
+		return adminUserService.create(request);
+	}
 
-    return adminUserService.update(request);
-  }
+	// 회원 수정
+	@PutMapping("")
+	public Header<AdminUserResponse> userUpdate(@RequestBody @Valid AdminUserRequest request, Errors errors) {
 
-  // 비밀번호 초기화
-  @PatchMapping("")
-  public Header<AdminUserResponse> userPwUpdate(@RequestParam Long userIndex) {
+		if (errors.hasErrors()) {
+			return Header.ERROR(errors);
+		}
 
-    return adminUserService.updatePw(userIndex);
-  }
+		return adminUserService.update(request);
+	}
 
-  // 회원 삭제
-  @DeleteMapping("")
-  public Header userDelete(@RequestParam Long userIndex) {
+	// 비밀번호 초기화
+	@PatchMapping("")
+	public Header<AdminUserResponse> userPwUpdate(@RequestParam Long userIndex) {
 
-    return adminUserService.delete(userIndex);
-  }
+		return adminUserService.updatePw(userIndex);
+	}
+
+	// 회원 삭제
+	@DeleteMapping("")
+	public Header userDelete(@RequestParam Long userIndex) {
+
+		return adminUserService.delete(userIndex);
+	}
 }

@@ -347,7 +347,8 @@ $("#branch_Addr").on("propertychange change keyup paste input", function() {
 
 
 // 추가 유효성검사
-const branchInsertValid = $('#branchInsertform').validate({
+//TODO JavaScript 다시 선언시 Const 중복 에러발생 
+var branchInsertValid = $('#branchInsertform').validate({
 	onkeyup:false,
 	rules : {
 		branchName: {
@@ -446,7 +447,8 @@ const branchInsertValid = $('#branchInsertform').validate({
 })
 
 // 수정 유효성검사
-const branchUpdateValid = $('#branchUpdateForm').validate({
+//TODO JavaScript 다시 선언시 Const 중복 에러발생 
+var branchUpdateValid = $('#branchUpdateForm').validate({
 	onkeyup:false,
 	ignore: ':hidden, [readonly=readonly]',
 	rules : { 
