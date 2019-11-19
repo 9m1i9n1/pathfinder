@@ -70,3 +70,7 @@ pageEncoding="UTF-8"%>
 <%-- jquery validation --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
+
+<!-- LeafLet Library -->
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<script src="/static/js/leaflet-routing-machine.js"></script>

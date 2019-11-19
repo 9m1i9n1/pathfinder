@@ -12,10 +12,11 @@ import com.douzone.bit.pathfinder.model.entity.UserTb;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserTb, Long> {
+	
+	public UserTb findByUserId(String userId);
 
 	public Boolean existsByuserId(String userId);
 
-	// 검색기능 쿼리
 	public Page<UserTb> findByUserNameLike(String userName, Pageable pageable);
 
 	public Page<UserTb> findByUserPositionLike(String userPosition, Pageable pageable);

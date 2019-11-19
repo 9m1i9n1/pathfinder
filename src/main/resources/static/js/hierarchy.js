@@ -32,6 +32,9 @@ function getSearch() {
 					searchType : type,
 					searchValue : value
 				},
+	    beforeSend: function(req) {
+	    	req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
+	    },
 		success: function(res) {
 	      let str = "";
 	      let count = "";
@@ -40,7 +43,7 @@ function getSearch() {
 	      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
 	      $.each(res.data, function(key, value) {
-	        str += "<tr>";
+	    	str += `<tr class="tr-shadow">`;
 	        str += "<td>" + value.userName + "</td>";
 	        str += "<td>" + value.userEmail + "</td>";
 	        str += "<td>" + value.userPhone + "</td>";
@@ -62,6 +65,9 @@ function getUser(treeId, selectPage) {
   $.ajax({
     url: "/hierarchy/userlist.do",
     type: "get",
+    beforeSend: function(req) {
+  	  req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
+    },
     data: { id: treeId, page: selectPage },
     success: function(res) {
       let str = "";
@@ -71,7 +77,7 @@ function getUser(treeId, selectPage) {
       count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
-        str += "<tr>";
+    	str += `<tr class="tr-shadow">`;
         str += "<td>" + value.userName + "</td>";
         str += "<td>" + value.userEmail + "</td>";
         str += "<td>" + value.userPhone + "</td>";
@@ -143,6 +149,9 @@ function treeLoading() {
       url: "/hierarchy/treelist.do",
       type: "get",
       data: { id },
+      beforeSend: function(req) {
+    	  req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
+      },
       async: false,
       success: function(res) {
         result = res.data;

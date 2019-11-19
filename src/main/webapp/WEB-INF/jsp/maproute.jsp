@@ -11,7 +11,6 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
 	
@@ -74,8 +73,9 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-	<script src="/static/js/leaflet-routing-machine.js"></script>
 	<script src="/static/js/routes.js"></script>
+<!-- 	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+	<script src="/static/js/leaflet-routing-machine.js"></script>
+	<script src="/static/js/routes.js"></script> -->
 </body>
 </html>
