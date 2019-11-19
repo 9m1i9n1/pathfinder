@@ -108,14 +108,14 @@
 										<label for="inputName" class="col-sm-2 col-form-label">이름</label>
 										<div class="col-sm-10">
 											<input type="email" class="form-control" id="inputName"
-												placeholder="Name">
+												placeholder="Name" readonly>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label for="inputID" class="col-sm-2 col-form-label">아이디</label>
 										<div class="col-sm-10">
 											<input type="email" class="form-control" id="inputId"
-												placeholder="ID">
+												placeholder="ID" readonly>
 										</div>
 									</div>
 									<div class="form-group row">
