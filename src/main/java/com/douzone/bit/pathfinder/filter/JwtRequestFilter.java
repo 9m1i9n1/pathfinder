@@ -63,6 +63,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 						.userPhone(userClaim.get("userPhone").toString())
 						.userPosition(userClaim.get("userPosition").toString())
 						.userBranch(userClaim.get("userBranch").toString())
+						.userArea(userClaim.get("userArea").toString())
 						.authorities(authorities)
 						.accountNonExpired(true).accountNonLocked(true)
 						.credentialsNonExpired(true).enabled(true)

@@ -57,4 +57,7 @@
 	
 	<definition name="ajax.carmanage" template="/WEB-INF/jsp/admin/carManage.jsp">
 	</definition>
+	
+	<definition name="ajax.userinfo" template="/WEB-INF/jsp/userinfo.jsp">
+	</definition>
 </tiles-definitions>

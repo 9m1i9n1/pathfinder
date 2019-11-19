@@ -62,6 +62,7 @@ public class JwtUtil {
 				.claim("userEmail", userDetails.getUserEmail())
 				.claim("userBranch", userDetails.getUserBranch())
 				.claim("userPosition", userDetails.getUserPosition())
+				.claim("userArea", userDetails.getUserArea())
 				.claim("userAuthority", userAuth)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
