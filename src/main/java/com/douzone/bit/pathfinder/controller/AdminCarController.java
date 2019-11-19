@@ -1,4 +1,5 @@
 package com.douzone.bit.pathfinder.controller;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,25 @@ import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/carmanage")
 public class AdminCarController {
 
-  @GetMapping("/carmanage")
-  public ModelAndView carManage(Model model) {
+	@GetMapping("/ajax")
+	public ModelAndView AjaxCarManage() {
 
-	  ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("ajax.carmanage");
+		
+		return mv;
+	}
+	
+	@GetMapping("/carmanage")
+	public ModelAndView carManage(Model model) {
 
-	  mv.setViewName("/admin/carManage");
-	  return mv;
-  }
+		ModelAndView mv = new ModelAndView();
+
+		mv.setViewName("/admin/carmanage");
+		return mv;
+	}
 
 }
