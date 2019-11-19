@@ -317,6 +317,9 @@ $(function() {
 				$.ajax({
 					url : "/maproute/maproutesend",
 					type : 'post',
+				    beforeSend: function(req) {
+				    	req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
+				    },
 					data : JSON.stringify({
 						"data" : branchObjectDataArray
 					}),
@@ -437,6 +440,9 @@ function branchsearch(searchUrl, searchpage) {
 		type : "GET",
 		url : "/maproute/search" + searchUrl +"&page=" + 0 ,
 		contentType : 'application/json',
+	    beforeSend: function(req) {
+	    	req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
+	    },
 		async: false,
 		success : function(res) {
 			var str = '<tr onclick=\"event.cancelBubble=true\">';
@@ -482,6 +488,9 @@ function branchlist() {
 	$.ajax({
 		url : "/maproute/allData",
 		type: "get",
+	    beforeSend: function(req) {
+	    	req.setRequestHeader("Authorization", "pathfinder " + document.cookie.substring(6));
+	    },
 		async: false,
 		success : function(res) {
 			var str = '<tr onclick=\"event.cancelBubble=true\">';

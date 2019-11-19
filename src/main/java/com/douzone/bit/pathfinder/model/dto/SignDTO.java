@@ -22,6 +22,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SignDTO implements UserDetails {
 
+	private static final long serialVersionUID = 7409745273729947063L;
+	
 	private String userFullName;
 	private String password;
 	private String username;

@@ -27,7 +27,11 @@ public class SignService implements UserDetailsService  {
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		UserTb user = userRepository.findByUserId(userId);
-	
+		
+		if (user == null) {
+			return null;
+		}
+		
 		SignDTO signInfo = SignDTO.builder()
 				.username(user.getUserId()).password(user.getUserPw())
 				.userFullName(user.getUserName()).userEmail(user.getUserEmail())
