@@ -19,7 +19,7 @@ import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.repository.UserRepository;
 
 @Service
-public class SignService implements UserDetailsService  {
+public class SignService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -27,7 +27,7 @@ public class SignService implements UserDetailsService  {
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		UserTb user = userRepository.findByUserId(userId);
-		
+
 		if (user == null) {
 			return null;
 		}
@@ -45,16 +45,16 @@ public class SignService implements UserDetailsService  {
 		
 		return signInfo;
 	}
-	
+
 	public Collection<GrantedAuthority> setAuthorites(boolean authority) {
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		
+
 		String auth = "";
-		
+
 		auth = (authority) ? "ROLE_ADMIN" : "ROLE_USER";
-		
+
 		authorities.add(new SimpleGrantedAuthority(auth));
-		
+
 		return authorities;
 	}
 }

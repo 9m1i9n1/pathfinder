@@ -36,9 +36,6 @@ public class SignController {
 	@Autowired
 	private JwtUtil jwtTokenUtil;
 
-	@Autowired
-	private SignService signService;
-
 	@GetMapping({ "", "/", "/login" })
 	public ModelAndView loginPage() {
 
@@ -48,8 +45,6 @@ public class SignController {
 
 		return mv;
 	}
-	
-	
 
 	@PostMapping("/authenticate.do")
 	public ModelAndView createAuthenticationToken(SignRequest request, HttpServletResponse response) throws Exception {
