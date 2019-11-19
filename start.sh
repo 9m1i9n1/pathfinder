@@ -22,4 +22,4 @@ then docker rmi "$image"
 fi
 
 docker build -t "$maintaner"/"$app" "$script_path"
-docker run -p 8181:8181 -d --name "$app" "$maintaner"/"$app" -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul
+docker run -p 8181:8181 -d --name "$app" "$maintaner"/"$app"
