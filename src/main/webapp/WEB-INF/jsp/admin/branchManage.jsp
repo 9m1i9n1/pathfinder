@@ -5,39 +5,42 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>지점관리페이지</title>
+    <title>지점 관리 페이지</title>
   </head>
   <body>
     <div class="container-fluid">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">관리자 페이지</li>
-        <li class="breadcrumb-item active">지점 관리</li>
+        <li class="breadcrumb-item">관리자 페이지 : 지점 관리</li>
       </ol>
     </div>
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-2">
           <div class="card">
             <div class="card-header">
-              <b>조직도</b>
+              <h3 class="card-title">조직도</h3>
             </div>
+
             <div class="card-body">
               <div id="jstree"></div>
             </div>
           </div>
         </div>
+        
         <div class="col-10">
           <div class="card">
             <div class="card-header">
-              <b>지점 목록</b>
+              <h3 class="card-title">지점 목록</h3>
+
               <button
-                class="au-btn au-btn-icon au-btn--blue au-btn--small"
+                class="btn btn-block bg-gradient-primary"
                 data-toggle="modal"
                 data-target="#insertModal"
-                value="지점 추가"
               >
                 <i class="zmdi zmdi-plus"></i>지점 추가
               </button>
+
               <div style="float: right;">
                 <select class="selectpicker" name="searchType" id="searchType">
                   <option value="branchName">지점명</option>
@@ -49,8 +52,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 </button>
               </div>
             </div>
-            <div class="table-responsive table-responsive-data2">
-              <table class="table table-data2" id="tableTest">
+
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover" id="tableTest">
                 <thead>
                   <tr>
                     <th>지역</th>
@@ -62,8 +66,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     <th>수정/삭제</th>
                   </tr>
                 </thead>
+
                 <tbody id="tableListBody"></tbody>
+
               </table>
+
               <div id="page"></div>
             </div>
           </div>
@@ -71,6 +78,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       </div>
     </div>
   </body>
+
   <%@include file="branchManageModal.jsp"%>
+  
   <script src="/static/js/adminBranchManage.js"></script>
 </html>

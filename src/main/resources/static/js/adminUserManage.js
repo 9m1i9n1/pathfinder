@@ -48,8 +48,8 @@ function userLoading() {
         str += "<td>" + (value.userAuth ? "관리자" : "사용자") + "</td>";
 
         str += "<td><div class='table-data-feature'>";
-        str += `<button class="item" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="zmdi zmdi-edit"></i></button>`;
-        str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="zmdi zmdi-delete"></i></button>`;
+        str += `<button class="item" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
+        str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
         str += "</div></td>";
         str += "</tr>";
 
@@ -204,7 +204,7 @@ function userPwReset(userIndex) {
 }
 
 //! Modal 관련 =======================
-//TODO JavaScript 다시 선언시 Const 중복 에러발생 
+//TODO JavaScript 다시 선언시 Const 중복 에러발생
 var insertModal = $("#insertModal");
 var modifyModal = $("#modifyModal");
 

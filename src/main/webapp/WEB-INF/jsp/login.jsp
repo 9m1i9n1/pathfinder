@@ -47,17 +47,19 @@
 							</div>
 						</div>
 						<div class="form-bottom">
-							<form role="form" action="<c:url value="/authenticate.do"/>" method="post" class="login-form">
+							<form role="form" action="<c:url value='/authenticate.do'/>" method="post" class="login-form">
 								<div class="form-group">
-									<label class="sr-only" for="form-username">Username</label> <input
-										type="text" name="id" value="tjenyns3" placeholder="Username..."
+									<label class="sr-only" for="form-username">Username</label> 
+									<input type="text" name="id" value="tjenyns3" placeholder="ID"
 										class="form-username form-control" id="form-username">
 								</div>
+
 								<div class="form-group">
-									<label class="sr-only" for="form-password">Password</label> <input
-										type="password" name="pwd" placeholder="Password..."
+									<label class="sr-only" for="form-password">Password</label> 
+									<input type="password" name="pwd" placeholder="PW"
 										class="form-password form-control" value="qc263pEL9" id="form-password">
 								</div>
+
 								<button type="submit" class="btn">로그인</button>
 							</form>
 						</div>

@@ -4,7 +4,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Document</title>
+    <title>회원 관리 페이지</title>
   </head>
 
   <body>
@@ -83,13 +83,17 @@ pageEncoding="UTF-8"%>
 
                 <tbody id="body"></tbody>
               </table>
+              
               <div id="page"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <%@include file="userManageModal.jsp"%>
+
     <script src="/static/js/adminUserManage.js"></script>
+
   </body>
 </html>
