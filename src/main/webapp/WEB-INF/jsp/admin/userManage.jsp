@@ -5,16 +5,6 @@ pageEncoding="UTF-8"%>
 <html>
   <head>
     <title>Document</title>
-
-    <%-- <!-- Fontfaces CSS-->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.css"
-      rel="stylesheet"
-      media="all"
-    /> --%>
-
-    <%-- <!-- Main CSS-->
-    <link href="/static/css/theme.css" rel="stylesheet" media="all" /> --%>
   </head>
 
   <body>

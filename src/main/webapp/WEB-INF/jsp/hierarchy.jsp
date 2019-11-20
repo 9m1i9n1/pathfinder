@@ -4,8 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="/static/css/theme.css" rel="stylesheet" media="all">
-<link rel="stylesheet" href="/static/js/bootstrap/table.css">
+
 </head>
 <body>
 	<div class="container-fluid">
