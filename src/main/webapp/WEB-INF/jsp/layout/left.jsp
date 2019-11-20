@@ -24,10 +24,10 @@
 <aside class="main-sidebar elevation-4 sidebar-dark-yellow">
 	<!-- Brand Logo -->
 	<sec:authorize access="isAuthenticated()">
-		<a href="changeView(this)" id="/home" class="brand-link navbar-purple"> 
+		<a onclick="changeView(this)" id="/home" class="brand-link navbar-purple"> 
 		<img src="/static/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 			class="brand-image img-circle elevation-3" style="opacity: .8">
-			<span class="brand-text font-weight-light">PathFinder</span>
+			<span class="brand-text font-weight-bold">PathFinder</span>
 		</a>
 		<!-- Sidebar -->
 		<div class="sidebar">
