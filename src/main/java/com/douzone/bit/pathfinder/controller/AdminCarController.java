@@ -22,24 +22,15 @@ import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminUserService;
 
 @RestController
-@RequestMapping("/admin/carmanage")
+@RequestMapping("/admin")
 public class AdminCarController {
 
-	@GetMapping("/ajax")
-	public ModelAndView AjaxCarManage() {
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("ajax.carmanage");
-		
-		return mv;
-	}
-	
 	@GetMapping("/carmanage")
 	public ModelAndView carManage(Model model) {
 
 		ModelAndView mv = new ModelAndView();
 
-		mv.setViewName("/admin/carmanage");
+		mv.setViewName("/admin/carManage");
 		return mv;
 	}
 

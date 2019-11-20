@@ -11,15 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/history")
 public class HistoryController {
 
-	@GetMapping("/ajax")
-	public String AjaxHistory() {
-		
-		return "ajax.history";
-	}
-	
 	@GetMapping({ "", "/" })
 	public String history(Model model) {
-		
+
 		return "/history";
 	}
 

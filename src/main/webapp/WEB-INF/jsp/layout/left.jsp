@@ -9,10 +9,10 @@
 		let id = $(element).attr("id");
 
 		$.ajax({
-			url : id + "/ajax",
+			url : id,
 			type : "get",
 			success : function(res) {
-				$("#layout").html(res);
+				$("#layoutContent").html(res);
 			},
 			error : function(e) {
 				console.log(e);

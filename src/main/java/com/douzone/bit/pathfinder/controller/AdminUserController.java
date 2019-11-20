@@ -45,17 +45,8 @@ public class AdminUserController {
 	@Autowired
 	HierarchyService hierarchyService;
 
-	@GetMapping("/ajax")
-	public ModelAndView AjaxUserManage() {
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("ajax.usermanage");
-		
-		return mv;
-	}
-
 	// 회원 리스트 뷰
-	@GetMapping("")
+	@GetMapping({ "", "/" })
 	public ModelAndView userManage() {
 
 		ModelAndView mv = new ModelAndView();
