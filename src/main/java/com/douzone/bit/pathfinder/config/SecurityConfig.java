@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable() // CSRF 보안 비설정
 			.authorizeRequests()
 			.antMatchers("/admin/**").access("hasRole('ADMIN')")
-			.antMatchers("/authenticate.do", "/login").permitAll() // 로그인은 누구나 접속할 수 았게 설정
+			.antMatchers("/authenticate.do", "/login", "/history").permitAll() // 로그인은 누구나 접속할 수 았게 설정
 			.anyRequest().authenticated()
 			.and()
 			.sessionManagement() // JWT 토큰 방식을 이용하기 때문에 Session은 이용하지 않음.
