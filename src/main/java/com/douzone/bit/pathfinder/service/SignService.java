@@ -33,6 +33,7 @@ public class SignService implements UserDetailsService {
 		}
 		
 		SignDTO signInfo = SignDTO.builder()
+				.userIndex(user.getUserIndex())
 				.username(user.getUserId()).password(user.getUserPw())
 				.userFullName(user.getUserName()).userEmail(user.getUserEmail())
 				.userPhone(user.getUserPhone()).userPosition(user.getUserPosition())
