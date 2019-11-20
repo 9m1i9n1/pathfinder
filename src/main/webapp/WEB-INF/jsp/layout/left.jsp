@@ -24,7 +24,7 @@
 <aside class="main-sidebar elevation-4 sidebar-dark-yellow">
 	<!-- Brand Logo -->
 	<sec:authorize access="isAuthenticated()">
-		<a href="/home" class="brand-link navbar-indigo"> <img
+		<a href="changeView(this)" id="/home" class="brand-link navbar-olive"> <img
 			src="/static/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 			class="brand-image img-circle elevation-3" style="opacity: .8">
 			<span class="brand-text font-weight-light">PathFinder</span>
@@ -38,8 +38,8 @@
 						class="img-circle elevation-2" alt="User Image">
 				</div>
 				<div class="info">
-					<a onclick="changeView(this)" id="/userinfo" class="d-block"> <!-- 로그인한 유저 정보 가져오기 --> <sec:authentication
-							property="principal.userFullName" />
+					<a onclick="changeView(this)" id="/userinfo" class="d-block"> <!-- 로그인한 유저 정보 가져오기 --> 
+					<sec:authentication property="principal.userFullName" />
 					</a>
 				</div>
 			</div>

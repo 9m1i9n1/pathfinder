@@ -8,6 +8,10 @@ body {
     text-align: center;
 }
 
+p {
+	font-size : 0.9em;
+}
+
 strong { font-weight: 500; }
 
 a, a:hover, a:focus {
@@ -42,7 +46,7 @@ img { max-width: 100%; }
 	height: 50px;
 	margin: 5px;
 	padding: 16px 20px 0 20px;
-	background: #de615e;
+	u: #de615e;
 	font-size: 16px;
     font-weight: 300;
     line-height: 16px;
@@ -82,7 +86,7 @@ img { max-width: 100%; }
 /***** Top content *****/
 
 .inner-bg {
-    padding: 100px 0 170px 0;
+    padding: 2% 0 2% 0;
 }
 
 .top-content .text {
