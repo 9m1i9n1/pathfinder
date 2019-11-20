@@ -108,27 +108,27 @@
 										<label for="inputName" class="col-sm-2 col-form-label">이름</label>
 										<div class="col-sm-10">
 											<input type="email" class="form-control" id="inputName"
-												placeholder="Name" readonly>
+												placeholder="Name" readonly value="<sec:authentication property="principal.userFullName"/>">
 										</div>
 									</div>
 									<div class="form-group row">
 										<label for="inputID" class="col-sm-2 col-form-label">아이디</label>
 										<div class="col-sm-10">
 											<input type="email" class="form-control" id="inputId"
-												placeholder="ID" readonly>
+												placeholder="ID" readonly value="<sec:authentication property="principal.username"/>">
 										</div>
 									</div>
 									<div class="form-group row">
 										<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputPassword"
+											<input type="password" class="form-control" id="inputPassword"
 												placeholder="Password">
 										</div>
 									</div>
 										<div class="form-group row">
 										<label for="inputPasswordCheck" class="col-sm-2 col-form-label">비밀번호 확인</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputPasswordCheck"
+											<input type="password" class="form-control" id="inputPasswordCheck"
 												placeholder="PasswordCheck">
 										</div>
 									</div>
@@ -136,14 +136,14 @@
 										<label for="inputEmail" class="col-sm-2 col-form-label">이메일</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="inputEmail"
-												placeholder="Email">
+												placeholder="Email" value="<sec:authentication property="principal.userEmail"/>">
 										</div>
 									</div>
 									<div class="form-group row">
 										<label for="inputPhone" class="col-sm-2 col-form-label">전화번호</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="inputLocation"
-												placeholder="Phone">
+												placeholder="Phone" value="<sec:authentication property="principal.userPhone"/>">
 										</div>
 									</div>
 									<div class="form-group row">
