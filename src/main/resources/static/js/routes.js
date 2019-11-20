@@ -68,7 +68,7 @@ var mapControl = L.Routing.control({
 		      // here change all the others
 		      return L.marker(wp.latLng, {
 		        icon: blueIcon
-		      }).bindPopup("<b>asdasd</b>").openPopup();;
+		      }).bindPopup("<b>asdasd</b>").openPopup();
 		    }
 	  }
 });
@@ -308,12 +308,18 @@ $(function() {
 	
 	$("#submitroute").click(
 		function() {
-			if (routecnt <= 2) {
+			if (routecnt <= 0) {
 				alert("출발지와 목적지를 포함한 경로가 세개 이상이어야 합니다.");
 			} else if (routecnt > 100) {
 				alert("경유지가 너무 MP염");
 			} else {
-				var str = "출발 : ";
+// <img src="/static/css/flag.png" width="30px" height="30px"/>
+// <img src="/static/css/circle.png" width="15px" height="15px"/>
+// <img src="/static/css/line.png" width="30px" height="30px"/>
+// <img src="/static/css/circle.png" width="15px" height="15px"/>
+// <img src="/static/css/home.png" width="30px" height="30px"/>
+				var str = "";
+				var intersectionalStr = "";
 				$.ajax({
 					url : "/maproute/maproutesend",
 					type : 'post',
@@ -324,17 +330,15 @@ $(function() {
 					async: false,
 
 					success : function(branchObjectDataArray) {
-						
 						var mapInfoData = [];
-				
+						console.log("branchObjectDataArray - ", branchObjectDataArray);
 						if (branchObjectDataArray.length > 0) {
 							$.each(branchObjectDataArray, function(i, s) {
 								/*
 								 * data[i].branch_value data[i].branch_lat
-								 * data[i].branch_lng
+								 * data[i].branch_lng data[i].priceBetweenAandB
 								 */
 								mapInfoData.push (L.latLng(branchObjectDataArray[i].branch_lat, branchObjectDataArray[i].branch_lng));
-								str +=	branchObjectDataArray[i].branch_name + '->'; 
 							});
 						}
 						
@@ -343,15 +347,81 @@ $(function() {
 							
 						}).then((result) => {
 							test.on('routesfound', function (e) {
-								var distance = e.routes[0].summary.totalDistance;
-							    var time = e.routes[0].summary.totalTime;
+								var totalDistance = 0;
+								var intersectionalDistance = 0;
+								var intersectionalDistanceArr = new Array;
+								
+								var intersectionalTime =0;
+								var intersectionalTimeArr = new Array;
+								var j = 0;
+								var BetweenAandBArr = new Array;
+								for(var i = 0; i < branchObjectDataArray.length; i++){
+									BetweenAandBArr[i] = branchObjectDataArray[i].priceBetweenAandB;
+								}
+								
+								for(var i = 0; i < e.routes[0].instructions.length; i++){
+									if(e.routes[0].instructions[i].type == 'DestinationReached'){
+										intersectionalDistanceArr[j] = (intersectionalDistance/1000).toFixed(1);
+										intersectionalTimeArr[j] = (intersectionalTime).toFixed(1);
+										intersectionalTime = 0;
+										intersectionalDistance = 0;
+									}
+									
+									else if(e.routes[0].instructions[i].type == 'WaypointReached'){
+										intersectionalDistanceArr[j] = (intersectionalDistance/1000).toFixed(1);
+										intersectionalTimeArr[j] = (intersectionalTime).toFixed(1);
+										intersectionalTime = 0;
+										intersectionalDistance = 0;
+										j++;
+									}
+									else{
+										intersectionalDistance += e.routes[0].instructions[i].distance;
+										intersectionalTime += e.routes[0].instructions[i].time;
+									}
+								}
+
+								
+								for(var i = 0; i < intersectionalDistanceArr.length; i++){
+									totalDistance += Number(intersectionalDistanceArr[i]);
+								}
+								var time = 0;
+								var hArr = new Array();
+								var mArr = new Array();
+								var sArr = new Array();
+								
+								  for (var i = 0; i < intersectionalTimeArr.length; i++){
+									    time += parseInt(intersectionalTimeArr[i]);
+									    mArr[i] = parseInt(intersectionalTimeArr[i]/60);
+									    hArr[i] = parseInt(mArr[i]/60);
+									    sArr[i] = parseInt(intersectionalTimeArr[i]%60);
+									    mArr[i] = parseInt(mArr[i]%60);
+								  }
 							    var m = time/60;
 							    var h = parseInt(m/60);
 							    var s = parseInt(time%60);
 							    var m = parseInt(m%60);
-							    var km = (distance/1000).toFixed(1);
-							    str += "  도착 <br/> 총 걸리는 시간 : " + h + "시간 " + m + "분 " + s +"초 <br/> 총 거리 : " + km +"Km";
+							    
+							for(var i = 0; i < branchObjectDataArray.length; i++){
+								if(i === branchObjectDataArray.length -1){
+									console.log(branchObjectDataArray[i]);
+								} else{
+									intersectionalStr += "<div class=\"col-1 col-sm-6 col-md-2 col-lg-24\" style=\"padding-right: 0px; padding-left: 0px;\">"
+									intersectionalStr +="<div class=\'container-fluid\' style=\"padding-right: 0px; padding-left: 0px;\">";
+									intersectionalStr +="<ul class=\'htimeline\'>";
+									intersectionalStr +="<li data-date='"+hArr[i]+":"+mArr[i]+":"+sArr[i]+"' class='step col-sm-12 orange' style='font-size: 100px;'>";
+									intersectionalStr +="<div>"+branchObjectDataArray[i].branch_name+"</div>";
+									intersectionalStr +="<div class='tasks container-fluid'>";
+									intersectionalStr +="<div class='resource' data-name='a와b비용'>";
+									intersectionalStr +="<div class='task col-sm-8'>"+BetweenAandBArr[i]+"</div>";	
+									intersectionalStr +="</div>";	
+									intersectionalStr +="<div class='resource' data-name='a와b거리'>";
+									intersectionalStr +="<div class='task col-sm-8 col-sm-offset-6'>"+intersectionalDistanceArr[i]+"</div>";	
+									intersectionalStr +="</div></div></li></ul></div></div>";	
+								}
+							}
+							    str += "<br/>총 걸리는 시간 : " + h + "시간 " + m + "분 " + s +"초 <br/> 총 거리 : " + (totalDistance).toFixed(2) +"Km";
 							    $("#finalPathDiv").html(str);
+							    $("#box").html(intersectionalStr);
 							});
 						})
 					},

@@ -36,38 +36,41 @@ public class MaprouteService {
 		for (int i = 0; i < list.size(); i++) {
 			testList.add(new RouteDTO());
 			testList.get(i).setBranch_name(list.get(i).get("branch_name").toString());
-
-			testList.get(i)
-					.setBranch_value(Integer.parseInt(list.get(i).get("branch_value").toString()));
+			testList.get(i).setBranch_value(Integer.parseInt(list.get(i).get("branch_value").toString()));
 			testList.get(i).setBranch_lat(Double.valueOf(list.get(i).get("branch_lat").toString()).doubleValue());
 			testList.get(i).setBranch_lng(Double.valueOf(list.get(i).get("branch_lng").toString()).doubleValue());
 		}
-		
+
 		createMap m = new createMap(list, testList);
+
 		Recursive r = new Recursive(0, m.getmap());
 
 		List<Integer> TourList = r.getTour();
+		for (int i = 0; i < TourList.size() - 1; i++) {
+			testList.get(TourList.get(i)).setPriceBetweenAandB(m.getmap()[TourList.get(i)][TourList.get(i + 1)]);
+			
+		}
 		for (int i = 0; i < testList.size(); i++) {
 			sucList.add(testList.get(Integer.parseInt(TourList.get(i).toString())));
-			}
-		
+		}
+
 		return sucList;
 	}
-	
+
 	@Autowired
 	BranchRepository testDao;
-	
-	//list
-	public  Header<List<AdminBranchResponse>> allData() {
-		   List<BranchTb> branchs = testDao.findAll();
-		   
-		   List<AdminBranchResponse> branchList = branchs.stream().map(branch -> response(branch))
-					.collect(Collectors.toList());
-		   
-		   return Header.OK(branchList);
+
+	// list
+	public Header<List<AdminBranchResponse>> allData() {
+		List<BranchTb> branchs = testDao.findAll();
+
+		List<AdminBranchResponse> branchList = branchs.stream().map(branch -> response(branch))
+				.collect(Collectors.toList());
+
+		return Header.OK(branchList);
 	}
-	
-	  // Response 데이터 파싱
+
+	// Response 데이터 파싱
 	private AdminBranchResponse response(BranchTb branch) {
 		AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder().branchIndex(branch.getBranchIndex())
 				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner())
@@ -83,7 +86,7 @@ public class MaprouteService {
 		List<BranchTb> branchs = null;
 		List<AdminBranchResponse> branchResponseList = null;
 		switch (searchType) {
-		case "branchName":{
+		case "branchName": {
 			branchs = testDao.findByBranchNameLike("%" + keyword + "%");
 			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
 			break;
