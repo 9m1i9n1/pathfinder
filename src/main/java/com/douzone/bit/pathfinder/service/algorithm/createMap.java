@@ -23,7 +23,7 @@ public class createMap {
 		return map;
 	}
 
-	public int[][] mapmap() {
+	public void mapmap() {
 		LocationDistance distance;
 
 		int n = testList.size();
@@ -61,6 +61,5 @@ public class createMap {
 				}
 			}
 		}
-		return map;
 	}
 }

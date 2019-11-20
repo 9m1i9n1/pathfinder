@@ -5,7 +5,7 @@ public class RouteDTO {
 	private int branch_value;
 	private double branch_lat; // 위도
 	private double branch_lng; // 경도
-	
+	private int priceBetweenAandB;
 	public String getBranch_name() {
 		return branch_name;
 	}
@@ -30,4 +30,11 @@ public class RouteDTO {
 	public void setBranch_lng(double branch_lng) {
 		this.branch_lng = branch_lng;
 	}
+	public int getPriceBetweenAandB() {
+		return priceBetweenAandB;
+	}
+	public void setPriceBetweenAandB(int priceBetweenAandB) {
+		this.priceBetweenAandB = priceBetweenAandB;
+	}
+	
 }

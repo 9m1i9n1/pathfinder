@@ -12,6 +12,7 @@ public class Recursive {
 	private int minTourCost = Integer.MAX_VALUE;
 
 	private List<Integer> tour = new ArrayList<>();
+	private List<Integer> tour2 = new ArrayList<>();
 	private boolean ranSolver = false;
 
 	public long startTime, endTime, lTime;
@@ -68,7 +69,7 @@ public class Recursive {
 			state = nextState;
 			index = nextIndex;
 		}
-		tour.add(START_NODE);
+//		tour.add(START_NODE);
 		ranSolver = true;
 		
 	}

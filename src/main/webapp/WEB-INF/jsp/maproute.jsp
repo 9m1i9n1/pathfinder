@@ -11,17 +11,22 @@
 <html>
 <head>
 <meta charset="utf-8">
-
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/static/js/swiper.min.js"></script>
 <script>
 	
 </script>
 <title>CSS</title>
+
+<link rel="stylesheet" href="/static/css/swiper.min.css">
 <link href="/static/css/maproute.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
 <link rel="stylesheet" href="/static/css/leaflet-routing-machine.css" />
 </head>
+
 <body>
+<!-- 	<button type="button" onClick="location.href = '/maproute/tt'">aaa</button> -->
 	<div class="container-fluid">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">경로탐색</a></li>
@@ -37,8 +42,7 @@
 					<div class="card-header">
 						<b>검색</b> <input type="text" name="keyword" id="keyword"
 							style="text-align: center; width: 60%" /> <input type="button"
-							name="btnSearch" id="btnSearch" value="확인"
-							style="width: 20%" />
+							name="btnSearch" id="btnSearch" value="확인" style="width: 20%" />
 					</div>
 
 					<div id="tableEdge">
@@ -59,14 +63,22 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" style="margin-top: 20px;">
-			<div class="col-12">
+		<div class="row" style="margin-top: 5px;">
+			<div class="col-9">
 				<div class="card">
 					<div class="card-header">
 						<b>경로</b>
 					</div>
-					<div class="card-body"
-						style="min-height: 100px; max-height: 100px;">
+					<div class="row flex-row flex-nowrap" id="box" class="box" style="min-height:200px; max-height: 200px;">
+					</div>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="card" >
+					<div class="card-header" > 
+						<b>최종값</b>
+					</div>
+					<div class="card-body" style="min-height: 200px;">
 						<div id="finalPathDiv"></div>
 					</div>
 				</div>
