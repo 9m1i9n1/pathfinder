@@ -21,7 +21,7 @@
 <base href="/">
 <link rel="stylesheet" href="/static/css/login.css">
 </head>
-<body>
+<body> 
 	<!-- Main Content -->
 	<div class="container-fluid">
 		<div class="row main-content bg-success text-center">
