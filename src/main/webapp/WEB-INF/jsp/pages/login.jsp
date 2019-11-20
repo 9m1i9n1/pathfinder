@@ -76,32 +76,5 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
 	<script src="static/js/login.js"></script>
-
-	<script type="text/javascript">
-		function doAuth() {
-			let userId = $("#username").val();
-			let userPwd = $("#password").val();
-
-			let userData = new Object();
-
-			userData.id = userId;
-			userData.pwd = userPwd;
-
-			$("#submit").on("click", function() {
-				$.ajax({
-					url : "/authenticate.do",
-					type : "post",
-					contentType : "application/json",
-					data : JSON.stringify(userData),
-					success : function(res, status, xhr) {
-
-					},
-					error : function(e) {
-						console.log(e);
-					}
-				})
-			})
-		}
-	</script>
 </body>
 </html>
