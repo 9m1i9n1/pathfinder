@@ -204,6 +204,7 @@ function userPwReset(userIndex) {
 }
 
 //! Modal 관련 =======================
+//TODO JavaScript 다시 선언시 Const 중복 에러발생 
 var insertModal = $("#insertModal");
 var modifyModal = $("#modifyModal");
 
@@ -286,10 +287,8 @@ function areaLoading(modal) {
         .selectpicker("refresh");
 
       $.each(res.data, function(key, value) {
-        const [index, name] = value;
-
-        str += "<option value='" + index + "'>";
-        str += name + "</option>";
+        str += "<option value='" + value[0] + "'>";
+        str += value[1] + "</option>";
       });
 
       modal
@@ -325,10 +324,8 @@ function branchLoading(modal, selected) {
       str += "<option value=''>선택</option>";
 
       $.each(res.data, function(key, value) {
-        const [index, name] = value;
-
-        str += "<option value='" + index + "'>";
-        str += name + "</option>";
+        str += "<option value='" + value[0] + "'>";
+        str += value[1] + "</option>";
       });
 
       modal

@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import com.douzone.bit.pathfinder.filter.JwtRequestFilter;
 import com.douzone.bit.pathfinder.service.SignService;
@@ -60,12 +62,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) {
+		web.httpFirewall(allowUrlEncoddedSlashHttpFirewall());
 		web.ignoring()
 			.antMatchers(
 					"/static/**");
 	}
-	
-	
 	
 	@Override
 	@Bean
@@ -77,5 +78,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return NoOpPasswordEncoder.getInstance();
+	}
+	
+	@Bean
+	public HttpFirewall allowUrlEncoddedSlashHttpFirewall() {
+		StrictHttpFirewall firewall = new StrictHttpFirewall();
+		firewall.setAllowSemicolon(true);
+		
+		return firewall;
 	}
 }
