@@ -45,8 +45,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String userId = null;
 		String token = null;
 		
-		if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
-			token = authorizationHeader.substring(11);
+		if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder")) {
+			token = authorizationHeader.substring(10);
 			userId = jwtUtil.extractUserId(token);
 			
 			if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
