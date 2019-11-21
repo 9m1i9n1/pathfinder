@@ -40,15 +40,6 @@ public class AdminBranchController {
 	@Autowired
 	AdminUserService adminUserService;
 
-	@GetMapping("/ajax")
-	public ModelAndView AjaxBranchManage() {
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("ajax.branchmanage");
-		
-		return mv;
-	}
-
 	// branch create
 	@PostMapping("")
 	public Header<AdminBranchResponse> branchCreate(@RequestBody @Valid AdminBranchRequest request,
@@ -65,7 +56,7 @@ public class AdminBranchController {
 	}
 
 	// branch view
-	@GetMapping("")
+	@GetMapping({ "", "/" })
 	public ModelAndView branchManage() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/branchManage");
@@ -114,6 +105,5 @@ public class AdminBranchController {
 	public Header branchDelete(@PathVariable Long branchIndex) {
 		return adminBranchService.delete(branchIndex);
 	}
-	
-	
+
 }

@@ -19,7 +19,7 @@ $('[name=branchInsertBtn]').click(function() {
 })*/
 
 // insertModal 닫힐 시
-$("#insertModal").on("hidden.bs.modal", function() {
+$("#insertModal").on("hidden.bs.modal", function() { 
   $("#branchInsertform")[0].reset();
   branchInsertValid.resetForm();
 });
@@ -267,8 +267,8 @@ function branchlist(selectPage) {
 				str += '<td>'+ value.branchPhone+ '</td>';
 				str += '<td>'+(value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ " 원"+'</td>';
 				str += "<td><div class='table-data-feature'>";
-				str += `<button class="item" data-toggle='modal' data-target='#updateModal' data-placement="top" title="Edit" value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="zmdi zmdi-edit"></i></button>`;
-				str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '`+ value.branchName + `')"><i class="zmdi zmdi-delete"></button></div></td>'+ '</tr>`;
+				str += `<button class="item" data-toggle='modal' data-target='#updateModal' data-placement="top" title="Edit" value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
+				str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '`+ value.branchName + `')"><i class="fas fa-trash-alt"></button></div></td>'+ '</tr>`;
 			});
 			$("#tableListBody").html(str);
 			pageButton(res.pagination.totalPages, res.pagination.currentPage);

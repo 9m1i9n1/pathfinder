@@ -37,16 +37,6 @@ public class HierarchyController {
 
 	@Autowired
 	AdminUserService adminUserService;
-
-	@GetMapping("/ajax")
-	public ModelAndView AjaxHierarchy() {
-
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("ajax.hierarchy");
-		
-		return mv;
-	}
 	
 	@GetMapping({ "", "/" })
 	public ModelAndView getHierarchy() {

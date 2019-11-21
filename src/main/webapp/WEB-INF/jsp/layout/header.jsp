@@ -74,3 +74,16 @@ pageEncoding="UTF-8"%>
 <!-- LeafLet Library -->
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 <script src="/static/js/leaflet-routing-machine.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $.ajaxSetup({
+      beforeSend: function(req) {
+        req.setRequestHeader(
+          "Authorization",
+          "pathfinder " + document.cookie.substring(6)
+        );
+      }
+    });
+  });
+</script>

@@ -55,15 +55,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				List<GrantedAuthority> authorities = new ArrayList<>();
 				authorities.add(new SimpleGrantedAuthority(userClaim.get("userAuthority").toString()));
 				
-				
 				SignDTO signInfo = SignDTO.builder()
 						.username(userId)
 						.password(null)
+						.userIndex(Long.valueOf(userClaim.get("userIndex").toString()))
 						.userFullName(userClaim.get("userFullName").toString())
 						.userEmail(userClaim.get("userEmail").toString())
 						.userPhone(userClaim.get("userPhone").toString())
 						.userPosition(userClaim.get("userPosition").toString())
 						.userBranch(userClaim.get("userBranch").toString())
+						.userArea(userClaim.get("userArea").toString())
 						.authorities(authorities)
 						.accountNonExpired(true).accountNonLocked(true)
 						.credentialsNonExpired(true).enabled(true)

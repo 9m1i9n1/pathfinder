@@ -16,13 +16,12 @@ public class UserinfoController {
 	@Autowired
 	UserinfoService userinfoService;
 
-	//userinfoTest
-	@GetMapping("/ajax")
-	public ModelAndView AjaxUserInfo() {
-	ModelAndView mv = new ModelAndView();
-	mv.setViewName("ajax.userinfo");
-	return mv;
+	@GetMapping({ "", "/" })
+	public ModelAndView userInfo() {
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/userinfo");
+
+		return mv;
 	}
-	
-	
 }

@@ -11,16 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/home")
 public class HomeController {
 
-	@GetMapping("/ajax")
-	public ModelAndView Ajaxhome() {
-		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("ajax.home");
-		
-		return mv;
-	}
-	
 	@GetMapping({ "", "/" })
 	public ModelAndView home(Model model) {
 

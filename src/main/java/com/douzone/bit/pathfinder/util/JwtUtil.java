@@ -57,6 +57,7 @@ public class JwtUtil {
 		return Jwts.builder()
 				.setClaims(claims)
 				.setSubject(userDetails.getUsername())
+				.claim("userIndex", userDetails.getUserIndex())
 				.claim("userFullName", userDetails.getUserFullName())
 				.claim("userPhone", userDetails.getUserPhone())
 				.claim("userEmail", userDetails.getUserEmail())
