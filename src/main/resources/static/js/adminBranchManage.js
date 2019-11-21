@@ -19,7 +19,7 @@ $('[name=branchInsertBtn]').click(function() {
 })*/
 
 // insertModal 닫힐 시
-$("#insertModal").on("hidden.bs.modal", function() {
+$("#insertModal").on("hidden.bs.modal", function() { 
   $("#branchInsertform")[0].reset();
   branchInsertValid.resetForm();
 });
