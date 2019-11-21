@@ -81,7 +81,7 @@ pageEncoding="UTF-8"%>
       beforeSend: function(req) {
         req.setRequestHeader(
           "Authorization",
-          "pathfinder " + document.cookie.substring(6)
+          "pathfinder" + document.cookie.substring(6)
         );
       }
     });
