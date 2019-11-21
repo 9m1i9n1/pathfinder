@@ -30,59 +30,51 @@ import io.jsonwebtoken.Claims;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-	
+
 	Logger logger = Logger.getLogger(JwtRequestFilter.class);
 
 	@Autowired
 	private JwtUtil jwtUtil;
-	
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		
+
 		final String authorizationHeader = request.getHeader("Authorization");
-		
+
 		String userId = null;
 		String token = null;
-		
-		if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder")) {
-			token = authorizationHeader.substring(10);
+
+		if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
+			token = authorizationHeader.substring(11);
 			userId = jwtUtil.extractUserId(token);
-			
+
 			if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				Claims userClaim = jwtUtil.extractAllClaims(token);
-				
+
 				List<GrantedAuthority> authorities = new ArrayList<>();
 				authorities.add(new SimpleGrantedAuthority(userClaim.get("userAuthority").toString()));
-				
-				SignDTO signInfo = SignDTO.builder()
-						.username(userId)
-						.password(null)
+
+				SignDTO signInfo = SignDTO.builder().username(userId).password(null)
 						.userIndex(Long.valueOf(userClaim.get("userIndex").toString()))
-						.userFullName(userClaim.get("userFullName").toString())
-						.userEmail(userClaim.get("userEmail").toString())
-						.userPhone(userClaim.get("userPhone").toString())
-						.userPosition(userClaim.get("userPosition").toString())
-						.userBranch(userClaim.get("userBranch").toString())
-						.userArea(userClaim.get("userArea").toString())
-						.authorities(authorities)
-						.accountNonExpired(true).accountNonLocked(true)
-						.credentialsNonExpired(true).enabled(true)
-						.build();
-				
+						.userFullName(userClaim.get("userFullName").toString()).userEmail(userClaim.get("userEmail").toString())
+						.userPhone(userClaim.get("userPhone").toString()).userPosition(userClaim.get("userPosition").toString())
+						.userBranch(userClaim.get("userBranch").toString()).userArea(userClaim.get("userArea").toString())
+						.authorities(authorities).accountNonExpired(true).accountNonLocked(true).credentialsNonExpired(true)
+						.enabled(true).build();
+
 				if (jwtUtil.validateToken(token, signInfo)) {
-					
-					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-							new UsernamePasswordAuthenticationToken(signInfo, null, signInfo.getAuthorities());
-					
-					usernamePasswordAuthenticationToken
-						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				
+
+					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+							signInfo, null, signInfo.getAuthorities());
+
+					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 				}
 			}
 		}
-		
+
 		chain.doFilter(request, response);
 	}
 }

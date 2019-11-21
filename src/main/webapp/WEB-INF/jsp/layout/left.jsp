@@ -8,13 +8,6 @@
 	function changeView(element) {
 		let id = $(element).attr("id");
 
-		console.log("#id");
-		console.log(id);
-
-		console.log("#cookie");
-		console.log(document.cookie);
-		
-
 		$.ajax({
 			url : id,
 			type : "get",

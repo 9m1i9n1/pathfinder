@@ -84,17 +84,12 @@ pageEncoding="UTF-8"%>
   }
 
   $(document).ready(function() {
-    console.log(document.cookie);
-
-    console.log("#token cookie");
-    console.log(getCookie("token"));
-    
 
     $.ajaxSetup({
       beforeSend: function(req) {
         req.setRequestHeader(
           "Authorization",
-          "pathfinder" + getCookie("token")
+          "pathfinder " + getCookie("token")
         );
       }
     });
