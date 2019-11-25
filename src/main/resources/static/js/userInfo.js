@@ -1,0 +1,112 @@
+$.fn.serializeObject = function() {
+  let result = {};
+  let extend = function(i, element) {
+    let node = result[element.name];
+    if ("undefined" !== typeof node && node !== null) {
+      if ($.isArray(node)) {
+        node.push(element.value);
+      } else {
+        result[element.name] = [node, element.value];
+      }
+    } else {
+      result[element.name] = element.value;
+    }
+  };
+
+  $.each(this.serializeArray(), extend);
+  return JSON.stringify(result);
+};
+// 회원 수정
+function userUpdate(req) {
+  $.ajax({
+    url: "/userinfo",
+    type: "put",
+    contentType: "application/json",
+    data: req,
+    success: function(res) {
+    	console.log("test@@@@@@@@")
+        alert("해당 유저 정보를 수정하였습니다.");
+    },
+    error: function(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+    }
+  });
+}
+
+$("form").each(function() {
+	  $(this).validate({
+	    onkeyup: false,
+	    ignore: ":hidden, [readonly]",
+	    rules: {
+	      userIndex: {
+	    	  required: true
+	      },
+	      userPw: {
+	    	  required: true,
+	    	  pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+	      },
+	      userPwCheck: {
+	    	  required: true,
+	    	  equalTo : "#userPw"
+	      },
+	      userEmail: {
+	        required: true,
+	        email: true
+	      },
+	      userPhone: {
+	        required: true,
+	        pattern: /^\d{3}-\d{4}-\d{4}$/
+	      }
+	    },
+	    messages: {
+	      userIndex:{
+	    	  required:"index 오류"
+	      },
+	      userPw:{
+	    	  required:"비밀번호를 입력하세요.",
+	    	  pattern: "문자,숫자,특수문자(!@#$%^&*?) 혼합 8자 이상"
+	      },
+	      userPwCheck: {
+	    	  required: "비밀번호 확인을 입력해주세요",
+	    	  equalTo : " 비밀번호가 다릅니다."
+	      },
+	      userEmail: {
+	        required: "이메일을 입력하세요.",
+	        email: "이메일 형식이 맞지 않습니다."
+	      },
+	      userPhone: {
+	        required: "연락처를 입력하세요.",
+	        pattern: "연락처 형식이 맞지 않습니다."
+	      }
+	    },
+
+	    // valid 실패시
+	    invalidHandler: function(form, validator) {
+	      var errors = validator.numberOfInvalids();
+
+	      if (errors) {
+	        alert(validator.errorList[0].message);
+	        validator.errorList[0].element.focus();
+	      }
+	      console.log(errors)
+	    },
+
+	    // valid 성공시
+	    submitHandler: function(form) {
+	     const formId = $(form).attr("id");
+	     var req = $(form).serializeObject();
+	     //userIndex=4&userName=Tadio&userId=tjenyns3&userPw=1234&userEmail=tcomiam3%40quantcast.com&userPhone=010-1234-1234
+	     //console.log(req)
+	     userUpdate(req);
+	      }
+	  });
+	});

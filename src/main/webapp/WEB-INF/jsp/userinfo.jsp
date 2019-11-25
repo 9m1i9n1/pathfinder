@@ -103,46 +103,47 @@
 						
 						<div class="card-body">
 							<div class="tab-pane" id="settings">
-								<form class="form-horizontal">
+								<form class="form-horizontal" id="settings" name="settings" >
 									<div class="form-group row">
+										<input hidden id="userIndex" value= "<sec:authentication property="principal.userIndex"/>" id="userIndex" name="userIndex">
 										<label for="inputName" class="col-sm-2 col-form-label">이름</label>
 										<div class="col-sm-10">
-											<input type="email" class="form-control" id="inputName"
+											<input type="email" class="form-control" id="userName" name="userName"
 												placeholder="Name" readonly value="<sec:authentication property="principal.userFullName"/>">
 										</div>
 									</div>
 									<div class="form-group row">
 										<label for="inputID" class="col-sm-2 col-form-label">아이디</label>
 										<div class="col-sm-10">
-											<input type="email" class="form-control" id="inputId"
+											<input type="email" class="form-control" id="userId" name="userId"
 												placeholder="ID" readonly value="<sec:authentication property="principal.username"/>">
 										</div>
 									</div>
 									<div class="form-group row">
 										<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
 										<div class="col-sm-10">
-											<input type="password" class="form-control" id="inputPassword"
+											<input type="password" class="form-control" id="userPw" name="userPw"
 												placeholder="Password">
 										</div>
 									</div>
 										<div class="form-group row">
 										<label for="inputPasswordCheck" class="col-sm-2 col-form-label">비밀번호 확인</label>
 										<div class="col-sm-10">
-											<input type="password" class="form-control" id="inputPasswordCheck"
+											<input type="password" class="form-control" id="userPwCheck" name="userPwCheck"
 												placeholder="PasswordCheck">
 										</div>
-									</div>
+									</div> 
 									<div class="form-group row">
 										<label for="inputEmail" class="col-sm-2 col-form-label">이메일</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputEmail"
+											<input type="text" class="form-control" id="userEmail" name="userEmail"
 												placeholder="Email" value="<sec:authentication property="principal.userEmail"/>">
 										</div>
 									</div>
 									<div class="form-group row">
 										<label for="inputPhone" class="col-sm-2 col-form-label">전화번호</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputLocation"
+											<input type="text" class="form-control" id="userPhone" name="userPhone"
 												placeholder="Phone" value="<sec:authentication property="principal.userPhone"/>">
 										</div>
 									</div>
@@ -171,5 +172,6 @@
 		</div>
 		<!-- /.container-fluid -->
 	</section>
+	 <script src="/static/js/userInfo.js"></script>
 </body>
 </html>
