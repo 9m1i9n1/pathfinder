@@ -5,6 +5,4 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="layoutContent">
 
-<c:import url="/WEB-INF/jsp/home.jsp" />
-
 </div>
