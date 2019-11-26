@@ -30,12 +30,12 @@ html {font-family: helvetica, arial;}
 .htimeline .step.red::before {border-color: #C04848;}
 .htimeline .step.blue::before {border-color: #49a09d;}
 
-.htimeline .step::after { content: attr(data-date); position: absolute; top: -25px; left: 17px; font-size: 15px; font-style: italic; color: #000}
+.htimeline .step::after { content: attr(data-date); position: absolute; top: -25px; left:  70%; font-size: 15px; font-style: italic; color: #000}
 
 /*TASKS*/
 .htimeline .step .tasks { margin-top: 10px; }
-.htimeline .step .tasks .resource {position: relative; height: 40px; padding-bottom: 60px;}
-.htimeline .step .tasks .resource::before { position: absolute; bottom: 10px; left: -5px; content: attr(data-name); font-size: 13px; font-style: italic; color: #888}
+.htimeline .step .tasks .resource {position: relative; height: 40px; padding-bottom: 30px; padding-left:60px;}
+.htimeline .step .tasks .resource::before { position: absolute; bottom: 15px; left: -5px; content: attr(data-name); font-size: 13px; font-style: italic; color: #888}
 .htimeline .step .tasks .task { overflow: hidden; font-size: 15px; padding: 3px; border: solid 1px white; border-radius: 4px; min-height: 20px;}
 .htimeline .step.green .tasks .task { background-color: #348F50; color: white; }
 .htimeline .step.orange .tasks .task { background-color: #F09819; color: white; }
