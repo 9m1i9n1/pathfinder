@@ -24,8 +24,8 @@ function userUpdate(req) {
     contentType: "application/json",
     data: req,
     success: function(res) {
-    	console.log("test@@@@@@@@")
         alert("해당 유저 정보를 수정하였습니다.");
+        window.location.href="/userinfo";
     },
     error: function(request, status, error) {
       alert(
