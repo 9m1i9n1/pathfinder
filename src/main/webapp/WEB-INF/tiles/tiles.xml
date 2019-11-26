@@ -13,26 +13,27 @@
 			value="/WEB-INF/jsp/layout/nav.jsp" />
 		<put-attribute name="left"
 			value="/WEB-INF/jsp/layout/left.jsp" />
-		<put-attribute name="content" value="" />
+		<put-attribute name="body" value="" />
 		<put-attribute name="footer"
 			value="/WEB-INF/jsp/layout/footer.jsp" />
 	</definition>
 
-	<definition name="login" extends="/WEB-INF/jsp/login/login.jsp">
-		<put-attribute name="content"
-		 value="/"/>
+	<definition name="/login"
+		extends="/WEB-INF/jsp/defaultPage/login.jsp">
+		<put-attribute name="content" value="" />
 	</definition>
 
+	<definition name="/error"
+		template="/WEB-INF/jsp/defaultPage/error.jsp">
+		<put-attribute name="content" value="" />
+	</definition>
+	
 	<definition name="*" extends="layouts-tiles">
-		<put-attribute name="content"
+		<put-attribute name="body"
 			value="/WEB-INF/jsp/{1}.jsp" />
 	</definition>
 	<definition name="*/*" extends="layouts-tiles">
-		<put-attribute name="content"
+		<put-attribute name="body"
 			value="/WEB-INF/jsp/{1}/{2}.jsp" />
-	</definition>
-	<definition name="*/*/*" extends="layouts-tiles">
-		<put-attribute name="content"
-			value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
 	</definition>
 </tiles-definitions>

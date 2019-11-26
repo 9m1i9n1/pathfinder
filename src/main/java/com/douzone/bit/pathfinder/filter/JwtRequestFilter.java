@@ -51,7 +51,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String requestUrl = request.getRequestURI();
 
 		if (!requestUrl.matches("^/static/.*$")) {
-			System.out.println(requestUrl);
 			if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
 				token = authorizationHeader.substring(11);
 

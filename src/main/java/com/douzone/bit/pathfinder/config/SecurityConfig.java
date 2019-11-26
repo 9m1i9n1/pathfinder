@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -48,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.hasRole("ADMIN")
 				.antMatchers("/home/**", "/history/**", "/hierarchy/**", "/maproute/**")
 				.hasAnyRole("ADMIN", "USER")
-				.antMatchers("/authenticate.do", "/login")
+				.antMatchers("/authenticate.do")
 				.permitAll() // 로그인은 누구나 접속할 수 았게 설정
 				.anyRequest()
 				.authenticated()
@@ -56,12 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement() // JWT 토큰 방식을 이용하기 때문에 Session은 이용하지 않음.
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.formLogin() // Login 화면 설정.
+				.exceptionHandling()
+				.accessDeniedPage("/error/error_403")
+			.and()
+				.formLogin() // Login 화면 설정.
 				.loginPage("/login")
 				.permitAll()
 				.failureUrl("/login")
 			.and()
-			.logout().permitAll();
+				.logout()
+				.permitAll()
+			;
 		
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}

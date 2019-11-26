@@ -41,7 +41,7 @@ public class SignController {
 
 		ModelAndView mv = new ModelAndView();
 
-		mv.setViewName("/login/login");
+		mv.setViewName("/defaultpage/login");
 
 		return mv;
 	}

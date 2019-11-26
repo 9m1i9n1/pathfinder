@@ -14,10 +14,9 @@
 		<!-- Sidebar -->
 		<tiles:insertAttribute name="left" />
 		<div id="layout" class="content-wrapper">
-			<tiles:insertAttribute name="content" />
+			<tiles:insertAttribute name="body" />
 			<tiles:insertAttribute name="footer" />
 		</div>
-		<!-- /.content-wrapper -->
 	</div>
 </body>
 
