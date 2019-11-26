@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
@@ -40,24 +41,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-				.csrf().disable() // CSRF 보안 비설정
-				.authorizeRequests()
-					.antMatchers("/admin/**")
-					.access("hasRole('ADMIN')")
-				.antMatchers("/authenticate.do", "/login").permitAll() // 로그인은 누구나 접속할 수 았게 설정
+		http
+			.csrf().disable() // CSRF 보안 비설정
+			.authorizeRequests()
+				.antMatchers("/admin/**")
+				.hasRole("ADMIN")
+				.antMatchers("/home/**", "/history/**", "/hierarchy/**", "/maproute/**")
+				.hasAnyRole("ADMIN", "USER")
+				.antMatchers("/authenticate.do", "/login")
+				.permitAll() // 로그인은 누구나 접속할 수 았게 설정
 				.anyRequest()
-					.authenticated()
-				.and()
-				.sessionManagement() // JWT 토큰 방식을 이용하기 때문에 Session은 이용하지 않음.
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.formLogin() // Login 화면 설정.
-					.loginPage("/login")
-					.permitAll()
-					.failureUrl("/login")
-				.and()
-				.logout().permitAll();
+				.authenticated()
+			.and()
+			.sessionManagement() // JWT 토큰 방식을 이용하기 때문에 Session은 이용하지 않음.
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.formLogin() // Login 화면 설정.
+				.loginPage("/login")
+				.permitAll()
+				.failureUrl("/login")
+			.and()
+			.logout().permitAll();
+		
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
@@ -65,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.httpFirewall(allowUrlEncoddedSlashHttpFirewall());
 		web.ignoring().antMatchers("/static/**");
 	}
-
+	
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {

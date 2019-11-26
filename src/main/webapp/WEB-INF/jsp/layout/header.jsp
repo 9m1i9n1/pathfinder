@@ -84,7 +84,6 @@ pageEncoding="UTF-8"%>
   }
 
   $(document).ready(function() {
-
     $.ajaxSetup({
       beforeSend: function(req) {
         req.setRequestHeader(

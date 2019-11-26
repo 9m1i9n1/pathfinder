@@ -4,7 +4,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	function changeView(element) {
 		let id = $(element).attr("id");
 
@@ -28,13 +28,14 @@
 			}
 		})
 	}
-</script>
+</script> -->
 
 <aside class="main-sidebar elevation-4 sidebar-dark-yellow">
 	<!-- Brand Logo -->
 	<sec:authorize access="isAuthenticated()">
-		<a onclick="changeView(this)" id="/home" class="brand-link navbar-purple"> 
-		<img src="/static/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+		<a onclick="changeView(this)" id="/home"
+			class="brand-link navbar-purple"> <img
+			src="/static/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 			class="brand-image img-circle elevation-3" style="opacity: .8">
 			<span class="brand-text font-weight-bold">PathFinder</span>
 		</a>
@@ -47,8 +48,8 @@
 						class="img-circle elevation-2" alt="User Image">
 				</div>
 				<div class="info">
-					<a onclick="changeView(this)" id="/userinfo" class="d-block"> <!-- 로그인한 유저 정보 가져오기 --> 
-					<sec:authentication property="principal.userFullName" />
+					<a href="/userinfo" class="d-block"> <!-- 로그인한 유저 정보 가져오기 --> <sec:authentication
+							property="principal.userFullName" />
 					</a>
 				</div>
 			</div>
@@ -61,27 +62,23 @@
                with font-awesome or any other icon font library -->
 					<li class="nav-header">사용자 메뉴</li>
 
-					<li class="nav-item"><a id="/home" onClick="changeView(this)"
-						class="nav-link active"> <i
-							class="nav-icon fas fa-tachometer-alt"></i>
+					<li class="nav-item"><a href="/home" class="nav-link active">
+							<i class="nav-icon fas fa-tachometer-alt"></i>
 							<p>홈</p>
 					</a></li>
 
-					<li class="nav-item"><a id="/maproute"
-						onClick="changeView(this)" class="nav-link"> <i
-							class="nav-icon fas fa-truck"></i>
+					<li class="nav-item"><a href="/maproute" class="nav-link">
+							<i class="nav-icon fas fa-truck"></i>
 							<p>경로탐색</p>
 					</a></li>
 
-					<li class="nav-item"><a id="/history"
-						onClick="changeView(this)" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
+					<li class="nav-item"><a href="/history" class="nav-link">
+							<i class="nav-icon fas fa-book"></i>
 							<p>조회내역</p>
 					</a></li>
 
-					<li class="nav-item"><a id="/hierarchy"
-						onClick="changeView(this)" class="nav-link"> <i
-							class="nav-icon fas fa-table"></i>
+					<li class="nav-item"><a href="/hierarchy" class="nav-link">
+							<i class="nav-icon fas fa-table"></i>
 							<p>조직도</p>
 					</a></li>
 
@@ -95,19 +92,16 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a id="/admin/usermanage"
-									onClick="changeView(this)" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
+								<li class="nav-item"><a href="/admin/usermanage"
+									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>사용자 관리</p>
 								</a></li>
-								<li class="nav-item"><a id="/admin/branchmanage"
-									onClick="changeView(this)" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
+								<li class="nav-item"><a href="/admin/branchmanage"
+									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>지점 관리</p>
 								</a></li>
-								<li class="nav-item"><a id="/admin/carmanage"
-									onClick="changeView(this)" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
+								<li class="nav-item"><a href="/admin/carmanage"
+									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>차량 관리</p>
 								</a></li>
 							</ul></li>

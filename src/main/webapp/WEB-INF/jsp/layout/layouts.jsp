@@ -1,23 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> 
-<%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <!DOCTYPE html>
+<tiles:insertAttribute name="header" />
+<html>
 
-  <c:import url="/WEB-INF/jsp/layout/header.jsp" />
+<body
+	class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
+	<div class="wrapper">
+		<tiles:insertAttribute name="nav" />
 
-  <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
-    <div class="wrapper">
+		<!-- Sidebar -->
+		<tiles:insertAttribute name="left" />
+		<div id="layout" class="content-wrapper">
+			<tiles:insertAttribute name="content" />
+			<!-- Sticky Footer -->
+			<tiles:insertAttribute name="footer" />
+		</div>
+		<!-- /.content-wrapper -->
+	</div>
+</body>
 
-      <c:import url="/WEB-INF/jsp/layout/nav.jsp" />
-      <c:import url="/WEB-INF/jsp/layout/left.jsp" />
-
-      <div id="layout" class="content-wrapper">
-        <c:import url="/WEB-INF/jsp/layout/content.jsp" />
-        <c:import url="/WEB-INF/jsp/layout/footer.jsp" />
-      </div>
-
-    </div>
-  </body>
 </html>
