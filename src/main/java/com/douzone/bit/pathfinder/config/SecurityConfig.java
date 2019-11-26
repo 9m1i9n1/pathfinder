@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) {
 		web.httpFirewall(allowUrlEncoddedSlashHttpFirewall());
-		web.ignoring().antMatchers("/static/**");
+		web.ignoring().antMatchers("/static/**/*.*");
 	}
 	
 	@Override

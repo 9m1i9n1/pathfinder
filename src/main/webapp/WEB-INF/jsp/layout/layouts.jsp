@@ -15,7 +15,6 @@
 		<tiles:insertAttribute name="left" />
 		<div id="layout" class="content-wrapper">
 			<tiles:insertAttribute name="content" />
-			<!-- Sticky Footer -->
 			<tiles:insertAttribute name="footer" />
 		</div>
 		<!-- /.content-wrapper -->

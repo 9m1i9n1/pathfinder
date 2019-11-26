@@ -66,7 +66,7 @@ public class SignController {
 			
 			response.addCookie(cookie);
 
-			mv.setViewName("/home");
+			mv.setViewName("redirect:/home");
 
 		} catch (BadCredentialsException e) {
 			throw new Exception("Incorrect userId or password", e);

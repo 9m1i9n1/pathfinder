@@ -35,6 +35,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	Logger logger = Logger.getLogger(JwtRequestFilter.class);
 
 	@Autowired
+	private SignService signService;
+	
+	@Autowired
 	private JwtUtil jwtUtil;
 
 	@Override
@@ -44,25 +47,30 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		final String authorizationHeader = request.getHeader("Authorization");
 
 		String token = null;
+		
+		String requestUrl = request.getRequestURI();
 
-		if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
-			token = authorizationHeader.substring(11);
+		if (!requestUrl.matches("^/static/.*$")) {
+			System.out.println(requestUrl);
+			if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
+				token = authorizationHeader.substring(11);
 
-			checkToken(token, request);
-		} else {
-			Cookie[] cookie = request.getCookies();
-
-			if (cookie != null) {
-				for (Cookie value : cookie) {
-					if (value.getName().equals("token")) {
-						token = value.getValue();
-
-						checkToken(token, request);
-						break;
-					}
-				}
+				checkToken(token, request);
 			} else {
-				// Exception 추가
+				Cookie[] cookie = request.getCookies();
+
+				if (cookie != null) {
+					for (Cookie value : cookie) {
+						if (value.getName().equals("token")) {
+							token = value.getValue();
+
+							checkToken(token, request);
+							break;
+						}
+					}
+				} else {
+					// Exception 추가
+				}
 			}
 		}
 
@@ -71,7 +79,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	private void checkToken(String token, HttpServletRequest request) {
 		String userId = null;
-
 		userId = jwtUtil.extractUserId(token);
 
 		if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -80,21 +87,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			authorities.add(new SimpleGrantedAuthority(userClaim.get("userAuthority").toString()));
 
-			SignDTO signInfo = SignDTO.builder().username(userId).password(null)
-					.userIndex(Long.valueOf(userClaim.get("userIndex").toString()))
-					.userFullName(userClaim.get("userFullName").toString())
-					.userEmail(userClaim.get("userEmail").toString()).userPhone(userClaim.get("userPhone").toString())
-					.userPosition(userClaim.get("userPosition").toString())
-					.userBranch(userClaim.get("userBranch").toString()).userArea(userClaim.get("userArea").toString())
-					.authorities(authorities).accountNonExpired(true).accountNonLocked(true).credentialsNonExpired(true)
-					.enabled(true).build();
+			SignDTO signInfo = (SignDTO) this.signService.loadUserByUsername(userId);
 
 			if (jwtUtil.validateToken(token, signInfo)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						signInfo, null, signInfo.getAuthorities());
 
-				System.out.println(signInfo);
-				
 				usernamePasswordAuthenticationToken
 						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
