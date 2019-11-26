@@ -76,12 +76,19 @@ pageEncoding="UTF-8"%>
 <script src="/static/js/leaflet-routing-machine.js"></script>
 
 <script type="text/javascript">
+  window.getCookie = function(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) {
+      return match[2];
+    }
+  }
+
   $(document).ready(function() {
     $.ajaxSetup({
       beforeSend: function(req) {
         req.setRequestHeader(
           "Authorization",
-          "pathfinder " + document.cookie.substring(6)
+          "pathfinder " + getCookie("token")
         );
       }
     });

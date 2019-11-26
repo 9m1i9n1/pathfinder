@@ -41,7 +41,7 @@ public class SignController {
 
 		ModelAndView mv = new ModelAndView();
 
-		mv.setViewName("/login");
+		mv.setViewName("/login/login");
 
 		return mv;
 	}
@@ -63,10 +63,10 @@ public class SignController {
 			Cookie cookie = new Cookie("token", token);
 
 			cookie.setMaxAge(7 * 24 * 60 * 60); // 7일
-
+			
 			response.addCookie(cookie);
 
-			mv.setViewName("/layout/layouts");
+			mv.setViewName("/home");
 
 		} catch (BadCredentialsException e) {
 			throw new Exception("Incorrect userId or password", e);
