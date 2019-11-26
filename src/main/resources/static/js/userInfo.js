@@ -104,8 +104,6 @@ $("form").each(function() {
 	    submitHandler: function(form) {
 	     const formId = $(form).attr("id");
 	     var req = $(form).serializeObject();
-	     //userIndex=4&userName=Tadio&userId=tjenyns3&userPw=1234&userEmail=tcomiam3%40quantcast.com&userPhone=010-1234-1234
-	     //console.log(req)
 	     userUpdate(req);
 	      }
 	  });
