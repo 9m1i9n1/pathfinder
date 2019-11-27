@@ -66,6 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login")
 			.and()
 				.logout()
+				.logoutSuccessUrl("/login")
+				.logoutUrl("/logout")
+				.deleteCookies("token")
 				.permitAll()
 			;
 		

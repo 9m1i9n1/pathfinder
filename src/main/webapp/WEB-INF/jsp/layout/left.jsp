@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- <script type="text/javascript">
 	function changeView(element) {
@@ -51,6 +52,7 @@
 					<a href="/userinfo" class="d-block"> <!-- 로그인한 유저 정보 가져오기 --> <sec:authentication
 							property="principal.userFullName" />
 					</a>
+					<a href="<c:url value='/logout'/>">로그아웃</a>
 				</div>
 			</div>
 
