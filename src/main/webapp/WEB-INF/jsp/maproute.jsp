@@ -29,44 +29,97 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
           <div id="map"></div>
         </div>
         <div class="col-3">
-          <div class="card">
-            <div class="card-header">
-              <b>검색</b>
-              <input
-                type="text"
-                name="keyword"
-                id="keyword"
-                style="text-align: center; width: 60%"
-              />
-              <input
-                type="button"
-                name="btnSearch"
-                id="btnSearch"
-                value="확인"
-                style="width: 20%"
-              />
-            </div>
-
-            <div id="tableEdge">
-              <table
-                class="table table-hover table-mc-light-blue"
-                style="text-align: center;"
-                id="allDataTable"
-              ></table>
-            </div>
-
+          <div class="accordion">
             <div class="card">
-              <div class="card-header">
-                <b>검색누른거</b>
+              <div class="card-header" id="headingbranch">
+                <h3
+                  class="card-title"
+                  data-toggle="collapse"
+                  data-target="#tableEdge"
+                  aria-expanded="true"
+                  aria-controls="tableEdge"
+                >
+                  1. 지점 선택
+                </h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input
+                      type="text"
+                      name="branch_search"
+                      class="form-control float-right"
+                      placeholder="검색"
+                    />
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <%-- 이전 검색. class명 확인차 주석 --%> <%--
+              <div class="card-header">
+                검색
+                <input
+                  type="text"
+                  name="keyword"
+                  id="keyword"
+                  style="text-align: center; width: 60%"
+                />
+                <input
+                  type="button"
+                  name="btnSearch"
+                  id="btnSearch"
+                  value="확인"
+                  style="width: 20%"
+                />
+              </div>
+              --%>
+
               <div id="tableEdge">
                 <table
                   class="table table-hover table-mc-light-blue"
                   style="text-align: center;"
-                  id="selectRoute"
+                  id="allDataTable"
                 ></table>
               </div>
-              <button type="button" id="submitroute">전송</button>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">선택된 지점</h3>
+
+                  <div class="card-tools">
+                    <div
+                      class="input-group input-group-sm"
+                      style="width: 150px;"
+                    >
+                      <input
+                        type="text"
+                        name="selected_search"
+                        class="form-control float-right"
+                        placeholder="검색"
+                      />
+
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="tableEdge">
+                  <table
+                    class="table table-hover table-mc-light-blue"
+                    style="text-align: center;"
+                    id="selectRoute"
+                  ></table>
+                </div>
+                <button type="button" id="submitroute">전송</button>
+              </div>
             </div>
           </div>
         </div>
