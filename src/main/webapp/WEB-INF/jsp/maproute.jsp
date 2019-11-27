@@ -34,7 +34,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-9">
-				<div id="map"></div>
+				<div id="map" style="height:540px"></div>
 			</div>
 			<div class="col-3">
 				<div class="card">
