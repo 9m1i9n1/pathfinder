@@ -14,8 +14,8 @@
 :root {
   --blue: #007bff;
   --indigo: #605ca8;
-  --purple: #009681;
-  --pink: #de605e;
+  --purple: #94ba65;
+  --pink: #388a33;
   --red: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
@@ -12008,13 +12008,13 @@ body,
 
 .sidebar-dark-purple .nav-sidebar > .nav-item > .nav-link.active,
 .sidebar-light-purple .nav-sidebar > .nav-item > .nav-link.active {
-  background-color: #009681;
+  background-color: #388a33;
   color: #ffffff;
 }
 
 .sidebar-dark-purple .nav-sidebar.nav-legacy > .nav-item > .nav-link.active,
 .sidebar-light-purple .nav-sidebar.nav-legacy > .nav-item > .nav-link.active {
-  border-color: #009681;
+  border-color: #388a33;
 }
 
 .sidebar-dark-purple-dark .nav-sidebar > .nav-item > .nav-link.active,
@@ -13232,7 +13232,7 @@ body.text-sm .control-sidebar {
 }
 
 .navbar-purple {
-  background-color: #009681;
+  background-color: #388a33;
 }
 
 .navbar-purple-dark {
@@ -13839,7 +13839,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-switch.custom-switch-off-purple .custom-control-input ~ .custom-control-label::before {
-  background: #009681;
+  background: #388a33;
   border-color: #432776;
 }
 
@@ -13852,7 +13852,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-switch.custom-switch-on-purple .custom-control-input:checked ~ .custom-control-label::before {
-  background: #009681;
+  background: #388a33;
   border-color: #432776;
 }
 
@@ -14741,7 +14741,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-purple::-webkit-slider-thumb {
-  background-color: #009681;
+  background-color: #388a33;
 }
 
 .custom-range.custom-range-purple::-webkit-slider-thumb:active {
@@ -14749,7 +14749,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-purple::-moz-range-thumb {
-  background-color: #009681;
+  background-color: #388a33;
 }
 
 .custom-range.custom-range-purple::-moz-range-thumb:active {
@@ -14757,7 +14757,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-purple::-ms-thumb {
-  background-color: #009681;
+  background-color: #388a33;
 }
 
 .custom-range.custom-range-purple::-ms-thumb:active {
@@ -15602,7 +15602,7 @@ html.maximized-card {
 }
 
 .todo-list .purple {
-  border-left-color: #009681;
+  border-left-color: #388a33;
 }
 
 .todo-list .pink {
@@ -16721,7 +16721,7 @@ html.maximized-card {
 }
 
 .card-purple.card-tabs:not(.card-outline) .card-header {
-  background-color: #009681;
+  background-color: #388a33;
 }
 
 .card-purple.card-tabs:not(.card-outline) .card-header,
@@ -16734,7 +16734,7 @@ html.maximized-card {
 }
 
 .card-purple.card-tabs.card-outline {
-  border-top: 3px solid #009681;
+  border-top: 3px solid #388a33;
 }
 
 .card-purple.card-outline-tabs .card-header a:hover {
@@ -16742,7 +16742,7 @@ html.maximized-card {
 }
 
 .card-purple.card-outline-tabs .card-header a.active {
-  border-top: 3px solid #009681;
+  border-top: 3px solid #388a33;
 }
 
 .bg-purple .btn-tool,
@@ -19117,13 +19117,13 @@ html.maximized-card {
 }
 
 .direct-chat-purple .right > .direct-chat-text {
-  background: #009681;
-  border-color: #009681;
+  background: #388a33;
+  border-color: #388a33;
   color: #ffffff;
 }
 
 .direct-chat-purple .right > .direct-chat-text::after, .direct-chat-purple .right > .direct-chat-text::before {
-  border-left-color: #009681;
+  border-left-color: #388a33;
 }
 
 .direct-chat-pink .right > .direct-chat-text {
@@ -20769,7 +20769,7 @@ html.maximized-card {
 
 .select2-container--default .select2-purple .select2-results__option--highlighted,
 .select2-purple .select2-container--default .select2-results__option--highlighted {
-  background-color: #009681;
+  background-color: #388a33;
   color: #ffffff;
 }
 
@@ -20787,7 +20787,7 @@ html.maximized-card {
 
 .select2-container--default .select2-purple .select2-selection--multiple .select2-selection__choice,
 .select2-purple .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background-color: #009681;
+  background-color: #388a33;
   border-color: #643ab0;
   color: #ffffff;
 }
@@ -21366,7 +21366,7 @@ html.maximized-card {
 }
 
 .slider-purple .slider .slider-selection {
-  background: #009681;
+  background: #388a33;
 }
 
 .slider-pink .slider .slider-selection {
@@ -21651,18 +21651,18 @@ html.maximized-card {
 
 .icheck-purple > input:first-child:not(:checked):not(:disabled):hover + label::before,
 .icheck-purple > input:first-child:not(:checked):not(:disabled):hover + input[type="hidden"] + label::before {
-  border-color: #009681;
+  border-color: #388a33;
 }
 
 .icheck-purple > input:first-child:not(:checked):not(:disabled):focus + label::before,
 .icheck-purple > input:first-child:not(:checked):not(:disabled):focus + input[type="hidden"] + label::before {
-  border-color: #009681;
+  border-color: #388a33;
 }
 
 .icheck-purple > input:first-child:checked + label::before,
 .icheck-purple > input:first-child:checked + input[type="hidden"] + label::before {
-  background-color: #009681;
-  border-color: #009681;
+  background-color: #388a33;
+  border-color: #388a33;
 }
 
 .icheck-pink > input:first-child:not(:checked):not(:disabled):hover + label::before,
@@ -23952,7 +23952,7 @@ html.maximized-card {
 }
 
 .pace-purple .pace .pace-progress {
-  background: #009681;
+  background: #388a33;
 }
 
 .pace-barber-shop-purple .pace {
@@ -23960,7 +23960,7 @@ html.maximized-card {
 }
 
 .pace-barber-shop-purple .pace .pace-progress {
-  background: #009681;
+  background: #388a33;
 }
 
 .pace-barber-shop-purple .pace .pace-activity {
@@ -23972,7 +23972,7 @@ html.maximized-card {
 }
 
 .pace-bounce-purple .pace .pace-activity {
-  background: #009681;
+  background: #388a33;
 }
 
 .pace-center-atom-purple .pace-progress {
@@ -23981,7 +23981,7 @@ html.maximized-card {
 }
 
 .pace-center-atom-purple .pace-progress::before {
-  background: #009681;
+  background: #388a33;
   color: #ffffff;
   font-size: .8rem;
   line-height: .7rem;
@@ -23989,11 +23989,11 @@ html.maximized-card {
 }
 
 .pace-center-atom-purple .pace-activity {
-  border-color: #009681;
+  border-color: #388a33;
 }
 
 .pace-center-atom-purple .pace-activity::after, .pace-center-atom-purple .pace-activity::before {
-  border-color: #009681;
+  border-color: #388a33;
 }
 
 .pace-center-circle-purple .pace .pace-progress {
@@ -24002,28 +24002,28 @@ html.maximized-card {
 }
 
 .pace-center-radar-purple .pace .pace-activity {
-  border-color: #009681 transparent transparent;
+  border-color: #388a33 transparent transparent;
 }
 
 .pace-center-radar-purple .pace .pace-activity::before {
-  border-color: #009681 transparent transparent;
+  border-color: #388a33 transparent transparent;
 }
 
 .pace-center-simple-purple .pace {
   background: #ffffff;
-  border-color: #009681;
+  border-color: #388a33;
 }
 
 .pace-center-simple-purple .pace .pace-progress {
-  background: #009681;
+  background: #388a33;
 }
 
 .pace-material-purple .pace {
-  color: #009681;
+  color: #388a33;
 }
 
 .pace-corner-indicator-purple .pace .pace-activity {
-  background: #009681;
+  background: #388a33;
 }
 
 .pace-corner-indicator-purple .pace .pace-activity::after,
@@ -24046,31 +24046,31 @@ html.maximized-card {
 }
 
 .pace-flash-purple .pace .pace-progress {
-  background: #009681;
+  background: #388a33;
 }
 
 .pace-flash-purple .pace .pace-progress-inner {
-  box-shadow: 0 0 10px #009681, 0 0 5px #009681;
+  box-shadow: 0 0 10px #388a33, 0 0 5px #388a33;
 }
 
 .pace-flash-purple .pace .pace-activity {
-  border-top-color: #009681;
-  border-left-color: #009681;
+  border-top-color: #388a33;
+  border-left-color: #388a33;
 }
 
 .pace-loading-bar-purple .pace .pace-progress {
-  background: #009681;
-  color: #009681;
+  background: #388a33;
+  color: #388a33;
   box-shadow: 120px 0 #ffffff, 240px 0 #ffffff;
 }
 
 .pace-loading-bar-purple .pace .pace-activity {
-  box-shadow: inset 0 0 0 2px #009681, inset 0 0 0 7px #ffffff;
+  box-shadow: inset 0 0 0 2px #388a33, inset 0 0 0 7px #ffffff;
 }
 
 .pace-mac-osx-purple .pace .pace-progress {
-  background-color: #009681;
-  box-shadow: inset -1px 0 #009681, inset 0 -1px #009681, inset 0 2px rgba(255, 255, 255, 0.5), inset 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #388a33;
+  box-shadow: inset -1px 0 #388a33, inset 0 -1px #388a33, inset 0 2px rgba(255, 255, 255, 0.5), inset 0 6px rgba(255, 255, 255, 0.3);
 }
 
 .pace-mac-osx-purple .pace .pace-activity {
@@ -24079,7 +24079,7 @@ html.maximized-card {
 }
 
 .pace-progress-color-purple .pace-progress {
-  color: #009681;
+  color: #388a33;
 }
 
 .pace-pink .pace .pace-progress {
@@ -25548,7 +25548,7 @@ html.maximized-card {
 
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-purple,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-purple {
-  background: #009681;
+  background: #388a33;
   color: #ffffff;
 }
 
@@ -26346,7 +26346,7 @@ blockquote.quote-indigo h6 {
 }
 
 blockquote.quote-purple {
-  border-color: #009681;
+  border-color: #388a33;
 }
 
 blockquote.quote-purple h1,
@@ -26355,7 +26355,7 @@ blockquote.quote-purple h3,
 blockquote.quote-purple h4,
 blockquote.quote-purple h5,
 blockquote.quote-purple h6 {
-  color: #009681;
+  color: #388a33;
 }
 
 blockquote.quote-pink {
@@ -26597,7 +26597,7 @@ input.btn:-moz-focusring {
 }
 
 .text-purple {
-  color: #009681;
+  color: #388a33;
 }
 
 .text-pink {
@@ -26965,7 +26965,7 @@ input.btn:-moz-focusring {
 }
 
 .bg-purple {
-  background-color: #009681 !important;
+  background-color: #388a33 !important;
 }
 
 .bg-purple,
@@ -27674,7 +27674,7 @@ input.btn:-moz-focusring {
 }
 
 .bg-gradient-purple {
-  background: #009681 linear-gradient(180deg, #855eca, #009681) repeat-x !important;
+  background: #388a33 linear-gradient(180deg, #855eca, #388a33) repeat-x !important;
 }
 
 .bg-gradient-purple.btn.disabled, .bg-gradient-purple.btn:disabled, .bg-gradient-purple.btn:not(:disabled):not(.disabled):active, .bg-gradient-purple.btn:not(:disabled):not(.disabled).active,
@@ -28305,7 +28305,7 @@ a.text-muted:hover {
 }
 
 .accent-purple a {
-  color: #009681;
+  color: #388a33;
 }
 
 .accent-purple a:hover {
@@ -28313,8 +28313,8 @@ a.text-muted:hover {
 }
 
 .accent-purple .page-item.active .page-link {
-  background-color: #009681;
-  border-color: #009681;
+  background-color: #388a33;
+  border-color: #388a33;
 }
 
 .accent-purple .page-item.disabled .page-link {

@@ -29,13 +29,13 @@ public class MaprouteController {
 	@Autowired
 	private MaprouteService MaprouteService;
 
-	@GetMapping("/ajax")
+	@GetMapping("/example")
 	public ModelAndView AjaxMaproute() {
 
 		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("ajax.maproute");
-		
+
+		mv.setViewName("/tt");
+
 		return mv;
 	}
 
@@ -61,13 +61,13 @@ public class MaprouteController {
 
 	}
 
-	@GetMapping({"/tt"})
+	@GetMapping({ "/tt" })
 	public ModelAndView tt() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/tt");
 		return mv;
 	}
-	
+
 	@GetMapping({ "/allData" })
 	public Header<List<AdminBranchResponse>> allData() {
 

@@ -28,6 +28,20 @@ pageEncoding="UTF-8"%>
   rel="stylesheet"
 />
 
+<!-- LeafLet Library -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+<!-- Leaflet routing-machine -->
+<link
+  rel="stylesheet"
+  href="/static/route/css/leaflet-routing-machine.css"
+/>
+<script src="/static/route/js/leaflet-routing-machine.js"></script>
+
 <!-- overlayScrollbars -->
 <script src="/static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <link
@@ -71,20 +85,15 @@ pageEncoding="UTF-8"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
 
-<!-- LeafLet Library -->
-<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-<script src="/static/js/leaflet-routing-machine.js"></script>
-
 <script type="text/javascript">
   window.getCookie = function(name) {
-    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    let match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
     if (match) {
       return match[2];
     }
-  }
+  };
 
   $(document).ready(function() {
-
     $.ajaxSetup({
       beforeSend: function(req) {
         req.setRequestHeader(

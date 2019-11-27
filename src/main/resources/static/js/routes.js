@@ -3,6 +3,25 @@ $(document).ready(function() {
 	showClickRoute();
 });
 
+// 다음 지도 사용
+var map = new L.Map('map', {
+	center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
+	zoom: 0.5,	//Leaflet.KoreanTmsProviders.js : resolutions기준 줌 레벨(Level 12)
+	crs: L.Proj.CRS.Daum, //Leaflet.KoreanTmsProviders.js : 새로 정의된 Daum Map CRS
+	worldCopyJump: false,  //https://leafletjs.com/reference-1.3.2.html#map-worldcopyjump 참조    
+});
+var baseLayers = L.tileLayer.koreaProvider('DaumMap.Street').addTo(map);
+baseLayers.on("load", function() {console.log("로딩");
+})
+
+// 나중에 미국 추가 - 
+// OSM 사용
+// var map = L.map('map').setView([36.441163, 127.861612], 7);
+// L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+// 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+// }).addTo(map);
+
+
 var tbody;
 var orgBColor = '#ffffff';
 var route = new Array();
@@ -443,13 +462,6 @@ $(function() {
  * for(var i = 0; i < testarr.length; ++i){ console.log('하이염');
  * console.log(testarr[i].branch_lat); console.log(testarr[i].branch_lng); }
  */
-
-var map = L.map('map').setView([36.441163, 127.861612], 7);
-
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-
 
 
 
