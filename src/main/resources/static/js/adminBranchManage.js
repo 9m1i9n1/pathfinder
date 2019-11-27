@@ -514,7 +514,9 @@ var branchUpdateValid = $('#branchUpdateForm').validate({
 	     event.preventDefault();
 	     console.log("인서트 접속");
 	 	 var formData1 = $('[name=branchUpdateForm]').serializeObject();
-		 let Barea =formData1.branchArea;
+		 console.log(formData1);
+	 	 
+	 	 let Barea =formData1.branchArea;
 		 branchupdate(JSON.stringify(formData1), Barea);
 	 	 $('#updateModal').modal("hide");
 	 	 branchUpdateValid.resetForm();

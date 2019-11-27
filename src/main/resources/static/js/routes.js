@@ -41,14 +41,24 @@ var mapPlan = L.Routing.plan({
 	draggableWaypoints : false
 });
 
+// var greenIcon = new L.Icon({
+// iconUrl: '/static/css/test.png',
+// shadowUrl:
+// 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+// iconSize: [100, 100],
+// iconAnchor: [12, 41],
+// popupAnchor: [1, -34],
+// shadowSize: [41, 41]
+// });
+
 var greenIcon = new L.Icon({
-	  iconUrl: '/static/css/test.png',
+	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
 	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
-	  iconSize: [100, 100],
+	  iconSize: [25, 41],
 	  iconAnchor: [12, 41],
 	  popupAnchor: [1, -34],
 	  shadowSize: [41, 41]
-	});
+});
 
 var blueIcon = new L.Icon({
 	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
@@ -60,9 +70,9 @@ var blueIcon = new L.Icon({
 	});
 
 var redIcon = new L.Icon({
-	  iconUrl: '/static/css/test2.png',
+	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
 	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
-	  iconSize: [100, 100],
+	  iconSize: [25, 41],
 	  iconAnchor: [12, 41],
 	  popupAnchor: [1, -34],
 	  shadowSize: [41, 41]
@@ -408,6 +418,11 @@ $(function() {
 								var mArr = new Array();
 								var sArr = new Array();
 								
+								var sumHArr = new Array();
+								var sumMArr = new Array();
+								var sumSArr = new Array();
+								var testArray = new Array();
+								//각각 시간 어레이에 저장
 								  for (var i = 0; i < intersectionalTimeArr.length; i++){
 									    time += parseInt(intersectionalTimeArr[i]);
 									    mArr[i] = parseInt(intersectionalTimeArr[i]/60);
@@ -415,6 +430,25 @@ $(function() {
 									    sArr[i] = parseInt(intersectionalTimeArr[i]%60);
 									    mArr[i] = parseInt(mArr[i]%60);
 								  }
+								  //누적 시간  어레이에 넣기
+								  for(var i = 0; i < intersectionalTimeArr.length; i++){
+									  testArray[i]=0;
+									  for(var j = 0; j < i+1; j++){
+										  testArray[i] += parseInt(intersectionalTimeArr[j]);
+									  }
+								  }
+								  //누적시간 어레이를 계산
+								  for (var i = 0; i < intersectionalTimeArr.length; i++){
+									    sumMArr[i] = parseInt(testArray[i]/60);
+									    sumHArr[i] = parseInt(sumMArr[i]/60);
+									    sumSArr[i] = parseInt(testArray[i]%60);
+									    sumMArr[i] = parseInt(sumMArr[i]%60);
+								  }
+								  console.log("testArray - ", testArray);
+								  console.log("sumHArr - ", sumHArr);
+								  console.log("sumMArr - ", sumMArr);
+								  console.log("sumSArr - ", sumSArr);
+								  
 							    var m = time/60;
 							    var h = parseInt(m/60);
 							    var s = parseInt(time%60);
@@ -427,18 +461,22 @@ $(function() {
 									intersectionalStr += "<div class=\"col-1 col-sm-6 col-md-2 col-lg-24\" style=\"padding-right: 0px; padding-left: 0px;\">"
 									intersectionalStr +="<div class=\'container-fluid\' style=\"padding-right: 0px; padding-left: 0px;\">";
 									intersectionalStr +="<ul class=\'htimeline\'>";
-									intersectionalStr +="<li data-date='"+hArr[i]+":"+mArr[i]+":"+sArr[i]+"' class='step col-sm-12 orange' style='font-size: 100px;'>";
+									intersectionalStr +="<li data-date='"+sumHArr[i]+":"+sumMArr[i]+":"+sumSArr[i]+"' class='step col-sm-12 orange'>";
 									intersectionalStr +="<div>"+branchObjectDataArray[i].branch_name+"</div>";
 									intersectionalStr +="<div class='tasks container-fluid'>";
 									intersectionalStr +="<div class='resource' data-name='a와b비용'>";
-									intersectionalStr +="<div class='task col-sm-8'>"+BetweenAandBArr[i]+"</div>";	
+									intersectionalStr +="<div class='task col-sm-8' style='text-align:right'>"+BetweenAandBArr[i]+"</div>";	
 									intersectionalStr +="</div>";	
 									intersectionalStr +="<div class='resource' data-name='a와b거리'>";
-									intersectionalStr +="<div class='task col-sm-8 col-sm-offset-6'>"+intersectionalDistanceArr[i]+"</div>";	
-									intersectionalStr +="</div></div></li></ul></div></div>";	
+									intersectionalStr +="<div class='task col-sm-8 col-sm-offset-6' style='text-align:right'>"+intersectionalDistanceArr[i]+"</div>";	
+									intersectionalStr +="</div>"
+									intersectionalStr +="<div class='resource' data-name='a와b시간'>";
+									intersectionalStr +="<div class='task col-sm-8' style='text-align:right'>"+hArr[i]+":"+mArr[i]+":"+sArr[i]+"</div>";	
+									intersectionalStr +="</div>";	
+									intersectionalStr +="</div></li></ul></div></div>";	
 								}
 							}
-							    str += "<br/>총 걸리는 시간 : " + h + "시간 " + m + "분 " + s +"초 <br/> 총 거리 : " + (totalDistance).toFixed(2) +"Km";
+							    str += "<br/>총 걸리는 시간 : " + h + "시간 " + m + "분 " + s +"초 <br/> 총 거리 : " + (totalDistance).toFixed(1) +"Km";
 							    $("#finalPathDiv").html(str);
 							    $("#box").html(intersectionalStr);
 							});

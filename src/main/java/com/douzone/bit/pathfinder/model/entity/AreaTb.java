@@ -28,4 +28,7 @@ public class AreaTb {
 
 	@OneToMany(mappedBy = "area")
 	private List<BranchTb> branchList;
+
+	@OneToMany(mappedBy = "carArea")
+	private List<CarTb> carList;
 }
