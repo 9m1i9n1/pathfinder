@@ -8,17 +8,12 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.RouteDTO;
-import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.Header;
-import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
-import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.service.algorithm.Recursive;
 import com.douzone.bit.pathfinder.service.algorithm.createMap;

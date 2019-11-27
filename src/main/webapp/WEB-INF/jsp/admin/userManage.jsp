@@ -7,7 +7,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
   <head>
     <title>회원 관리 페이지</title>
-    <c:import url="/WEB-INF/jsp/layout/header.jsp" />
   </head>
 
   <body>
