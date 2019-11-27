@@ -30,97 +30,173 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
         </div>
         <div class="col-3">
           <div class="accordion">
+            <!-- 날짜선택 -->
             <div class="card">
-              <div class="card-header" id="headingbranch">
+              <div class="card-header" id="headingDate">
                 <h3
                   class="card-title"
                   data-toggle="collapse"
-                  data-target="#tableEdge"
+                  data-target="#col-selectDate"
                   aria-expanded="true"
-                  aria-controls="tableEdge"
+                  aria-controls="col-selectDate"
                 >
-                  1. 지점 선택
+                  1. 날짜 선택
                 </h3>
+              </div>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input
-                      type="text"
-                      name="branch_search"
-                      class="form-control float-right"
-                      placeholder="검색"
-                    />
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
+              <div id="col-selectDate">
+                <div class="card">
+                  <div id="datapicker"></div>
                 </div>
               </div>
+            </div>
 
-              <%-- 이전 검색. class명 확인차 주석 --%> <%--
-              <div class="card-header">
-                검색
-                <input
-                  type="text"
-                  name="keyword"
-                  id="keyword"
-                  style="text-align: center; width: 60%"
-                />
-                <input
-                  type="button"
-                  name="btnSearch"
-                  id="btnSearch"
-                  value="확인"
-                  style="width: 20%"
-                />
-              </div>
-              --%>
-
-              <div id="tableEdge">
-                <table
-                  class="table table-hover table-mc-light-blue"
-                  style="text-align: center;"
-                  id="allDataTable"
-                ></table>
+            <!-- 차량 선택 -->
+            <div class="card">
+              <div class="card-header" id="headingCar">
+                <h3
+                  class="card-title"
+                  data-toggle="collapse"
+                  data-target="#col-selectCar"
+                  aria-expanded="false"
+                  aria-controls="col-selectCar"
+                >
+                  2. 차량 선택
+                </h3>
               </div>
 
-              <div class="card">
+              <div id="col-selectCar">
+                <div class="card">
+                  <div id="Carselect"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 지점 선택 -->
+            <div class="card">
+              <div class="card-header" id="headingBranch">
+                <h3
+                  class="card-title"
+                  data-toggle="collapse"
+                  data-target="#col-selectBranch"
+                  aria-expanded="false"
+                  aria-controls="col-selectBranch"
+                >
+                  3. 지점 선택
+                </h3>
+
+                <%-- 이전 검색. class명 확인차 주석 --%> <%--
                 <div class="card-header">
-                  <h3 class="card-title">선택된 지점</h3>
+                  검색
+                  <input
+                    type="text"
+                    name="keyword"
+                    id="keyword"
+                    style="text-align: center; width: 60%"
+                  />
+                  <input
+                    type="button"
+                    name="btnSearch"
+                    id="btnSearch"
+                    value="확인"
+                    style="width: 20%"
+                  />
+                </div>
+                --%>
+              </div>
 
-                  <div class="card-tools">
-                    <div
-                      class="input-group input-group-sm"
-                      style="width: 150px;"
-                    >
-                      <input
-                        type="text"
-                        name="selected_search"
-                        class="form-control float-right"
-                        placeholder="검색"
-                      />
+              <div id="col-selectBranch">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">지점 목록</h3>
 
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                          <i class="fas fa-search"></i>
-                        </button>
+                    <div class="card-tools">
+                      <div
+                        class="input-group input-group-sm"
+                        style="width: 150px;"
+                      >
+                        <input
+                          type="text"
+                          name="selected_search"
+                          class="form-control float-right"
+                          placeholder="검색"
+                        />
+
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
+
+                  <div id="tableEdge">
+                    <table
+                      class="table table-hover table-mc-light-blue"
+                      style="text-align: center;"
+                      id="allDataTable"
+                    ></table>
+                  </div>
                 </div>
-                <div id="tableEdge">
-                  <table
-                    class="table table-hover table-mc-light-blue"
-                    style="text-align: center;"
-                    id="selectRoute"
-                  ></table>
+
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">선택된 지점</h3>
+
+                    <div class="card-tools">
+                      <div
+                        class="input-group input-group-sm"
+                        style="width: 150px;"
+                      >
+                        <input
+                          type="text"
+                          name="selected_search"
+                          class="form-control float-right"
+                          placeholder="검색"
+                        />
+
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tableEdge">
+                    <table
+                      class="table table-hover table-mc-light-blue"
+                      style="text-align: center;"
+                      id="selectRoute"
+                    ></table>
+                  </div>
+                  <button type="button" id="submitroute">전송</button>
                 </div>
-                <button type="button" id="submitroute">전송</button>
               </div>
             </div>
+
+            <!-- 차량 선택 -->
+            <div class="card">
+              <div class="card-header" id="headingRoad">
+                <h3
+                  class="card-title"
+                  data-toggle="collapse"
+                  data-target="#col-selectRoad"
+                  aria-expanded="false"
+                  aria-controls="col-selectRoad"
+                >
+                  4. 추천 경로
+                </h3>
+              </div>
+
+              <div id="col-selectRoad">
+                <div class="card">
+                  <div id="Carselect"></div>
+                </div>
+              </div>
+            </div>
+            <!--  accordion div -->
           </div>
         </div>
       </div>
