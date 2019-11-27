@@ -28,6 +28,7 @@ import com.douzone.bit.pathfinder.service.SignService;
 import com.douzone.bit.pathfinder.util.JwtUtil;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -49,12 +50,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String token = null;
 		
 		String requestUrl = request.getRequestURI();
-
+		
 		if (!requestUrl.matches("^/static/.*$")) {
 			if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
 				token = authorizationHeader.substring(11);
 
-				checkToken(token, request);
+				checkToken(token, request, response);
 			} else {
 				Cookie[] cookie = request.getCookies();
 
@@ -63,12 +64,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 						if (value.getName().equals("token")) {
 							token = value.getValue();
 
-							checkToken(token, request);
+							checkToken(token, request, response);
 							break;
 						}
 					}
-				} else {
-					// Exception 추가
 				}
 			}
 		}
@@ -76,10 +75,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		chain.doFilter(request, response);
 	}
 
-	private void checkToken(String token, HttpServletRequest request) {
+	protected void checkToken(String token, HttpServletRequest request
+			, HttpServletResponse response) throws IOException {
 		String userId = null;
-		userId = jwtUtil.extractUserId(token);
-
+		
+		try {
+			userId = jwtUtil.extractUserId(token);
+		} catch (ExpiredJwtException e) {
+			System.out.println("JWT Token has expired");
+			
+			response.sendRedirect("/logout");
+		} catch (IllegalArgumentException e) {
+			System.out.println("Unable to get JWT Token");
+		}
+		
 		if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			Claims userClaim = jwtUtil.extractAllClaims(token);
 
