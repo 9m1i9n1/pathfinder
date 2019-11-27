@@ -1,5 +1,7 @@
 package com.douzone.bit.pathfinder.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
 	@GetMapping({ "", "/" })
-	public ModelAndView home(Model model) {
+	public ModelAndView home(ModelAndView  mv, HttpServletRequest request) {
 
-		ModelAndView mv = new ModelAndView();
-
+		System.out.println(request.getParameter("pageName"));
 		mv.setViewName("/home");
 
 		return mv;

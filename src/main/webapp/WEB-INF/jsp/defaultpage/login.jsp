@@ -21,7 +21,7 @@
 </head>
 <body>
 	<sec:authorize access="isAuthenticated()">
-		<% response.sendRedirect("home"); %>
+		<% response.sendRedirect("home?pageName=home"); %>
 	</sec:authorize>
 	<!-- Top content -->
 	<div class="top-content">
