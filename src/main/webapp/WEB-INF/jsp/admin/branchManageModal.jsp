@@ -15,7 +15,7 @@
 				<form name="branchInsertform" id="branchInsertform">
 
 					<div class="form-group row">
-						<label for="b1" class="col-sm-2 col-form-label-sm">지점명 </label>
+						<label for="b1" class="col-sm-2 col-form-label-sm small">지점명 </label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" name="branchName"
 								id="branchName" >
@@ -23,7 +23,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="b2" class="col-sm-2 col-form-label-sm">지점장 </label>
+						<label for="b2" class="col-sm-2 col-form-label-sm small">지점장 </label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" name="branchOwner"
 								id="branchOwner" >

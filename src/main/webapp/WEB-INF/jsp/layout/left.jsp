@@ -62,22 +62,22 @@
                with font-awesome or any other icon font library -->
 					<li class="nav-header">사용자 메뉴</li>
 
-					<li class="nav-item"><a href="/home" class="nav-link active">
+					<li class="nav-item"><a href="/home" class="nav-link ">
 							<i class="nav-icon fas fa-tachometer-alt"></i>
 							<p>홈</p>
 					</a></li>
 
-					<li class="nav-item"><a href="/maproute" class="nav-link">
+					<li class="nav-item"><a href="/maproute" class="nav-link ">
 							<i class="nav-icon fas fa-truck"></i>
 							<p>경로탐색</p>
 					</a></li>
 
-					<li class="nav-item"><a href="/history" class="nav-link">
+					<li class="nav-item"><a href="/history" class="nav-link ">
 							<i class="nav-icon fas fa-book"></i>
 							<p>조회내역</p>
 					</a></li>
 
-					<li class="nav-item"><a href="/hierarchy" class="nav-link">
+					<li class="nav-item"><a href="/hierarchy" class="nav-link ">
 							<i class="nav-icon fas fa-table"></i>
 							<p>조직도</p>
 					</a></li>

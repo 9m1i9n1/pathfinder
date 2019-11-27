@@ -139,7 +139,7 @@ function cardelete(idx, carname, cararea) {
 			let Cname =areaNameTrans(cararea)
 			 var url = "";
 			 url = url + "?searchType=area&keyword="+Cname;
-			 carsearch(url);
+			 carlist();
 			}else{
 			 carlist();
 			}

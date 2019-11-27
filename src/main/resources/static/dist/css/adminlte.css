@@ -437,7 +437,7 @@ hr {
 
 small,
 .small {
-  font-size: 80%;
+  font-size: 90%;
   font-weight: 400;
 }
 
@@ -1533,8 +1533,9 @@ pre code {
 .table th,
 .table td {
   padding: 0.75rem;
-  vertical-align: top;
+  vertical-align: center;
   border-top: 1px solid #dee2e6;
+  text-align: center;
 }
 
 .table thead th {
@@ -28501,4 +28502,8 @@ a.text-muted:hover {
   background-color: #ffffff;
   border-color: #dee2e6;
 }
+.hierarchysideheight {
+  height: 675px;
+}
+
 /*# sourceMappingURL=adminlte.css.map */
