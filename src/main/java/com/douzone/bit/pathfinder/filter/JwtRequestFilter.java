@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +35,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	Logger logger = Logger.getLogger(JwtRequestFilter.class);
 
 	@Autowired
+	private SignService signService;
+	
+	@Autowired
 	private JwtUtil jwtUtil;
 
 	@Override
@@ -42,39 +46,57 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		final String authorizationHeader = request.getHeader("Authorization");
 
-		String userId = null;
 		String token = null;
+		
+		String requestUrl = request.getRequestURI();
 
-		if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
-			token = authorizationHeader.substring(11);
-			userId = jwtUtil.extractUserId(token);
+		if (!requestUrl.matches("^/static/.*$")) {
+			if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
+				token = authorizationHeader.substring(11);
 
-			if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-				Claims userClaim = jwtUtil.extractAllClaims(token);
+				checkToken(token, request);
+			} else {
+				Cookie[] cookie = request.getCookies();
 
-				List<GrantedAuthority> authorities = new ArrayList<>();
-				authorities.add(new SimpleGrantedAuthority(userClaim.get("userAuthority").toString()));
+				if (cookie != null) {
+					for (Cookie value : cookie) {
+						if (value.getName().equals("token")) {
+							token = value.getValue();
 
-				SignDTO signInfo = SignDTO.builder().username(userId).password(null)
-						.userIndex(Long.valueOf(userClaim.get("userIndex").toString()))
-						.userFullName(userClaim.get("userFullName").toString()).userEmail(userClaim.get("userEmail").toString())
-						.userPhone(userClaim.get("userPhone").toString()).userPosition(userClaim.get("userPosition").toString())
-						.userBranch(userClaim.get("userBranch").toString()).userArea(userClaim.get("userArea").toString())
-						.authorities(authorities).accountNonExpired(true).accountNonLocked(true).credentialsNonExpired(true)
-						.enabled(true).build();
-
-				if (jwtUtil.validateToken(token, signInfo)) {
-
-					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-							signInfo, null, signInfo.getAuthorities());
-
-					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+							checkToken(token, request);
+							break;
+						}
+					}
+				} else {
+					// Exception 추가
 				}
 			}
 		}
 
 		chain.doFilter(request, response);
+	}
+
+	private void checkToken(String token, HttpServletRequest request) {
+		String userId = null;
+		userId = jwtUtil.extractUserId(token);
+
+		if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			Claims userClaim = jwtUtil.extractAllClaims(token);
+
+			List<GrantedAuthority> authorities = new ArrayList<>();
+			authorities.add(new SimpleGrantedAuthority(userClaim.get("userAuthority").toString()));
+
+			SignDTO signInfo = (SignDTO) this.signService.loadUserByUsername(userId);
+
+			if (jwtUtil.validateToken(token, signInfo)) {
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+						signInfo, null, signInfo.getAuthorities());
+
+				usernamePasswordAuthenticationToken
+						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			}
+		}
 	}
 }
