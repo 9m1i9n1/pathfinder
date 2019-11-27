@@ -8,54 +8,57 @@ function pageButton(nodeType, nodeIndex, totalPages, currentPage, type) {
     pageNum: totalPages,
     buttonNum: 12,
     callback: function(currentPage) {
-    	if (type === "list")
-    		getUser(`${nodeType}:${nodeIndex}`, currentPage - 1);
-    	else 
-    		getSearch(`${nodeType}:${nodeIndex}`, currentPage - 1);
-    },
+      if (type === "list") getUser(`${nodeType}:${nodeIndex}`, currentPage - 1);
+      else getSearch(`${nodeType}:${nodeIndex}`, currentPage - 1);
+    }
   });
 }
 
 function getSearch() {
-	let type = $("select#searchType").val();
-	let value = $("#searchInput").val();
-	
-	let treeId = sessionStorage.getItem("treeId");
-	let selectPage = sessionStorage.getItem("pageNum");
-	
-	$.ajax({
-		url : "/hierarchy/userlist.do",
-		type : "get",
-		data : { 
-					id : treeId,
-					page : selectPage,
-					searchType : type,
-					searchValue : value
-				},
-		success: function(res) {
-	      let str = "";
-	      let count = "";
+  let type = $("select#searchType").val();
+  let value = $("#searchInput").val();
 
-	      count += `<li class="breadcrumb-item">조직도 페이지 /&nbsp</a></li>`;
-	      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
+  let treeId = sessionStorage.getItem("treeId");
+  let selectPage = sessionStorage.getItem("pageNum");
 
-	      $.each(res.data, function(key, value) {
-	    	str += `<tr class="tr-shadow">`;
-	        str += "<td>" + value.userName + "</td>";
-	        str += "<td>" + value.userEmail + "</td>";
-	        str += "<td>" + value.userPhone + "</td>";
-	        str += "<td>" + value.branchName + "</td>";
-	        str += "<td>" + value.userPosition + "</td>";
-	        str += "</tr>";
-	      });
+  $.ajax({
+    url: "/hierarchy/userlist.do",
+    type: "get",
+    data: {
+      id: treeId,
+      page: selectPage,
+      searchType: type,
+      searchValue: value
+    },
+    success: function(res) {
+      let str = "";
+      let count = "";
 
-	      $("#userTable").html(str);
-	      $("#headInfo").html(count);
+      count += `<li class="breadcrumb-item">조직도 페이지 /&nbsp</a></li>`;
+      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
-	      pageButton(res.pagination.nodeType, res.pagination.nodeIndex,
-	    		  res.pagination.totalPages, res.pagination.currentPage, "search");
-		}
-	});
+      $.each(res.data, function(key, value) {
+        str += `<tr class="tr-shadow">`;
+        str += "<td>" + value.userName + "</td>";
+        str += "<td>" + value.userEmail + "</td>";
+        str += "<td>" + value.userPhone + "</td>";
+        str += "<td>" + value.branchName + "</td>";
+        str += "<td>" + value.userPosition + "</td>";
+        str += "</tr>";
+      });
+
+      $("#userTable").html(str);
+      $("#headInfo").html(count);
+
+      pageButton(
+        res.pagination.nodeType,
+        res.pagination.nodeIndex,
+        res.pagination.totalPages,
+        res.pagination.currentPage,
+        "search"
+      );
+    }
+  });
 }
 
 function getUser(treeId, selectPage) {
@@ -71,7 +74,7 @@ function getUser(treeId, selectPage) {
       count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
-    	str += `<tr class="tr-shadow">`;
+        str += `<tr class="tr-shadow">`;
         str += "<td>" + value.userName + "</td>";
         str += "<td>" + value.userEmail + "</td>";
         str += "<td>" + value.userPhone + "</td>";
@@ -84,8 +87,13 @@ function getUser(treeId, selectPage) {
 
       $("#headInfo").html(count);
 
-      pageButton(res.pagination.nodeType, res.pagination.nodeIndex,
-    		  res.pagination.totalPages, res.pagination.currentPage, "list");
+      pageButton(
+        res.pagination.nodeType,
+        res.pagination.nodeIndex,
+        res.pagination.totalPages,
+        res.pagination.currentPage,
+        "list"
+      );
     }
   });
 }
@@ -97,12 +105,12 @@ function treeLoading() {
       core: {
         themes: {
           name: "proton",
-          reponsive: true,
+          reponsive: true
         },
         data: function(node, callback) {
           callback(treeData(node.id));
-        },
-      },
+        }
+      }
     })
     .bind("changed.jstree", function(e, data) {
       let selectedData = data.instance.get_node(data.selected);
@@ -115,18 +123,18 @@ function treeLoading() {
 
       sessionStorage.setItem("treeId", selectedData.id);
       sessionStorage.setItem("pageNum", 0);
-      
+
       getUser(selectedData.id, 0);
     })
     .bind("select_node.jstree", function(e, data) {
       let nodesToKeepOpen = [];
 
       nodesToKeepOpen.push(data.node.id);
-      
+
       for (let i = 0; i < data.node.parents.length; i++) {
-    	  nodesToKeepOpen.push(data.node.parents[i]);
+        nodesToKeepOpen.push(data.node.parents[i]);
       }
-      
+
       $(".jstree-node").each(function() {
         if (nodesToKeepOpen.indexOf(this.id) === -1) {
           $("#jstree")
@@ -146,7 +154,7 @@ function treeLoading() {
       async: false,
       success: function(res) {
         result = res.data;
-      },
+      }
     });
 
     return result;
