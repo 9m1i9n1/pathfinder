@@ -62,7 +62,7 @@ public class SignController {
 
 			Cookie cookie = new Cookie("token", token);
 
-			cookie.setMaxAge(7 * 24 * 60 * 60); // 7일
+			cookie.setMaxAge(6 * (60 * 60));
 			
 			response.addCookie(cookie);
 
