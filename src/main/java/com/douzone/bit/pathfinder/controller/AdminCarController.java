@@ -2,6 +2,7 @@ package com.douzone.bit.pathfinder.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,8 @@ import com.douzone.bit.pathfinder.service.AdminCarService;
 public class AdminCarController {
 
 	@GetMapping("")
-	public ModelAndView carManage(Model model) {
+	public ModelAndView carManage(ModelAndView mv, HttpServletRequest request) {
 
-		ModelAndView mv = new ModelAndView();
 
 		mv.setViewName("/admin/carManage");
 		return mv;

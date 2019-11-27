@@ -3,6 +3,8 @@ package com.douzone.bit.pathfinder.controller;
 import java.util.List;
 import java.util.function.Function;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,14 +41,12 @@ public class HierarchyController {
 	AdminUserService adminUserService;
 	
 	@GetMapping({ "", "/" })
-	public ModelAndView getHierarchy() {
+	public ModelAndView getHierarchy(ModelAndView mv, HttpServletRequest request) {
 
-		ModelAndView mv = new ModelAndView();
+		System.out.println(request.getParameter("pageName"));
 		mv.setViewName("/hierarchy");
-
 		return mv;
 	}
-
 	@GetMapping("/treelist.do")
 	public Header<HierarchyResponse> treeList() {
 

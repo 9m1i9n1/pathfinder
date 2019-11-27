@@ -2,6 +2,8 @@ package com.douzone.bit.pathfinder.controller;
 
 import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,12 +32,8 @@ public class MaprouteController {
 	private MaprouteService MaprouteService;
 
 	@GetMapping("/example")
-	public ModelAndView AjaxMaproute() {
-
-		ModelAndView mv = new ModelAndView();
-
+	public ModelAndView AjaxMaproute(ModelAndView mv) {
 		mv.setViewName("/tt");
-
 		return mv;
 	}
 
@@ -54,16 +52,15 @@ public class MaprouteController {
 	}
 
 	@GetMapping({ "", "/" })
-	public ModelAndView routeMapView() {
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView routeMapView(ModelAndView mv, HttpServletRequest request) {
+		System.out.println(request.getParameter("pageName"));
 		mv.setViewName("/maproute");
 		return mv;
 
 	}
 
 	@GetMapping({ "/tt" })
-	public ModelAndView tt() {
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView tt(ModelAndView mv) {
 		mv.setViewName("/tt");
 		return mv;
 	}
