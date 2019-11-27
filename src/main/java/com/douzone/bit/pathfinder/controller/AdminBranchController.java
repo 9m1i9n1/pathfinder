@@ -3,6 +3,7 @@ package com.douzone.bit.pathfinder.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,7 @@ public class AdminBranchController {
 
 	// branch view
 	@GetMapping({ "", "/" })
-	public ModelAndView branchManage() {
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView branchManage(ModelAndView mv, HttpServletRequest request) {
 		mv.setViewName("/admin/branchManage");
 		return mv;
 	}
