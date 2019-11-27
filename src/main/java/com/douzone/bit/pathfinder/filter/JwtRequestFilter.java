@@ -37,7 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private SignService signService;
-	
+
 	@Autowired
 	private JwtUtil jwtUtil;
 
@@ -48,9 +48,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		final String authorizationHeader = request.getHeader("Authorization");
 
 		String token = null;
-		
+
 		String requestUrl = request.getRequestURI();
-		
+
 		if (!requestUrl.matches("^/static/.*$")) {
 			if (authorizationHeader != null && authorizationHeader.startsWith("pathfinder ")) {
 				token = authorizationHeader.substring(11);
@@ -75,37 +75,37 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		chain.doFilter(request, response);
 	}
 
-	protected void checkToken(String token, HttpServletRequest request
-			, HttpServletResponse response) throws IOException {
+	protected void checkToken(String token, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		String userId = null;
-		
+
 		try {
 			userId = jwtUtil.extractUserId(token);
+
+			if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+				Claims userClaim = jwtUtil.extractAllClaims(token);
+
+				List<GrantedAuthority> authorities = new ArrayList<>();
+				authorities.add(new SimpleGrantedAuthority(userClaim.get("userAuthority").toString()));
+
+				SignDTO signInfo = (SignDTO) this.signService.loadUserByUsername(userId);
+
+				if (jwtUtil.validateToken(token, signInfo)) {
+					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+							signInfo, null, signInfo.getAuthorities());
+
+					usernamePasswordAuthenticationToken
+							.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+				}
+			}
 		} catch (ExpiredJwtException e) {
 			System.out.println("JWT Token has expired");
-			
+
 			response.sendRedirect("/logout");
 		} catch (IllegalArgumentException e) {
 			System.out.println("Unable to get JWT Token");
-		}
-		
-		if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			Claims userClaim = jwtUtil.extractAllClaims(token);
-
-			List<GrantedAuthority> authorities = new ArrayList<>();
-			authorities.add(new SimpleGrantedAuthority(userClaim.get("userAuthority").toString()));
-
-			SignDTO signInfo = (SignDTO) this.signService.loadUserByUsername(userId);
-
-			if (jwtUtil.validateToken(token, signInfo)) {
-				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-						signInfo, null, signInfo.getAuthorities());
-
-				usernamePasswordAuthenticationToken
-						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-			}
 		}
 	}
 }
