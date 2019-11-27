@@ -4,6 +4,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,6 +57,7 @@ public class ServerErrorController implements ErrorController {
 
 		errorPage.addObject("errorCode", "" + errorCode);
 		errorPage.addObject("errorMsg", errorMsg);
+		
 		errorPage.setViewName("/defaultpage/error");
 		
 		return errorPage;
