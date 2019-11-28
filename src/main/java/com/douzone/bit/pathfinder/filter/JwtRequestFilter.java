@@ -75,8 +75,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		chain.doFilter(request, response);
 	}
 
-	protected void checkToken(String token, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	protected void checkToken(String token, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String userId = null;
 
 		try {
@@ -94,13 +93,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 							signInfo, null, signInfo.getAuthorities());
 
-					usernamePasswordAuthenticationToken
-							.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 				}
 			}
 		} catch (ExpiredJwtException e) {
+			System.out.println("JWT Token has expired");
+
+			Cookie cookie = new Cookie("token", null);
+			cookie.setMaxAge(0);
+
+			response.addCookie(cookie);
+		} catch (IllegalArgumentException e) {
 			System.out.println("Unable to get JWT Token");
 		}
 	}
+}

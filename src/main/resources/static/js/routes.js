@@ -614,10 +614,24 @@ function branchlist() {
 				str += `<td style="display: none">${value.branchLat}</td>`
 				str += `<td style="display: none">${value.branchLng}</td>`
 				str += "</td>"
-								// str += '<td id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
+				// str += '<td id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
 			});
 			
 			$("#allDataTable").html(str);
 		}
 	})
 }
+
+
+$(function() {
+	let todayDate = moment().format('YYYY[-]MM[-]DD');
+
+	$('.calendar').calendar({
+	date:new Date(),
+	format:'yyyy-MM-dd',
+	selectedRang:[todayDate],
+	// trigger: '#selectDate',
+	weekArray: ['일','월','화','수','목','금','토'],
+	monthArray: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	});
+})

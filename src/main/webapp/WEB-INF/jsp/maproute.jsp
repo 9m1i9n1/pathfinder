@@ -6,14 +6,19 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
   <head>
     <title>CSS</title>
 
+    <!-- 한국 지도 표시 -->
     <script src="/static/route/js/proj4.js"></script>
     <script src="/static/route/js/proj4leaflet.js"></script>
     <script src="/static/route/js/Leaflet.KoreanTmsProviders.js"></script>
 
-    <script src="/static/js/swiper.min.js"></script>
-    <link rel="stylesheet" href="/static/css/swiper.min.css" />
+    <!-- 캘린더 표시 -->
+    <link rel="stylesheet" href="/static/route/css/calendar.css" />
+    <script src="/static/route/js/calendar.js"></script>
 
-    <link href="/static/css/maproute.css" rel="stylesheet" />
+    <script src="/static/js/swiper.min.js"></script>
+    <link href="/static/css/swiper.min.css" rel="stylesheet" />
+
+    <link href="/static/route/css/maproute.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -29,12 +34,12 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
           <div id="map"></div>
         </div>
         <div class="col-3">
-          <div class="accordion">
+          <div class="accordion md-accordion" id="accordion-select">
             <!-- 날짜선택 -->
             <div class="card">
               <div class="card-header" id="headingDate">
                 <h3
-                  class="mb-0"
+                  class="card-title"
                   data-toggle="collapse"
                   data-target="#col-selectDate"
                   aria-expanded="true"
@@ -44,9 +49,15 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 </h3>
               </div>
 
-              <div id="col-selectDate">
+              <div
+                id="col-selectDate"
+                class="collapse show"
+                aria-labelledby="headingDate"
+                data-parent="#accordion-select"
+              >
                 <div class="card">
-                  <div id="datapicker"></div>
+                  <p id="selectDate">gggg</p>
+                  <div class="calendar"></div>
                 </div>
               </div>
             </div>
@@ -65,7 +76,12 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 </h3>
               </div>
 
-              <div id="col-selectCar">
+              <div
+                id="col-selectCar"
+                class="collapse"
+                aria-labelledby="headingCar"
+                data-parent="#accordion-select"
+              >
                 <div class="card">
                   <div id="Carselect"></div>
                 </div>
@@ -105,7 +121,12 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 --%>
               </div>
 
-              <div id="col-selectBranch">
+              <div
+                id="col-selectBranch"
+                class="collapse"
+                aria-labelledby="headingBranch"
+                data-parent="#accordion-select"
+              >
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title">지점 목록</h3>
@@ -190,7 +211,12 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 </h3>
               </div>
 
-              <div id="col-selectRoad">
+              <div
+                id="col-selectRoad"
+                class="collapse"
+                aria-labelledby="headingRoad"
+                data-parent="#accordion-select"
+              >
                 <div class="card">
                   <div id="Carselect"></div>
                 </div>
@@ -228,7 +254,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
         </div>
       </div>
     </div>
-  </body>
 
-  <script src="/static/js/routes.js"></script>
+    <script src="/static/js/routes.js"></script>
+  </body>
 </html>

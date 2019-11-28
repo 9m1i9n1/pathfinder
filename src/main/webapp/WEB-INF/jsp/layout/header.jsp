@@ -85,6 +85,9 @@ pageEncoding="UTF-8"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
 
+<%-- moment --%>
+<script src="/static/route/js/moment.js"></script>
+
 <script type="text/javascript">
   window.getCookie = function(name) {
     let match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
