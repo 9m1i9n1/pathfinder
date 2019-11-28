@@ -129,16 +129,12 @@
 	const pageSubmitFn = function(menu) {
 		if (menu === "home") {
 			location.href = "/home?pageName=home";
-
 		} else if (menu === "maproute") {
 			location.href = "/maproute?pageName=maproute";
-
 		} else if (menu === "history") {
 			location.href = "/history?pageName=history";
-
 		} else if (menu === "hierarchy") {
 			location.href = "/hierarchy?pageName=hierarchy";
-
 		}
 	}
 	const subMenuSubmit = function(menu) {
