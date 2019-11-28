@@ -43,7 +43,7 @@ public class MaprouteService {
 		List<Integer> TourList = r.getTour();
 		for (int i = 0; i < TourList.size() - 1; i++) {
 			testList.get(TourList.get(i)).setPriceBetweenAandB(m.getmap()[TourList.get(i)][TourList.get(i + 1)]);
-			
+
 		}
 		for (int i = 0; i < testList.size(); i++) {
 			sucList.add(testList.get(Integer.parseInt(TourList.get(i).toString())));
@@ -56,7 +56,7 @@ public class MaprouteService {
 	BranchRepository testDao;
 
 	// list
-	public Header<List<AdminBranchResponse>> allData() {
+	public Header<List<AdminBranchResponse>> branchLoading() {
 		List<BranchTb> branchs = testDao.findAll();
 
 		List<AdminBranchResponse> branchList = branchs.stream().map(branch -> response(branch))
@@ -68,9 +68,8 @@ public class MaprouteService {
 	// Response 데이터 파싱
 	private AdminBranchResponse response(BranchTb branch) {
 		AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder().branchIndex(branch.getBranchIndex())
-				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner())
-				.branchValue(branch.getBranchValue()).branchAddr(branch.getBranchAddr())
-				.branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
+				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner()).branchValue(branch.getBranchValue())
+				.branchAddr(branch.getBranchAddr()).branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
 				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
 				.areaIndex(branch.getArea().getAreaIndex()).build();
 		return adminBranchResponse;

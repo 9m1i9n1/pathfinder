@@ -51,32 +51,33 @@ var mapPlan = L.Routing.plan({
 // shadowSize: [41, 41]
 // });
 
-var greenIcon = new L.Icon({
-	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
-	  iconSize: [25, 41],
-	  iconAnchor: [12, 41],
-	  popupAnchor: [1, -34],
-	  shadowSize: [41, 41]
-});
+// var greenIcon = new L.Icon({
+// 	iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+// 	shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+// 	iconSize: [25, 41],
+// 	iconAnchor: [12, 41],
+// 	popupAnchor: [1, -34],
+// 	shadowSize: [41, 41]
+// });
 
-var blueIcon = new L.Icon({
-	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
-	  iconSize: [25, 41],
-	  iconAnchor: [12, 41],
-	  popupAnchor: [1, -34],
-	  shadowSize: [41, 41]
-	});
+// var blueIcon = new L.Icon({
+// 	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+// 	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+// 	  iconSize: [25, 41],
+// 	  iconAnchor: [12, 41],
+// 	  popupAnchor: [1, -34],
+// 	  shadowSize: [41, 41]
+// 	});
 
-var redIcon = new L.Icon({
-	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
-	  iconSize: [25, 41],
-	  iconAnchor: [12, 41],
-	  popupAnchor: [1, -34],
-	  shadowSize: [41, 41]
-	});
+// var redIcon = new L.Icon({
+// 	  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+// 	  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+// 	  iconSize: [25, 41],
+// 	  iconAnchor: [12, 41],
+// 	  popupAnchor: [1, -34],
+// 	  shadowSize: [41, 41]
+// 	});
+
 
 /* Route Control 초기화 */
 var mapControl = L.Routing.control({
@@ -110,6 +111,7 @@ var prev_size = 0;
 var bool_routed = false;
 
 var testarr = new Array();
+
 // tr누르면 밑에 테이블어 show해주는거
 function showClickRoute(){
 	$("#allDataTable tr").click(
@@ -335,6 +337,7 @@ $(function() {
 		return test;
 	}
 	
+	//! 전송버튼 클릭
 	$("#submitroute").click(
 		function() {
 			if (routecnt <= 0) {
@@ -600,25 +603,35 @@ function branchsearch(searchUrl, searchpage) {
 // 첫페이지
 function branchlist() {
 	$.ajax({
-		url : "/maproute/allData",
+		url : "/maproute/branchLoding",
 		type: "get",
-		async: false,
 		success : function(res) {
-			var str = '<tr onclick=\"event.cancelBubble=true\">';
-				str += '<th onclick=\"event.cancelBubble=true\"';
-				str += 'style=\"background-color: #fafafa; text-align: center;\">branch_name(지역이름)</th>';
-				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_value(교통비)</th>';
-				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lat(위도)</th>';
-				str += '<th onclick=\"event.cancelBubble=true\" style=\"display: none\">branch_lng(경도)</th>';
+			let str = "";
+			
 			$.each(res.data, function(key, value) {
-				str += '<tr id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
-				str += '<td class=\"test\">'+ value.branchName+ '</td>';
-				str += '<td style=\"display: none\"> '+ value.branchValue+ '</td>';
-				str += '<td style=\"display: none\">'+ value.branchLat+ '</td>';
-				str += '<td style=\"display: none\">'+ value.branchLng+ '</td>';
-				str += '</tr>'
+				str += "<tr class='tr-shadow'>"
+				str += `<td id="${value.branchIndex}" class="">${value.branchName}</td>`
+				str += `<td style="display: none">${value.branchLat}</td>`
+				str += `<td style="display: none">${value.branchLng}</td>`
+				str += "</td>"
+				// str += '<td id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
 			});
+			
 			$("#allDataTable").html(str);
 		}
 	})
 }
+
+
+$(function() {
+	let todayDate = moment().format('YYYY[-]MM[-]DD');
+
+	$('.calendar').calendar({
+	date:new Date(),
+	format:'yyyy-MM-dd',
+	selectedRang:[todayDate],
+	// trigger: '#selectDate',
+	weekArray: ['일','월','화','수','목','금','토'],
+	monthArray: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	});
+})

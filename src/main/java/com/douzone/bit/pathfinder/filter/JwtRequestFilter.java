@@ -75,8 +75,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		chain.doFilter(request, response);
 	}
 
-	protected void checkToken(String token, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	protected void checkToken(String token, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String userId = null;
 
 		try {
@@ -94,8 +93,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 							signInfo, null, signInfo.getAuthorities());
 
-					usernamePasswordAuthenticationToken
-							.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 				}

@@ -4,8 +4,8 @@
 }
 #tableEdge {
   width: 100%;
-  height: 190px;
-  overflow: auto;
+  max-height: 200px;
+  overflow: overlay;
 }
 
 html {
