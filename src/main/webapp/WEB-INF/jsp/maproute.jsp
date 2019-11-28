@@ -34,7 +34,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
             <div class="card">
               <div class="card-header" id="headingDate">
                 <h3
-                  class="card-title"
+                  class="mb-0"
                   data-toggle="collapse"
                   data-target="#col-selectDate"
                   aria-expanded="true"
