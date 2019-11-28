@@ -9,28 +9,40 @@
 </head>
 
 <body>
-	<div class="container-fluid">
-		<ol class="breadcrumb" id="headerol">
-			<li class="breadcrumb-item">관리자 페이지 : 사용자 관리</li>
-		</ol>
-	</div>
+
+<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-md-2 col-md-6">
+					<h1>사용자 관리</h1>
+				</div>
+				<div class="col-md-6">
+					<ol class="breadcrumb float-sm-right" id="headerol">
+						<li class="breadcrumb-item"><a href="#">관리자 메뉴</a></li>
+						<li class="breadcrumb-item active">사용자 관리</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</section>
 
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-2">
-				<div class="card">
+		<div class="row height675px">
+			<div class="col-md-2">
+				<div class="card height100">
 					<div class="card-header">
-						<h3 class="card-title">조직도</h3>
+						<h3 class="card-title" style="height:30px">조직도</h3>
 					</div>
 
-					<div class="card-body small">
+					<div class="card-body small height100">
 						<div id="jstree"></div>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-10">
-				<div class="card">
+			<div class="col-md-10">
+				<div class="card height100">
 					<div class="card-header">
 						<h3 class="card-title">
 						<button class="btn bg-gradient-primary btn-sm"
@@ -54,7 +66,7 @@
 						</div>
 					</div>
 
-					<div class="card-body table-responsive p-0">
+					<div class="card-body table-responsive p-0 height700px">
 						<table id="table" class="table table-hover">
 							<thead>
 								<tr>

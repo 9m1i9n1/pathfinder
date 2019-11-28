@@ -70,7 +70,7 @@ function getUser(treeId, selectPage) {
       let str = "";
       let count = "";
 
-      count += `<li class="breadcrumb-item">조직도 패이지 /&nbsp</a></li>`;
+      count += `<li class="breadcrumb-item">조직도 페이지 /&nbsp</a></li>`;
       count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
