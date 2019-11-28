@@ -83,7 +83,7 @@ function carsearch(searchUrl, searchpage=0) {
 				str	+= '<td>' + value.carFuel + '</td>';
 				str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
 				str += "<td><div class='table-data-feature'>"
-				str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName+ `', '` + value.area + `')">삭제</button>`;
+				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName+ `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
 				str += `</td>'+ '</tr>`;
 				});
 			$("#tableListBody").html(str);
@@ -165,7 +165,7 @@ function carlist(selectPage) {
 				str	+= '<td>' + value.carFuel + '</td>';
 				str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
 				str += "<td><div class='table-data-feature'>"
-				str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName + `')">삭제</button>`;
+				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName + `')"><i class="fas fa-trash-alt"></i></button>`;
 				str += `</td>'+ '</tr>`;
 				});
 			$("#tableListBody").html(str);

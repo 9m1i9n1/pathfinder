@@ -604,6 +604,8 @@ pre code {
   flex-wrap: wrap;
   margin-right: -7.5px;
   margin-left: -7.5px;
+   
+  
 }
 
 .no-gutters {
@@ -2025,6 +2027,7 @@ textarea.form-control {
   flex-wrap: wrap;
   margin-right: -5px;
   margin-left: -5px;
+  
 }
 
 .form-row > .col,
@@ -15352,8 +15355,8 @@ html.maximized-card {
 .card-header > .card-tools .input-group,
 .card-header > .card-tools .nav,
 .card-header > .card-tools .pagination {
-  margin-bottom: -0.3rem;
-  margin-top: -0.3rem;
+ /*  margin-bottom: -0.3rem;
+  margin-top: -0.3rem; */
 }
 
 .card-header > .card-tools [data-toggle='tooltip'] {
@@ -28502,8 +28505,11 @@ a.text-muted:hover {
   background-color: #ffffff;
   border-color: #dee2e6;
 }
-.hierarchysideheight {
-  height: 675px;
+.height100 {
+   height: 100%; 
+}
+.height675px{
+	height: 675px;
 }
 
 /*# sourceMappingURL=adminlte.css.map */

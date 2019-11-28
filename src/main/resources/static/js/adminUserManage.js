@@ -48,8 +48,8 @@ function userLoading() {
         str += "<td>" + (value.userAuth ? "관리자" : "사용자") + "</td>";
 
         str += "<td><div class='table-data-feature'>";
-        str += `<button class="item" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
-        str += `<button class="item" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
+        str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
+        str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
         str += "</div></td>";
         str += "</tr>";
 
