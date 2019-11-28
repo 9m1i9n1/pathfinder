@@ -30,7 +30,7 @@ function userLoading() {
       let str = "";
       let count = "";
 
-      count += `<li class="breadcrumb-item">관리자 페이지 : 사용자 관리</a></li>`;
+      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
       count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {

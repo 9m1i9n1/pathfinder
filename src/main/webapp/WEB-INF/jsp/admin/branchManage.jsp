@@ -31,7 +31,7 @@
 				<div class="col-md-2">
 					<div class="card height100">
 						<div class="card-header">
-							<h3 class="card-title" style="height:30px">조직도</h3>
+							<h3 class="card-title" style="height: 30px">조직도</h3>
 						</div>
 
 						<div class="card-body small height100">
@@ -44,10 +44,10 @@
 					<div class="card height100 ">
 						<div class="card-header">
 
-							<button class=" btn btn-primary btn-sm bg-gradient-primary col-md-1"
+							<button class=" btn btn-primary btn-sm bg-gradient-primary "
 								data-toggle="modal" data-target="#insertModal">지점 추가</button>
 
-							<div class="card-tools col-md-4">
+							<div class="card-tools ">
 								<div class="input-group input-group-sm">
 									<select class=" col-4 small " name="searchType" id="searchType">
 										<option value="branchName" class="small">지점명</option>
@@ -80,7 +80,7 @@
 									</tr>
 								</thead>
 
-								<tbody id="tableListBody" class="small text-center"></tbody>
+								<tbody id="tableListBody" class="small"></tbody>
 
 							</table>
 
