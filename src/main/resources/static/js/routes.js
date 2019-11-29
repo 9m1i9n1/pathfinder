@@ -1,6 +1,9 @@
 $(document).ready(function() {
+	depBranchList();
+
+	//-----------------------
 	branchlist();
-	showClickRoute();
+	// showClickRoute();
 });
 
 // 다음 지도 사용
@@ -598,6 +601,62 @@ function branchsearch(searchUrl, searchpage) {
 			showClickRoute();
 		}
 	})
+}
+
+function depBranchList() {
+	$('#depSelect').select2({
+		ajax: {
+			url: '/maproute/branchLoding',
+			dataType: 'json',
+			processResults: function (data) {
+				console.log("#select");
+				console.log(data);
+
+				return null;
+			}
+		},
+		width: '100%',
+		placeholder: 'select',
+		minimumInputLength: 1,
+		templateResult: formatBranch,
+		templateSelection: formatBranchSelection
+	});
+}
+
+function formatBranch (branch) {
+  if (branch.loading) {
+    return branch.text;
+  }
+
+	console.log("#branch", branch);
+	
+
+  var $container = $(
+    "<div class='select2-result-repository clearfix'>" +
+      "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
+      "<div class='select2-result-repository__meta'>" +
+        "<div class='select2-result-repository__title'></div>" +
+        "<div class='select2-result-repository__description'></div>" +
+        "<div class='select2-result-repository__statistics'>" +
+          "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> </div>" +
+          "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> </div>" +
+          "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> </div>" +
+        "</div>" +
+      "</div>" +
+    "</div>"
+  );
+
+  $container.find(".select2-result-repository__title").text(repo.full_name);
+  $container.find(".select2-result-repository__description").text(repo.description);
+  $container.find(".select2-result-repository__forks").append(repo.forks_count + " Forks");
+  $container.find(".select2-result-repository__stargazers").append(repo.stargazers_count + " Stars");
+  $container.find(".select2-result-repository__watchers").append(repo.watchers_count + " Watchers");
+
+  return $container;
+}
+
+function formatBranchSelection (repo) {
+  return repo.full_name || repo.text;
 }
 
 // 첫페이지

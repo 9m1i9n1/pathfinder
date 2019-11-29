@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.douzone.bit.pathfinder.model.entity.CarTb;
 import com.douzone.bit.pathfinder.model.network.Header;
@@ -22,6 +23,7 @@ import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.CarRepository;
 
 @Service
+@Transactional
 public class AdminCarService {
 	
 	@Autowired
