@@ -35,19 +35,99 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
         </div>
         <div class="col-3">
           <div class="accordion md-accordion" id="accordion-select">
+            <%-- 출발지점 선택 --%>
+            <div class="card">
+              <div class="card-header" id="headingDep">
+                <h3
+                  class="card-title"
+                  data-toggle="collapse show"
+                  data-target="#col-selectDep"
+                  aria-expanded="false"
+                  aria-controls="col-selectDep"
+                >
+                  1. 출발 지점 선택
+                </h3>
+              </div>
+
+              <div
+                id="col-selectDep"
+                class="collapse show"
+                aria-labelledby="headingDep"
+                data-parent="#accordion-select"
+              >
+                <div class="card-body">
+                  <select id="depSelect"></select>
+                </div>
+
+                <div class="card-footer">
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectCar"
+                    aria-expanded="false"
+                    aria-controls="col-selectCar"
+                  >
+                    다음
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 차량 선택 -->
+            <div class="card">
+              <div class="card-header" id="headingCar">
+                <h3 class="card-title">
+                  2. 차량 선택
+                </h3>
+              </div>
+
+              <div
+                id="col-selectCar"
+                class="collapse multi-collapse1"
+                aria-labelledby="headingCar"
+                data-parent="#accordion-select"
+              >
+                <div class="card-body">
+                  <div id="Carselect"></div>
+                </div>
+
+                <div class="card-footer">
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectDep"
+                    aria-expanded="false"
+                    aria-controls="col-selectDep"
+                  >
+                    이전
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectDate"
+                    aria-expanded="false"
+                    aria-controls="col-selectDate"
+                  >
+                    다음
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <!-- 날짜선택 -->
             <div class="card">
               <div class="card-header" id="headingDate">
-                <h3
-                  class="card-title"
-                >
-                  1. 날짜 선택
+                <h3 class="card-title">
+                  3. 예약 날짜 선택
                 </h3>
               </div>
 
               <div
                 id="col-selectDate"
-                class="collapse multi-collapse1 show"
+                class="collapse"
                 aria-labelledby="headingDate"
                 data-parent="#accordion-select"
               >
@@ -59,42 +139,26 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 </div>
 
                 <div class="card-footer">
-                <button
-                  class="btn btn-primary"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#col-selectDate"
-                  aria-expanded="false"
-                  aria-controls="col-selectDate col-selectCar"
-                >
-                  다음
-                </button>
-              </div>
-              </div>
-            </div>
-
-            <!-- 차량 선택 -->
-            <div class="card">
-              <div class="card-header" id="headingCar">
-                <h3
-                  class="card-title"
-                  data-toggle="collapse"
-                  data-target="#col-selectCar"
-                  aria-expanded="false"
-                  aria-controls="col-selectCar"
-                >
-                  2. 차량 선택
-                </h3>
-              </div>
-
-              <div
-                id="col-selectCar"
-                class="collapse multi-collapse1"
-                aria-labelledby="headingCar"
-                data-parent="#accordion-select"
-              >
-                <div class="card">
-                  <div id="Carselect"></div>
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectCar"
+                    aria-expanded="false"
+                    aria-controls="col-selectCar"
+                  >
+                    이전
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectBranch"
+                    aria-expanded="false"
+                    aria-controls="col-selectBranch"
+                  >
+                    다음
+                  </button>
                 </div>
               </div>
             </div>
@@ -102,14 +166,8 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
             <!-- 지점 선택 -->
             <div class="card">
               <div class="card-header" id="headingBranch">
-                <h3
-                  class="card-title"
-                  data-toggle="collapse"
-                  data-target="#col-selectBranch"
-                  aria-expanded="false"
-                  aria-controls="col-selectBranch"
-                >
-                  3. 지점 선택
+                <h3 class="card-title">
+                  4. 경유 지점 선택
                 </h3>
 
                 <%-- 이전 검색. class명 확인차 주석 --%> <%--
@@ -134,44 +192,13 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
               <div
                 id="col-selectBranch"
-                class="collapse"
+                class="card-body collapse"
                 aria-labelledby="headingBranch"
                 data-parent="#accordion-select"
               >
-                <div class="card">
+                <div>
                   <div class="card-header">
                     <h3 class="card-title">지점 목록</h3>
-
-                    <div class="card-tools">
-                      <div class="input-group input-group-sm">
-                        <input
-                          type="text"
-                          name="selected_search"
-                          class="form-control float-right"
-                          placeholder="검색"
-                        />
-
-                        <div class="input-group-append">
-                          <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div id="tableEdge">
-                    <table
-                      class="table table-hover table-mc-light-blue"
-                      style="text-align: center;"
-                      id="allDataTable"
-                    ></table>
-                  </div>
-                </div>
-
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">선택된 지점</h3>
 
                     <div class="card-tools">
                       <div
@@ -192,6 +219,45 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                         </div>
                       </div>
                     </div>
+                    <div id="tableEdge">
+                      <table
+                        class="table table-hover table-mc-light-blue"
+                        style="text-align: center;"
+                        id="selectRoute"
+                      ></table>
+                    </div>
+                  </div>
+
+                  <div id="tableEdge">
+                    <table
+                      class="table table-hover table-mc-light-blue"
+                      style="text-align: center;"
+                      id="allDataTable"
+                    ></table>
+                  </div>
+                </div>
+
+                <div class="card-header">
+                  <h3 class="card-title">선택된 지점</h3>
+
+                  <div class="card-tools">
+                    <div
+                      class="input-group input-group-sm"
+                      style="width: 150px;"
+                    >
+                      <input
+                        type="text"
+                        name="selected_search"
+                        class="form-control float-right"
+                        placeholder="검색"
+                      />
+
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <div id="tableEdge">
                     <table
@@ -200,7 +266,29 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                       id="selectRoute"
                     ></table>
                   </div>
-                  <button type="button" id="submitroute">전송</button>
+                </div>
+
+                <div class="card-footer">
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectDate"
+                    aria-expanded="false"
+                    aria-controls="col-selectDate"
+                  >
+                    이전
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectRoad"
+                    aria-expanded="false"
+                    aria-controls="col-selectRoad"
+                  >
+                    다음
+                  </button>
                 </div>
               </div>
             </div>
@@ -215,7 +303,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   aria-expanded="false"
                   aria-controls="col-selectRoad"
                 >
-                  4. 추천 경로
+                  5. 추천 경로
                 </h3>
               </div>
 
@@ -225,8 +313,21 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 aria-labelledby="headingRoad"
                 data-parent="#accordion-select"
               >
-                <div class="card">
+                <div class="card-body">
                   <div id="Carselect"></div>
+                </div>
+
+                <div class="card-footer">
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectBranch"
+                    aria-expanded="false"
+                    aria-controls="col-selectBranch"
+                  >
+                    이전
+                  </button>
                 </div>
               </div>
             </div>
