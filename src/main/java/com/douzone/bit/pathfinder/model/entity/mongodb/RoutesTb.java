@@ -1,4 +1,4 @@
-package com.douzone.bit.pathfinder.model.entity;
+package com.douzone.bit.pathfinder.model.entity.mongodb;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Document(collection="history")
-public class HistoryTb {
+@Document(collection = "routes")
+public class RoutesTb {
 
-	private String _id;
-	private String name;
-	private String age;
+	private String hindex;
+	private Object[] detail;
 }
