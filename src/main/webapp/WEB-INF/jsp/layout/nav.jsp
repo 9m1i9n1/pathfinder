@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-dark navbar-purple">
+  <nav class="main-header navbar navbar-expand navbar-dark navbar-olive">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -9,7 +9,7 @@
       </li>
     </ul>
 
-    <!-- SEARCH FORM -->
+    <%-- <!-- SEARCH FORM -->
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -19,9 +19,9 @@
           </button>
         </div>
       </div>
-    </form>
+    </form> --%>
 
-    <!-- Right navbar links -->
+    <%-- <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -106,7 +106,7 @@
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
+        </div> --%>
       </li>
     </ul>
   </nav>
