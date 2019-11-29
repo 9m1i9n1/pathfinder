@@ -29,16 +29,6 @@ public class MaprouteController {
 	@Autowired
 	private MaprouteService MaprouteService;
 
-	@GetMapping("/example")
-	public ModelAndView AjaxMaproute() {
-
-		ModelAndView mv = new ModelAndView();
-
-		mv.setViewName("/tt");
-
-		return mv;
-	}
-
 	@RequestMapping(value = "/maproutesend")
 	public List<RouteDTO> test(@RequestBody Map<String, Object> map, Model model) throws Exception {
 

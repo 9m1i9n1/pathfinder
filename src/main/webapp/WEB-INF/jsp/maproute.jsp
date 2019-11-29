@@ -40,10 +40,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
               <div class="card-header" id="headingDate">
                 <h3
                   class="card-title"
-                  data-toggle="collapse"
-                  data-target="#col-selectDate"
-                  aria-expanded="true"
-                  aria-controls="col-selectDate"
                 >
                   1. 날짜 선택
                 </h3>
@@ -51,14 +47,29 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
               <div
                 id="col-selectDate"
-                class="collapse show"
+                class="collapse multi-collapse1 show"
                 aria-labelledby="headingDate"
                 data-parent="#accordion-select"
               >
-                <div class="card">
-                  <p id="selectDate">gggg</p>
+                <div class="card-body" id="calendarcard">
                   <div class="calendar"></div>
+                  <div class="alert alert-light" role="alert" id="selectDate">
+                    날짜를 선택해주세요!
+                  </div>
                 </div>
+
+                <div class="card-footer">
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#col-selectDate"
+                  aria-expanded="false"
+                  aria-controls="col-selectDate col-selectCar"
+                >
+                  다음
+                </button>
+              </div>
               </div>
             </div>
 
@@ -78,7 +89,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
               <div
                 id="col-selectCar"
-                class="collapse"
+                class="collapse multi-collapse1"
                 aria-labelledby="headingCar"
                 data-parent="#accordion-select"
               >
@@ -132,10 +143,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     <h3 class="card-title">지점 목록</h3>
 
                     <div class="card-tools">
-                      <div
-                        class="input-group input-group-sm"
-                        style="width: 150px;"
-                      >
+                      <div class="input-group input-group-sm">
                         <input
                           type="text"
                           name="selected_search"
