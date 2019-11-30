@@ -56,7 +56,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 data-parent="#accordion-select"
               >
                 <div class="card-body">
-                  <select id="depSelect"></select>
+                  <select id="depSelect">
+                    <option></option>
+                  </select>
                 </div>
 
                 <div class="card-footer">
@@ -89,7 +91,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 data-parent="#accordion-select"
               >
                 <div class="card-body">
-                  <div id="Carselect"></div>
+                  <select id="carSelect">
+                    <option></option>
+                  </select>
                 </div>
 
                 <div class="card-footer">
@@ -105,6 +109,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   </button>
                   <button
                     class="btn btn-primary"
+                    id="nextCarButton"
                     type="button"
                     data-toggle="collapse"
                     data-target="#col-selectDate"
@@ -133,6 +138,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
               >
                 <div class="card-body" id="calendarcard">
                   <div class="calendar"></div>
+
                   <div class="alert alert-light" role="alert" id="selectDate">
                     날짜를 선택해주세요!
                   </div>
@@ -192,7 +198,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
               <div
                 id="col-selectBranch"
-                class="card-body collapse"
+                class="collapse"
                 aria-labelledby="headingBranch"
                 data-parent="#accordion-select"
               >
@@ -267,29 +273,28 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     ></table>
                   </div>
                 </div>
-
                 <div class="card-footer">
-                  <button
-                    class="btn btn-primary"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#col-selectDate"
-                    aria-expanded="false"
-                    aria-controls="col-selectDate"
-                  >
-                    이전
-                  </button>
-                  <button
-                    class="btn btn-primary"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#col-selectRoad"
-                    aria-expanded="false"
-                    aria-controls="col-selectRoad"
-                  >
-                    다음
-                  </button>
-                </div>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#col-selectDate"
+                  aria-expanded="false"
+                  aria-controls="col-selectDate"
+                >
+                  이전
+                </button>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#col-selectRoad"
+                  aria-expanded="false"
+                  aria-controls="col-selectRoad"
+                >
+                  다음
+                </button>
+              </div>
               </div>
             </div>
 

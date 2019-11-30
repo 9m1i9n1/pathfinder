@@ -1,8 +1,7 @@
 $(document).ready(function() {
-	depBranchList();
+	branchlist(depBranchlist);
+	branchlist(drawBranchlist);
 
-	//-----------------------
-	branchlist();
 	// showClickRoute();
 });
 
@@ -603,69 +602,43 @@ function branchsearch(searchUrl, searchpage) {
 	})
 }
 
-function depBranchList() {
-	$('#depSelect').select2({
-		ajax: {
-			url: '/maproute/branchLoding',
-			dataType: 'json',
-			processResults: function (data) {
-				console.log("#select");
-				console.log(data);
-
-				return null;
-			}
-		},
-		width: '100%',
-		placeholder: 'select',
-		minimumInputLength: 1,
-		templateResult: formatBranch,
-		templateSelection: formatBranchSelection
-	});
-}
-
-function formatBranch (branch) {
-  if (branch.loading) {
-    return branch.text;
-  }
-
-	console.log("#branch", branch);
-	
-
-  var $container = $(
-    "<div class='select2-result-repository clearfix'>" +
-      "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
-      "<div class='select2-result-repository__meta'>" +
-        "<div class='select2-result-repository__title'></div>" +
-        "<div class='select2-result-repository__description'></div>" +
-        "<div class='select2-result-repository__statistics'>" +
-          "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> </div>" +
-          "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> </div>" +
-          "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> </div>" +
-        "</div>" +
-      "</div>" +
-    "</div>"
-  );
-
-  $container.find(".select2-result-repository__title").text(repo.full_name);
-  $container.find(".select2-result-repository__description").text(repo.description);
-  $container.find(".select2-result-repository__forks").append(repo.forks_count + " Forks");
-  $container.find(".select2-result-repository__stargazers").append(repo.stargazers_count + " Stars");
-  $container.find(".select2-result-repository__watchers").append(repo.watchers_count + " Watchers");
-
-  return $container;
-}
-
-function formatBranchSelection (repo) {
-  return repo.full_name || repo.text;
-}
-
-// 첫페이지
-function branchlist() {
+function branchlist(handleFunc) {
 	$.ajax({
 		url : "/maproute/branchLoding",
 		type: "get",
 		success : function(res) {
-			let str = "";
+			handleFunc(res)
+		}
+	})
+}
+
+// 출발지 선택 Draw
+function depBranchlist(res) {
+	res = res.data;
+
+	let branchData = $.map(res, function (obj) {
+		
+		obj.id = obj.id || obj.branchIndex;
+		obj.text = obj.text || obj.branchName;
+
+		return obj;
+	})
+	
+
+	$('#depSelect').select2({
+		width: '100%',
+		placeholder: '출발지 선택',
+		data: branchData,
+		// 이전달 다음달 변경 시
+		viewChange: function (view, y, m) {
+			console.log(view, y, m)
+	}
+	});
+}
+
+// 경유지 선택 Draw
+function drawBranchlist(res) {
+	let str = "";
 			
 			$.each(res.data, function(key, value) {
 				str += "<tr class='tr-shadow'>"
@@ -677,25 +650,22 @@ function branchlist() {
 			});
 			
 			$("#allDataTable").html(str);
-		}
-	})
 }
 
-
-$(function() {
+$('#nextCarButton').click(function () {
 	let todayDate = moment().format('YYYY[-]MM[-]DD');
-
+	
 	$('.calendar').calendar({
-		width: $('#calendarcard').width(),
-		height: $('#calendarcard').width(),
+		width: $('#headingDate').width(),
+		height: 280,
 	date:new Date(),
 	format:'yyyy-MM-dd',
 	startWeek: 0,
-	selectedRang:[todayDate],
+	selectedRang:[moment(), moment().add(3, 'M')],
 	weekArray: ['일','월','화','수','목','금','토'],
 	monthArray: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 	onSelected: function (view, date, data) {
 		$('#selectDate').html(moment(date).format('YYYY-MM-DD'))
-},
+	},
 	});
 })
