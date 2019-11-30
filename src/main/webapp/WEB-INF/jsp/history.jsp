@@ -55,17 +55,13 @@
 				<table class="table table-hover" id="tableTest">
 					<thead>
 						<tr>
+							<th style="width: 10%">출발일자</th>
 							<th style="width: 10%">사용자</th>
-
 							<th style="width: 10%">출발지</th>
 							<th style="width: 10%">도착지</th>
-							<th style="width: 10%">이동거리</th>
-							<th style="width: 10%">요금</th>
-							<th style="width: 10%">등록날짜</th>
-							<th style="width: 10%">출발날짜</th>
-							<th style="width: 10%">도착날짜</th>
-							<th style="width: 10%">차량이름</th>
-							<th style="width: 10%">상세정보</th>
+							<th style="width: 10%">차량번호</th>
+							<th style="width: 10%">예약일자</th>
+							<th style="width: 10%">상세보기</th>
 						</tr>
 					</thead>
 
@@ -357,5 +353,6 @@
 </body>
 <%@include file="historyModal.jsp"%>
 
+<script src="/static/js/history.js"></script>
 <script src="/static/js/hisoryModal.js"></script>
 </html>
