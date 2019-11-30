@@ -64,6 +64,7 @@ pageEncoding="UTF-8"%>
 <script src="/static/plugins/chart.js/Chart.min.js"></script>
 
 <%-- bootstrap-select --%>
+<link rel="stylesheet" href="/static/css/select2-bootstrap4.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 

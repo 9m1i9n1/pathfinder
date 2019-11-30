@@ -56,7 +56,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 data-parent="#accordion-select"
               >
                 <div class="card-body">
-                  <select id="depSelect"></select>
+                  <select id="depSelect">
+                    <option></option>
+                  </select>
                 </div>
 
                 <div class="card-footer">
@@ -89,7 +91,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 data-parent="#accordion-select"
               >
                 <div class="card-body">
-                  <div id="Carselect"></div>
+                  <select id="carSelect">
+                    <option></option>
+                  </select>
                 </div>
 
                 <div class="card-footer">
@@ -105,6 +109,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   </button>
                   <button
                     class="btn btn-primary"
+                    id="nextCarButton"
                     type="button"
                     data-toggle="collapse"
                     data-target="#col-selectDate"
@@ -133,6 +138,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
               >
                 <div class="card-body" id="calendarcard">
                   <div class="calendar"></div>
+
                   <div class="alert alert-light" role="alert" id="selectDate">
                     날짜를 선택해주세요!
                   </div>
@@ -156,6 +162,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     data-target="#col-selectBranch"
                     aria-expanded="false"
                     aria-controls="col-selectBranch"
+                    onclick="branchlist(selectBranchlist)"
                   >
                     다음
                   </button>
@@ -192,53 +199,42 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
               <div
                 id="col-selectBranch"
-                class="card-body collapse"
+                class="collapse"
                 aria-labelledby="headingBranch"
                 data-parent="#accordion-select"
               >
-                <div>
-                  <div class="card-header">
-                    <h3 class="card-title">지점 목록</h3>
-
-                    <div class="card-tools">
-                      <div
-                        class="input-group input-group-sm"
-                        style="width: 150px;"
-                      >
-                        <input
-                          type="text"
-                          name="selected_search"
-                          class="form-control float-right"
-                          placeholder="검색"
-                        />
-
-                        <div class="input-group-append">
-                          <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="tableEdge">
-                      <table
-                        class="table table-hover table-mc-light-blue"
-                        style="text-align: center;"
-                        id="selectRoute"
-                      ></table>
-                    </div>
-                  </div>
-
-                  <div id="tableEdge">
-                    <table
-                      class="table table-hover table-mc-light-blue"
-                      style="text-align: center;"
-                      id="allDataTable"
-                    ></table>
-                  </div>
+                <div class="card-body">
+                  <select id="branchSelect" multiple="multiple">
+                    <option></option>
+                  </select>
                 </div>
-
+                <div class="card-footer">
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectDate"
+                    aria-expanded="false"
+                    aria-controls="col-selectDate"
+                  >
+                    이전
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#col-selectRoad"
+                    aria-expanded="false"
+                    aria-controls="col-selectRoad"
+                  >
+                    다음
+                  </button>
+                </div>
+              </div>
+              <%--
+              <div>
                 <div class="card-header">
-                  <h3 class="card-title">선택된 지점</h3>
+                  <h3 class="card-title">지점 목록</h3>
 
                   <div class="card-tools">
                     <div
@@ -268,70 +264,78 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   </div>
                 </div>
 
-                <div class="card-footer">
-                  <button
-                    class="btn btn-primary"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#col-selectDate"
-                    aria-expanded="false"
-                    aria-controls="col-selectDate"
-                  >
-                    이전
-                  </button>
-                  <button
-                    class="btn btn-primary"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#col-selectRoad"
-                    aria-expanded="false"
-                    aria-controls="col-selectRoad"
-                  >
-                    다음
-                  </button>
+                <div id="tableEdge">
+                  <table
+                    class="table table-hover table-mc-light-blue"
+                    style="text-align: center;"
+                    id="allDataTable"
+                  ></table>
                 </div>
               </div>
-            </div>
 
-            <!-- 차량 선택 -->
-            <div class="card">
-              <div class="card-header" id="headingRoad">
-                <h3
-                  class="card-title"
-                  data-toggle="collapse"
-                  data-target="#col-selectRoad"
-                  aria-expanded="false"
-                  aria-controls="col-selectRoad"
+              <div class="card-header">
+                <h3 class="card-title">선택된 지점</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input
+                      type="text"
+                      name="selected_search"
+                      class="form-control float-right"
+                      placeholder="검색"
+                    />
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="tableEdge">
+                  <table
+                    class="table table-hover table-mc-light-blue"
+                    style="text-align: center;"
+                    id="selectRoute"
+                  ></table>
+                </div>
+                --%>
+              </div>
+
+              <!-- 차량 선택 -->
+              <div class="card">
+                <div class="card-header" id="headingRoad">
+                  <h3 class="card-title">
+                    5. 추천 경로
+                  </h3>
+                </div>
+
+                <div
+                  id="col-selectRoad"
+                  class="collapse"
+                  aria-labelledby="headingRoad"
+                  data-parent="#accordion-select"
                 >
-                  5. 추천 경로
-                </h3>
-              </div>
+                  <div class="card-body">
+                    <div id="Carselect"></div>
+                  </div>
 
-              <div
-                id="col-selectRoad"
-                class="collapse"
-                aria-labelledby="headingRoad"
-                data-parent="#accordion-select"
-              >
-                <div class="card-body">
-                  <div id="Carselect"></div>
-                </div>
-
-                <div class="card-footer">
-                  <button
-                    class="btn btn-primary"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#col-selectBranch"
-                    aria-expanded="false"
-                    aria-controls="col-selectBranch"
-                  >
-                    이전
-                  </button>
+                  <div class="card-footer">
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#col-selectBranch"
+                      aria-expanded="false"
+                      aria-controls="col-selectBranch"
+                    >
+                      이전
+                    </button>
+                  </div>
                 </div>
               </div>
+              <!--  accordion div -->
             </div>
-            <!--  accordion div -->
           </div>
         </div>
       </div>
