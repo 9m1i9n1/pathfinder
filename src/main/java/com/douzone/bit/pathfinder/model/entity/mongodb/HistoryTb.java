@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Document(collection="history")
 public class HistoryTb {
-	private String _id;
+	private ObjectId _id;
 	private String regdate;
 	private String username;
 	private String carname;
@@ -22,5 +22,5 @@ public class HistoryTb {
 	private String fee;
 	private String dlvrdate;
 	private String arrivedate;
-	private ObjectId routes;
+	private String routes;
 }
