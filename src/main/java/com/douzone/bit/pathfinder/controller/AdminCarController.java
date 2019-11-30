@@ -52,7 +52,7 @@ public class AdminCarController {
 	@GetMapping("/search")
 	public Header<List<AdminCarResponse>> carSearch(
 			@RequestParam(required = false, defaultValue = "carName") String searchType,
-			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false) Long keyword,
 			@PageableDefault(sort = "carIndex", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		return adminCarService.search(pageable, searchType, keyword);

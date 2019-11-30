@@ -612,6 +612,20 @@ function branchlist(handleFunc) {
 	})
 }
 
+function carlist(handleFunc, areaIndex) {
+
+	console.log("#areaIndex",areaIndex);
+	
+	$.ajax({
+		url : "/maproute/carLoading",
+		data: {areaIndex},
+		type: "get",
+		success : function(res) {
+			handleFunc(res)
+		}
+	})
+}
+
 // 출발지 선택 Draw
 function depBranchlist(res) {
 	res = res.data;
@@ -636,6 +650,30 @@ function depBranchlist(res) {
 	});
 }
 
+// 차량 선택 Draw
+function depCarlist(res) {
+	res = res.data;
+
+	let carData = $.map(res, function (obj) {
+		
+		obj.id = obj.id || obj.carIndex;
+		obj.text = obj.text || obj.carName;
+
+		return obj;
+	})
+	
+
+	$('#carSelect').select2({
+		width: '100%',
+		placeholder: '차량 선택',
+		data: carData,
+		// 이전달 다음달 변경 시
+		viewChange: function (view, y, m) {
+			console.log(view, y, m)
+	}
+	});
+}
+
 // 경유지 선택 Draw
 function drawBranchlist(res) {
 	let str = "";
@@ -652,6 +690,13 @@ function drawBranchlist(res) {
 			$("#allDataTable").html(str);
 }
 
+$("#depSelect").on('select2:select', function(e) {
+	let selectData = e.params.data;
+
+	carlist(depCarlist, selectData.areaIndex);
+})
+
+// 캘린더 띄움 (차량선택 화면에서 다음 버튼 클릭)
 $('#nextCarButton').click(function () {
 	let todayDate = moment().format('YYYY[-]MM[-]DD');
 	
