@@ -1,12 +1,30 @@
-// 다음 지도 사용
-var map = new L.Map("map", {
-  center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
-  zoom: 0.5, //Leaflet.KoreanTmsProviders.js : resolutions기준 줌 레벨(Level 12)
-  crs: L.Proj.CRS.Daum, //Leaflet.KoreanTmsProviders.js : 새로 정의된 Daum Map CRS
-  worldCopyJump: false //https://leafletjs.com/reference-1.3.2.html#map-worldcopyjump 참조
-});
+$(function() {
+  let todayDate = moment().format("YYYY[-]MM[-]DD");
 
-var baseLayers = L.tileLayer.koreaProvider("DaumMap.Street").addTo(map);
-baseLayers.on("load", function() {
-  console.log("로딩");
+  $("#calendar").calendar({
+    width: 280,
+    height: 280,
+    // 	zIndex: 1,
+    // 	trigger: null,
+    date: new Date(),
+    // format:'yyyy-MM-dd',
+    // view: 'date',
+    startWeek: 0,
+    selectedRang: [todayDate],
+    weekArray: ["일", "월", "화", "수", "목", "금", "토"],
+    monthArray: [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월"
+    ]
+  });
 });

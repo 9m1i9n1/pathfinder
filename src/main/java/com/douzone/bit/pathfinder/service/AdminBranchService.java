@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.douzone.bit.pathfinder.model.entity.AreaTb;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
@@ -19,11 +21,9 @@ import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
-import com.douzone.bit.pathfinder.repository.UserRepository;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 @Service
+@Transactional
 public class AdminBranchService {
 
 	@Autowired
@@ -126,12 +126,13 @@ public class AdminBranchService {
 
 		return treeResponse;
 	}
-	// 지점 중복 검사
-	  public Boolean branchCheck(String branchName) {
 
-		    return !(branchRepository.existsByBranchName(branchName));
-		  }
-	
+	// 지점 중복 검사
+	public Boolean branchCheck(String branchName) {
+
+		return !(branchRepository.existsByBranchName(branchName));
+	}
+
 	// 지점 검색
 	public Header<List<AdminBranchResponse>> search(Pageable pageable, String searchType, String keyword) {
 

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import com.douzone.bit.pathfinder.service.algorithm.Recursive;
 import com.douzone.bit.pathfinder.service.algorithm.createMap;
 
 @Service
+@Transactional
 public class MaprouteService {
 	Logger logger = LoggerFactory.getLogger(MaprouteService.class);
 

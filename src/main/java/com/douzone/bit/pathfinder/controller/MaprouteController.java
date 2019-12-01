@@ -20,6 +20,8 @@ import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.RouteDTO;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
+import com.douzone.bit.pathfinder.model.network.response.AdminCarResponse;
+import com.douzone.bit.pathfinder.service.AdminCarService;
 import com.douzone.bit.pathfinder.service.MaprouteService;
 
 @RestController
@@ -29,15 +31,8 @@ public class MaprouteController {
 	@Autowired
 	private MaprouteService MaprouteService;
 
-	@GetMapping("/example")
-	public ModelAndView AjaxMaproute() {
-
-		ModelAndView mv = new ModelAndView();
-
-		mv.setViewName("/tt");
-
-		return mv;
-	}
+	@Autowired
+	private AdminCarService adminCarService;
 
 	@RequestMapping(value = "/maproutesend")
 	public List<RouteDTO> test(@RequestBody Map<String, Object> map, Model model) throws Exception {
@@ -72,6 +67,13 @@ public class MaprouteController {
 	public Header<List<AdminBranchResponse>> branchLoading() {
 
 		return MaprouteService.branchLoading();
+	}
+
+	@GetMapping("/carLoading")
+	public Header<List<AdminCarResponse>> carLoading(
+			@RequestParam(required = false, defaultValue = "branch") String searchType, @RequestParam Long areaIndex) {
+
+		return adminCarService.search(null, searchType, areaIndex);
 	}
 
 	@GetMapping({ "/search" })

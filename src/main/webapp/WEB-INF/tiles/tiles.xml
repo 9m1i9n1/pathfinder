@@ -11,16 +11,11 @@
 		<put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp" />
 	</definition>
 
-	<!-- <definition name="/login" extends="/WEB-INF/jsp/defaultPage/login.jsp"> 
-		<put-attribute name="content" value="" /> </definition> <definition name="/error" 
-		template="/WEB-INF/jsp/defaultPage/error.jsp"> <put-attribute name="content" 
-		value="" /> </definition> -->
-
-	<definition name="/login" extends="empty">
+	<definition name="/login">
 		<put-attribute name="body" value="/WEB-INF/jsp/defaultpage/login.jsp" />
 	</definition>
-	
-	<definition name="/error" extends="empty">
+
+	<definition name="/error">
 		<put-attribute name="body" value="/WEB-INF/jsp/defaultpage/error.jsp" />
 	</definition>
 
@@ -29,7 +24,6 @@
 	</definition>
 
 	<definition name="/admin/*" extends="layouts-tiles">
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/admin/{1}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/admin/{1}.jsp" />
 	</definition>
 </tiles-definitions>
