@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
@@ -21,6 +22,7 @@ import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
 
 @Service
+@Transactional
 public class AdminUserService {
 
   @Autowired
@@ -76,11 +78,10 @@ public class AdminUserService {
 
   // 유저 리스트
   public Header<List<AdminUserResponse>> list(String id, Pageable pageable) {
-
     String treeId[] = id.split(":");
     String nodeType = treeId[0];
     Long nodeIndex = Long.parseLong(treeId[1]);
-
+    
     // Page<UserTb> users = null;
     //
     // switch (nodeType) {
@@ -104,7 +105,6 @@ public class AdminUserService {
     // }
 
     Page<UserTb> users = mappingUser(nodeType, nodeIndex, "", "", pageable);
-
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
 
     Pagination pagination = Pagination.builder().totalPages(users.getTotalPages())

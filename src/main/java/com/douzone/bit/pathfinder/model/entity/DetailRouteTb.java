@@ -1,8 +1,4 @@
-package com.douzone.bit.pathfinder.model.entity.mongodb;
-
-import java.util.List;
-
-import javax.persistence.Id;
+package com.douzone.bit.pathfinder.model.entity;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,11 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Document(collection = "routes")
-public class RoutesTb {
+public class DetailRouteTb {
 
-	private ObjectId hindex;
-	@Id
 	private ObjectId id;
-	private String index;
-	private List<Object> detail;
+	private String rdep;
+	private String rarvl;
+	private String rdist;
+	private Long rtime;
+	private Double rfee;
 }

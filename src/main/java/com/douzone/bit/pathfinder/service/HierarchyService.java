@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.douzone.bit.pathfinder.model.entity.AreaTb;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
@@ -26,6 +27,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @Service
+@Transactional
 public class HierarchyService {
 
 	@Autowired

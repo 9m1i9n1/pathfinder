@@ -13,12 +13,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.douzone.bit.pathfinder.model.dto.SignDTO;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.repository.UserRepository;
 
 @Service
+@Transactional
 public class SignService implements UserDetailsService {
 
 	@Autowired
@@ -31,19 +33,14 @@ public class SignService implements UserDetailsService {
 		if (user == null) {
 			return null;
 		}
-		
-		SignDTO signInfo = SignDTO.builder()
-				.userIndex(user.getUserIndex())
-				.username(user.getUserId()).password(user.getUserPw())
-				.userFullName(user.getUserName()).userEmail(user.getUserEmail())
+
+		SignDTO signInfo = SignDTO.builder().userIndex(user.getUserIndex()).username(user.getUserId())
+				.password(user.getUserPw()).userFullName(user.getUserName()).userEmail(user.getUserEmail())
 				.userPhone(user.getUserPhone()).userPosition(user.getUserPosition())
-				.userBranch(user.getBranch().getBranchName())
-				.userArea(user.getBranch().getArea().getAreaName())
-				.authorities(setAuthorites(user.getUserAuth()))
-				.accountNonExpired(true).accountNonLocked(true)
-				.credentialsNonExpired(true).enabled(true)
-				.build();
-		
+				.userBranch(user.getBranch().getBranchName()).userArea(user.getBranch().getArea().getAreaName())
+				.authorities(setAuthorites(user.getUserAuth())).accountNonExpired(true).accountNonLocked(true)
+				.credentialsNonExpired(true).enabled(true).build();
+
 		return signInfo;
 	}
 

@@ -1,17 +1,18 @@
-package com.douzone.bit.pathfinder.model.entity.mongodb;
+package com.douzone.bit.pathfinder.model.network.response;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Document(collection="history")
-public class HistoryTb {
+@Builder
+public class HistoryResponse {
+
 	private ObjectId _id;
 	private String regdate;
 	private String username;

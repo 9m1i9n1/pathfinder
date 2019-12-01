@@ -49,7 +49,7 @@ function getSearch() {
 
       $("#userTable").html(str);
       $("#headInfo").html(count);
-
+      
       pageButton(
         res.pagination.nodeType,
         res.pagination.nodeIndex,
@@ -123,7 +123,6 @@ function treeLoading() {
 
       sessionStorage.setItem("treeId", selectedData.id);
       sessionStorage.setItem("pageNum", 0);
-
       getUser(selectedData.id, 0);
     })
     .bind("select_node.jstree", function(e, data) {
