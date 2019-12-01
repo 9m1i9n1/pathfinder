@@ -1,5 +1,6 @@
 package com.douzone.bit.pathfinder.model.entity.mongodb;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -12,6 +13,6 @@ import lombok.NoArgsConstructor;
 @Document(collection = "routes")
 public class RoutesTb {
 
-	private String hindex;
+	private ObjectId hindex;
 	private Object[] detail;
 }
