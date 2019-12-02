@@ -506,6 +506,7 @@ $("form").each(function() {
   $(this).validate({
     onkeyup: false,
     ignore: ":hidden, [readonly]",
+    // errorClass: "is-invalid",
     rules: {
       userId: {
         required: true,
