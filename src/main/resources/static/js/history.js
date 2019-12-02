@@ -60,8 +60,9 @@ function getRoutes(routes) {
 		success: function(res) {
 			let str = "";
 			let count = 0;
-
+			let totalTime = 0;
 			$.each(res.data.detail, function(key, value) {
+			
 				str += `<tr class="tr-shadow">`;
 				str += "<td>" + ++count + "</td>";
 				str += "<td>" + value.rdep + "</td>";
@@ -70,6 +71,9 @@ function getRoutes(routes) {
 				str += "<td>" + value.rtime + "</td>";
 				str += "<td>" + value.rfee + "</td>";
 				str += "</tr>";
+				
+				totalTime += parseFloat(value.rtime);
+				console.log(parseFloat(totalTime))
 			});
 			
 			if (userAuth === "[ROLE_ADMIN]"){
@@ -81,6 +85,14 @@ function getRoutes(routes) {
 			}
 			
 			$("#routesListBody").html(str);
+			console.log(routes)
+			detailsModal
+			.find("#index")
+			.text('총 소요시간 '+routes.index);
+			
+			detailsModal
+			.find("#totalTime")
+			.text('총 소요시간 : '+totalTime);
 			
 			detailsModal
 			.find("#regdate")
@@ -91,16 +103,24 @@ function getRoutes(routes) {
 			.text(routes.username);
 			
 			detailsModal
-			.find("#depandarvl")
-			.text(routes.dep + " -> " + routes.arvl);
+			.find("#carname")
+			.text(routes.carname);
+			
+			detailsModal
+			.find("#dep")
+			.text(routes.dep );
+			
+			detailsModal
+			.find("#arvl")
+			.text(routes.arvl);
 			
 			detailsModal
 			.find("#dist")
-			.text("총 거리 : " + routes.dist);
+			.text("총 거리 : " + routes.dist +" km");
 			
 			detailsModal
 			.find("#fee")
-			.text("총 비용 : " + routes.fee);
+			.text("전체 비용 : " + routes.fee+" 원");
 		}
 	})
 }
