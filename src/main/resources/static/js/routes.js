@@ -149,7 +149,7 @@ $("#branchSelect").on("select2:unselect", function(e) {
 
 const loadCalendar = () => {
   $("#calendarBox").html("<div id='calendar'></div>");
-  $("#selectDate").html("배송날짜를 선택해주세요!");
+  $("#dateSelect").val("");
 
   let calendarSize = $("#headingDate").width();
 
@@ -176,7 +176,7 @@ const loadCalendar = () => {
       "12월"
     ],
     onSelected: function(view, date, data) {
-      $("#selectDate").html(moment(date).format("YYYY-MM-DD"));
+      $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
     },
     // 이전달 다음달 변경 시
     viewChange: function(view, y, m) {
@@ -184,6 +184,87 @@ const loadCalendar = () => {
     }
   });
 };
+
+$("#routeForm").validate({
+  onkeyup: false,
+  // ignore: "",
+  // errorClass: "is-invalid",
+  rules: {
+    depSelect: {
+      required: true
+    },
+    carSelect: {
+      required: true
+    },
+    dateSelect: {
+      required: true
+    },
+    branchSelect: {
+      required: true
+    }
+  },
+  messages: {
+    depSelect: {
+      required: "출발지를 선택해주세요."
+    },
+    carSelect: {
+      required: "차량을 선택해주세요."
+    },
+    dateSelect: {
+      required: "날짜를 선택해주세요."
+    },
+    branchSelect: {
+      required: "지점을 선택해주세요."
+    }
+  },
+
+  // 에러 위치 조정
+  errorPlacement: function(error, element) {
+    if (element.is(":radio") || element.is("select") || element.is("input")) {
+      error.appendTo(element.parents(".card-body"));
+    } else {
+      error.insertAfter(element);
+    }
+  },
+
+  // valid 실패시
+  invalidHandler: function(form, validator) {
+    var errors = validator.numberOfInvalids();
+
+    if (errors) {
+      alert(validator.errorList[0].message);
+      validator.errorList[0].element.focus();
+    }
+  },
+
+  // valid 성공시
+  submitHandler: function(form) {
+    const formId = $(form).attr("id");
+    const req = $(form).serializeObject();
+
+    return false;
+  }
+});
+
+$(".next").click(function(e) {
+  e.preventDefault();
+
+  var sectionValid = true;
+  var collapse = $(this).closest(".collapse");
+  $.each(collapse.find("input, select, textarea"), function() {
+    if (!$(this).valid()) {
+      sectionValid = false;
+    }
+  });
+
+  if (sectionValid) {
+    collapse
+      .parents(".card")
+      .next()
+      .find(".collapse")
+      .collapse("toggle");
+  }
+});
 
 // var tbody;
 // var orgBColor = '#ffffff';
