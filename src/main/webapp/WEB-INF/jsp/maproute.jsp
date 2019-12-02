@@ -137,7 +137,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 data-parent="#accordion-select"
               >
                 <div class="card-body" id="calendarcard">
-                  <div class="calendar"></div>
+                  <div id="calendarBox"></div>
 
                   <div class="alert alert-light" role="alert" id="selectDate">
                     날짜를 선택해주세요!
