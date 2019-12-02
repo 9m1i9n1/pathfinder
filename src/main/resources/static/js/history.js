@@ -53,42 +53,55 @@ function getHistory(selectPage) {
 // Modal
 var detailsModal = $("#detailsModal");
 
-// detailsModal 열릴 시
-detailsModal.on("shown.bs.modal", function() {
-  // something Do...
-});
-
 function getRoutes(routes) {
-  $.ajax({
-    url: "/history/getroutes.do",
-    type: "get",
-    data: { routesIndex: routes.routes },
-    success: function(res) {
-      let str = "";
-      let count = 0;
+	$.ajax({
+		url: "/history/getroutes.do",
+		type: "get",
+		data: {routesIndex : routes.routes},
+		success: function(res) {
+			let str = "";
+			let count = 0;
 
-      $.each(res.data.detail, function(key, value) {
-        str += `<tr class="tr-shadow">`;
-        str += "<td>" + ++count + "</td>";
-        str += "<td>" + value.rdep + "</td>";
-        str += "<td>" + value.rarvl + "</td>";
-        str += "<td>" + value.rdist + "</td>";
-        str += "<td>" + value.rtime + "</td>";
-        str += "<td>" + value.rfee + "</td>";
-        str += "</tr>";
-      });
-
-      $("#routesListBody").html(str);
-
-      detailsModal.find("#regdate").text(routes.regdate);
-
-      detailsModal.find("#username").text(routes.username);
-
-      detailsModal.find("#depandarvl").text(routes.dep + " -> " + routes.arvl);
-
-      detailsModal.find("#dist").text("총 거리 : " + routes.dist);
-
-      detailsModal.find("#fee").text("총 비용 : " + routes.fee);
-    }
-  });
+			$.each(res.data.detail, function(key, value) {
+				str += `<tr class="tr-shadow">`;
+				str += "<td>" + ++count + "</td>";
+				str += "<td>" + value.rdep + "</td>";
+				str += "<td>" + value.rarvl + "</td>";
+				str += "<td>" + value.rdist + "</td>";
+				str += "<td>" + value.rtime + "</td>";
+				str += "<td>" + value.rfee + "</td>";
+				str += "</tr>";
+			});
+			
+			if (userAuth === "[ROLE_ADMIN]"){
+				$("#deleteBtn").show();
+			} else if(userName === routes.username){
+				$("#deleteBtn").show();
+			} else {
+				$("#deleteBtn").hide();
+			}
+			
+			$("#routesListBody").html(str);
+			
+			detailsModal
+			.find("#regdate")
+			.text(routes.regdate);
+			
+			detailsModal
+			.find("#username")
+			.text(routes.username);
+			
+			detailsModal
+			.find("#depandarvl")
+			.text(routes.dep + " -> " + routes.arvl);
+			
+			detailsModal
+			.find("#dist")
+			.text("총 거리 : " + routes.dist);
+			
+			detailsModal
+			.find("#fee")
+			.text("총 비용 : " + routes.fee);
+		}
+	})
 }
