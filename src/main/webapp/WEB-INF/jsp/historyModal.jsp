@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+
+<sec:authentication property="principal.username" var="authUsername"/>
+<sec:authentication property="principal.authorities" var="userAuth"/>
+
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -31,6 +38,10 @@
 				<h6 id="dist"></h6>
 				<h6>총 시간: 00:10:00</h6>
 				<h6 id="fee"></h6>
+				<sec:authorize access="hasRole('ADMIN')">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">삭제</button>
+				</sec:authorize>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
