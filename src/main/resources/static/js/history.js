@@ -52,17 +52,11 @@ function getHistory(selectPage) {
 // Modal
 var detailsModal = $("#detailsModal");
 
-// detailsModal 열릴 시
-detailsModal.on("shown.bs.modal", function() {
-  // something Do...
-});
-
 function getRoutes(routes) {
 	$.ajax({
 		url: "/history/getroutes.do",
 		type: "get",
-		data: {routesIndex : routes.routes
-		      },
+		data: {routesIndex : routes.routes},
 		success: function(res) {
 			let str = "";
 			let count = 0;
@@ -77,6 +71,14 @@ function getRoutes(routes) {
 				str += "<td>" + value.rfee + "</td>";
 				str += "</tr>";
 			});
+			
+			if (userAuth === "[ROLE_ADMIN]"){
+				$("#deleteBtn").show();
+			} else if(userName === routes.username){
+				$("#deleteBtn").show();
+			} else {
+				$("#deleteBtn").hide();
+			}
 			
 			$("#routesListBody").html(str);
 			

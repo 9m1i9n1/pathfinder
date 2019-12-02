@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -31,6 +32,7 @@
 				<h6 id="dist"></h6>
 				<h6>총 시간: 00:10:00</h6>
 				<h6 id="fee"></h6>
+				<button id="deleteBtn" type="button" class="btn btn-secondary" data-dismiss="modal">삭제</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
