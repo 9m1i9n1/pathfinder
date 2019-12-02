@@ -55,6 +55,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 aria-labelledby="headingDep"
                 data-parent="#accordion-select"
               >
+              <form id="depForm">
                 <div class="card-body">
                   <select id="depSelect">
                     <option></option>
@@ -73,6 +74,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     다음
                   </button>
                 </div>
+              </form>
               </div>
             </div>
 
