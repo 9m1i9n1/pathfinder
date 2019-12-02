@@ -10,9 +10,12 @@
 
 # DB Information
 
+## MariaDB
 **Address** :  pathfinder.ca5sinhqhzpv.ap-northeast-2.rds.amazonaws.com
-
 **Password** : pathfinder1123!
+
+## MongoDB
+**Address** : 15.164.187.249
 
 ## Schema
 **User Table**
