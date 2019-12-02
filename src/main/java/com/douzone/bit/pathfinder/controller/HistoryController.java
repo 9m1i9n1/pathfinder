@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +30,14 @@ public class HistoryController {
 	@GetMapping({ "", "/" })
 	public ModelAndView history(ModelAndView mv, HttpServletRequest request) {
 		
-		System.out.println(request.getParameter("pageName"));
 		mv.setViewName("/history");
 		return mv;
 	}
 	
 	@GetMapping("/gethistory.do")
-	public Header<List<HistoryResponse>> getHistory() {
-
-		return historyService.readHistory();
+	public Header<List<HistoryResponse>> getHistory(
+			@PageableDefault(size = 10) Pageable pageable ) {
+		return historyService.readHistory(pageable);
 	}
 	
 	@GetMapping("/getroutes.do")

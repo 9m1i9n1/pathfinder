@@ -356,7 +356,6 @@
             <!-- /.nav-tabs-custom -->
           </div>
 				</table>
-
 				<div id="page"></div>
 
 			</div>

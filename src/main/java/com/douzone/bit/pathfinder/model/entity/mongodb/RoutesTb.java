@@ -1,6 +1,5 @@
 package com.douzone.bit.pathfinder.model.entity.mongodb;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Id;
@@ -18,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Document(collection = "routes")
 public class RoutesTb {
 
+	private ObjectId hindex;
 	@Id
 	private ObjectId id;
 	private String index;

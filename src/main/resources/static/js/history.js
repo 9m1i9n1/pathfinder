@@ -1,15 +1,29 @@
 $(document).ready(function() {
-  getHistory();
+  getHistory(0);
 });
 
-function getHistory() {
+
+function pageButton(totalPages, currentPage, type) {
+	  $("#page").paging({
+	    nowPage: currentPage + 1,
+	    pageNum: totalPages,
+	    buttonNum: 12,
+	    callback: function(currentPage) {
+	      if (type === "history") getHistory(currentPage - 1);
+	    }
+	  });
+	}
+
+
+function getHistory(selectPage) {
 	$.ajax({
 		url: "/history/gethistory.do",
 		type: "get",
+		data:{page : selectPage},
+		
 		success: function(res) {
 			let str = "";
 			
-			console.log(res);
 			$.each(res.data, function(key, value) {		
 				str += `<tr class="tr-shadow">`;
 				str += "<td>" + value.dlvrdate + "</td>";
@@ -25,6 +39,12 @@ function getHistory() {
 			});
 			
 			$("#tableListBody").html(str);
+			
+		      pageButton(
+		    	        res.pagination.totalPages,
+		    	        res.pagination.currentPage,
+		    	        "history"
+		    	      );
 		}
 	})
 }
@@ -41,7 +61,8 @@ function getRoutes(routes) {
 	$.ajax({
 		url: "/history/getroutes.do",
 		type: "get",
-		data: {routesIndex : routes.routes},
+		data: {routesIndex : routes.routes
+		      },
 		success: function(res) {
 			let str = "";
 			let count = 0;
