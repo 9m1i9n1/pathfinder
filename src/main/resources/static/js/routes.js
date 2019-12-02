@@ -6,23 +6,24 @@ $(document).ready(function() {
 });
 
 // 다음 지도 사용
-var map = new L.Map("map", {
-  center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
-  zoom: 0.5, //Leaflet.KoreanTmsProviders.js : resolutions기준 줌 레벨(Level 12)
-  crs: L.Proj.CRS.Daum, //Leaflet.KoreanTmsProviders.js : 새로 정의된 Daum Map CRS
-  worldCopyJump: false //https://leafletjs.com/reference-1.3.2.html#map-worldcopyjump 참조
-});
-var baseLayers = L.tileLayer.koreaProvider("DaumMap.Street").addTo(map);
-baseLayers.on("load", function() {
-  console.log("맵 로딩");
-});
+// var map = new L.Map("map", {
+//   center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
+//   zoom: 0.5, //Leaflet.KoreanTmsProviders.js : resolutions기준 줌 레벨(Level 12)
+//   crs: L.Proj.CRS.Daum, //Leaflet.KoreanTmsProviders.js : 새로 정의된 Daum Map CRS
+//   worldCopyJump: false //https://leafletjs.com/reference-1.3.2.html#map-worldcopyjump 참조
+// });
+// var baseLayers = L.tileLayer.koreaProvider("DaumMap.Street").addTo(map);
+// baseLayers.on("load", function() {
+//   console.log("맵 로딩");
+// });
 
 // 나중에 미국 추가 -
 // OSM 사용
-// var map = L.map('map').setView([36.441163, 127.861612], 7);
-// L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-// 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-// }).addTo(map);
+var map = L.map("map").setView([36.441163, 127.861612], 7);
+L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
 const branchlist = handleFunc => {
   $.ajax({
@@ -75,6 +76,8 @@ const depCarlist = res => {
   });
 
   $("#carSelect").empty();
+  $("#carSelect").html("<option></option>");
+
   $("#carSelect").select2({
     width: "100%",
     placeholder: "차량 선택",
@@ -135,7 +138,7 @@ $("#branchSelect").on("select2:select", function(e) {
     .openPopup();
 });
 
-// 경유지 삭제시 Evnet
+// 경유지 삭제시 Event
 $("#branchSelect").on("select2:unselect", function(e) {
   let selectData = e.params.data;
 
@@ -146,6 +149,8 @@ $("#branchSelect").on("select2:unselect", function(e) {
 
 const loadCalendar = () => {
   $("#calendarBox").html("<div id='calendar'></div>");
+  $("#selectDate").html("배송날짜를 선택해주세요!");
+
   let calendarSize = $("#headingDate").width();
 
   $("#calendar").calendar({

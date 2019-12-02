@@ -140,7 +140,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   <div id="calendarBox"></div>
 
                   <div class="alert alert-light" role="alert" id="selectDate">
-                    날짜를 선택해주세요!
+                    배송날짜를 선택해주세요!
                   </div>
                 </div>
 
