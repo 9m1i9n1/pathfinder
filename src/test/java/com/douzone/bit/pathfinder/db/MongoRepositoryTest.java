@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.douzone.bit.pathfinder.PathfinderApplicationTests;
 import com.douzone.bit.pathfinder.model.entity.mongodb.ReservationTb;
+import com.douzone.bit.pathfinder.repository.repTest;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.ReservationRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
@@ -23,7 +24,10 @@ public class MongoRepositoryTest extends PathfinderApplicationTests {
 	
 	@Autowired
 	private RoutesRepository routesRepository;
-	private ReservationTb rt;
+	
+	@Autowired
+	private HistoryService historyService;
+	
 	//다 들고오기
 	//------------------------------------------------------------------------------------------
 	
@@ -56,7 +60,11 @@ public class MongoRepositoryTest extends PathfinderApplicationTests {
 	
 	@Test
 	public void pringReservationByCarIndex() {
-		System.out.println("carindx로 내용 불러오기 - " + reservationRepository.findByIndex("3"));
+		System.out.println("되나연 ? - " + historyService.getReservation("3"));
 	}
-
+	
+	@Test
+	public void pringReservationByCarIndexAll() {
+		System.out.println("모두 들고오기 ? - " + historyService.getReservation());
+	}
 }
