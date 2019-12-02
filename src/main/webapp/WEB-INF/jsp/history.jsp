@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+	
+<sec:authentication property="principal.username" var="authUsername" />
+<sec:authentication property="principal.authorities" var="userAuth" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,11 +107,12 @@
 
 		</div>
 	</div>
-	</div>
-
 </body>
 <%@include file="historyModal.jsp"%>
 
 <script src="/static/js/history.js"></script>
-<script src="/static/js/hisoryModal.js"></script>
+<script type="text/javascript">
+	let userName = '${authUsername}';
+	let userAuth = '${userAuth}';
+</script>
 </html>

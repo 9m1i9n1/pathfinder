@@ -72,9 +72,15 @@ function getRoutes(routes) {
 				str += "</tr>";
 			});
 			
-			$("#routesListBody").html(str);
+			if (userAuth === "[ROLE_ADMIN]"){
+				$("#deleteBtn").show();
+			} else if(userName === routes.username){
+				$("#deleteBtn").show();
+			} else {
+				$("#deleteBtn").hide();
+			}
 			
-			sessionStorage.setItem("modalUserName", routes.username);
+			$("#routesListBody").html(str);
 			
 			detailsModal
 			.find("#regdate")
