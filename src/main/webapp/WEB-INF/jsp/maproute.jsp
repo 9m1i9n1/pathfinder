@@ -223,6 +223,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     </button>
                     <button
                       class="btn btn-primary next"
+                      id="resultButton"
                       type="button"
                     >
                       다음
@@ -318,7 +319,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     data-parent="#accordion-select"
                   >
                     <div class="card-body">
-                      <div id="Carselect"></div>
+                      <div id="routeResult"></div>
                     </div>
 
                     <div class="card-footer">

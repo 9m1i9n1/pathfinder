@@ -44,28 +44,19 @@ public class MaprouteService {
 		Recursive r = new Recursive(0, m.getmap());
 
 		List<Integer> TourList = r.getTour();
+
+		// 여기서 구간 비용이 나온다.
 		for (int i = 0; i < TourList.size() - 1; i++) {
 			testList.get(TourList.get(i)).setPriceBetweenAandB(m.getmap()[TourList.get(i)][TourList.get(i + 1)]);
 
 		}
+
+		// 정렬이 된 아이들 DTO LIST
 		for (int i = 0; i < testList.size(); i++) {
 			sucList.add(testList.get(Integer.parseInt(TourList.get(i).toString())));
 		}
 
 		return sucList;
-	}
-
-	@Autowired
-	BranchRepository testDao;
-
-	// list
-	public Header<List<AdminBranchResponse>> branchLoading() {
-		List<BranchTb> branchs = testDao.findAll();
-
-		List<AdminBranchResponse> branchList = branchs.stream().map(branch -> response(branch))
-				.collect(Collectors.toList());
-
-		return Header.OK(branchList);
 	}
 
 	// Response 데이터 파싱
@@ -76,21 +67,5 @@ public class MaprouteService {
 				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
 				.areaIndex(branch.getArea().getAreaIndex()).build();
 		return adminBranchResponse;
-	}
-
-	public Header<List<AdminBranchResponse>> search(String searchType, String keyword) {
-		// TODO Auto-generated method stub
-		List<BranchTb> branchs = null;
-		List<AdminBranchResponse> branchResponseList = null;
-		switch (searchType) {
-		case "branchName": {
-			branchs = testDao.findByBranchNameLike("%" + keyword + "%");
-			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
-			break;
-		}
-		default:
-			break;
-		}
-		return Header.OK(branchResponseList);
 	}
 }

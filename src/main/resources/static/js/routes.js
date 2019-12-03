@@ -35,6 +35,7 @@ const branchlist = handleFunc => {
   });
 };
 
+// 차량 선택 Draw
 const carlist = (handleFunc, areaIndex) => {
   $.ajax({
     url: "/maproute/carLoading",
@@ -64,6 +65,18 @@ const depBranchlist = res => {
   });
 };
 
+// 출발지 선택시 Event
+$("#depSelect").on("select2:select", function(e) {
+  let selectData = e.params.data;
+
+  markerGroup.clearLayers();
+  markerAdd(selectData);
+
+  carlist(depCarlist, selectData.areaIndex);
+
+  $("#branchSelect").empty();
+});
+
 // 차량 선택 Draw
 const depCarlist = res => {
   res = res.data;
@@ -85,7 +98,14 @@ const depCarlist = res => {
   });
 };
 
-// 출발지 선택 Draw
+// 차량 선택시 Event
+$("#carSelect").on("select2:select", function(e) {
+  let selectData = e.params.data;
+
+  loadCalendar();
+});
+
+// 경유지 선택 Draw
 const selectBranchlist = res => {
   let dep = $("#depSelect").val();
   res = res.data;
@@ -109,43 +129,69 @@ const selectBranchlist = res => {
   });
 };
 
-// 출발지 선택시 Event
-$("#depSelect").on("select2:select", function(e) {
-  let selectData = e.params.data;
-
-  carlist(depCarlist, selectData.areaIndex);
-});
-
-$("#carSelect").on("select2:select", function(e) {
-  let selectData = e.params.data;
-
-  loadCalendar();
-});
-
-//! 마커 그룹
-let markerGroup = L.layerGroup().addTo(map);
-
-// 경유지 선택시 Evnet
+// 경유지 선택시 Event
 $("#branchSelect").on("select2:select", function(e) {
   let selectData = e.params.data;
 
-  let marker = L.marker([selectData.branchLat, selectData.branchLng]);
-  marker.id = selectData.branchIndex;
-
-  marker
-    .addTo(markerGroup)
-    .bindPopup("test")
-    .openPopup();
+  markerAdd(selectData);
 });
 
 // 경유지 삭제시 Event
 $("#branchSelect").on("select2:unselect", function(e) {
   let selectData = e.params.data;
 
+  markerRemove(selectData);
+});
+
+//! 마커 그룹
+let markerGroup = L.layerGroup().addTo(map);
+
+// 마커 추가
+const markerAdd = selectData => {
+  let marker = L.marker([selectData.branchLat, selectData.branchLng]);
+  marker.id = selectData.branchIndex;
+
+  marker
+    .addTo(markerGroup)
+    .bindPopup(selectData.branchName)
+    .openPopup();
+};
+
+const markerRemove = selectData => {
   markerGroup.eachLayer(layer => {
     layer.id === selectData.branchIndex ? markerGroup.removeLayer(layer) : "";
   });
+};
+
+//! 이벤트 객체 부분
+// 다음버튼 누를 경우에
+$(".next").click(function(e) {
+  e.preventDefault();
+
+  var sectionValid = true;
+  var collapse = $(this).closest(".collapse");
+  $.each(collapse.find("input, select, textarea"), function() {
+    if (!$(this).valid()) {
+      sectionValid = false;
+    }
+  });
+
+  if (sectionValid) {
+    collapse
+      .parents(".card")
+      .next()
+      .find(".collapse")
+      .collapse("toggle");
+  }
 });
+
+$("#resultButton").click(function(e) {
+  requestSort();
+});
+
+const requestSort = () => {
+  console.log("#markerGroup", markerGroup);
+};
 
 const loadCalendar = () => {
   $("#calendarBox").html("<div id='calendar'></div>");
@@ -243,26 +289,6 @@ $("#routeForm").validate({
     const req = $(form).serializeObject();
 
     return false;
-  }
-});
-
-$(".next").click(function(e) {
-  e.preventDefault();
-
-  var sectionValid = true;
-  var collapse = $(this).closest(".collapse");
-  $.each(collapse.find("input, select, textarea"), function() {
-    if (!$(this).valid()) {
-      sectionValid = false;
-    }
-  });
-
-  if (sectionValid) {
-    collapse
-      .parents(".card")
-      .next()
-      .find(".collapse")
-      .collapse("toggle");
   }
 });
 
@@ -551,12 +577,13 @@ $(".next").click(function(e) {
 
 // // 전송 버튼 누르면 경로 출력
 
-//! 마커 메인부분
+//! drawmap - 지도 경로 출력 메인부분
 // $(function() {
 // 	/* 지도 출력 함수 */
 // 	function drawMap(mapInfoData) {
 // 		bool_routed = true;
 
+//TODO 이전에 있던 잔여물 처리
 // 		/* 이전 맵에 미리 클릭된 마커를 모두 제거. */
 // 		for(var i = 0; i < marker.length; i++) {
 // 			map.removeLayer(marker[i]);
@@ -565,6 +592,7 @@ $(".next").click(function(e) {
 // 		/* 기존에 존재하던 Waypoints들 수 만큼 mapPlan에서 제거. */
 // 		mapPlan.spliceWaypoints(0, prev_size,
 // 				mapPlan.getWaypoints());
+//TODO =====================
 
 // 		/* mapPlan에 새로운 경로 추가. */
 // 		mapPlan.setWaypoints(mapInfoData);
@@ -616,7 +644,7 @@ $(".next").click(function(e) {
 // 								 * data[i].branch_value data[i].branch_lat
 // 								 * data[i].branch_lng data[i].priceBetweenAandB
 // 								 */
-// 								mapInfoData.push (L.latLng(branchObjectDataArray[i].branch_lat, branchObjectDataArray[i].branch_lng));
+// 								mapInfoData.push (L.latLng(branchObjectDataArray[i].branch_lat, branchObjectDataArray[i].branch_lng))ranchObjectDataArray[i].branch_lat, branchObjectDataArray[i].branch_lng));
 // 							});
 // 						}
 

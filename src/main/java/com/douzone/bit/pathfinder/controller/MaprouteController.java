@@ -19,8 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.RouteDTO;
 import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.request.MaprouteRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.AdminCarResponse;
+import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminCarService;
 import com.douzone.bit.pathfinder.service.MaprouteService;
 
@@ -32,7 +34,18 @@ public class MaprouteController {
 	private MaprouteService MaprouteService;
 
 	@Autowired
+	private AdminBranchService adminBranchService;
+
+	@Autowired
 	private AdminCarService adminCarService;
+
+	@RequestMapping(value = "/mapsort")
+	public List<RouteDTO> mapsort(@RequestBody List<MaprouteRequest> requestMap) {
+
+		System.out.println(requestMap);
+
+		return null;
+	}
 
 	@RequestMapping(value = "/maproutesend")
 	public List<RouteDTO> test(@RequestBody Map<String, Object> map, Model model) throws Exception {
@@ -56,17 +69,10 @@ public class MaprouteController {
 
 	}
 
-	@GetMapping({ "/tt" })
-	public ModelAndView tt() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/tt");
-		return mv;
-	}
-
 	@GetMapping("/branchLoding")
 	public Header<List<AdminBranchResponse>> branchLoading() {
 
-		return MaprouteService.branchLoading();
+		return adminBranchService.branchlist();
 	}
 
 	@GetMapping("/carLoading")
@@ -74,15 +80,5 @@ public class MaprouteController {
 			@RequestParam(required = false, defaultValue = "branch") String searchType, @RequestParam Long areaIndex) {
 
 		return adminCarService.search(null, searchType, areaIndex);
-	}
-
-	@GetMapping({ "/search" })
-	public Header<List<AdminBranchResponse>> search(
-			@RequestParam(required = false, defaultValue = "branchName") String searchType,
-			@RequestParam(required = false) String keyword) {
-		System.out.println("searchType - " + searchType);
-		System.out.println("keyword - " + keyword);
-
-		return MaprouteService.search(searchType, keyword);
 	}
 }
