@@ -1,5 +1,9 @@
 package com.douzone.bit.pathfinder.model.entity.mongodb;
 
+import java.util.Date;
+
+import javax.persistence.Id;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Document(collection="history")
 public class HistoryTb {
-	private ObjectId _id;
+	@Id
+	private ObjectId id;
 	private String regdate;
 	private String username;
 	private String carname;
@@ -20,7 +25,7 @@ public class HistoryTb {
 	private String arvl;
 	private String dist;
 	private String fee;
-	private String dlvrdate;
-	private String arrivedate;
+	private Date dlvrdate;
+	private Date arrivedate;
 	private String routes;
 }

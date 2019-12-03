@@ -62,11 +62,11 @@
 					<div class="card-header p-2">
 						<ul class="nav nav-pills">
 							<li class="nav-item"><a class="nav-link" href="#todayList"
-								id="todayAjax" data-toggle="tab">오늘</a></li>
+								id="will" onclick="getHistory(0, this.id)" data-toggle="tab">배송예정</a></li>
 							<li class="nav-item"><a class="nav-link active"
-								id="afterAjax" href="#afterList" data-toggle="tab">이후</a></li>
+								id="ing" onclick="getHistory(0, this.id)" href="#afterList" data-toggle="tab">배송중</a></li>
 							<li class="nav-item"><a class="nav-link" href="#beforeList"
-								id="beforeAjax" data-toggle="tab">이전</a></li>
+								id="pp" onclick="getHistory(0, this.id)" data-toggle="tab">배송완료</a></li>
 						</ul>
 					</div>
 					<!-- /.card-header -->
@@ -87,11 +87,11 @@
 
 								<tbody id="tableListBody" class="small">
 
-								<div class="tab-pane" id="todayList">오늘D</div>
+								<div class="tab-pane" id="todayList">배송예정 목록</div>
 
-								<div class="tab-pane active" id="afterList">이후D</div>
+								<div class="tab-pane active" id="afterList">배송중 목록</div>
 
-								<div class="tab-pane" id="beforeList">이전D</div>
+								<div class="tab-pane" id="beforeList">배송완료 목록</div>
 								</tbody>
 								
 							</table>

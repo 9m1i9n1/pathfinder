@@ -2,6 +2,8 @@ package com.douzone.bit.pathfinder.model.network.response;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +15,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HistoryRoutesResponse {
 
-	private String index;
+	private ObjectId hindex;
 	private List<Object> detail; 
 }
