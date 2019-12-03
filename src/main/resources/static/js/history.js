@@ -63,7 +63,7 @@ function getRoutes(routes) {
 			let totalTime = 0;
 			$.each(res.data.detail, function(key, value) {
 			
-				str += `<tr class="tr-shadow">`;
+				str += `<tr class="tr-shadow" id="ModalTr">`;
 				str += "<td>" + ++count + "</td>";
 				str += "<td>" + value.rdep + "</td>";
 				str += "<td>" + value.rarvl + "</td>";
@@ -92,7 +92,7 @@ function getRoutes(routes) {
 			
 			detailsModal
 			.find("#totalTime")
-			.text('총 소요시간 : '+totalTime);
+			.text('총 소요시간 : '+Number(totalTime).toFixed(1));
 			
 			detailsModal
 			.find("#regdate")

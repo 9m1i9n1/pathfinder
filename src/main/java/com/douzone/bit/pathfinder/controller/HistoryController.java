@@ -46,4 +46,14 @@ public class HistoryController {
 		
 		return historyService.readRoutes(id);
 	}
+	
+	@GetMapping("/gethistory/search")
+	public Header<List<HistoryResponse>> getSearchHistory(
+			@RequestParam(required = false) String searchType,
+			@RequestParam(required = false) String keyword,
+			@PageableDefault(size = 10) Pageable pageable){
+		System.out.println("test@@@");
+		return historyService.searchHistory(pageable, searchType, keyword);
+	}
+	
 }

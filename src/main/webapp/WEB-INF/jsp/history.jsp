@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-	
+
 <sec:authentication property="principal.username" var="authUsername" />
 <sec:authentication property="principal.authorities" var="userAuth" />
 
@@ -53,26 +53,23 @@
 						</div>
 					</div>
 				</div>
+				<ul class="nav nav-pills ">
+					<li class="nav-item"><a class="nav-link" href="#todayList"
+						id="todayAjax" data-toggle="tab">오늘</a></li>
+					<li class="nav-item"><a class="nav-link active" id="afterAjax"
+						href="#afterList" data-toggle="tab">이후</a></li>
+					<li class="nav-item"><a class="nav-link" href="#beforeList"
+						id="beforeAjax" data-toggle="tab">이전</a></li>
+				</ul>
+
 			</div>
 
-			<div class="card-body box-profile table-responsive p-0 height700px">
-
+			<div class="card-body box-profile table-responsive p-0 height100">
 
 				<div class="card">
-					<div class="card-header p-2">
-						<ul class="nav nav-pills">
-							<li class="nav-item"><a class="nav-link" href="#todayList"
-								id="todayAjax" data-toggle="tab">오늘</a></li>
-							<li class="nav-item"><a class="nav-link active"
-								id="afterAjax" href="#afterList" data-toggle="tab">이후</a></li>
-							<li class="nav-item"><a class="nav-link" href="#beforeList"
-								id="beforeAjax" data-toggle="tab">이전</a></li>
-						</ul>
-					</div>
-					<!-- /.card-header -->
 					<div class="card-body">
 						<div class="tab-content">
-							<table class="table table-hover" >
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th style="width: 10%">출발일자</th>
@@ -87,13 +84,13 @@
 
 								<tbody id="tableListBody" class="small">
 
-								<div class="tab-pane" id="todayList">오늘D</div>
+									<div class="tab-pane" id="todayList">오늘D</div>
 
-								<div class="tab-pane active" id="afterList">이후D</div>
+									<div class="tab-pane active" id="afterList">이후D</div>
 
-								<div class="tab-pane" id="beforeList">이전D</div>
+									<div class="tab-pane" id="beforeList">이전D</div>
 								</tbody>
-								
+
 							</table>
 						</div>
 						<!-- /.tab-content -->
