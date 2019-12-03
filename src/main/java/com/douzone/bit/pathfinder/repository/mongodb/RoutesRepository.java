@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface RoutesRepository extends MongoRepository<RoutesTb, String> {
 	Object findByHindex(ObjectId hindex);
 	RoutesTb findById(ObjectId id);
+	void deleteByHindex(ObjectId hindex);
 }
