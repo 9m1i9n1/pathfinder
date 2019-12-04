@@ -1,5 +1,7 @@
 package com.douzone.bit.pathfinder.model.network.response;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HistoryResponse {
 
-	private ObjectId _id;
+	private ObjectId id;
 	private String regdate;
 	private String username;
 	private String carname;
@@ -21,7 +23,7 @@ public class HistoryResponse {
 	private String arvl;
 	private String dist;
 	private String fee;
-	private String dlvrdate;
-	private String arrivedate;
+	private Date dlvrdate;
+	private Date arrivedate;
 	private String routes;
 }

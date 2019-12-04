@@ -208,6 +208,19 @@ function userPwReset(userIndex) {
 var insertModal = $("#insertModal");
 var modifyModal = $("#modifyModal");
 
+const selectInit = modal => {
+  // init
+  modal.find("#branchIndex").select2({
+    width: "100%",
+    placeholder: "지점 선택"
+  });
+
+  modal.find("#userPosition").select2({
+    width: "100%",
+    placeholder: "직책 선택"
+  });
+};
+
 // insertModal 열릴 시
 insertModal.on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
@@ -219,19 +232,9 @@ insertModal.on("hidden.bs.modal", function() {
   $("#userCreateForm")[0].reset();
   insertModal.find(".formCheck").html("");
 
-  let str = "<option value='' disabled selected>선택</option>";
-
-  insertModal
-    .find("#areaIndex")
-    .html(str)
-    .selectpicker("refresh");
-
-  insertModal
-    .find("#branchIndex")
-    .html(str)
-    .selectpicker("refresh");
-
-  insertModal.find("#userPosition").selectpicker("refresh");
+  insertModal.find("#areaIndex").empty();
+  insertModal.find("#branchIndex").empty();
+  insertModal.find("#userPosition").trigger("change");
 
   $("#userCreateForm")
     .validate()
@@ -253,22 +256,27 @@ modifyModal.on("hidden.bs.modal", function() {
     .resetForm();
 });
 
-// 모달 내에서 지역 선택 시
-insertModal.find("#areaIndex").change(function() {
-  let selected = $(this)
-    .children("option:selected")
-    .val();
-
-  branchLoading(insertModal, selected);
+insertModal.find("#areaIndex").on("select2:select", function(e) {
+  let selectData = e.params.data;
+  branchLoading(insertModal, selectData.id);
 });
 
-modifyModal.find("#areaIndex").change(function() {
-  let selected = $(this)
-    .children("option:selected")
-    .val();
-
-  branchLoading(modifyModal, selected);
+modifyModal.find("#areaIndex").on("select2:select", function(e) {
+  let selectData = e.params.data;
+  branchLoading(modifyModal, selectData.id);
 });
+
+function arrayToObject(array) {
+  return array.reduce(function(result, item) {
+    let obj = {};
+    obj.id = item[0];
+    obj.text = item[1];
+
+    result.push(obj);
+
+    return result;
+  }, []);
+}
 
 //모달 내 지역 로딩
 function areaLoading(modal) {
@@ -277,24 +285,16 @@ function areaLoading(modal) {
     type: "get",
     async: false,
     success: function(res) {
-      let str = "";
+      let areaData = arrayToObject(res.data);
 
-      str += "<option value='' disabled selected>선택</option>";
-
-      modal
-        .find("#branchIndex")
-        .html(str)
-        .selectpicker("refresh");
-
-      $.each(res.data, function(key, value) {
-        str += "<option value='" + value[0] + "'>";
-        str += value[1] + "</option>";
+      modal.find("#areaIndex").html("<option></option>");
+      modal.find("#areaIndex").select2({
+        width: "100%",
+        placeholder: "지역 선택",
+        data: areaData
       });
 
-      modal
-        .find("#areaIndex")
-        .html(str)
-        .selectpicker("refresh");
+      selectInit(modal);
     },
     error: function(request, status, error) {
       alert(
@@ -319,19 +319,15 @@ function branchLoading(modal, selected) {
     data: { areaIndex: selected },
     async: false,
     success: function(res) {
-      let str = "";
+      let branchData = arrayToObject(res.data);
 
-      str += "<option value=''>선택</option>";
-
-      $.each(res.data, function(key, value) {
-        str += "<option value='" + value[0] + "'>";
-        str += value[1] + "</option>";
+      modal.find("#branchIndex").empty();
+      modal.find("#branchIndex").html("<option></option>");
+      modal.find("#branchIndex").select2({
+        width: "100%",
+        placeholder: "지점 선택",
+        data: branchData
       });
-
-      modal
-        .find("#branchIndex")
-        .html(str)
-        .selectpicker("refresh");
     },
     error: function(request, status, error) {
       alert(
@@ -365,33 +361,27 @@ function modalUserLoading(userIndex) {
     data: { userIndex: userIndex },
     type: "get",
     success: function(res) {
-      modifyModal.find("#userIndex").val(res.data.userIndex);
-      modifyModal.find("#userId").val(res.data.userId);
-      modifyModal.find("#userName").val(res.data.userName);
-      modifyModal.find("#userEmail").val(res.data.userEmail);
-      modifyModal.find("#userPhone").val(res.data.userPhone);
+      res = res.data;
+
+      modifyModal.find("#userIndex").val(res.userIndex);
+      modifyModal.find("#userId").val(res.userId);
+      modifyModal.find("#userName").val(res.userName);
+      modifyModal.find("#userEmail").val(res.userEmail);
+      modifyModal.find("#userPhone").val(res.userPhone);
       modifyModal
-        .find("[name=userAuth][value=" + res.data.userAuth + "]")
+        .find("[name=userAuth][value=" + res.userAuth + "]")
         .prop("checked", true);
 
       areaLoading(modifyModal);
+      modifyModal.find("#areaIndex").val(res.areaIndex);
+      modifyModal.find("#areaIndex").trigger("change");
 
-      modifyModal
-        .find("#areaIndex")
-        .val(res.data.areaIndex)
-        .selectpicker("refresh");
+      branchLoading(modifyModal, res.areaIndex);
+      modifyModal.find("#branchIndex").val(res.branchIndex);
+      modifyModal.find("#branchIndex").trigger("change");
 
-      branchLoading(modifyModal, res.data.areaIndex);
-
-      modifyModal
-        .find("#branchIndex")
-        .val(res.data.branchIndex)
-        .selectpicker("refresh");
-
-      modifyModal
-        .find("#userPosition")
-        .val(res.data.userPosition)
-        .selectpicker("refresh");
+      modifyModal.find("#userPosition").val(res.userPosition);
+      modifyModal.find("#userPosition").trigger("change");
     },
     error: function(request, status, error) {
       alert(
@@ -516,6 +506,7 @@ $("form").each(function() {
   $(this).validate({
     onkeyup: false,
     ignore: ":hidden, [readonly]",
+    // errorClass: "is-invalid",
     rules: {
       userId: {
         required: true,

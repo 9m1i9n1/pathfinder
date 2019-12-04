@@ -41,7 +41,8 @@
           <div class="form-group row">
             <label for="areaIndex" class="col-sm-3 col-form-label-sm">지역</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex" >
+              <select id="areaIndex" name="areaIndex" >
+                <option></option>
               </select>
             </div>
           </div>
@@ -49,7 +50,8 @@
           <div class="form-group row">
             <label for="branchIndex" class="col-sm-3 col-form-label-sm">지점</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex" >
+              <select id="branchIndex" name="branchIndex" >
+                <option></option>
               </select>
             </div>
           </div>
@@ -57,8 +59,8 @@
           <div class="form-group row">
             <label for="userPosition" class="col-sm-3 col-form-label-sm">직책</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" >
-                <option value="" disabled selected>선택</option>
+              <select id="userPosition" name="userPosition" >
+                <option></option>
                 <option value="사원">사원</option>
                 <option value="대리">대리</option>
                 <option value="과장">과장</option>
@@ -150,7 +152,7 @@
           <div class="form-group row">
             <label for="areaIndex" class="col-sm-3 col-form-label-sm">지역</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="areaIndex" name="areaIndex" >
+              <select id="areaIndex" name="areaIndex" >
               </select>
             </div>
           </div>
@@ -158,7 +160,7 @@
           <div class="form-group row">
             <label for="branchIndex" class="col-sm-3 col-form-label-sm">지점</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="branchIndex" name="branchIndex">
+              <select id="branchIndex" name="branchIndex">
               </select>
             </div>
           </div>
@@ -166,7 +168,7 @@
           <div class="form-group row">
             <label for="userPosition" class="col-sm-3 col-form-label-sm">직책</label>
             <div class="col-sm-8">
-              <select class="selectpicker" data-live-search="true" id="userPosition" name="userPosition" >
+              <select id="userPosition" name="userPosition" >
                 <option value="" disabled selected>선택</option>
                 <option>사원</option>
                 <option>대리</option>

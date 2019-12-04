@@ -6,23 +6,24 @@ $(document).ready(function() {
 });
 
 // 다음 지도 사용
-var map = new L.Map("map", {
-  center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
-  zoom: 0.5, //Leaflet.KoreanTmsProviders.js : resolutions기준 줌 레벨(Level 12)
-  crs: L.Proj.CRS.Daum, //Leaflet.KoreanTmsProviders.js : 새로 정의된 Daum Map CRS
-  worldCopyJump: false //https://leafletjs.com/reference-1.3.2.html#map-worldcopyjump 참조
-});
-var baseLayers = L.tileLayer.koreaProvider("DaumMap.Street").addTo(map);
-baseLayers.on("load", function() {
-  console.log("로딩");
-});
+// var map = new L.Map("map", {
+//   center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
+//   zoom: 0.5, //Leaflet.KoreanTmsProviders.js : resolutions기준 줌 레벨(Level 12)
+//   crs: L.Proj.CRS.Daum, //Leaflet.KoreanTmsProviders.js : 새로 정의된 Daum Map CRS
+//   worldCopyJump: false //https://leafletjs.com/reference-1.3.2.html#map-worldcopyjump 참조
+// });
+// var baseLayers = L.tileLayer.koreaProvider("DaumMap.Street").addTo(map);
+// baseLayers.on("load", function() {
+//   console.log("맵 로딩");
+// });
 
 // 나중에 미국 추가 -
 // OSM 사용
-// var map = L.map('map').setView([36.441163, 127.861612], 7);
-// L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-// 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-// }).addTo(map);
+var map = L.map("map").setView([36.441163, 127.861612], 7);
+L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
 const branchlist = handleFunc => {
   $.ajax({
@@ -59,11 +60,7 @@ const depBranchlist = res => {
   $("#depSelect").select2({
     width: "100%",
     placeholder: "출발지 선택",
-    data: branchData,
-    // 이전달 다음달 변경 시
-    viewChange: function(view, y, m) {
-      console.log(view, y, m);
-    }
+    data: branchData
   });
 };
 
@@ -79,14 +76,12 @@ const depCarlist = res => {
   });
 
   $("#carSelect").empty();
+  $("#carSelect").html("<option></option>");
+
   $("#carSelect").select2({
     width: "100%",
     placeholder: "차량 선택",
-    data: carData,
-    // 이전달 다음달 변경 시
-    viewChange: function(view, y, m) {
-      console.log(view, y, m);
-    }
+    data: carData
   });
 };
 
@@ -121,24 +116,46 @@ $("#depSelect").on("select2:select", function(e) {
   carlist(depCarlist, selectData.areaIndex);
 });
 
+$("#carSelect").on("select2:select", function(e) {
+  let selectData = e.params.data;
+
+  loadCalendar();
+});
+
+//! 마커 그룹
+let markerGroup = L.layerGroup().addTo(map);
+
 // 경유지 선택시 Evnet
 $("#branchSelect").on("select2:select", function(e) {
   let selectData = e.params.data;
 
-  L.marker([selectData.branchLat, selectData.branchLng])
-    .addTo(map)
+  let marker = L.marker([selectData.branchLat, selectData.branchLng]);
+  marker.id = selectData.branchIndex;
+
+  marker
+    .addTo(markerGroup)
     .bindPopup("test")
     .openPopup();
-  console.log("#branch SelectData", selectData);
 });
 
-// 캘린더 띄움 (차량선택 화면에서 다음 버튼 클릭)
-$("#nextCarButton").click(() => {
-  let todayDate = moment().format("YYYY[-]MM[-]DD");
+// 경유지 삭제시 Event
+$("#branchSelect").on("select2:unselect", function(e) {
+  let selectData = e.params.data;
 
-  $(".calendar").calendar({
-    width: $("#headingDate").width(),
-    height: 280,
+  markerGroup.eachLayer(layer => {
+    layer.id === selectData.branchIndex ? markerGroup.removeLayer(layer) : "";
+  });
+});
+
+const loadCalendar = () => {
+  $("#calendarBox").html("<div id='calendar'></div>");
+  $("#dateSelect").val("");
+
+  let calendarSize = $("#headingDate").width();
+
+  $("#calendar").calendar({
+    width: calendarSize,
+    height: calendarSize * 0.8,
     date: new Date(),
     format: "yyyy-MM-dd",
     startWeek: 0,
@@ -159,13 +176,94 @@ $("#nextCarButton").click(() => {
       "12월"
     ],
     onSelected: function(view, date, data) {
-      $("#selectDate").html(moment(date).format("YYYY-MM-DD"));
+      $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
     },
     // 이전달 다음달 변경 시
     viewChange: function(view, y, m) {
       console.log(view, y, m);
     }
   });
+};
+
+$("#routeForm").validate({
+  onkeyup: false,
+  // ignore: "",
+  // errorClass: "is-invalid",
+  rules: {
+    depSelect: {
+      required: true
+    },
+    carSelect: {
+      required: true
+    },
+    dateSelect: {
+      required: true
+    },
+    branchSelect: {
+      required: true
+    }
+  },
+  messages: {
+    depSelect: {
+      required: "출발지를 선택해주세요."
+    },
+    carSelect: {
+      required: "차량을 선택해주세요."
+    },
+    dateSelect: {
+      required: "날짜를 선택해주세요."
+    },
+    branchSelect: {
+      required: "지점을 선택해주세요."
+    }
+  },
+
+  // 에러 위치 조정
+  errorPlacement: function(error, element) {
+    if (element.is(":radio") || element.is("select") || element.is("input")) {
+      error.appendTo(element.parents(".card-body"));
+    } else {
+      error.insertAfter(element);
+    }
+  },
+
+  // valid 실패시
+  invalidHandler: function(form, validator) {
+    var errors = validator.numberOfInvalids();
+
+    if (errors) {
+      alert(validator.errorList[0].message);
+      validator.errorList[0].element.focus();
+    }
+  },
+
+  // valid 성공시
+  submitHandler: function(form) {
+    const formId = $(form).attr("id");
+    const req = $(form).serializeObject();
+
+    return false;
+  }
+});
+
+$(".next").click(function(e) {
+  e.preventDefault();
+
+  var sectionValid = true;
+  var collapse = $(this).closest(".collapse");
+  $.each(collapse.find("input, select, textarea"), function() {
+    if (!$(this).valid()) {
+      sectionValid = false;
+    }
+  });
+
+  if (sectionValid) {
+    collapse
+      .parents(".card")
+      .next()
+      .find(".collapse")
+      .collapse("toggle");
+  }
 });
 
 // var tbody;
@@ -745,18 +843,18 @@ $("#nextCarButton").click(() => {
 // 	})
 // }
 
-// 경유지 선택 Draw
-const drawBranchlist = res => {
-  let str = "";
+// // 경유지 선택 Draw
+// const drawBranchlist = res => {
+//   let str = "";
 
-  $.each(res.data, function(key, value) {
-    str += "<tr class='tr-shadow'>";
-    str += `<td id="${value.branchIndex}" class="">${value.branchName}</td>`;
-    str += `<td style="display: none">${value.branchLat}</td>`;
-    str += `<td style="display: none">${value.branchLng}</td>`;
-    str += "</td>";
-    // str += '<td id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
-  });
+//   $.each(res.data, function(key, value) {
+//     str += "<tr class='tr-shadow'>";
+//     str += `<td id="${value.branchIndex}" class="">${value.branchName}</td>`;
+//     str += `<td style="display: none">${value.branchLat}</td>`;
+//     str += `<td style="display: none">${value.branchLng}</td>`;
+//     str += "</td>";
+//     // str += '<td id="' + key + '" onClick=\"HighLightTR(this, \'rgb(201, 204, 153)\');\">';
+//   });
 
-  $("#allDataTable").html(str);
-};
+//   $("#allDataTable").html(str);
+// };

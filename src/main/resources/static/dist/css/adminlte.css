@@ -28504,13 +28504,18 @@ a.text-muted:hover {
   background-color: #ffffff;
   border-color: #dee2e6;
 }
+/*# sourceMappingURL=adminlte.css.map */
+
+/* Custom CSS */
 .height100 {
-   height: 100%; 
-}
-.height675px{
-	height: 750px;
+  height: 100%; 
 }
 
+.height675px{
+ height: 750px;
+}
+
+<<<<<<< HEAD
 .modal-body table {
 	width: 100%; /* 140px * 5 column + 16px scrollbar width */
 	border-spacing: 0;
@@ -28544,3 +28549,7 @@ a.text-muted:hover {
 
 
 /*# sourceMappingURL=adminlte.css.map */
+.vh-80 {
+  min-height: 80vh;
+}
+
