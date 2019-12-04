@@ -30,6 +30,7 @@ function getHistory(selectPage, id) {
 						function(key, value) {
 							str += `<tr class="tr-shadow">`;
 							str += "<td>" + value.dlvrdate	+ "</td>";
+							str += "<td>" + value.arrivedate	+ "</td>";
 							str += "<td>" + value.username + "</td>";
 							str += "<td>" + value.dep + "</td>";
 							str += "<td>" + value.arvl + "</td>";

@@ -72,6 +72,7 @@
 								<thead>
 									<tr>
 										<th style="width: 10%">출발일자</th>
+										<th style="width: 10%">도착일자</th>
 										<th style="width: 10%">사용자</th>
 										<th style="width: 10%">출발지</th>
 										<th style="width: 10%">도착지</th>
