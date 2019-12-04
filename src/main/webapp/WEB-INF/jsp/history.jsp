@@ -53,34 +53,19 @@
 						</div>
 					</div>
 				</div>
-				<ul class="nav nav-pills ">
+				<ul class="nav nav-pills">
 					<li class="nav-item"><a class="nav-link" href="#todayList"
-						id="todayAjax" data-toggle="tab">오늘</a></li>
-					<li class="nav-item"><a class="nav-link active" id="afterAjax"
-						href="#afterList" data-toggle="tab">이후</a></li>
+						id="will" onclick="getHistory(0, this.id)" data-toggle="tab">배송예정</a></li>
+					<li class="nav-item"><a class="nav-link active" id="ing"
+						onclick="getHistory(0, this.id)" href="#afterList"
+						data-toggle="tab">배송중</a></li>
 					<li class="nav-item"><a class="nav-link" href="#beforeList"
-						id="beforeAjax" data-toggle="tab">이전</a></li>
+						id="pp" onclick="getHistory(0, this.id)" data-toggle="tab">배송완료</a></li>
 				</ul>
-
 			</div>
 
 			<div class="card-body box-profile table-responsive p-0 height100">
-
 				<div class="card">
-<<<<<<< HEAD
-=======
-					<div class="card-header p-2">
-						<ul class="nav nav-pills">
-							<li class="nav-item"><a class="nav-link" href="#todayList"
-								id="will" onclick="getHistory(0, this.id)" data-toggle="tab">배송예정</a></li>
-							<li class="nav-item"><a class="nav-link active"
-								id="ing" onclick="getHistory(0, this.id)" href="#afterList" data-toggle="tab">배송중</a></li>
-							<li class="nav-item"><a class="nav-link" href="#beforeList"
-								id="pp" onclick="getHistory(0, this.id)" data-toggle="tab">배송완료</a></li>
-						</ul>
-					</div>
-					<!-- /.card-header -->
->>>>>>> origin/master
 					<div class="card-body">
 						<div class="tab-content">
 							<table class="table table-hover">
@@ -98,19 +83,12 @@
 
 								<tbody id="tableListBody" class="small">
 
-<<<<<<< HEAD
-									<div class="tab-pane" id="todayList">오늘D</div>
+									<div class="tab-pane" id="todayList"></div>
 
-									<div class="tab-pane active" id="afterList">이후D</div>
+									<div class="tab-pane active" id="afterList"></div>
 
-									<div class="tab-pane" id="beforeList">이전D</div>
-=======
-								<div class="tab-pane" id="todayList">배송예정 목록</div>
+									<div class="tab-pane" id="beforeList"></div>
 
-								<div class="tab-pane active" id="afterList">배송중 목록</div>
-
-								<div class="tab-pane" id="beforeList">배송완료 목록</div>
->>>>>>> origin/master
 								</tbody>
 
 							</table>
