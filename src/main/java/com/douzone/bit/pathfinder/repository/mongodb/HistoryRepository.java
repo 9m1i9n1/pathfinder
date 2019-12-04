@@ -17,15 +17,15 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	Object findByRoutes(ObjectId routes);
 	
 	//검색 페이지
-	public Page<HistoryTb> findByCarnameLike(String carname, Pageable pageable);
+	Page<HistoryTb> findByCarnameLike(String carname, Pageable pageable);
 	
-	public Page<HistoryTb> findByRegdate(String carname, Pageable pageable);
+	Page<HistoryTb> findByRegdate(String regdate, Pageable pageable);
 	
-	public Page<HistoryTb> findByUsernameLike(String carname, Pageable pageable);
+	Page<HistoryTb> findByUsernameLike(String username, Pageable pageable);
 	
-	public Page<HistoryTb> findByDep(String carname, Pageable pageable);
+	Page<HistoryTb> findByDep(String dep, Pageable pageable);
 
-	public Page<HistoryTb> findByArvl(String carname, Pageable pageable);
+	Page<HistoryTb> findByArvl(String arvl, Pageable pageable);
 
 	@Query("{'arrivedate' : { '$lt' : ?0 }}")
 	Page<HistoryTb> findAllByPp(Pageable pageable, Date LocalTime);

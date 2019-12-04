@@ -72,7 +72,7 @@
 									<th style="width: 15%">지역</th>
 									<th style="width: 20%">차량번호</th>
 									<th style="width: 22%">차종</th>
-									<th style="width: 13%">연비</th>
+									<th style="width: 13%">연비(km)</th>
 									<th style="width: 20%">구입날짜</th>
 									<th style="width: 10%">삭제</th>
 								</tr>

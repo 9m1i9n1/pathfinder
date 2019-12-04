@@ -54,10 +54,13 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 
 
-	public Header<List<HistoryResponse>> readHistory(Pageable pageable, String id) {
+	public Header<List<HistoryResponse>> readHistory(Pageable pageable, String id, String searchType, String keyword) {
 
-		Page<HistoryTb> historys = null;
+		System.out.println("id : "+id );
+		System.out.println("searchType : "+searchType );
+		System.out.println("keyword : " + keyword);
 		
+		Page<HistoryTb> historys = null;
 
 		switch(id) {
 			case "will" :
@@ -74,11 +77,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
 
-		System.out.println("totalpage: " + historys.getTotalPages());
-		System.out.println("totalelements: " + historys.getTotalElements());
-		System.out.println("getNumber: " + historys.getNumber());
-		System.out.println("NumberOfElements: " + historys.getNumberOfElements());
-		
 		Pagination pagination = Pagination.builder()
 				.totalPages(historys.getTotalPages())
 				.totalElements(historys.getTotalElements())

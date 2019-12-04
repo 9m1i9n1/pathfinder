@@ -40,9 +40,11 @@ public class HistoryController {
 	@GetMapping("/gethistory.do")
 	public Header<List<HistoryResponse>> getHistory(
 			@PageableDefault(size = 10) Pageable pageable,
-			@RequestParam(value = "id", required = false) String id) {
+			@RequestParam(value = "id", required = false) String id,
+			@RequestParam(value= "searchType" , required = false) String searchType,
+			@RequestParam(value= "keyword" , required = false) String keyword){
 		
-		return historyService.readHistory(pageable, id);
+		return historyService.readHistory(pageable, id, searchType ,keyword);
 	}
 	
 	@GetMapping("/getroutes.do")
