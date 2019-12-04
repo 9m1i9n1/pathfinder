@@ -5,6 +5,12 @@ $(document).ready(function() {
   // showClickRoute();
 });
 
+$("#testButton").on("click", function(e) {
+  $("#depSelect")
+    .val("652")
+    .trigger("change");
+});
+
 // 다음 지도 사용
 // var map = new L.Map("map", {
 //   center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
@@ -28,10 +34,9 @@ L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 const branchlist = handleFunc => {
   $.ajax({
     url: "/maproute/branchLoding",
-    type: "get",
-    success: function(res) {
-      handleFunc(res);
-    }
+    type: "get"
+  }).then(function(res) {
+    handleFunc(res);
   });
 };
 
@@ -40,10 +45,9 @@ const carlist = (handleFunc, areaIndex) => {
   $.ajax({
     url: "/maproute/carLoading",
     data: { areaIndex },
-    type: "get",
-    success: function(res) {
-      handleFunc(res);
-    }
+    type: "get"
+  }).then(function(res) {
+    handleFunc(res);
   });
 };
 
@@ -150,6 +154,8 @@ let markerGroup = L.layerGroup().addTo(map);
 const markerAdd = selectData => {
   let marker = L.marker([selectData.branchLat, selectData.branchLng]);
   marker.id = selectData.branchIndex;
+  marker.name = selectData.branchName;
+  marker.cost = selectData.branchValue;
 
   marker
     .addTo(markerGroup)
@@ -186,11 +192,42 @@ $(".next").click(function(e) {
 });
 
 $("#resultButton").click(function(e) {
-  requestSort();
+  mapSort();
 });
 
-const requestSort = () => {
-  console.log("#markerGroup", markerGroup);
+// sort 요청
+const mapSort = () => {
+  let markerList = [];
+
+  markerGroup.eachLayer(layer => {
+    markerList.push({
+      branchIndex: layer.id,
+      branchName: layer.name,
+      branchLat: layer.getLatLng().lat,
+      branchLng: layer.getLatLng().lng,
+      branchValue: layer.cost
+    });
+  });
+
+  console.log("#markerList", markerList);
+
+  requestSort(markerList);
+};
+
+// request sort 통신 소스
+const requestSort = markerList => {
+  $.ajax({
+    url: "/maproute/mapsort",
+    type: "post",
+    contentType: "application/json",
+    data: JSON.stringify(markerList)
+  })
+    .then(function(res) {
+      console.log("#res", res);
+    })
+    .catch(function(error) {
+      alert("#error : ", error);
+    });
 };
 
 const loadCalendar = () => {

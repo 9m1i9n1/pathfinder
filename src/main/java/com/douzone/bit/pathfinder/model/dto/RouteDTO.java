@@ -1,4 +1,4 @@
-package com.douzone.bit.pathfinder.model.entity;
+package com.douzone.bit.pathfinder.model.dto;
 
 public class RouteDTO {
 	private String branch_name;

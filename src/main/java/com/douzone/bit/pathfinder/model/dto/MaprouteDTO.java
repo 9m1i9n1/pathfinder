@@ -1,4 +1,4 @@
-package com.douzone.bit.pathfinder.model.network.request;
+package com.douzone.bit.pathfinder.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MaprouteRequest {
+public class MaprouteDTO {
 
   private Long branchIndex;
 

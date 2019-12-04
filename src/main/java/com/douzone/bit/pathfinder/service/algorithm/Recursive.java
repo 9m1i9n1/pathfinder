@@ -3,28 +3,28 @@ package com.douzone.bit.pathfinder.service.algorithm;
 import java.util.*;
 
 public class Recursive {
-	
+
 	private final int N;
 	private final int START_NODE;
 	private final int FINISHED_STATE;
 
-	private int[][] distance;
-	private int minTourCost = Integer.MAX_VALUE;
+	private double[][] map;
+	private double minTourCost = Double.POSITIVE_INFINITY;
+	// private int minTourCost = Integer.MAX_VALUE;
 
 	private List<Integer> tour = new ArrayList<>();
-	private List<Integer> tour2 = new ArrayList<>();
 	private boolean ranSolver = false;
 
 	public long startTime, endTime, lTime;
 
-	public Recursive(int[][] distanceMatrix) {
-		this(0, distanceMatrix);
+	public Recursive(double[][] map) {
+		this(0, map);
 	}
 
-	public Recursive(int startNode, int[][] distanceMatrix) {
-		
-		this.distance = distanceMatrix;
-		N = distanceMatrix.length;
+	public Recursive(int startNode, double[][] map) {
+
+		this.map = map;
+		N = map.length;
 		START_NODE = startNode;
 
 		// Validate inputs.
@@ -34,7 +34,7 @@ public class Recursive {
 		FINISHED_STATE = (1 << N) - 1;
 	}
 
-// Returns the optimal tour for the traveling salesman problem.
+	// Returns the optimal tour for the traveling salesman problem.
 	public List<Integer> getTour() {
 		if (!ranSolver)
 			solve();
@@ -42,20 +42,27 @@ public class Recursive {
 	}
 
 	// Returns the minimal tour cost.
-	public int getTourCost() {
+	public double getTourCost() {
 		if (!ranSolver)
 			solve();
 		return minTourCost;
 	}
-	int cnt = 0;
+
+	// int cnt = 0;
+
 	public void solve() {
-		
+
 		// Run the solver
 		int state = 1 << START_NODE;
-		
-		int[][] memo = new int[N][1 << N];
+
+		Double[][] memo = new Double[N][1 << N];
 		Integer[][] prev = new Integer[N][1 << N];
-		System.out.println(N);
+
+		// for (Double[] row : memo)
+		// Arrays.fill(row, 0);
+		// for (Integer[] row : prev)
+		// Arrays.fill(row, 0);
+
 		minTourCost = tsp(START_NODE, state, memo, prev);
 
 		// Regenerate path
@@ -69,22 +76,23 @@ public class Recursive {
 			state = nextState;
 			index = nextIndex;
 		}
-//		tour.add(START_NODE);
+		// tour.add(START_NODE);
 		ranSolver = true;
-		
+
 	}
 
-	private int tsp(int i, int state, int[][] memo, Integer[][] prev) {
+	private double tsp(int i, int state, Double[][] memo, Integer[][] prev) {
 		// Done this tour. Return cost of going back to start node.
-//		System.out.println(cnt++);
+		// System.out.println(cnt++);
+
 		if (state == FINISHED_STATE)
-			return distance[0][START_NODE];
+			return map[0][START_NODE];
 
 		// Return cached answer if already computed.
-		if (memo[i][state] != 0)
+		if (memo[i][state] != null)
 			return memo[i][state];
 
-		int minCost = Integer.MAX_VALUE;
+		double minCost = Double.POSITIVE_INFINITY;
 		int index = -1;
 		for (int next = 0; next < N; next++) {
 
@@ -93,7 +101,7 @@ public class Recursive {
 				continue;
 
 			int nextState = state | (1 << next);
-			int newCost = distance[i][next] + tsp(next, nextState, memo, prev);
+			double newCost = map[i][next] + tsp(next, nextState, memo, prev);
 			if (newCost < minCost) {
 				minCost = newCost;
 				index = next;
