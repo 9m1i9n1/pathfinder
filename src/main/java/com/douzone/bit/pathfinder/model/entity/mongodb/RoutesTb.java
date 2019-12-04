@@ -17,9 +17,8 @@ import lombok.NoArgsConstructor;
 @Document(collection = "routes")
 public class RoutesTb {
 
-	private ObjectId hindex;
 	@Id
 	private ObjectId id;
-	private String index;
+	private ObjectId hindex;
 	private List<Object> detail;
 }

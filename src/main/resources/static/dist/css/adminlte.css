@@ -28515,6 +28515,41 @@ a.text-muted:hover {
  height: 750px;
 }
 
+<<<<<<< HEAD
+.modal-body table {
+	width: 100%; /* 140px * 5 column + 16px scrollbar width */
+	border-spacing: 0;
+}
+
+.modal-body tbody, .modal-body thead tr {
+	display: block;
+}
+
+.modal-body tbody {
+	height: 150px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.modal-body tbody tr, .modal-body thead th {
+	width: 150px;
+}
+
+.modal-body td {
+	width: 140px;
+}
+
+.modal-body thead th:last-child {
+	width: 170px;
+}
+
+.modal-body td:last-child {
+	width: 140px; 
+}
+
+
+/*# sourceMappingURL=adminlte.css.map */
 .vh-80 {
   min-height: 80vh;
 }
+
