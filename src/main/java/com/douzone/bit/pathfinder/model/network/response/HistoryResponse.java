@@ -23,7 +23,7 @@ public class HistoryResponse {
 	private String arvl;
 	private String dist;
 	private String fee;
-	private Date dlvrdate;
-	private Date arrivedate;
+	private String dlvrdate;
+	private String arrivedate;
 	private String routes;
 }
