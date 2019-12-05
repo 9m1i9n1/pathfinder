@@ -40,9 +40,11 @@ public class HistoryController {
 	@GetMapping("/gethistory.do")
 	public Header<List<HistoryResponse>> getHistory(
 			@PageableDefault(size = 10) Pageable pageable,
-			@RequestParam(value = "id", required = false) String id) {
+			@RequestParam("id") String id,
+			@RequestParam("myhistory") boolean myhistory,
+			@RequestParam(value = "keyword", required = false) String keyword) {
 		
-		return historyService.readHistory(pageable, id);
+		return historyService.readHistory(pageable, id, myhistory, keyword);
 	}
 	
 	@GetMapping("/getroutes.do")
@@ -50,16 +52,6 @@ public class HistoryController {
 			@RequestParam("routesIndex") ObjectId id) {
 		return historyService.readRoutes(id);
 	}
-	
-	@GetMapping("/gethistory/search")
-	public Header<List<HistoryResponse>> getSearchHistory(
-			@RequestParam(required = false) String searchType,
-			@RequestParam(required = false) String keyword,
-			@PageableDefault(size = 10) Pageable pageable){
-		System.out.println("test@@@");
-		return historyService.searchHistory(pageable, searchType, keyword);
-	}
-	
 
 	@PostMapping("/removeroutes.do")
 	public Header<String> removeRoutes(
