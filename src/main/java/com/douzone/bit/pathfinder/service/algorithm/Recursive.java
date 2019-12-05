@@ -10,12 +10,10 @@ public class Recursive {
 
 	private double[][] map;
 	private double minTourCost = Double.POSITIVE_INFINITY;
-	// private int minTourCost = Integer.MAX_VALUE;
 
-	private List<Integer> tour = new ArrayList<>();
+	private List<List<Double>> tour = new ArrayList<>();
+
 	private boolean ranSolver = false;
-
-	public long startTime, endTime, lTime;
 
 	public Recursive(double[][] map) {
 		this(0, map);
@@ -35,7 +33,7 @@ public class Recursive {
 	}
 
 	// Returns the optimal tour for the traveling salesman problem.
-	public List<Integer> getTour() {
+	public List<List<Double>> getTour() {
 		if (!ranSolver)
 			solve();
 		return tour;
@@ -58,32 +56,38 @@ public class Recursive {
 		Double[][] memo = new Double[N][1 << N];
 		Integer[][] prev = new Integer[N][1 << N];
 
-		// for (Double[] row : memo)
-		// Arrays.fill(row, 0);
-		// for (Integer[] row : prev)
-		// Arrays.fill(row, 0);
-
 		minTourCost = tsp(START_NODE, state, memo, prev);
 
 		// Regenerate path
 		int index = START_NODE;
+		int row = 0;
+
 		while (true) {
-			tour.add(index);
+
+			tour.add(new ArrayList<Double>());
+			tour.get(row).add((double) index);
+
+			if (prev[index][state] != null) {
+				tour.get(row).add(map[index][prev[index][state]]);
+			} else {
+				tour.get(row).add(null);
+			}
+
 			Integer nextIndex = prev[index][state];
 			if (nextIndex == null)
 				break;
 			int nextState = state | (1 << nextIndex);
 			state = nextState;
 			index = nextIndex;
+
+			row++;
 		}
-		// tour.add(START_NODE);
 		ranSolver = true;
 
 	}
 
 	private double tsp(int i, int state, Double[][] memo, Integer[][] prev) {
 		// Done this tour. Return cost of going back to start node.
-		// System.out.println(cnt++);
 
 		if (state == FINISHED_STATE)
 			return map[0][START_NODE];

@@ -34,37 +34,20 @@ public class MaprouteController {
 	@Autowired
 	private AdminCarService adminCarService;
 
-	@PostMapping(value = "/mapsort")
+	@GetMapping({ "", "/" })
+	public ModelAndView routeMapView() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/maproute");
+
+		return mv;
+	}
+
+	@PostMapping("/mapsort")
 	public Header<List<MaprouteResponse>> mapsort(@RequestBody List<MaprouteRequest> markerList) {
 
 		System.out.println(markerList);
 
 		return MaprouteService.markerSort(markerList);
-	}
-
-	// @PostMapping(value = "/maproutesend")
-	// public List<RouteDTO> test(@RequestBody Map<String, Object> map, Model model)
-	// throws Exception {
-
-	// // 넘어온 것은 jsonObject이다!!
-	// // 그리고 그 jsonObject의 key값이 data이고
-	// // value값이 우리가 값을 만들어 넣어준(amu)객체들이 담겨있는 "배열" 이다.
-
-	// // 그렇다면 우리의 염원은 value에 해당하는 배열안의 객체(amu)들을 하나하나 분리해야 한다.
-	// @SuppressWarnings("unchecked")
-	// ArrayList<Map> list = new ArrayList<Map>(((ArrayList<Map>) map.get("data")));
-
-	// return MaprouteService.tryCalc(list);
-
-	// return null;
-	// }
-
-	@GetMapping({ "", "/" })
-	public ModelAndView routeMapView() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/maproute");
-		return mv;
-
 	}
 
 	@GetMapping("/branchLoding")

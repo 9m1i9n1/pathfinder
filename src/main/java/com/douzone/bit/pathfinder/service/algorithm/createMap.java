@@ -2,14 +2,17 @@ package com.douzone.bit.pathfinder.service.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.douzone.bit.pathfinder.model.MapCost;
 import com.douzone.bit.pathfinder.model.network.request.MaprouteRequest;
+import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
 
 public class CreateMap {
 	// public static int map[][], d[][], MAX = 987654321;
 	private double[][] map;
 	private List<MaprouteRequest> unsortList;
+	private List<MaprouteResponse> sortList;
 
 	public CreateMap(List<MaprouteRequest> unsortList) {
 		this.unsortList = unsortList;
@@ -17,8 +20,22 @@ public class CreateMap {
 
 	public double[][] getMap() {
 		makeCostMap();
-
 		return map;
+	}
+
+	public List<MaprouteResponse> getSortList(List<List<Double>> sortIndexList) {
+		sortList = new ArrayList();
+
+		int listIndex, index = 0;
+
+		for (List<Double> item : sortIndexList) {
+			listIndex = item.get(0).intValue();
+
+			sortList.add(response(unsortList.get(listIndex), item.get(1)));
+			index++;
+		}
+
+		return sortList;
 	}
 
 	public void printMap() {
@@ -29,22 +46,16 @@ public class CreateMap {
 		}
 	}
 
-	// public int[][] getmap() {
-	// makeCostMap();
-	// return map;
-	// }
-
 	public void makeCostMap() {
+		int row, col;
+		int size = unsortList.size();
+		double distance, result;
+
 		List<Integer> costList = new ArrayList();
 		LocationDistance locationDistance = new LocationDistance();
 		MapCost mapCost = new MapCost();
 
-		int row, col;
-
-		int size = unsortList.size();
 		map = new double[size][size];
-
-		double distance, result;
 
 		for (MaprouteRequest item : unsortList) {
 			costList.add(item.getBranchValue());
@@ -76,51 +87,14 @@ public class CreateMap {
 		}
 	}
 
-	// TestList = sortList, list = unsortList
-	// public void mapmap() {
-	// LocationDistance distance;
-	// int n = list.size();
+	private MaprouteResponse response(MaprouteRequest marker, Double cost) {
+		Optional<Double> oCost = Optional.ofNullable(cost);
+		cost = oCost.orElse(0.0);
 
-	// String line[] = new String[n];
+		MaprouteResponse maprouteResponse = MaprouteResponse.builder().branchIndex(marker.getBranchIndex())
+				.branchName(marker.getBranchName()).branchLat(marker.getBranchLat()).branchLng(marker.getBranchLng())
+				.routeCost(cost.intValue()).build();
 
-	// for (int i = 0; i < n; i++) {
-	// line[i] = list.get(i).get("branch_value").toString();
-	// }
-
-	// // map
-	// map = new int[n][n];
-
-	// // visted
-	// d = new int[n][1 << n]; // 비트마스킹을 사용하므로 2^n개 만큼 사용
-
-	// // map 초기화 해주는 부분
-	// for (int col = 0; col <= n - 1; col++) {
-	// for (int row = 0; row <= n - 1; row++) {
-	// if (row == col) {
-	// map[row][col] = 0;
-	// } else {
-
-	// int r = Integer.parseInt(line[col]);
-	// map[row][col] = r;
-	// java.util.Arrays.fill(d[row], MAX); // 거리를 모두 MAX로 초기화
-	// }
-	// }
-	// }
-
-	// // 비용계산
-	// 직선거리 + (운반비 *(거리 * 0.1))
-	// for (int i = 0; i < n; i++) {
-	// for (int j = 0; j < n; j++) {
-	// if (i == j)
-	// map[i][j] = 0;
-	// else {
-	// distance = new LocationDistance(testList.get(i).getBranch_lat(),
-	// testList.get(i).getBranch_lng(),
-	// testList.get(j).getBranch_lat(), testList.get(j).getBranch_lng());
-
-	// map[i][j] = (int) Math.ceil((distance.getdistance() + (map[i][j] *
-	// (distance.getdistance() * 0.1))));
-	// }
-	// }
-	// }
+		return maprouteResponse;
+	}
 }
