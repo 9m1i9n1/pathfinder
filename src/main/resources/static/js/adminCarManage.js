@@ -79,7 +79,7 @@ function carsearch(searchUrl, searchpage=0) {
 			$.each(res.data,function(key, value) {
 				str += `<tr class="tr-shadow"><td>` + value.carArea +'</td>';
 				str += '<td>' + value.carNumber +'</td>';
-				str += '<td>' + value.carName +'</td>';
+				str += '<td>' + value.carName +'톤 카고</td>';
 				str	+= '<td>' + value.carFuel + '</td>';
 				str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
 				str += "<td><div class='table-data-feature'>"
@@ -161,7 +161,7 @@ function carlist(selectPage) {
 				
 				str += `<tr class="tr-shadow"><td>` + value.carArea +'</td>';
 				str += '<td>' + value.carNumber +'</td>';
-				str += '<td>' + value.carName +'</td>';
+				str += '<td>' + value.carName +'톤 카고</td>';
 				str	+= '<td>' + value.carFuel + ' km </td>';
 				str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
 				str += "<td><div class='table-data-feature'>"

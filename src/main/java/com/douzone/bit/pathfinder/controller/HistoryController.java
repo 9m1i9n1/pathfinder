@@ -47,6 +47,8 @@ public class HistoryController {
 		return historyService.readHistory(pageable, id, searchType ,keyword);
 	}
 	
+	
+	
 	@GetMapping("/getroutes.do")
 	public Header<HistoryRoutesResponse> getRoutes(
 			@RequestParam("routesIndex") ObjectId id) {

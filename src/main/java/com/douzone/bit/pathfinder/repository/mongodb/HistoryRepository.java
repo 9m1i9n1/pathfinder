@@ -40,4 +40,5 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	
 	List<HistoryTb> findByArrivedate(Date arrivedate);
 
+	
 }

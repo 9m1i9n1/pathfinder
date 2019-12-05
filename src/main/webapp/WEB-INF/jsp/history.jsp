@@ -47,7 +47,7 @@
 							type="search" placeholder="Search" name="keyword" id="keyword" />
 						<div class="input-group-append">
 							<button class="btn btn-primary btn-sm" name="btnSearch"
-								id="btnSearch" onclick="getHistory(0, )">
+								id="btnSearch" onclick="getHistory(0, this.id )">
 								<i class="fas fa-search"></i>
 							</button>
 						</div>

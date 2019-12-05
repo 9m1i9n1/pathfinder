@@ -37,12 +37,12 @@
 						<div class="col-sm-8">
 							<select id="carName" name="carName">
 								<option></option>
-								<option value="1톤 카고">1톤 카고</option>
-								<option value="2톤 카고">2톤 카고</option>
-								<option value="2.5톤 카고">2.5톤 카고</option>
-								<option value="5톤 카고">5톤 카고</option>
-								<option value="10톤 카고">10톤 카고</option>
-								<option value="20톤 카고">20톤 카고</option>
+								<option value="1">1톤 카고</option>
+								<option value="2">2톤 카고</option>
+								<option value="2.5">2.5톤 카고</option>
+								<option value="5">5톤 카고</option>
+								<option value="10">10톤 카고</option>
+								<option value="20">20톤 카고</option>
 							</select>
 						</div>
 					</div>

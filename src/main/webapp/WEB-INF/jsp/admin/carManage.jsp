@@ -12,7 +12,7 @@
 </head>
 <body>
 <section class="content-header">
-		<div class="container-fluid">
+		<div class="container-fluid ">
 			<div class="row mb-2">
 				<div class="col-md-2 col-md-6">
 					<h1>차량 관리</h1>
@@ -28,7 +28,7 @@
 		<!-- /.container-fluid -->
 	</section>
 
-	<div class="container-fluid">
+	<div class="container-fluid vh-80">
 		<div class="row">
 			<div class="col-md-2">
 				<div class="card height100">

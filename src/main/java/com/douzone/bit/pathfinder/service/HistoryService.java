@@ -22,7 +22,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.repository.support.PageableExecutionUtils;
-
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
@@ -52,42 +53,78 @@ public class HistoryService extends QuerydslRepositorySupport {
 	@Autowired
 	private RoutesRepository routesRepository;
 
-
-
 	public Header<List<HistoryResponse>> readHistory(Pageable pageable, String id, String searchType, String keyword) {
 
-		System.out.println("id : "+id );
-		System.out.println("searchType : "+searchType );
+		System.out.println("id : " + id);
+		System.out.println("searchType : " + searchType);
 		System.out.println("keyword : " + keyword);
-		
+
 		Page<HistoryTb> historys = null;
 
-		switch(id) {
-			case "will" :
-				historys = historyRepository.findAllByWill(pageable, Calendar.getInstance().getTime());
-				break;
-			case "ing" :
-				historys = historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
-				break;
-			case "pp" :
-				historys = historyRepository.findAllByPp(pageable, Calendar.getInstance().getTime());
-				break;
+		switch (id) {
+		case "will":
+			historys = historyRepository.findAllByWill(pageable, Calendar.getInstance().getTime());
+			break;
+		case "ing":
+			historys = historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
+			break;
+		case "pp":
+			historys = historyRepository.findAllByPp(pageable, Calendar.getInstance().getTime());
+			break;
 		}
-		
+
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
 
-		Pagination pagination = Pagination.builder()
-				.totalPages(historys.getTotalPages())
-				.totalElements(historys.getTotalElements())
-				.currentPage(historys.getNumber())
+		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
+				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
 				.currentElements(historys.getNumberOfElements()).build();
 
 		return Header.OK(historyList, pagination);
 	}
 
+	public Header<List<HistoryResponse>> readRecentlyHistoryUseHome(Pageable pageable) {
 
-	//검색
+		System.out.println("$%^");
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+
+		String username = securityContext.getAuthentication().getName();
+
+		System.out.println(username);
+		Page<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
+
+		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
+				.collect(Collectors.toList());
+
+		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
+				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
+				.currentElements(historys.getNumberOfElements()).build();
+		System.out.println("@@" + historyList);
+
+		return Header.OK(historyList, pagination);
+	}
+
+	public Header<List<HistoryResponse>> readTodayHistoryUseHome(Pageable pageable) {
+
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+
+		String username = securityContext.getAuthentication().getName();
+
+		System.out.println(username);
+		Page<HistoryTb> historys = historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
+
+		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
+				.collect(Collectors.toList());
+
+		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
+				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
+				.currentElements(historys.getNumberOfElements()).build();
+		System.out.println("@@" + historyList);
+
+		return Header.OK(historyList, pagination);
+	}
+
+	// 검색
 	public Header<List<HistoryResponse>> searchHistory(Pageable pageable, String searchType, String keyword) {
 
 		List<HistoryResponse> historyResponseList = null;
@@ -101,8 +138,8 @@ public class HistoryService extends QuerydslRepositorySupport {
 					.collect(Collectors.toList());
 			break;
 
-		case "regdate": 
-			historys = historyRepository.findByRegdate(keyword , pageable);
+		case "regdate":
+			historys = historyRepository.findByRegdate(keyword, pageable);
 			System.out.println(historys);
 			historyResponseList = historys.stream().map(history -> historyResponse(history))
 					.collect(Collectors.toList());
@@ -134,17 +171,14 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK(historyResponseList, pagination);
 	}
 
-
 	public Header<HistoryRoutesResponse> readRoutes(ObjectId id) {
 
 		RoutesTb routesTb = routesRepository.findById(id);
 
 		HistoryRoutesResponse routes = routesResponse(routesTb);
 
-
 		return Header.OK(routes);
 	}
-
 
 	public Header<String> removeRoutes(HistoryTb history) {
 
@@ -154,30 +188,30 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK();
 	}
 
-	public ArrayList<String> calcDate (String startDate, String EndDate) {
-				String DATE_PATTERN = "yyyy-MM-dd";
-				ArrayList<String> dates = new ArrayList<String>();
-				
-	try {
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+	public ArrayList<String> calcDate(String startDate, String EndDate) {
+		String DATE_PATTERN = "yyyy-MM-dd";
+		ArrayList<String> dates = new ArrayList<String>();
 
-		Date start = sdf.parse(startDate);
-		Date end = sdf.parse(EndDate);
-		
-		Date currentDate = start;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
 
-		while (currentDate.compareTo(end) <= 0) {
-			dates.add(sdf.format(currentDate));
-			Calendar c = Calendar.getInstance();
-			c.setTime(currentDate);
-			c.add(Calendar.DAY_OF_MONTH, 1);
-			currentDate = c.getTime();
+			Date start = sdf.parse(startDate);
+			Date end = sdf.parse(EndDate);
+
+			Date currentDate = start;
+
+			while (currentDate.compareTo(end) <= 0) {
+				dates.add(sdf.format(currentDate));
+				Calendar c = Calendar.getInstance();
+				c.setTime(currentDate);
+				c.add(Calendar.DAY_OF_MONTH, 1);
+				currentDate = c.getTime();
+			}
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-	} catch (ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 		return dates;
 	}
 
