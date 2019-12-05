@@ -22,8 +22,6 @@ public class MaprouteService {
 		createMap = new CreateMap(markerList);
 		recursive = new Recursive(createMap.getMap());
 
-		createMap.printMap();
-
 		List<List<Double>> sortIndexList = recursive.getTour();
 		List<MaprouteResponse> sortMarkerList = createMap.getSortList(sortIndexList);
 

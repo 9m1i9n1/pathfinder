@@ -25,11 +25,24 @@ $("#testButton").on("click", function(e) {
 
 // 나중에 미국 추가 -
 // OSM 사용
-var map = L.map("map").setView([36.441163, 127.861612], 7);
+let map = L.map("map").setView([36.441163, 127.861612], 7);
+
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+
+var routeControl = L.Routing.control({
+  serviceUrl: "http://218.39.221.89:5000/route/v1",
+  routeWhileDragging: false,
+  draggableWaypoints: false,
+  createMarker: function() {
+    return null;
+  }
+})
+  // .on("routingstart", showSpinner)
+  // .on("routesfound routingerror", hideSpinner)
+  .addTo(map);
 
 const branchlist = handleFunc => {
   $.ajax({
@@ -163,6 +176,27 @@ const markerAdd = selectData => {
     .openPopup();
 };
 
+// 경로 그리기
+const drawRoute = sortList => {
+  // markergroup 생성
+  // let routeGroup = sortList.map(branch => {
+  //   let marker = L.marker([branch.branchLat, branch.branchLng]);
+  //   marker.id = branch.branchIndex;
+  //   marker.name = branch.branchName;
+  //   marker.cost = branch.routeCost;
+
+  //   return marker;
+  // });
+
+  let wayPoints = sortList.map(branch => {
+    return new L.LatLng(branch.branchLat, branch.branchLng);
+  });
+
+  console.log("#routeControl", wayPoints);
+
+  routeControl.setWaypoints(wayPoints);
+};
+
 const markerRemove = selectData => {
   markerGroup.eachLayer(layer => {
     layer.id === selectData.branchIndex ? markerGroup.removeLayer(layer) : "";
@@ -209,8 +243,6 @@ const mapSort = () => {
     });
   });
 
-  console.log("#markerList", markerList);
-
   requestSort(markerList);
 };
 
@@ -223,7 +255,10 @@ const requestSort = markerList => {
     data: JSON.stringify(markerList)
   })
     .then(function(res) {
+      res = res.data;
       console.log("#res", res);
+
+      drawRoute(res);
     })
     .catch(function(error) {
       alert("#error : ", error);

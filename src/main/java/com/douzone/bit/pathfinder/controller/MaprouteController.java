@@ -45,8 +45,6 @@ public class MaprouteController {
 	@PostMapping("/mapsort")
 	public Header<List<MaprouteResponse>> mapsort(@RequestBody List<MaprouteRequest> markerList) {
 
-		System.out.println(markerList);
-
 		return MaprouteService.markerSort(markerList);
 	}
 

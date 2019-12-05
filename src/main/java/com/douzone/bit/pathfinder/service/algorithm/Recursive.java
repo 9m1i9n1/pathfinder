@@ -34,8 +34,14 @@ public class Recursive {
 
 	// Returns the optimal tour for the traveling salesman problem.
 	public List<List<Double>> getTour() {
+		long start = System.currentTimeMillis();
+
 		if (!ranSolver)
 			solve();
+
+		long end = System.currentTimeMillis();
+		System.out.println("실행 시간(초) : " + (end - start) / 1000.0);
+
 		return tour;
 	}
 
