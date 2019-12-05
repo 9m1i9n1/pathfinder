@@ -79,7 +79,7 @@ function carsearch(searchUrl, searchpage=0) {
 			$.each(res.data,function(key, value) {
 				str += `<tr class="tr-shadow"><td>` + value.carArea +'</td>';
 				str += '<td>' + value.carNumber +'</td>';
-				str += '<td>' + value.carName +'</td>';
+				str += '<td>' + value.carName +'톤 카고</td>';
 				str	+= '<td>' + value.carFuel + '</td>';
 				str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
 				str += "<td><div class='table-data-feature'>"
@@ -161,8 +161,8 @@ function carlist(selectPage) {
 				
 				str += `<tr class="tr-shadow"><td>` + value.carArea +'</td>';
 				str += '<td>' + value.carNumber +'</td>';
-				str += '<td>' + value.carName +'</td>';
-				str	+= '<td>' + value.carFuel + '</td>';
+				str += '<td>' + value.carName +'톤 카고</td>';
+				str	+= '<td>' + value.carFuel + ' km </td>';
 				str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
 				str += "<td><div class='table-data-feature'>"
 				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName + `')"><i class="fas fa-trash-alt"></i></button>`;
@@ -295,30 +295,35 @@ insertModal.find('#carBuy').click(function(){
 })
 
 // 모달 내 지역 로딩
+function arrayToObject(array) {
+  return array.reduce(function(result, item) {
+    let obj = {};
+    obj.id = item[0];
+    obj.text = item[1];
+
+    result.push(obj);
+
+    return result;
+  }, []);
+}
+
 function areaLoading(modal) {
   $.ajax({
     url: "/admin/usermanage/arealist.do",
     type: "get",
     async: false,
     success: function(res) {
-      let str = "";
+    	console.log("@@@@@@@@")
+      let areaData = arrayToObject(res.data);
 
-      str += "<option value='' disabled selected>선택</option>";
-
-      modal
-        .find("#branchIndex")
-        .html(str)
-        .selectpicker("refresh");
-
-      $.each(res.data, function(key, value) {
-        str += "<option value='" + value[0] + "'>";
-        str += value[1] + "</option>";
+      modal.find("#carArea").html("<option></option>");
+      modal.find("#carArea").select2({
+        width: "100%",
+        placeholder: "지역 선택",
+        data: areaData
       });
 
-      modal
-        .find("#carArea")
-        .html(str)
-        .selectpicker("refresh");
+      selectInit(modal);
     },
     error: function(request, status, error) {
       alert(
@@ -334,6 +339,22 @@ function areaLoading(modal) {
     }
   });
 }
+
+const selectInit = modal => {
+	  // init
+	  modal.find("#carArea").select2({
+	    width: "100%",
+	    placeholder: "지역 선택"
+	  });
+
+	  modal.find("#carName").select2({
+	    width: "100%",
+	    placeholder: "차종 선택"
+	  });
+	};
+
+	
+	
 
 // ! validation ====================
 // select 포커스 문제 해결

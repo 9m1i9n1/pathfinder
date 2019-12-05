@@ -2,9 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>지점 관리 페이지</title>
 </head>
 <body>
@@ -27,7 +29,7 @@
 
 	<section class="content">
 		<div class="container-fluid ">
-			<div class="row height675px">
+			<div class="row vh-80">
 				<div class="col-md-2">
 					<div class="card height100">
 						<div class="card-header">
@@ -86,6 +88,8 @@
 
 							<div id="page"></div>
 						</div>
+						
+						
 					</div>
 				</div>
 			</div>

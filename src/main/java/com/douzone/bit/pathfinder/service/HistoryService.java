@@ -126,52 +126,45 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK(historyList, pagination);
 	}
 
-	// 검색
-	public Header<List<HistoryResponse>> searchHistory(Pageable pageable, String searchType, String keyword, String id,
-			boolean myhistory) {
+	public Header<List<HistoryResponse>> readRecentlyHistoryUseHome(Pageable pageable) {
 
-		List<HistoryResponse> historyResponseList = null;
-		Page<HistoryTb> historys = null;
+		System.out.println("$%^");
+		SecurityContext securityContext = SecurityContextHolder.getContext();
 
-		switch (searchType) {
-		case "carname":
-			historys = historyRepository.findByCarnameLike(keyword, pageable);
-			System.out.println(historys);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
+		String username = securityContext.getAuthentication().getName();
 
-		case "regdate":
-			historys = historyRepository.findByRegdate(keyword, pageable);
-			System.out.println(historys);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
+		System.out.println(username);
+		Page<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
 
-		case "username":
-			historys = historyRepository.findByUsernameLike(keyword, pageable);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
-
-		case "dep":
-			historys = historyRepository.findByDep(keyword, pageable);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
-
-		case "arvl":
-			historys = historyRepository.findByArvl(keyword, pageable);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
-		}
+		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
+				.collect(Collectors.toList());
 
 		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
 				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
 				.currentElements(historys.getNumberOfElements()).build();
+		System.out.println("@@" + historyList);
 
-		return Header.OK(historyResponseList, pagination);
+		return Header.OK(historyList, pagination);
+	}
+
+	public Header<List<HistoryResponse>> readTodayHistoryUseHome(Pageable pageable) {
+
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+
+		String username = securityContext.getAuthentication().getName();
+
+		System.out.println(username);
+		Page<HistoryTb> historys = historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
+
+		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
+				.collect(Collectors.toList());
+
+		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
+				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
+				.currentElements(historys.getNumberOfElements()).build();
+		System.out.println("@@" + historyList);
+
+		return Header.OK(historyList, pagination);
 	}
 
 	public Header<HistoryRoutesResponse> readRoutes(ObjectId id) {

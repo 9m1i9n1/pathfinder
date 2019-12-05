@@ -12,7 +12,7 @@
 </head>
 <body>
 <section class="content-header">
-		<div class="container-fluid">
+		<div class="container-fluid ">
 			<div class="row mb-2">
 				<div class="col-md-2 col-md-6">
 					<h1>차량 관리</h1>
@@ -28,7 +28,7 @@
 		<!-- /.container-fluid -->
 	</section>
 
-	<div class="container-fluid">
+	<div class="container-fluid vh-80">
 		<div class="row">
 			<div class="col-md-2">
 				<div class="card height100">
@@ -72,7 +72,7 @@
 									<th style="width: 15%">지역</th>
 									<th style="width: 20%">차량번호</th>
 									<th style="width: 22%">차종</th>
-									<th style="width: 13%">연비</th>
+									<th style="width: 13%">연비(km)</th>
 									<th style="width: 20%">구입날짜</th>
 									<th style="width: 10%">삭제</th>
 								</tr>

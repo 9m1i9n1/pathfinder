@@ -26,7 +26,7 @@
 	</section>
 
 	<div class="container-fluid">
-		<div class="row height675px">
+		<div class="row vh-80">
 			<div class="col-md-2">
 				<div class="card height100">
 					<div class="card-header">

@@ -13,11 +13,12 @@
 			<div class="modal-body">
 				<form id="carCreateForm">
 
+
 					<div class="form-group row">
-						<label for="carArea" class="col-sm-3 col-form-label-sm">지역</label>
+						<label for="areaIndex" class="col-sm-3 col-form-label-sm">지역</label>
 						<div class="col-sm-8">
-							<select class="selectpicker" data-live-search="true"
-								id="carArea" name="carArea">
+							<select id="carArea" name="carArea">
+								<option></option>
 							</select>
 						</div>
 					</div>
@@ -34,8 +35,15 @@
 					<div class="form-group row">
 						<label for="carName" class="col-sm-3 col-form-label-sm">차종</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="carName"
-								name="carName" />
+							<select id="carName" name="carName">
+								<option></option>
+								<option value="1">1톤 카고</option>
+								<option value="2">2톤 카고</option>
+								<option value="2.5">2.5톤 카고</option>
+								<option value="5">5톤 카고</option>
+								<option value="10">10톤 카고</option>
+								<option value="20">20톤 카고</option>
+							</select>
 						</div>
 					</div>
 
@@ -50,8 +58,8 @@
 					<div class="form-group row">
 						<label for="carBuy" class="col-sm-3 col-form-label-sm">구입날짜</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="carBuy"
-								name="carBuy" placeholder="날짜넣기" readonly />
+							<input type="text" class="form-control" id="carBuy" name="carBuy"
+								placeholder="날짜넣기" readonly />
 						</div>
 					</div>
 

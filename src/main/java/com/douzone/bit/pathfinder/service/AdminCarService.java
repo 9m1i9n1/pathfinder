@@ -125,7 +125,7 @@ public class AdminCarService {
 	}
 
 	// 지점 검색
-	public Header<List<AdminCarResponse>> search(Pageable pageable, String searchType, Long keyword) {
+	public Header<List<AdminCarResponse>> search(Pageable pageable, String searchType, String keyword) {
 
 		Page<CarTb> cars = null;
 		List<AdminCarResponse> carResponseList = null;
@@ -142,12 +142,12 @@ public class AdminCarService {
 			break;
 
 		case "area":
-			cars = carRepository.findBycarArea(areaRepository.getOne(keyword), pageable);
+			cars = carRepository.findBycarArea(areaRepository.getOne(Long.parseLong(keyword)), pageable);
 			carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
 			break;
 
 		case "branch":
-			List<CarTb> carList = carRepository.findBycarArea(areaRepository.getOne(keyword));
+			List<CarTb> carList = carRepository.findBycarArea(areaRepository.getOne(Long.parseLong(keyword)));
 			carResponseList = carList.stream().map(car -> response(car)).collect(Collectors.toList());
 
 			return Header.OK(carResponseList);
