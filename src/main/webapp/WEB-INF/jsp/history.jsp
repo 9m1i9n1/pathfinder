@@ -74,8 +74,6 @@
 			</div>
 
 			<div class="card-body box-profile table-responsive p-0 height100">
-				<div class="card">
-					<div class="card-body">
 						<div class="tab-content">
 							<table class="table table-hover">
 								<thead>
@@ -95,15 +93,11 @@
 							</table>
 						</div>
 						<!-- /.tab-content -->
-					</div>
 					<!-- /.card-body -->
-				</div>
 				<!-- /.nav-tabs-custom -->
 			</div>
-
-			<div id="page"></div>
-
 		</div>
+			<div id="page"></div>
 	</div>
 </body>
 <%@include file="historyModal.jsp"%>

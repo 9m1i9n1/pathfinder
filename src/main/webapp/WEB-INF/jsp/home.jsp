@@ -42,8 +42,8 @@
 							class="fas fa-cog"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">CPU Traffic</span> <span
-								class="info-box-number"> 10 <small>%</small>
+							<span class="info-box-text">오늘의 배송 현황</span> <span
+								class="info-box-number" id="todayPercent"> 10 <small>%</small>
 							</span>
 						</div>
 						<!-- /.info-box-content -->
@@ -57,8 +57,8 @@
 							class="fas fa-thumbs-up"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">Likes</span> <span
-								class="info-box-number">41,410</span>
+							<span class="info-box-text">전체 사용자</span> <span
+								class="info-box-number" id="userCount"></span>
 						</div>
 						<!-- /.info-box-content -->
 					</div>
@@ -75,8 +75,8 @@
 							class="fas fa-shopping-cart"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">Sales</span> <span
-								class="info-box-number">760</span>
+							<span class="info-box-text">지점</span> <span
+								class="info-box-number" id="branchCount"></span>
 						</div>
 						<!-- /.info-box-content -->
 					</div>
@@ -89,8 +89,8 @@
 							class="fas fa-users"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">New Members</span> <span
-								class="info-box-number">2,000</span>
+							<span class="info-box-text">기록</span> <span
+								class="info-box-number" id="totalHistoryCount"></span>
 						</div>
 						<!-- /.info-box-content -->
 					</div>
@@ -976,6 +976,10 @@
 				<tbody id="schedule">
 				</tbody>
 			</table>
+			
+			<div class="chart-responsive">
+				<canvas id="pieChart" height="150"></canvas>
+			</div>
 		</div>
 	</div>
 </body>

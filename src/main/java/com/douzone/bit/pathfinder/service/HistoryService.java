@@ -2,6 +2,9 @@ package com.douzone.bit.pathfinder.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -142,7 +145,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
 				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
 				.currentElements(historys.getNumberOfElements()).build();
-		System.out.println("@@" + historyList);
 
 		return Header.OK(historyList, pagination);
 	}
@@ -233,6 +235,7 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		return response;
 	}
+	
 
 	public Header<List<HistoryResponse>> readHistoryTest(Pageable pageable) {
 
@@ -246,4 +249,40 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		return Header.OK(historyList, pagination);
 	}
+
+	public Header<List<HistoryTb>> historyAll() {
+		System.out.println(historyRepository.findAll());
+		return Header.OK(historyRepository.findAll());
+	}
+
+	
+	public double todayHistoryPercent() {
+	
+	Date localTime1 = new Date();
+	localTime1.setHours(0);
+	localTime1.setMinutes(0);
+	localTime1.setSeconds(0);
+	localTime1.setDate(localTime1.getDate());
+	Date localTime2 = new Date();
+	localTime2.setDate(localTime1.getDate()+1);
+	localTime2.setHours(0);
+	localTime2.setMinutes(0);
+	localTime2.setSeconds(0);
+	
+	Date localTime3 =  new Date();
+	
+	System.out.println(localTime1);
+	System.out.println(localTime2);
+	System.out.println(localTime3);
+	
+	int denominator = historyRepository.findAllByTotalToday(localTime1, localTime2);
+	int molecular = historyRepository.findAllByDoingToday(localTime1, localTime2, localTime3);
+		System.out.println((double)denominator);
+		System.out.println((double)molecular);
+	double result = ((double)molecular/(double)denominator)*100;
+	System.out.println(result);
+	return result;
+	}
+
+
 }
