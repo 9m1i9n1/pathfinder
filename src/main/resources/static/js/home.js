@@ -4,6 +4,7 @@ $(document).ready(function() {
 	userCount()
 	branchCount()
 	historyTotalCount()
+	todayHistoryPercent()
 });
 
 function recentlyHistory() {
@@ -59,6 +60,17 @@ function todayHistory() {
 
 		}
 	})
+}
+
+function todayHistoryPercent() {
+	$.ajax({
+		url : "/home/todayHistoryPercent",
+		type : "get",
+		success : function(res) {
+			console.log(res)
+			$("#todayPercent").html(res + " %");
+		}
+	});
 }
 
 function branchCount() {

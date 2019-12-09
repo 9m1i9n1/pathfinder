@@ -8,7 +8,8 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,15 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 
 	Page<HistoryTb> findByArvl(String arvl, Pageable pageable);
 
+	//오늘 배송할 총갯수
+	@Query(value = "{$and :[{'dlvrdate' : {'$gte' : ?0} },{'dlvrdate' :{'$lte' : ?1 } }]}", count = true)
+	Integer findAllByTotalToday(Date LocalTime1, Date LocalTime2);
+	
+	//오늘거배송된 갯수
+	@Query(value = "{$and : [{$and :[{'dlvrdate' : {'$gte' : ?0} },{'dlvrdate' :{'$lte' : ?1 } }]}, "
+			+ "{'arrivedate' : {'$lte' : ?2} }]}", count = true)
+	Integer findAllByDoingToday(Date LocalTime1, Date LocalTime2, Date LocalTime3);
+	
 	// 전체 검색
 	@Query("{'arrivedate' : { '$lt' : ?0 }}")
 	Page<HistoryTb> findAllByPp(Pageable pageable, Date LocalTime);

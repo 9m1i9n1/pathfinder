@@ -60,23 +60,33 @@ public class HomeController {
 		System.out.println(pageable);
 		return historyService.readTodayHistoryUseHome(pageable);
 	}
-	//전체사용자 수
+
+	// 오늘의 배송현황
+	@GetMapping("/todayHistoryPercent")
+	public double todayHistoryPercent() {
+
+		return historyService.todayHistoryPercent();
+	}
+
+	// 전체사용자 수
 	@GetMapping("/totalUserCount")
 	public Header<List<AdminUserResponse>> userList(@RequestParam String treeId,
 			@PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
 		return adminUserService.list(treeId, pageable);
 	}
-	//전체지점 수
+
+	// 전체지점 수
 	@GetMapping("/totalBranchCount")
 	public Header<List<AdminBranchResponse>> branchList(
 			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 		return adminBranchService.listpage(pageable);
 	}
-	//전체히스토리 수 
+
+	// 전체히스토리 수
 	@GetMapping("/totalHistoryCount")
-	public Header<List<HistoryTb>> historyAll(){
-		
+	public Header<List<HistoryTb>> historyAll() {
+
 		return historyService.historyAll();
 	}
 }

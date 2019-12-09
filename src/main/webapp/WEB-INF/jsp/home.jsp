@@ -44,7 +44,7 @@
 
 						<div class="info-box-content">
 							<span class="info-box-text">오늘의 배송 현황</span> <span
-								class="info-box-number"> 10 <small>%</small>
+								class="info-box-number" id="todayPercent"> 10 <small>%</small>
 							</span>
 						</div>
 						<!-- /.info-box-content -->
