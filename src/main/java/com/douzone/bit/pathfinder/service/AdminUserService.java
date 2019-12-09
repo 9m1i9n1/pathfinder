@@ -50,7 +50,7 @@ public class AdminUserService {
 
     if (idCheck(user.getUserId())) {
       Header.ERROR("중복된 ID");
-    }
+    } 
 
     UserTb newUser = userRepository.save(user);
     return Header.OK(response(newUser));
