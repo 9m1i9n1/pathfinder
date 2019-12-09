@@ -39,12 +39,12 @@ public class HistoryController {
 	
 	@GetMapping("/gethistory.do")
 	public Header<List<HistoryResponse>> getHistory(
-			@PageableDefault(size = 10) Pageable pageable,
+			@RequestParam("page") int page,
 			@RequestParam("id") String id,
 			@RequestParam("myhistory") boolean myhistory,
 			@RequestParam(value = "keyword", required = false) String keyword) {
 		
-		return historyService.readHistory(pageable, id, myhistory, keyword);
+		return historyService.readHistory(page, id, myhistory, keyword);
 	}
 	
 	

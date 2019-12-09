@@ -26,4 +26,5 @@ public class HistoryResponse {
 	private String dlvrdate;
 	private String arrivedate;
 	private String routes;
+	private int stat;
 }

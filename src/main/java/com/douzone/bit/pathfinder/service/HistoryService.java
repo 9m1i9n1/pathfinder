@@ -13,15 +13,11 @@ import javax.transaction.Transactional;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.repository.support.QuerydslRepositorySupport;
-import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -53,12 +49,11 @@ public class HistoryService extends QuerydslRepositorySupport {
 	@Autowired
 	private RoutesRepository routesRepository;
 
-	public Header<List<HistoryResponse>> readHistory(Pageable pageable, String id, boolean myhistory, String keyword) {
-
+	public Header<List<HistoryResponse>> readHistory(int page, String id, boolean myhistory, String keyword) {
+		Pageable pageable;
 		Page<HistoryTb> historys = null;
 		String userName = null;
 		Date date = null;
-
 		if (myhistory) {
 			userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		}
@@ -75,43 +70,51 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		switch (id) {
 		case "will":
+			pageable = PageRequest.of(page, 10, Sort.by("dlvrdate").ascending());
 			if (keyword == null) {
 				historys = (myhistory)
-					? historyRepository.findAllByWillAndUsername(pageable, Calendar.getInstance().getTime(), userName)
-					: historyRepository.findAllByWill(pageable, Calendar.getInstance().getTime());
+						? historyRepository.findAllByWillAndUsername(pageable, Calendar.getInstance().getTime(),
+								userName)
+						: historyRepository.findAllByWill(pageable, Calendar.getInstance().getTime());
 			} else {
 				historys = (myhistory)
-					? historyRepository.findAllByWillAndUsernameAndDate(pageable, Calendar.getInstance().getTime(), userName, date)
-					: historyRepository.findAllByWillAndDate(pageable, Calendar.getInstance().getTime(), date);
+						? historyRepository.findAllByWillAndUsernameAndDate(pageable, Calendar.getInstance().getTime(),
+								userName, date)
+						: historyRepository.findAllByWillAndDate(pageable, Calendar.getInstance().getTime(), date);
 			}
-					
+
 			break;
 		case "ing":
+			pageable = PageRequest.of(page, 10, Sort.by("arrivedate").ascending());
 			if (keyword == null) {
 				historys = (myhistory)
-					? historyRepository.findAllByIngAndUsername(pageable, Calendar.getInstance().getTime(), userName)
-					: historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
+						? historyRepository.findAllByIngAndUsername(pageable, Calendar.getInstance().getTime(),
+								userName)
+						: historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
 			} else {
 				historys = (myhistory)
-					? historyRepository.findAllByIngAndUsernameAndDate(pageable, Calendar.getInstance().getTime(), userName, date)
-					: historyRepository.findAllByIngAndDate(pageable, Calendar.getInstance().getTime(), date);
+						? historyRepository.findAllByIngAndUsernameAndDate(pageable, Calendar.getInstance().getTime(),
+								userName, date)
+						: historyRepository.findAllByIngAndDate(pageable, Calendar.getInstance().getTime(), date);
 			}
-					
+
 			break;
 		case "pp":
+			pageable = PageRequest.of(page, 10, Sort.by("arrivedate").descending());
 			if (keyword == null) {
 				historys = (myhistory)
-					? historyRepository.findAllByPpAndUsername(pageable, Calendar.getInstance().getTime(), userName)
-					: historyRepository.findAllByPp(pageable, Calendar.getInstance().getTime());
+						? historyRepository.findAllByPpAndUsername(pageable, Calendar.getInstance().getTime(), userName)
+						: historyRepository.findAllByPp(pageable, Calendar.getInstance().getTime() );
 			} else {
 				historys = (myhistory)
-					? historyRepository.findAllByPpAndUsernameAndDate(pageable, Calendar.getInstance().getTime(), userName, date)
-					: historyRepository.findAllByPpAndDate(pageable, Calendar.getInstance().getTime(), date);
+						? historyRepository.findAllByPpAndUsernameAndDate(pageable, Calendar.getInstance().getTime(),
+								userName, date)
+						: historyRepository.findAllByPpAndDate(pageable, Calendar.getInstance().getTime(), date);
 			}
-			
+
 			break;
 		}
-		
+
 		if (historys.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
@@ -126,43 +129,80 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK(historyList, pagination);
 	}
 
-	public Header<List<HistoryResponse>> readRecentlyHistoryUseHome(Pageable pageable) {
+	public Header<List<HistoryResponse>> readRecentlyHistoryUseHome() {
 
-		System.out.println("$%^");
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 
 		String username = securityContext.getAuthentication().getName();
+		Date currentTime = Calendar.getInstance().getTime();
 
-		System.out.println(username);
+		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
+		System.out.println("PageRequest - " + pageable);
 		Page<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
 
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
+		
+		for (int i = 0; i < historyList.size(); i++) {
+			try {
+				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(historyList.get(i).getDlvrdate());// 출발
+				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(historyList.get(i).getArrivedate());// 도착
 
-		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
-				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
-				.currentElements(historys.getNumberOfElements()).build();
-		System.out.println("@@" + historyList);
+				// end가 currnt보다 느림
+				if (currentTime.compareTo(end) > 0){
+					historyList.get(i).setStat(-1);
+				} else if (currentTime.compareTo(start) > 0){
+					historyList.get(i).setStat(0);
+				} else {
+					historyList.get(i).setStat(1);				
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-		return Header.OK(historyList, pagination);
+		}
+
+		return Header.OK(historyList);
 	}
 
-	public Header<List<HistoryResponse>> readTodayHistoryUseHome(Pageable pageable) {
+	public Header<List<HistoryResponse>> readTodayHistoryUseHome() {
 
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 
 		String username = securityContext.getAuthentication().getName();
 
-		System.out.println(username);
+		Date currentTime = Calendar.getInstance().getTime();
+		
+		Pageable pageable = PageRequest.of(0, 5, Sort.by("arrivedate").descending());
 		Page<HistoryTb> historys = historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
 
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
 
+		for (int i = 0; i < historyList.size(); i++) {
+			try {
+				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(historyList.get(i).getDlvrdate());// 출발
+				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(historyList.get(i).getArrivedate());// 도착
+
+				// end가 currnt보다 느림
+				if (currentTime.compareTo(end) > 0){
+					historyList.get(i).setStat(-1);
+				} else if (currentTime.compareTo(start) > 0){
+					historyList.get(i).setStat(0);
+				} else {
+					historyList.get(i).setStat(1);				
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
 		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
 				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
 				.currentElements(historys.getNumberOfElements()).build();
-		System.out.println("@@" + historyList);
 
 		return Header.OK(historyList, pagination);
 	}
@@ -213,10 +253,9 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 	private HistoryResponse historyResponse(HistoryTb history) {
 
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(history.getRegdate())
-
 				.username(history.getUsername()).carname(history.getCarname()).dep(history.getDep())
 				.arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(format.format(history.getDlvrdate())).arrivedate(format.format(history.getArrivedate()))
