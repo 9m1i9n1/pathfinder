@@ -11,6 +11,13 @@
 <html>
 <head>
 <title>Document</title>
+<!-- Toggle checkbox -->
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<!-- 캘린더 표시 -->
+<link rel="stylesheet" href="/static/route/css/calendar.css" />
+<script src="/static/route/js/calendar.js"></script>
 </head>
 <body>
 	<section class="content-header">
@@ -33,26 +40,28 @@
 	<div class="container-fluid ">
 		<div class="card height100">
 			<div class="card-header">
-
 				<div class="card-tools ">
-					<div class="input-group input-group-sm">
-						<select class=" col-4 small " name="searchType" id="searchType">
-							<option value="regdate" class="small">출발일자</option>
-							<option value="username" class="small">사용자</option>
-							<option value="dep" class="small">출발지</option>
-							<option value="dist" class="small">도착지</option>
-							<option value="carindex" class="small">차량번호</option>
-
-						</select> <input class="col-sm-7 form-control form-control-navbar"
-							type="search" placeholder="Search" name="keyword" id="keyword" />
-						<div class="input-group-append">
-							<button class="btn btn-primary btn-sm" name="btnSearch"
-								id="btnSearch" onclick="getHistory(0, this.id )">
-								<i class="fas fa-search"></i>
-							</button>
+					<div class="row">
+						<div class="col">
+							<input id="myhistory" type="checkbox" data-toggle="toggle"
+							 data-size="small" data-on="내 예약약" data-off="전체"/>
+						</div>
+						<div class="col-sm-7">
+							<div class=" input-group input-group-sm">
+								<input class="form-control form-control-navbar"
+								type="search" placeholder="출발날짜 선택" id="keyword" autocomplete="off" readonly />
+								<div class="input-group-append">
+									<button class="btn btn-primary btn-sm" name="btnSearch"
+										id="btnSearch" onclick="getSearch()">
+										<i class="fas fa-search"></i>
+									</button>
+								</div>
+							</div>
+							<div id="calendar"></div>
 						</div>
 					</div>
 				</div>
+				
 				<ul class="nav nav-pills">
 					<li class="nav-item"><a class="nav-link" href="#todayList"
 						id="will" onclick="getHistory(0, this.id)" data-toggle="tab">배송예정</a></li>
@@ -71,27 +80,18 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th style="width: 10%">출발일자</th>
-										<th style="width: 10%">도착일자</th>
+										<th style="width: 10%">예약일자</th>
 										<th style="width: 10%">사용자</th>
 										<th style="width: 10%">출발지</th>
 										<th style="width: 10%">도착지</th>
+										<th style="width: 10%">출발일자</th>
+										<th style="width: 10%">도착일자</th>
 										<th style="width: 10%">차량번호</th>
-										<th style="width: 10%">예약일자</th>
 										<th style="width: 10%">상세보기</th>
 									</tr>
 								</thead>
-
 								<tbody id="tableListBody" class="small">
-
-									<div class="tab-pane" id="todayList"></div>
-
-									<div class="tab-pane active" id="afterList"></div>
-
-									<div class="tab-pane" id="beforeList"></div>
-
 								</tbody>
-
 							</table>
 						</div>
 						<!-- /.tab-content -->

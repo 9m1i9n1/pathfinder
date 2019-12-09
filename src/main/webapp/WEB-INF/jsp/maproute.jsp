@@ -32,6 +32,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
             <ol class="breadcrumb float-sm-right" id="headInfo">
               <li class="breadcrumb-item"><a href="#">maproute</a></li>
               <li class="breadcrumb-item active">운송등록</li>
+              <li><button id="testButton">테스트</button></li>
             </ol>
           </div>
         </div>
@@ -223,6 +224,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     </button>
                     <button
                       class="btn btn-primary next"
+                      id="resultButton"
                       type="button"
                     >
                       다음
@@ -318,7 +320,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     data-parent="#accordion-select"
                   >
                     <div class="card-body">
-                      <div id="Carselect"></div>
+                      <div id="routeResult"></div>
                     </div>
 
                     <div class="card-footer">

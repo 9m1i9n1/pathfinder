@@ -68,6 +68,16 @@ public class AdminBranchService {
 		return Header.OK(branchResponseList, pagination);
 	}
 
+	// list
+	public Header<List<AdminBranchResponse>> branchlist() {
+		List<BranchTb> branchs = branchRepository.findAll();
+
+		List<AdminBranchResponse> branchList = branchs.stream().map(branch -> response(branch))
+				.collect(Collectors.toList());
+
+		return Header.OK(branchList);
+	}
+
 	// branch update
 	public Header<AdminBranchResponse> update(AdminBranchRequest request) {
 

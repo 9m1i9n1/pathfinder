@@ -277,6 +277,8 @@
         this.$element.addClass('calendar ' + this.options.customClass);
         this.width = this.options.width;
         this.height = this.options.height;
+//        this.left = this.options.left;
+//        this.top = this.options.top;
         this.date = this.options.date;
         this.selectedRang = this.options.selectedRang;
         this.data = this.options.data;
@@ -486,11 +488,17 @@
         setPosition: function () {
             var post = this.$trigger.offset();
             var offs = this.options.offset;
-
+            
             this.$element.css({
-                left: (post.left + offs[0]) + 'px',
-                top: (post.top + this.$trigger.outerHeight() + offs[1]) + 'px'
+              left: (offs[0]) + 'px',
+              top: (this.$trigger.outerHeight() + offs[1]) + 'px'
             })
+
+// 원본
+//            this.$element.css({
+//                left: (post.left + offs[0] + this.left) + 'px',
+//                top: (post.top + this.$trigger.outerHeight() + offs[1] + this.top) + 'px'
+            
         },
         trigger: function () {
 

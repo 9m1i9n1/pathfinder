@@ -3,22 +3,27 @@ package com.douzone.bit.pathfinder.service.algorithm;
 public class LocationDistance {
 	public double lat1, lon1, lat2, lon2;
 
-	public LocationDistance(double lat1, double lon1, double lat2, double lon2) {
+	public LocationDistance() {
+
+		// 킬로미터(Kilo Meter) 단위
+		// double distanceKiloMeter = distance(35.173110, 129.071361, 35.179834,
+		// 129.076637);
+		//
+		// System.out.println(distanceKiloMeter + " 키로미터");
+	}
+
+	public void setDistance(double lat1, double lon1, double lat2, double lon2) {
 		this.lat1 = lat1;
 		this.lon1 = lon1;
 		this.lat2 = lat2;
 		this.lon2 = lon2;
-		// 킬로미터(Kilo Meter) 단위
-//		double distanceKiloMeter = distance(35.173110, 129.071361, 35.179834, 129.076637);
-//
-//		System.out.println(distanceKiloMeter + " 키로미터");
 	}
 
-	public double getdistance(){
-		
+	public double getDistance() {
+
 		return distance();
 	}
-	
+
 	/**
 	 * 두 지점간의 거리 계산
 	 *

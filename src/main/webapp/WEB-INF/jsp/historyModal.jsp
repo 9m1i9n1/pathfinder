@@ -82,8 +82,7 @@
 
 			<div class="modal-footer">
 
-				<button id="deleteBtn" type="button" class="btn btn-secondary"
-					data-dismiss="modal">삭제</button>
+				<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
 
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>

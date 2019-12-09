@@ -53,24 +53,67 @@ public class HistoryService extends QuerydslRepositorySupport {
 	@Autowired
 	private RoutesRepository routesRepository;
 
-	public Header<List<HistoryResponse>> readHistory(Pageable pageable, String id, String searchType, String keyword) {
-
-		System.out.println("id : " + id);
-		System.out.println("searchType : " + searchType);
-		System.out.println("keyword : " + keyword);
+	public Header<List<HistoryResponse>> readHistory(Pageable pageable, String id, boolean myhistory, String keyword) {
 
 		Page<HistoryTb> historys = null;
+		String userName = null;
+		Date date = null;
+
+		if (myhistory) {
+			userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		}
+
+		try {
+			if (keyword != null) {
+				SimpleDateFormat transDate = new SimpleDateFormat("yyyy-MM-dd");
+
+				date = transDate.parse(keyword);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 		switch (id) {
 		case "will":
-			historys = historyRepository.findAllByWill(pageable, Calendar.getInstance().getTime());
+			if (keyword == null) {
+				historys = (myhistory)
+					? historyRepository.findAllByWillAndUsername(pageable, Calendar.getInstance().getTime(), userName)
+					: historyRepository.findAllByWill(pageable, Calendar.getInstance().getTime());
+			} else {
+				historys = (myhistory)
+					? historyRepository.findAllByWillAndUsernameAndDate(pageable, Calendar.getInstance().getTime(), userName, date)
+					: historyRepository.findAllByWillAndDate(pageable, Calendar.getInstance().getTime(), date);
+			}
+					
 			break;
 		case "ing":
-			historys = historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
+			if (keyword == null) {
+				historys = (myhistory)
+					? historyRepository.findAllByIngAndUsername(pageable, Calendar.getInstance().getTime(), userName)
+					: historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
+			} else {
+				historys = (myhistory)
+					? historyRepository.findAllByIngAndUsernameAndDate(pageable, Calendar.getInstance().getTime(), userName, date)
+					: historyRepository.findAllByIngAndDate(pageable, Calendar.getInstance().getTime(), date);
+			}
+					
 			break;
 		case "pp":
-			historys = historyRepository.findAllByPp(pageable, Calendar.getInstance().getTime());
+			if (keyword == null) {
+				historys = (myhistory)
+					? historyRepository.findAllByPpAndUsername(pageable, Calendar.getInstance().getTime(), userName)
+					: historyRepository.findAllByPp(pageable, Calendar.getInstance().getTime());
+			} else {
+				historys = (myhistory)
+					? historyRepository.findAllByPpAndUsernameAndDate(pageable, Calendar.getInstance().getTime(), userName, date)
+					: historyRepository.findAllByPpAndDate(pageable, Calendar.getInstance().getTime(), date);
+			}
+			
 			break;
+		}
+		
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
 		}
 
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
@@ -123,53 +166,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK(historyList, pagination);
 	}
 
-	// 검색
-	public Header<List<HistoryResponse>> searchHistory(Pageable pageable, String searchType, String keyword) {
-
-		List<HistoryResponse> historyResponseList = null;
-		Page<HistoryTb> historys = null;
-
-		switch (searchType) {
-		case "carname":
-			historys = historyRepository.findByCarnameLike(keyword, pageable);
-			System.out.println(historys);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
-
-		case "regdate":
-			historys = historyRepository.findByRegdate(keyword, pageable);
-			System.out.println(historys);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
-
-		case "username":
-			historys = historyRepository.findByUsernameLike(keyword, pageable);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
-
-		case "dep":
-			historys = historyRepository.findByDep(keyword, pageable);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
-
-		case "arvl":
-			historys = historyRepository.findByArvl(keyword, pageable);
-			historyResponseList = historys.stream().map(history -> historyResponse(history))
-					.collect(Collectors.toList());
-			break;
-		}
-
-		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
-				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
-				.currentElements(historys.getNumberOfElements()).build();
-
-		return Header.OK(historyResponseList, pagination);
-	}
-
 	public Header<HistoryRoutesResponse> readRoutes(ObjectId id) {
 
 		RoutesTb routesTb = routesRepository.findById(id);
@@ -216,11 +212,14 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 	private HistoryResponse historyResponse(HistoryTb history) {
 
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
 		HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(history.getRegdate())
 
 				.username(history.getUsername()).carname(history.getCarname()).dep(history.getDep())
-				.arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee()).dlvrdate(history.getDlvrdate())
-				.arrivedate(history.getArrivedate()).routes(history.getRoutes()).build();
+				.arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
+				.dlvrdate(format.format(history.getDlvrdate())).arrivedate(format.format(history.getArrivedate()))
+				.routes(history.getRoutes()).build();
 
 		return response;
 	}

@@ -81,28 +81,6 @@ public class AdminUserService {
     String treeId[] = id.split(":");
     String nodeType = treeId[0];
     Long nodeIndex = Long.parseLong(treeId[1]);
-    
-    // Page<UserTb> users = null;
-    //
-    // switch (nodeType) {
-    // case "company":
-    // users = userRepository.findAll(pageable);
-    // break;
-    //
-    // case "area":
-    // List<BranchTb> branchs =
-    // branchRepository.findByArea(areaRepository.getOne(nodeIndex));
-    // users = userRepository.findByBranchIn(branchs, pageable);
-    // break;
-    //
-    // case "branch":
-    // users = userRepository.findByBranch(branchRepository.getOne(nodeIndex),
-    // pageable);
-    // break;
-    //
-    // default:
-    // return Header.ERROR("잘못된 TreeIndex 입니다.");
-    // }
 
     Page<UserTb> users = mappingUser(nodeType, nodeIndex, "", "", pageable);
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
