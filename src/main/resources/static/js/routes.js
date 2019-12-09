@@ -33,7 +33,10 @@ L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 var routeControl = L.Routing.control({
-  serviceUrl: "http://218.39.221.89:5000/route/v1",
+  // serviceUrl: "http://218.39.221.89:5000/route/v1",
+  router: L.Routing.osrmv1({
+    serviceUrl: "http://218.39.221.89:5000/route/v1"
+  }),
   routeWhileDragging: false,
   draggableWaypoints: false,
   createMarker: function() {
@@ -43,9 +46,7 @@ var routeControl = L.Routing.control({
   .on("routesfound", function(e) {
     let routes = e.routes[0];
 
-    console.log("#routes", routes);
-
-    console.log("#routeList", routeList);
+    drawTimeline(routes);
   })
   // .on("routingstart", showSpinner)
   // .on("routesfound routingerror", hideSpinner)
@@ -276,7 +277,13 @@ const requestSort = markerList => {
     });
 };
 
-const drawTimeline = (routesInfo, res) => {};
+const drawTimeline = routes => {
+  console.log("#routes", routes);
+  let list = {};
+
+  list.dist = routes.summary.totalDistance;
+  list.time = routes.summary.totalTime.toHHMMSS();
+};
 
 const loadCalendar = () => {
   $("#calendarBox").html("<div id='calendar'></div>");
@@ -376,6 +383,24 @@ $("#routeForm").validate({
     return false;
   }
 });
+
+String.prototype.toHHMMSS = function() {
+  var sec_num = parseInt(this, 10); // don't forget the second param
+  var hours = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - hours * 3600) / 60);
+  var seconds = sec_num - hours * 3600 - minutes * 60;
+
+  if (hours < 10) {
+    hours = "0" + hours;
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  return hours + ":" + minutes + ":" + seconds;
+};
 
 // var tbody;
 // var orgBColor = '#ffffff';
