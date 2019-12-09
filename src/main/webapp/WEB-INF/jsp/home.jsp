@@ -948,40 +948,59 @@
 			</div>
 		</div>
 	</div>
-	<div>
-		<ul class="nav nav-pills">
-			<li class="nav-item"><a class="nav-link active"
-				href="#recentlyHistory" data-toggle="tab" onclick="todayHistory()">오늘의 스케쥴</a></li>
-			<li class="nav-item"><a class="nav-link" href="#recentlyHistory"
-				data-toggle="tab"  onclick="recentlyHistory()">나의 히스토리</a></li>
 
-		</ul>
-	</div>
-	<div class="tab-content">
-		<div>
-			<a href="/history">전체보기</a>
-			<table>
-			<div class="tab-pane" id="todayHistory" ></div>
-			<div class="tab-pane" id="recentlyHistory"></div>
-				<thead>
-					<tr>
-						<th>출발일자</th>
-						<th>도착일자</th>
-						<th>사용자</th>
-						<th>출발지</th>
-						<th>도착지</th>
-						<th>차량번호</th>
-					</tr>
-				</thead>
-				<tbody id="schedule">
-				</tbody>
-			</table>
-			
-			<div class="chart-responsive">
-				<canvas id="pieChart" height="150"></canvas>
+	<div class="card">
+		<div class="card-header border-transparent">
+			<h3 class="card-title">잇힝 잇힝 &gt_&ltv</h3>
+			<div class="card-tools">
+				<button type="button" class="btn btn-tool"
+					data-card-widget="collapse">
+					<i class="fas fa-minus"></i>
+				</button>
+				<button type="button" class="btn btn-tool" data-card-widget="remove">
+					<i class="fas fa-times"></i>
+				</button>
 			</div>
 		</div>
+
+
+		<!-- /.card-header -->
+		<div class="card-body p-0">
+			<ul class="nav nav-pills">
+				<li class="nav-item"><a class="nav-link active"
+					href="#todayHistory" data-toggle="tab" onclick="todayHistory()">오늘의
+						스케쥴</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="#recentlyHistory" data-toggle="tab"
+					onclick="recentlyHistory()">나의 히스토리</a></li>
+			</ul>
+			<div class="table-responsive">
+				<table class="table m-0">
+
+					<thead>
+						<tr>
+							<th></th>
+							<th>출발일자</th>
+							<th>도착일자</th>
+							<th>사용자</th>
+							<th>출발지</th>
+							<th>도착지</th>
+							<th>차량번호</th>
+						</tr>
+					</thead>
+					<tbody id="schedule">
+					</tbody>
+				</table>
+			</div>
+			<!-- /.table-responsive -->
+		</div>
+		<!-- /.card-body -->
+		<div class="card-footer clearfix">
+			<a href="/history" class="btn btn-sm btn-secondary float-right">전체보기</a>
+		</div>
+		<!-- /.card-footer -->
 	</div>
+
 </body>
 <script src="/static/js/home.js"></script>
 </html>

@@ -44,25 +44,19 @@ public class HomeController {
 	
 	@GetMapping({ "", "/" })
 	public ModelAndView home(ModelAndView  mv, HttpServletRequest request) {
-
-		System.out.println(request.getParameter("pageName"));
 		mv.setViewName("/home");
 
 		return mv;
 	}
 	
 	@GetMapping("/recentlyHistory")
-	public Header<List<HistoryResponse>> recentlyHistory(
-			@PageableDefault(size = 5) Pageable pageable){
-
-		return historyService.readRecentlyHistoryUseHome(pageable);
+	public Header<List<HistoryResponse>> recentlyHistory(){
+		return historyService.readRecentlyHistoryUseHome();
 	}
 	
 	@GetMapping("/todayHistory")
-	public Header<List<HistoryResponse>> todayHistory(
-			@PageableDefault(size = 5) Pageable pageable){
-
-		return historyService.readTodayHistoryUseHome(pageable);
+	public Header<List<HistoryResponse>> todayHistory(){
+		return historyService.readTodayHistoryUseHome();
 	}
 	
 	@GetMapping("/getTotalCount.do")
