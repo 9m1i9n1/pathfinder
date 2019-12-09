@@ -75,8 +75,6 @@ function drawProgress(will, ing, pp, total) {
 	$('#ingProgress').html(`<b>${ing}</b>/${total}`);
 	$('#ppProgress').html(`<b>${pp}</b>/${total}`);
 	
-	console.log(parseInt((pp / total) * 100));
-	
 	$('#willDiv').css('width', parseInt((will / total) * 100) + '%');
 	$('#ingDiv').css('width', parseInt((ing / total) * 100) + '%');
 	$('#ppDiv').css('width', parseInt((pp / total) * 100) + '%');

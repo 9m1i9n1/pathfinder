@@ -279,7 +279,7 @@ public class HistoryService extends QuerydslRepositorySupport {
 	int molecular = historyRepository.findAllByDoingToday(localTime1, localTime2, localTime3);
 		System.out.println((double)denominator);
 		System.out.println((double)molecular);
-	double result = ((double)molecular/(double)denominator)*100;
+	double result = Math.round(((double)molecular/(double)denominator)*1000) /10.00;
 	System.out.println(result);
 	return result;
 	}
