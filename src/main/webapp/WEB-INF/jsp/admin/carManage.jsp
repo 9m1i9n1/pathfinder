@@ -82,11 +82,12 @@
 
 						</table>
 
-						<div id="page"></div>
+					
 					</div>
 				</div>
 			</div>
 		</div>
+			<div id="page"></div>
 	</div>
 	</div>
 </body>

@@ -10,7 +10,7 @@
 
 <body>
 
-<section class="content-header">
+	<section class="content-header">
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-md-2 col-md-6">
@@ -32,7 +32,7 @@
 			<div class="col-md-2">
 				<div class="card height100">
 					<div class="card-header">
-						<h3 class="card-title" style="height:30px">조직도</h3>
+						<h3 class="card-title" style="height: 30px">조직도</h3>
 					</div>
 
 					<div class="card-body small height100">
@@ -45,15 +45,17 @@
 				<div class="card height100">
 					<div class="card-header">
 						<h3 class="card-title">
-						<button class="btn bg-gradient-primary btn-sm"
-									data-toggle="modal" data-target="#insertModal">
-									<i class="zmdi zmdi-plus"></i>사용자 추가
-								</button></h3>
+							<button class="btn bg-gradient-primary btn-sm"
+								data-toggle="modal" data-target="#insertModal">
+								<i class="zmdi zmdi-plus"></i>사용자 추가
+							</button>
+						</h3>
 
 						<div class="card-tools">
-							<div class="input-group input-group-sm" >
+							<div class="input-group input-group-sm">
 								<input type="search" name="table_search"
-									class="col-sm-7 form-control form-control-navbar" placeholder="Search" />
+									class="col-sm-7 form-control form-control-navbar"
+									placeholder="Search" />
 
 								<div class="input-group-append">
 									<button type="submit" class="btn btn-default">
@@ -88,11 +90,12 @@
 							<tbody id="body" class="small"></tbody>
 						</table>
 
-						<div id="page"></div>
+
 					</div>
 				</div>
 			</div>
 		</div>
+		<div id="page"></div>
 	</div>
 
 	<%@include file="userManageModal.jsp"%>

@@ -99,7 +99,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
 				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
 				.currentElements(historys.getNumberOfElements()).build();
-		System.out.println("@@" + historyList);
 
 		return Header.OK(historyList, pagination);
 	}
@@ -234,6 +233,7 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		return response;
 	}
+	
 
 	public Header<List<HistoryResponse>> readHistoryTest(Pageable pageable) {
 
@@ -247,4 +247,12 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		return Header.OK(historyList, pagination);
 	}
+
+	public Header<List<HistoryTb>> historyAll() {
+		System.out.println("@@@@@@@@");
+		System.out.println(historyRepository.findAll());
+		return Header.OK(historyRepository.findAll());
+	}
+
+
 }

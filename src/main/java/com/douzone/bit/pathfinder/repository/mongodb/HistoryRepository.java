@@ -39,6 +39,8 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	List<HistoryTb> findByDlvrdate(Date dlvrdate);
 	
 	List<HistoryTb> findByArrivedate(Date arrivedate);
+	
+	long countById(ObjectId id);
 
 	
 }

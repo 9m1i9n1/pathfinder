@@ -79,11 +79,12 @@
 
 							<tbody id="userTable" class="small"></tbody>
 						</table>
-						<div id="page"></div>
+						
 					</div>
 				</div>
 			</div>
 		</div>
+		<div id="page"></div>
 	</div>
 
 	<script src="/static/js/hierarchy.js"></script>
