@@ -40,9 +40,20 @@ var routeControl = L.Routing.control({
     return null;
   }
 })
+  .on("routesfound", function(e) {
+    let routes = e.routes[0];
+
+    console.log("#routes", routes);
+
+    console.log("#routeList", routeList);
+  })
   // .on("routingstart", showSpinner)
   // .on("routesfound routingerror", hideSpinner)
   .addTo(map);
+
+//히스토리에 등록할 sortList
+let sortList;
+let routeList;
 
 const branchlist = handleFunc => {
   $.ajax({
@@ -78,7 +89,8 @@ const depBranchlist = res => {
   $("#depSelect").select2({
     width: "100%",
     placeholder: "출발지 선택",
-    data: branchData
+    data: branchData,
+    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
   });
 };
 
@@ -100,7 +112,7 @@ const depCarlist = res => {
 
   let carData = $.map(res, function(obj) {
     obj.id = obj.id || obj.carIndex;
-    obj.text = obj.text || obj.carName;
+    obj.text = obj.text || `${obj.carName}톤트럭 (${obj.carNumber})`;
 
     return obj;
   });
@@ -111,7 +123,8 @@ const depCarlist = res => {
   $("#carSelect").select2({
     width: "100%",
     placeholder: "차량 선택",
-    data: carData
+    data: carData,
+    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)) // 앞에 숫자로 정렬되게 해야함.
   });
 };
 
@@ -142,7 +155,8 @@ const selectBranchlist = res => {
     width: "100%",
     placeholder: "경유지 선택",
     data: branchData,
-    maximumSelectionLength: 19
+    maximumSelectionLength: 19,
+    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
   });
 };
 
@@ -177,24 +191,15 @@ const markerAdd = selectData => {
 };
 
 // 경로 그리기
-const drawRoute = sortList => {
-  // markergroup 생성
-  // let routeGroup = sortList.map(branch => {
-  //   let marker = L.marker([branch.branchLat, branch.branchLng]);
-  //   marker.id = branch.branchIndex;
-  //   marker.name = branch.branchName;
-  //   marker.cost = branch.routeCost;
-
-  //   return marker;
-  // });
-
+const drawRoute = () => {
   let wayPoints = sortList.map(branch => {
-    return new L.LatLng(branch.branchLat, branch.branchLng);
+    return L.Routing.waypoint(
+      L.latLng(branch.branchLat, branch.branchLng),
+      branch.branchName
+    );
   });
 
-  console.log("#routeControl", wayPoints);
-
-  routeControl.setWaypoints(wayPoints);
+  return routeControl.setWaypoints(wayPoints);
 };
 
 const markerRemove = selectData => {
@@ -223,6 +228,12 @@ $(".next").click(function(e) {
       .find(".collapse")
       .collapse("toggle");
   }
+});
+
+$("#resultPrev").click(function(e) {
+  e.preventDefault();
+
+  routeControl.getPlan().setWaypoints([]);
 });
 
 $("#resultButton").click(function(e) {
@@ -255,15 +266,17 @@ const requestSort = markerList => {
     data: JSON.stringify(markerList)
   })
     .then(function(res) {
-      res = res.data;
-      console.log("#res", res);
+      sortList = $.extend(true, [], res.data);
+      console.log("#소팅 완료 sortList", sortList);
 
-      drawRoute(res);
+      return drawRoute();
     })
     .catch(function(error) {
       alert("#error : ", error);
     });
 };
+
+const drawTimeline = (routesInfo, res) => {};
 
 const loadCalendar = () => {
   $("#calendarBox").html("<div id='calendar'></div>");

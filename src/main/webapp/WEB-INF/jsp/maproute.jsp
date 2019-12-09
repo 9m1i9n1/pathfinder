@@ -326,6 +326,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     <div class="card-footer">
                       <button
                         class="btn btn-primary"
+                        id="resultPrev"
                         type="button"
                         data-toggle="collapse"
                         data-target="#col-selectBranch"
