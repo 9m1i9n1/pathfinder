@@ -66,4 +66,14 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	
 	@Query("{$and : [ {'arrivedate' : { '$lt' : ?0 }}, {'username' : ?1}, {'dlvrdate' : { '$gte' : ?2 } }]}")
 	Page<HistoryTb> findAllByPpAndUsernameAndDate(Pageable pageable, Date LocalTime, String username, Date keyword);
+
+	// 내 글 & 카운트
+	@Query(value = "{$and : [ {'dlvrdate' : { '$gt' : ?0 }}, {'username' : ?1 }] }", count = true)
+	int findAllByWillAndUsernameAndDateAndCnt(Date time, String username);
+	
+	@Query(value = "{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 } }, {'username' : ?1} ] }", count = true)
+	int findAllByIngAndUsernameAndDateAndCnt(Date time, String username);
+	
+	@Query(value = "{$and : [ {'arrivedate' : { '$lt' : ?0 }}, {'dlvrdate' : { '$gte' : ?2 }}, {'username' : ?1}]}", count = true)
+	int findAllByPpAndUsernameAndDateAndCnt(Date LocalTime, String username, Date thisMonth);
 }

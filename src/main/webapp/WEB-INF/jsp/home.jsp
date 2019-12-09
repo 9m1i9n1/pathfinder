@@ -7,7 +7,6 @@
 
 <!-- PAGE SCRIPTS -->
 <script src="/static/dist/js/pages/dashboard2.js"></script>
-
 </head>
 <body>
 	<!-- Content Header (Page header) -->
@@ -105,26 +104,13 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
-							<h5 class="card-title">Monthly Recap Report</h5>
+							<h5 class="card-title">최근 배송 현황(1 Month)</h5>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
 									data-card-widget="collapse">
 									<i class="fas fa-minus"></i>
 								</button>
-								<div class="btn-group">
-									<button type="button" class="btn btn-tool dropdown-toggle"
-										data-toggle="dropdown">
-										<i class="fas fa-wrench"></i>
-									</button>
-									<div class="dropdown-menu dropdown-menu-right" role="menu">
-										<a href="#" class="dropdown-item">Action</a> <a href="#"
-											class="dropdown-item">Another action</a> <a href="#"
-											class="dropdown-item">Something else here</a> <a
-											class="dropdown-divider"></a> <a href="#"
-											class="dropdown-item">Separated link</a>
-									</div>
-								</div>
 								<button type="button" class="btn btn-tool"
 									data-card-widget="remove">
 									<i class="fas fa-times"></i>
@@ -135,51 +121,41 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-8">
-									<p class="text-center">
-										<strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-									</p>
-
-									<div class="chart">
+									<div class="canvas">
 										<!-- Sales Chart Canvas -->
-										<canvas id="salesChart" height="180" style="height: 180px;"></canvas>
+										<canvas id="chart-area" class="chart-js-render-monitor"></canvas>
 									</div>
 									<!-- /.chart-responsive -->
 								</div>
 								<!-- /.col -->
 								<div class="col-md-4">
 									<p class="text-center">
-										<strong>Goal Completion</strong>
+										<strong>진행현황</strong>
 									</p>
 
 									<div class="progress-group">
-										Add Products to Cart <span class="float-right"><b>160</b>/200</span>
+										배송예정 
+										<span id="willProgress" class="float-right"></span>
 										<div class="progress progress-sm">
-											<div class="progress-bar bg-primary" style="width: 80%"></div>
+											<div id="willDiv" class="progress-bar bg-danger"></div>
 										</div>
 									</div>
 									<!-- /.progress-group -->
 
 									<div class="progress-group">
-										Complete Purchase <span class="float-right"><b>310</b>/400</span>
+										배송중
+										<span id="ingProgress" class="float-right"></span>
 										<div class="progress progress-sm">
-											<div class="progress-bar bg-danger" style="width: 75%"></div>
+											<div id="ingDiv" class="progress-bar bg-warning"></div>
 										</div>
 									</div>
 
 									<!-- /.progress-group -->
 									<div class="progress-group">
-										<span class="progress-text">Visit Premium Page</span> <span
-											class="float-right"><b>480</b>/800</span>
+										<span class="progress-text">배송완료</span>
+										<span id="ppProgress" class="float-right"></span>
 										<div class="progress progress-sm">
-											<div class="progress-bar bg-success" style="width: 60%"></div>
-										</div>
-									</div>
-
-									<!-- /.progress-group -->
-									<div class="progress-group">
-										Send Inquiries <span class="float-right"><b>250</b>/500</span>
-										<div class="progress progress-sm">
-											<div class="progress-bar bg-warning" style="width: 50%"></div>
+											<div id="ppDiv" class="progress-bar bg-success"></div>
 										</div>
 									</div>
 									<!-- /.progress-group -->
@@ -189,7 +165,7 @@
 							<!-- /.row -->
 						</div>
 						<!-- ./card-body -->
-						<div class="card-footer">
+						<!-- <div class="card-footer">
 							<div class="row">
 								<div class="col-sm-3 col-6">
 									<div class="description-block border-right">
@@ -198,9 +174,9 @@
 										<h5 class="description-header">$35,210.43</h5>
 										<span class="description-text">TOTAL REVENUE</span>
 									</div>
-									<!-- /.description-block -->
+									/.description-block
 								</div>
-								<!-- /.col -->
+								/.col
 								<div class="col-sm-3 col-6">
 									<div class="description-block border-right">
 										<span class="description-percentage text-warning"><i
@@ -208,9 +184,9 @@
 										<h5 class="description-header">$10,390.90</h5>
 										<span class="description-text">TOTAL COST</span>
 									</div>
-									<!-- /.description-block -->
+									/.description-block
 								</div>
-								<!-- /.col -->
+								/.col
 								<div class="col-sm-3 col-6">
 									<div class="description-block border-right">
 										<span class="description-percentage text-success"><i
@@ -218,9 +194,9 @@
 										<h5 class="description-header">$24,813.53</h5>
 										<span class="description-text">TOTAL PROFIT</span>
 									</div>
-									<!-- /.description-block -->
+									/.description-block
 								</div>
-								<!-- /.col -->
+								/.col
 								<div class="col-sm-3 col-6">
 									<div class="description-block">
 										<span class="description-percentage text-danger"><i
@@ -228,11 +204,11 @@
 										<h5 class="description-header">1200</h5>
 										<span class="description-text">GOAL COMPLETIONS</span>
 									</div>
-									<!-- /.description-block -->
+									/.description-block
 								</div>
 							</div>
-							<!-- /.row -->
-						</div>
+							/.row
+						</div> -->
 						<!-- /.card-footer -->
 					</div>
 					<!-- /.card -->

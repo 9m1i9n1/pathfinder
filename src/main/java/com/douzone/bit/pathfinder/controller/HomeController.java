@@ -18,10 +18,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.response.HistoryResponse;
 import com.douzone.bit.pathfinder.service.HistoryService;
+import com.douzone.bit.pathfinder.service.HomeService;
 
 @RestController
 @RequestMapping("/home")
 public class HomeController {
+	
+	@Autowired
+	HomeService homeService;
 	
 	@Autowired
 	HistoryService historyService;
@@ -38,18 +42,20 @@ public class HomeController {
 	@GetMapping("/recentlyHistory")
 	public Header<List<HistoryResponse>> recentlyHistory(
 			@PageableDefault(size = 5) Pageable pageable){
-		System.out.println("ggood");
-		System.out.println(pageable);
+
 		return historyService.readRecentlyHistoryUseHome(pageable);
 	}
 	
 	@GetMapping("/todayHistory")
 	public Header<List<HistoryResponse>> todayHistory(
 			@PageableDefault(size = 5) Pageable pageable){
-		System.out.println("ggood");
-		System.out.println(pageable);
+
 		return historyService.readTodayHistoryUseHome(pageable);
 	}
-
-
+	
+	@GetMapping("/getTotalCount.do")
+	public int[] totalCount() {
+		
+		return homeService.getTotalCount();
+	}
 }
