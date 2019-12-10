@@ -93,4 +93,14 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	
 	@Query(value = "{$and : [ {'arrivedate' : { '$lt' : ?0 }}, {'dlvrdate' : { '$gte' : ?2 }}, {'username' : ?1}]}", count = true)
 	int findAllByPpAndUsernameAndDateAndCnt(Date LocalTime, String username, Date thisMonth);
+	
+	// 카운트
+	@Query(value = "{'dlvrdate' : { '$gt' : ?0 }}", count = true)
+	int findAllByWillAndDateAndCnt(Date time);
+	
+	@Query(value = "{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 } }] }", count = true)
+	int findAllByIngAndDateAndCnt(Date time);
+	
+	@Query(value = "{$and : [ {'arrivedate' : { '$lt' : ?0 }}, {'dlvrdate' : { '$gte' : ?1 }}]}", count = true)
+	int findAllByPpAndDateAndCnt(Date LocalTime, Date thisMonth);
 }

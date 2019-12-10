@@ -1,31 +1,55 @@
 $(document).ready(function() {
 	recentlyHistory();
 	todayHistory();
-	drawDoughnut();
-	userCount()
-	branchCount()
-	historyTotalCount()
-	todayHistoryPercent()
+	drawDoughnut(false);
+	checkEvent();
+	userCount();
+	branchCount();
+	historyTotalCount();
+	todayHistoryPercent();
 });
 
-function drawDoughnut() {
-	var config = {
+function checkEvent() {
+	$('#myDelivery').change(function() {	
+		let checked = $(this).prop('checked');
+		
+		drawDoughnut(checked);
+	});
+}
+
+function initDoughnut(res) {
+	let data = null;
+	
+	if (res[2] !== 0) {
+		data = {
+			datasets: [{
+				data: [],
+				backgroundColor: [
+					'rgb(255, 0, 0)',
+					'rgb(255, 165, 0)',
+					'rgb(0, 128, 0)'
+					]
+			}],
+			labels: [
+				'배송예정',
+				'배송중',
+				'배송완료'
+			]
+		};
+	} else {
+		data = {
+			labels : ["Empty"],
+			datasets: [{
+				labels : "데이터가 존재하지 않습니다",
+				backgroundColor: ['#D3D3D3'],
+				data : [100]
+			}]
+		};
+	}
+	
+	let config = {
 			type: 'doughnut',
-			data : {
-				datasets: [{
-					data: [],
-					backgroundColor: [
-						'rgb(255, 0, 0)',
-						'rgb(255, 165, 0)',
-						'rgb(0, 128, 0)'
-						]
-				}],
-				labels: [
-					'배송예정',
-					'배송중',
-					'배송완료'
-				]
-			},
+			data : data,
 			options: {
 				responsive: true,
 				maintainAspectRatio: false,
@@ -40,30 +64,40 @@ function drawDoughnut() {
 					animateScale: true,
 					animateRotate: true
 				}
-			}
+		}
 	}
 	
+	$('#chart-area').remove();
+	$('#doughnutDiv').append(`<canvas id="chart-area"
+	 class="chart-js-render-monitor"></canvas>`);
+	
+	let ctx = $('#chart-area');
+	
+	myDoughnut = new Chart(ctx, config);
+	myDoughnut.options.circumference = Math.PI;
+	myDoughnut.options.rotation = -Math.PI;
+	
+	for (let i = 0; i < res.length; i++) {
+		myDoughnut.data.datasets[0].data.push(res[i]);
+	}
+	
+	myDoughnut.update();
+}
+
+function drawDoughnut(checked) {
 	$.ajax({
 		url : "/home/getTotalCount.do",
 		type : "get",
+		data : {
+			myDelivery : checked
+		},
 		success : function(res) {
-			let ctx = $('#chart-area');
-			
 			let will = res[0];
 			let ing = res[1];
 			let pp = res[2];
 			let total = will + ing + pp;
-			
-			window.myDoughnut = new Chart(ctx, config);
-
-			window.myDoughnut.options.circumference = Math.PI;
-			window.myDoughnut.options.rotation = -Math.PI;
-			
-			for (let i = 0; i < res.length; i++) {
-				window.myDoughnut.data.datasets[0].data.push(res[i]);
-			}
-			
-			window.myDoughnut.update();
+		
+			initDoughnut(res);
 			
 			drawProgress(will, ing, pp, total);
 		}
@@ -75,9 +109,25 @@ function drawProgress(will, ing, pp, total) {
 	$('#ingProgress').html(`<b>${ing}</b>/${total}`);
 	$('#ppProgress').html(`<b>${pp}</b>/${total}`);
 	
-	$('#willDiv').css('width', parseInt((will / total) * 100) + '%');
-	$('#ingDiv').css('width', parseInt((ing / total) * 100) + '%');
-	$('#ppDiv').css('width', parseInt((pp / total) * 100) + '%');
+	calWill = 0;
+	calIng = 0;
+	calPp = 0;
+	
+	if (total !== 0) {
+		calWill = parseInt((will / total) * 100);
+		calIng = parseInt((ing / total) * 100);
+		calPp = parseInt((pp / total) * 100);
+	}
+	
+	$("#willDiv").animate({
+		width : `${calWill}%`
+	}, 1000);
+	$("#ingDiv").animate({
+		width : `${calIng}%`
+	}, 1000);
+	$("#ppDiv").animate({
+		width : `${calPp}%`
+	}, 1000);
 }
 
 function recentlyHistory() {

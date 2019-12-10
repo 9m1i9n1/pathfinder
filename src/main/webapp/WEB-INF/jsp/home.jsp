@@ -5,6 +5,9 @@
 <head>
 <title>Document</title>
 
+<!-- Toggle checkbox -->
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- PAGE SCRIPTS -->
 <script src="/static/dist/js/pages/dashboard2.js"></script>
 </head>
@@ -107,6 +110,8 @@
 							<h5 class="card-title">최근 배송 현황(1 Month)</h5>
 
 							<div class="card-tools">
+								<input id="myDelivery" type="checkbox" data-toggle="toggle"
+							 	data-size="small" data-on="내 배송송" data-off="전체"/>
 								<button type="button" class="btn btn-tool"
 									data-card-widget="collapse">
 									<i class="fas fa-minus"></i>
@@ -121,7 +126,7 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-8">
-									<div class="canvas">
+									<div id="doughnutDiv" class="canvas">
 										<!-- Sales Chart Canvas -->
 										<canvas id="chart-area" class="chart-js-render-monitor"></canvas>
 									</div>
@@ -136,7 +141,7 @@
 									<div class="progress-group">
 										배송예정 
 										<span id="willProgress" class="float-right"></span>
-										<div class="progress progress-sm">
+										<div class="progress progress-sm active">
 											<div id="willDiv" class="progress-bar bg-danger"></div>
 										</div>
 									</div>
@@ -145,7 +150,7 @@
 									<div class="progress-group">
 										배송중
 										<span id="ingProgress" class="float-right"></span>
-										<div class="progress progress-sm">
+										<div class="progress progress-sm active">
 											<div id="ingDiv" class="progress-bar bg-warning"></div>
 										</div>
 									</div>
@@ -154,7 +159,7 @@
 									<div class="progress-group">
 										<span class="progress-text">배송완료</span>
 										<span id="ppProgress" class="float-right"></span>
-										<div class="progress progress-sm">
+										<div class="progress progress-sm active">
 											<div id="ppDiv" class="progress-bar bg-success"></div>
 										</div>
 									</div>

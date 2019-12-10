@@ -60,9 +60,10 @@ public class HomeController {
 	}
 	
 	@GetMapping("/getTotalCount.do")
-	public int[] totalCount() {
+	public int[] totalCount(
+			@RequestParam("myDelivery") boolean myDelivery) {
 		
-		return homeService.getTotalCount();
+		return homeService.getTotalCount(myDelivery);
 	}
 
 		// 오늘의 배송현황

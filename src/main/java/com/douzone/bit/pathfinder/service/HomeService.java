@@ -27,7 +27,7 @@ public class HomeService {
 	@Autowired
 	BranchRepository branchRepository;
 	
-	public int[] getTotalCount() {
+	public int[] getTotalCount(boolean myDelivery) {
 		int count[] = new int[3];
 		
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -37,10 +37,16 @@ public class HomeService {
 		
 		Date thisMonth = cal.getTime();
 		
-		count[0] = historyRepository.findAllByWillAndUsernameAndDateAndCnt(Calendar.getInstance().getTime(), userName);
-		count[1] = historyRepository.findAllByIngAndUsernameAndDateAndCnt(Calendar.getInstance().getTime(), userName);
-		count[2] = historyRepository.findAllByPpAndUsernameAndDateAndCnt(Calendar.getInstance().getTime(), userName, thisMonth);
-	
+		if (myDelivery) {
+			count[0] = historyRepository.findAllByWillAndUsernameAndDateAndCnt(Calendar.getInstance().getTime(), userName);
+			count[1] = historyRepository.findAllByIngAndUsernameAndDateAndCnt(Calendar.getInstance().getTime(), userName);
+			count[2] = historyRepository.findAllByPpAndUsernameAndDateAndCnt(Calendar.getInstance().getTime(), userName, thisMonth);
+		} else {
+			count[0] = historyRepository.findAllByWillAndDateAndCnt(Calendar.getInstance().getTime());
+			count[1] = historyRepository.findAllByIngAndDateAndCnt(Calendar.getInstance().getTime());
+			count[2] = historyRepository.findAllByPpAndDateAndCnt(Calendar.getInstance().getTime(), thisMonth);
+		}
+		
 		return count;
 	}
 
