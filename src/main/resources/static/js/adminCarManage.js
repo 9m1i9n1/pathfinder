@@ -76,21 +76,30 @@ function carsearch(searchUrl, searchpage=0) {
 		contentType : 'application/json',
 		success : function(res) {
 			var str = "";
-			$.each(res.data,function(key, value) {
-				str += `<tr class="tr-shadow"><td>` + value.carArea +'</td>';
-				str += '<td>' + value.carNumber +'</td>';
-				str += '<td>' + value.carName +'톤 카고</td>';
-				str	+= '<td>' + value.carFuel + '</td>';
-				str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
-				str += "<td><div class='table-data-feature'>"
-				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName+ `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
-				str += `</td>'+ '</tr>`;
-				});
-			$("#tableListBody").html(str);
 			var buttonAll = "";
-			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
+			if (res.resultCode !== "ERROR") {
+				$.each(res.data,function(key, value) {
+					str += `<tr class="tr-shadow"><td>` + value.carArea +'</td>';
+					str += '<td>' + value.carNumber +'</td>';
+					str += '<td>' + value.carName +'톤 카고</td>';
+					str	+= '<td>' + value.carFuel + '</td>';
+					str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
+					str += "<td><div class='table-data-feature'>"
+					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName+ `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
+					str += `</td>'+ '</tr>`;
+					});
+				buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
+				pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
+			} else {
+				str += `<tr class="tr-shadow">`;
+				str += `<td colspan="8">`;
+				str += `${res.description}`;
+				str += `</td>`;
+				str += `</tr>`;
+			}
+			
 			$("#seachAll").html(buttonAll);
-			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
+			$("#tableListBody").html(str);
 		}
 	});
 }

@@ -33,10 +33,10 @@ function getSearch() {
     success: function(res) {
       let str = "";
       let count = "";
-
       count += `<li class="breadcrumb-item">조직도 페이지 /&nbsp</a></li>`;
-      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
+		if (res.resultCode !== "ERROR") {
+			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
       $.each(res.data, function(key, value) {
         str += `<tr class="tr-shadow">`;
         str += "<td>" + value.userName + "</td>";
@@ -46,17 +46,25 @@ function getSearch() {
         str += "<td>" + value.userPosition + "</td>";
         str += "</tr>";
       });
-
+      pageButton(
+    		  res.pagination.nodeType,
+    		  res.pagination.nodeIndex,
+    		  res.pagination.totalPages,
+    		  res.pagination.currentPage,
+    		  "search"
+      );
+	}  else {
+		count += `<li class="breadcrumb-list">0명</li>`;
+		str += `<tr class="tr-shadow">`;
+		str += `<td colspan="8">`;
+		str += `${res.description}`;
+		str += `</td>`;
+		str += `</tr>`;
+		
+	}
       $("#userTable").html(str);
       $("#headInfo").html(count);
       
-      pageButton(
-        res.pagination.nodeType,
-        res.pagination.nodeIndex,
-        res.pagination.totalPages,
-        res.pagination.currentPage,
-        "search"
-      );
     }
   });
 }
@@ -71,6 +79,7 @@ function getUser(treeId, selectPage) {
       let count = "";
 
       count += `<li class="breadcrumb-item">조직도 페이지 /&nbsp</a></li>`;
+	if (res.resultCode !== "ERROR") {
       count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
@@ -82,18 +91,27 @@ function getUser(treeId, selectPage) {
         str += "<td>" + value.userPosition + "</td>";
         str += "</tr>";
       });
+      pageButton(
+    		  res.pagination.nodeType,
+    		  res.pagination.nodeIndex,
+    		  res.pagination.totalPages,
+    		  res.pagination.currentPage,
+    		  "list"
+      );
+	} else {
+		count += `<li class="breadcrumb-list">0명</li>`;
 
+		str += `<tr class="tr-shadow">`;
+		str += `<td colspan="8">`;
+		str += `${res.description}`;
+		str += `</td>`;
+		str += `</tr>`;
+		
+	}
       $("#userTable").html(str);
 
       $("#headInfo").html(count);
 
-      pageButton(
-        res.pagination.nodeType,
-        res.pagination.nodeIndex,
-        res.pagination.totalPages,
-        res.pagination.currentPage,
-        "list"
-      );
     }
   });
 }

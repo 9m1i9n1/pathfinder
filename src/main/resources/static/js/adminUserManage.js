@@ -31,36 +31,46 @@ function userLoading() {
       let count = "";
 
       count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
-      count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
-
-      $.each(res.data, function(key, value) {
-        str += "<tr class='tr-shadow'>";
-
-        str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
-        str += "<td style='display:none;'>" + value.userIndex + "</td>";
-        str += "<td>" + value.userName + "</td>";
-        str += "<td>" + value.branchName + "</td>";
-        str += "<td>" + value.userPosition + "</td>";
-        str += "<td class='desc'>" + value.userId + "</td>";
-        str +=
-          "<td><span class='block-email'>" + value.userEmail + "</span></td>";
-        str += "<td>" + value.userPhone + "</td>";
-        str += "<td>" + (value.userAuth ? "관리자" : "사용자") + "</td>";
-
-        str += "<td><div class='table-data-feature'>";
-        str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
-        str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
-        str += "</div></td>";
-        str += "</tr>";
-
-        str += "<tr class='spacer'></tr>";
-      });
-
+      if (res.resultCode !== "ERROR") {
+		  count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
+		
+		  $.each(res.data, function(key, value) {
+		    str += "<tr class='tr-shadow'>";
+		
+		    str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
+		    str += "<td style='display:none;'>" + value.userIndex + "</td>";
+		    str += "<td>" + value.userName + "</td>";
+		    str += "<td>" + value.branchName + "</td>";
+		    str += "<td>" + value.userPosition + "</td>";
+		    str += "<td class='desc'>" + value.userId + "</td>";
+		    str +=
+		      "<td><span class='block-email'>" + value.userEmail + "</span></td>";
+		    str += "<td>" + value.userPhone + "</td>";
+		    str += "<td>" + (value.userAuth ? "<span class=\"badge badge-primary\">관리자</span>" : "<span class=\"badge badge-danger:focus\">사용자</span>") + "</td>";
+		
+		    str += "<td><div class='table-data-feature'>";
+		    str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
+		    str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
+		    str += "</div></td>";
+		    str += "</tr>";
+		
+		    str += "<tr class='spacer'></tr>";
+		  });
+		  pageButton(res.pagination.totalPages, res.pagination.currentPage);
+      } else {
+		  count += `<li class="breadcrumb-item active">0명</li>`;
+			
+			str += `<tr class="tr-shadow">`;
+			str += `<td colspan="8">`;
+			str += `${res.description}`;
+			str += `</td>`;
+			str += `</tr>`;
+			
+		}
       $("#table #body").html(str);
 
       $("#headerol").html(count);
 
-      pageButton(res.pagination.totalPages, res.pagination.currentPage);
     },
     error: function(request, status, error) {
       alert(
@@ -203,8 +213,8 @@ function userPwReset(userIndex) {
   });
 }
 
-//! Modal 관련 =======================
-//TODO JavaScript 다시 선언시 Const 중복 에러발생
+// ! Modal 관련 =======================
+// TODO JavaScript 다시 선언시 Const 중복 에러발생
 var insertModal = $("#insertModal");
 var modifyModal = $("#modifyModal");
 
@@ -278,7 +288,7 @@ function arrayToObject(array) {
   }, []);
 }
 
-//모달 내 지역 로딩
+// 모달 내 지역 로딩
 function areaLoading(modal) {
   $.ajax({
     url: "/admin/usermanage/arealist.do",
@@ -418,7 +428,7 @@ $.fn.serializeObject = function() {
   return JSON.stringify(result);
 };
 
-//! JSTREE 부분 ====================
+// ! JSTREE 부분 ====================
 
 // jstree 로딩
 function treeLoading() {
@@ -495,7 +505,7 @@ function treeLoading() {
     });
 }
 
-//! validation ====================
+// ! validation ====================
 // select 포커스 문제 해결
 $(".selectpicker").on("change", function() {
   $(this).blur();
