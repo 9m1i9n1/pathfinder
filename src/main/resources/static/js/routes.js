@@ -1,11 +1,11 @@
-$(document).ready(function() {
+$(document).ready(() => {
   branchlist(depBranchlist);
   // branchlist(drawBranchlist);
 
   // showClickRoute();
 });
 
-$("#testButton").on("click", function(e) {
+$("#testButton").on("click", e => {
   $("#depSelect")
     .val("652")
     .trigger("change");
@@ -34,18 +34,23 @@ L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 
 var routeControl = L.Routing.control({
   serviceUrl: "http://218.39.221.89:5000/route/v1",
+  // router: L.Routing.osrmv1({
+  //   serviceUrl: "http://218.39.221.89:5000/route/v1"
+  // }),
   routeWhileDragging: false,
   draggableWaypoints: false,
-  createMarker: function() {
+  createMarker: () => {
     return null;
   }
 })
-  .on("routesfound", function(e) {
+  .on("routesfound", e => {
     let routes = e.routes[0];
 
-    console.log("#routes", routes);
-
-    console.log("#routeList", routeList);
+    carculateData(routes)
+      .then(result => drawTimeline(result))
+      .catch(error => {
+        alert(error);
+      });
   })
   // .on("routingstart", showSpinner)
   // .on("routesfound routingerror", hideSpinner)
@@ -59,7 +64,7 @@ const branchlist = handleFunc => {
   $.ajax({
     url: "/maproute/branchLoding",
     type: "get"
-  }).then(function(res) {
+  }).then(res => {
     handleFunc(res);
   });
 };
@@ -70,7 +75,7 @@ const carlist = (handleFunc, areaIndex) => {
     url: "/maproute/carLoading",
     data: { areaIndex },
     type: "get"
-  }).then(function(res) {
+  }).then(res => {
     handleFunc(res);
   });
 };
@@ -79,7 +84,7 @@ const carlist = (handleFunc, areaIndex) => {
 const depBranchlist = res => {
   res = res.data;
 
-  let branchData = $.map(res, function(obj) {
+  let branchData = $.map(res, obj => {
     obj.id = obj.id || obj.branchIndex;
     obj.text = obj.text || obj.branchName;
 
@@ -95,7 +100,7 @@ const depBranchlist = res => {
 };
 
 // 출발지 선택시 Event
-$("#depSelect").on("select2:select", function(e) {
+$("#depSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
   markerGroup.clearLayers();
@@ -110,7 +115,7 @@ $("#depSelect").on("select2:select", function(e) {
 const depCarlist = res => {
   res = res.data;
 
-  let carData = $.map(res, function(obj) {
+  let carData = $.map(res, obj => {
     obj.id = obj.id || obj.carIndex;
     obj.text = obj.text || `${obj.carName}톤트럭 (${obj.carNumber})`;
 
@@ -129,7 +134,7 @@ const depCarlist = res => {
 };
 
 // 차량 선택시 Event
-$("#carSelect").on("select2:select", function(e) {
+$("#carSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
   loadCalendar();
@@ -161,14 +166,14 @@ const selectBranchlist = res => {
 };
 
 // 경유지 선택시 Event
-$("#branchSelect").on("select2:select", function(e) {
+$("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
   markerAdd(selectData);
 });
 
 // 경유지 삭제시 Event
-$("#branchSelect").on("select2:unselect", function(e) {
+$("#branchSelect").on("select2:unselect", e => {
   let selectData = e.params.data;
 
   markerRemove(selectData);
@@ -210,11 +215,13 @@ const markerRemove = selectData => {
 
 //! 이벤트 객체 부분
 // 다음버튼 누를 경우에
+// Lambda의 bind 형식때문에 function으로 사용
 $(".next").click(function(e) {
   e.preventDefault();
 
   var sectionValid = true;
   var collapse = $(this).closest(".collapse");
+
   $.each(collapse.find("input, select, textarea"), function() {
     if (!$(this).valid()) {
       sectionValid = false;
@@ -230,13 +237,13 @@ $(".next").click(function(e) {
   }
 });
 
-$("#resultPrev").click(function(e) {
+$("#resultPrev").click(e => {
   e.preventDefault();
 
   routeControl.getPlan().setWaypoints([]);
 });
 
-$("#resultButton").click(function(e) {
+$("#resultButton").click(e => {
   mapSort();
 });
 
@@ -265,18 +272,65 @@ const requestSort = markerList => {
     contentType: "application/json",
     data: JSON.stringify(markerList)
   })
-    .then(function(res) {
+    .then(res => {
       sortList = $.extend(true, [], res.data);
       console.log("#소팅 완료 sortList", sortList);
 
       return drawRoute();
     })
-    .catch(function(error) {
+    .catch(error => {
       alert("#error : ", error);
     });
 };
 
-const drawTimeline = (routesInfo, res) => {};
+// reduce로 변경 요망
+// 현재 쓰레기 코드임. 시간 남으면 리팩토링 필수.
+const carculateData = lrmData => {
+  return new Promise((resolve, reject) => {
+    let routeInfo = {};
+    let rdist = 0,
+      rtime = 0,
+      index = 1;
+    let routes = [];
+
+    lrmData.instructions.forEach(item => {
+      rdist += item.distance;
+      rtime += item.time;
+
+      if (
+        item.type === "WaypointReached" ||
+        item.type === "DestinationReached"
+      ) {
+        rdist /= 1000;
+        routes.push({
+          rdist: rdist.toFixed(3),
+          rtime: rtime.toFixed(3),
+          rdep: sortList[index - 1].branchName,
+          rarvl: sortList[index].branchName,
+          rfee: sortList[index - 1].routeCost
+        });
+
+        rdist = 0;
+        rtime = 0;
+        index++;
+      }
+    });
+
+    routeInfo.carIndex = $("#carSelect").val();
+    routeInfo.dlvrdate = $("#dateSelect").val();
+    routeInfo.dist = (lrmData.summary.totalDistance / 1000.0).toFixed(3);
+    routeInfo.time = lrmData.summary.totalTime.toFixed(3);
+    routeInfo.routes = $.extend(true, [], routes);
+    routeInfo.dep = routes[0].rdep;
+    routeInfo.arvl = routes[routes.length - 1].rarvl;
+
+    resolve(routeInfo);
+  });
+};
+
+const drawTimeline = routeInfo => {
+  console.log("#routeInfo", routeInfo);
+};
 
 const loadCalendar = () => {
   $("#calendarBox").html("<div id='calendar'></div>");
@@ -306,11 +360,11 @@ const loadCalendar = () => {
       "11월",
       "12월"
     ],
-    onSelected: function(view, date, data) {
+    onSelected: (view, date, data) => {
       $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
     },
     // 이전달 다음달 변경 시
-    viewChange: function(view, y, m) {
+    viewChange: (view, y, m) => {
       console.log(view, y, m);
     }
   });
@@ -350,7 +404,7 @@ $("#routeForm").validate({
   },
 
   // 에러 위치 조정
-  errorPlacement: function(error, element) {
+  errorPlacement: (error, element) => {
     if (element.is(":radio") || element.is("select") || element.is("input")) {
       error.appendTo(element.parents(".card-body"));
     } else {
@@ -359,7 +413,7 @@ $("#routeForm").validate({
   },
 
   // valid 실패시
-  invalidHandler: function(form, validator) {
+  invalidHandler: (form, validator) => {
     var errors = validator.numberOfInvalids();
 
     if (errors) {
@@ -369,13 +423,31 @@ $("#routeForm").validate({
   },
 
   // valid 성공시
-  submitHandler: function(form) {
+  submitHandler: form => {
     const formId = $(form).attr("id");
     const req = $(form).serializeObject();
 
     return false;
   }
 });
+
+Number.prototype.toHHMMSS = () => {
+  var sec_num = Math.floor(this / 1);
+  var hours = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - hours * 3600) / 60);
+  var seconds = sec_num - hours * 3600 - minutes * 60;
+
+  if (hours < 10) {
+    hours = "0" + hours;
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  return hours + ":" + minutes + ":" + seconds;
+};
 
 // var tbody;
 // var orgBColor = '#ffffff';

@@ -191,7 +191,7 @@ function getRoutes(routes) {
 			
 			detailsModal
 			.find("#dep")
-			.text(routes.dep );
+			.text(routes.dep);
 			
 			detailsModal
 			.find("#arvl")
