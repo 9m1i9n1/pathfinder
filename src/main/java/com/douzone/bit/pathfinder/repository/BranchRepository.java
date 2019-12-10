@@ -18,6 +18,9 @@ public interface BranchRepository extends JpaRepository<BranchTb, Long> {
 	
 	public List<BranchTb> findByArea(AreaTb area);
 
+	@Query(value ="SELECT count(*) FROM branch_tb", nativeQuery = true)
+	public Long findAllBranchCount();
+	
 	@Query(value = "select branch_index, branch_name from branch_tb", nativeQuery = true)
 	public List<Object> findBranchName();
 

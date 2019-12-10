@@ -2,12 +2,16 @@ package com.douzone.bit.pathfinder.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.douzone.bit.pathfinder.model.entity.UserTb;
+import com.douzone.bit.pathfinder.repository.BranchRepository;
+import com.douzone.bit.pathfinder.repository.UserRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 
 @Service
@@ -16,6 +20,12 @@ public class HomeService {
 
 	@Autowired
 	HistoryRepository historyRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	BranchRepository branchRepository;
 	
 	public int[] getTotalCount() {
 		int count[] = new int[3];
@@ -32,5 +42,23 @@ public class HomeService {
 		count[2] = historyRepository.findAllByPpAndUsernameAndDateAndCnt(Calendar.getInstance().getTime(), userName, thisMonth);
 	
 		return count;
+	}
+
+	public Long userCount() {
+		Long userTotalCount =userRepository.findAllUserCount();
+		System.out.println("총원 : "+userTotalCount);
+		return userTotalCount;
+	}
+
+	public Long branchCount() {
+		Long branchTotalCount =branchRepository.findAllBranchCount();
+		System.out.println("지점수 : "+branchTotalCount);
+		return branchTotalCount;
+	}
+
+	public Long historyAll() {
+		Long historyTotalCount = historyRepository.findAllCount();
+		System.out.println("히스토리 수 : " + historyTotalCount);
+		return historyTotalCount;
 	}
 }

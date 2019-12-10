@@ -150,7 +150,7 @@ function todayHistoryPercent() {
 		type : "get",
 		success : function(res) {
 			console.log(res)
-			$("#todayPercent").html(res + " %");
+			$("#todayPercent").html(res + '<small>%</small>');
 		}
 	});
 }
@@ -161,32 +161,20 @@ function branchCount() {
 		type : "get",
 		data : {},
 		success : function(res) {
-			var count = "";
-			count = res.pagination.totalElements + " 개";
-			console.log(count)
-			$("#branchCount").html(count);
+			
+			$("#branchCount").html(res + " 개");
 		}
 	})
 }
 
 function userCount() {
-	let treeId = sessionStorage.getItem("treeId");
-	let selectPage = sessionStorage.getItem("page");
-
 	$.ajax({
 		url : "/home/totalUserCount",
 		type : "get",
 		data : {
-			treeId : treeId,
-			page : selectPage
 		},
 		success : function(res) {
-			let str = "";
-			let count = "";
-
-			count = res.pagination.totalElements + " 명";
-			console.log(count)
-			$("#userCount").html(count);
+			$("#userCount").html(res +" 명");
 		}
 	});
 }
@@ -196,14 +184,8 @@ function historyTotalCount() {
 		url : "/home/totalHistoryCount",
 		type : "get",
 		success : function(res) {
-			var str = 0;
-			let count = "";
-			$.each(res.data,function(key, value) {
-				str += 1
-				});
-			count = str + " 개";
-			console.log(count)
-			$("#totalHistoryCount").html(count);
+			
+			$("#totalHistoryCount").html(res + " 개");
 		}
 	});
 }
