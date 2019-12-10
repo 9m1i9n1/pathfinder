@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  $(".scrollbar-outer").scrollbar();
   branchlist(depBranchlist);
   // branchlist(drawBranchlist);
 
@@ -233,6 +234,7 @@ $(".next").click(function(e) {
 
   $.each(collapse.find("input, select, textarea"), function() {
     if (!$(this).valid()) {
+      //? valid 주석해놓음 (테스트 불편)
       sectionValid = false;
     }
   });
@@ -339,6 +341,27 @@ const carculateData = lrmData => {
 
 const drawTimeline = routeInfo => {
   console.log("#routeInfo", routeInfo);
+
+  let str = "<ul>";
+
+  $.each(routeInfo.routes, function(key, value) {
+    str += "<li><span></span>";
+    str += "<div>";
+    str += `<div class="title">${value.rdep} → ${value.rarvl}</div>`;
+    str += `<div class="info">${value.rdist}km</div>`;
+    str += `<div class="type">${value.rfee}원</div>`;
+    str += "</div>";
+
+    str += `<span class="number">
+            <span>10:00</span>
+            <span>12:00</span>
+            </span>`;
+    str += "</li>";
+  });
+
+  str += "</ul>";
+
+  $(".tmline").html(str);
 };
 
 const loadCalendar = (res) => {

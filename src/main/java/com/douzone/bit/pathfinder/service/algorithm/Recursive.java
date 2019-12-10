@@ -69,7 +69,6 @@ public class Recursive {
 		int row = 0;
 
 		while (true) {
-
 			tour.add(new ArrayList<Double>());
 			tour.get(row).add((double) index);
 

@@ -18,7 +18,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <script src="/static/js/swiper.min.js"></script>
     <link href="/static/css/swiper.min.css" rel="stylesheet" />
 
-    <link href="/static/route/css/maproute.css" rel="stylesheet" />
+    <!-- <link href="/static/route/css/maproute.css" rel="stylesheet" /> -->
+
+    <link href="/static/route/css/timeline.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -40,10 +42,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
       <!-- /.container-fluid -->
     </section>
 
-    <div class="container-fluid vh-80">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-9">
-          <div class="vh-80" id="map"></div>
+          <div class="vh-85" id="map"></div>
         </div>
 
         <div class="col-3">
@@ -141,7 +143,8 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                       <input
                         type="text"
                         class="form-control"
-                        id="dateSelect" name="dateSelect"
+                        id="dateSelect"
+                        name="dateSelect"
                         readonly
                       />
                     </div>
@@ -179,25 +182,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   <h3 class="card-title">
                     4. 경유 지점 선택
                   </h3>
-
-                  <%-- 이전 검색. class명 확인차 주석 --%> <%--
-                  <div class="card-header">
-                    검색
-                    <input
-                      type="text"
-                      name="keyword"
-                      id="keyword"
-                      style="text-align: center; width: 60%"
-                    />
-                    <input
-                      type="button"
-                      name="btnSearch"
-                      id="btnSearch"
-                      value="확인"
-                      style="width: 20%"
-                    />
-                  </div>
-                  --%>
                 </div>
 
                 <div
@@ -207,7 +191,11 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   data-parent="#accordion-select"
                 >
                   <div class="card-body">
-                    <select id="branchSelect" name="branchSelect" multiple="multiple">
+                    <select
+                      id="branchSelect"
+                      name="branchSelect"
+                      multiple="multiple"
+                    >
                       <option></option>
                     </select>
                   </div>
@@ -231,117 +219,43 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     </button>
                   </div>
                 </div>
-                <%--
-                <div>
-                  <div class="card-header">
-                    <h3 class="card-title">지점 목록</h3>
+              </div>
 
-                    <div class="card-tools">
-                      <div
-                        class="input-group input-group-sm"
-                        style="width: 150px;"
-                      >
-                        <input
-                          type="text"
-                          name="selected_search"
-                          class="form-control float-right"
-                          placeholder="검색"
-                        />
-
-                        <div class="input-group-append">
-                          <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="tableEdge">
-                      <table
-                        class="table table-hover table-mc-light-blue"
-                        style="text-align: center;"
-                        id="selectRoute"
-                      ></table>
-                    </div>
-                  </div>
-
-                  <div id="tableEdge">
-                    <table
-                      class="table table-hover table-mc-light-blue"
-                      style="text-align: center;"
-                      id="allDataTable"
-                    ></table>
-                  </div>
+              <!-- 경로 타임라인 -->
+              <div class="card">
+                <div class="card-header" id="headingRoad">
+                  <h3 class="card-title">
+                    5. 추천 경로
+                  </h3>
                 </div>
 
-                <div class="card-header">
-                  <h3 class="card-title">선택된 지점</h3>
+                <div
+                  id="col-selectRoad"
+                  class="collapse"
+                  aria-labelledby="headingRoad"
+                  data-parent="#accordion-select"
+                >
+                  <div class="card-body">
+                    <div id="routeResult" class="scrollbar-outer">
+                      <div class="tmline"></div>
+                    </div>
+                  </div>
 
-                  <div class="card-tools">
-                    <div
-                      class="input-group input-group-sm"
-                      style="width: 150px;"
+                  <div class="card-footer">
+                    <button
+                      class="btn btn-primary"
+                      id="resultPrev"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#col-selectBranch"
+                      aria-expanded="false"
+                      aria-controls="col-selectBranch"
                     >
-                      <input
-                        type="text"
-                        name="selected_search"
-                        class="form-control float-right"
-                        placeholder="검색"
-                      />
-
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="tableEdge">
-                    <table
-                      class="table table-hover table-mc-light-blue"
-                      style="text-align: center;"
-                      id="selectRoute"
-                    ></table>
-                  </div>
-                  --%>
-                </div>
-
-                <!-- 차량 선택 -->
-                <div class="card">
-                  <div class="card-header" id="headingRoad">
-                    <h3 class="card-title">
-                      5. 추천 경로
-                    </h3>
-                  </div>
-
-                  <div
-                    id="col-selectRoad"
-                    class="collapse"
-                    aria-labelledby="headingRoad"
-                    data-parent="#accordion-select"
-                  >
-                    <div class="card-body">
-                      <div id="routeResult"></div>
-                    </div>
-
-                    <div class="card-footer">
-                      <button
-                        class="btn btn-primary"
-                        id="resultPrev"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#col-selectBranch"
-                        aria-expanded="false"
-                        aria-controls="col-selectBranch"
-                      >
-                        이전
-                      </button>
-                      <button
-                        class="btn btn-primary"
-                        type="submit"
-                      >
-                        등록
-                      </button>
-                    </div>
+                      이전
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                      등록
+                    </button>
                   </div>
                 </div>
               </div>
