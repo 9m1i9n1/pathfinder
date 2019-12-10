@@ -1,12 +1,5 @@
 $(document).ready(function() {
-	recentlyHistory();
-	todayHistory();
-	drawDoughnut(false);
-	checkEvent();
-	userCount();
-	branchCount();
-	historyTotalCount();
-	todayHistoryPercent();
+	init();
 });
 
 function checkEvent() {
@@ -247,4 +240,16 @@ function historyTotalCount() {
 			$("#totalHistoryCount").html(res + " 개");
 		}
 	});
+}
+
+function init(){
+	recentlyHistory();
+	todayHistory();
+	drawDoughnut(false);
+	checkEvent();
+	userCount();
+	branchCount();
+	historyTotalCount();
+	todayHistoryPercent();
+	loadingMap();
 }

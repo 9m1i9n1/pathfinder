@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
@@ -93,4 +94,12 @@ public class HomeController {
 
 		return homeService.historyAll();
 	}
+	
+	@GetMapping("/barChart")
+	public  Header<List<AdminBranchResponse>> barChart(@RequestParam(value="keyword") Long keyword) {
+
+		return homeService.barChart(keyword);
+	}
+	
+	
 }

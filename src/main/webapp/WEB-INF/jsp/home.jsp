@@ -6,8 +6,11 @@
 <title>Document</title>
 
 <!-- Toggle checkbox -->
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<link
+	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+	rel="stylesheet">
+<script
+	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- PAGE SCRIPTS -->
 <script src="/static/dist/js/pages/dashboard2.js"></script>
 </head>
@@ -41,13 +44,12 @@
 			<div class="row">
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box">
-						<span class="info-box-icon bg-info elevation-1">
-						<i class="fas fa-shipping-fast"></i></span>
+						<span class="info-box-icon bg-info elevation-1"> <i
+							class="fas fa-shipping-fast"></i></span>
 
 						<div class="info-box-content">
 							<span class="info-box-text">오늘의 배송 현황</span> <span
-								class="info-box-number" id="todayPercent">
-							</span>
+								class="info-box-number" id="todayPercent"> </span>
 						</div>
 						<!-- /.info-box-content -->
 					</div>
@@ -74,8 +76,8 @@
 
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
-						<span class="info-box-icon bg-success elevation-1">
-						<i class="far fa-building"></i></span>
+						<span class="info-box-icon bg-success elevation-1"> <i
+							class="far fa-building"></i></span>
 
 						<div class="info-box-content">
 							<span class="info-box-text">지점</span> <span
@@ -88,8 +90,8 @@
 				<!-- /.col -->
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
-						<span class="info-box-icon bg-warning elevation-1">
-						<i class="fas fa-history"></i></span>
+						<span class="info-box-icon bg-warning elevation-1"> <i
+							class="fas fa-history"></i></span>
 
 						<div class="info-box-content">
 							<span class="info-box-text">기록</span> <span
@@ -111,7 +113,7 @@
 
 							<div class="card-tools">
 								<input id="myDelivery" type="checkbox" data-toggle="toggle"
-							 	data-size="small" data-on="내 배송송" data-off="전체"/>
+									data-size="small" data-on="내 배송송" data-off="전체" />
 								<button type="button" class="btn btn-tool"
 									data-card-widget="collapse">
 									<i class="fas fa-minus"></i>
@@ -139,8 +141,7 @@
 									</p>
 
 									<div class="progress-group">
-										배송예정 
-										<span id="willProgress" class="float-right"></span>
+										배송예정 <span id="willProgress" class="float-right"></span>
 										<div class="progress progress-sm active">
 											<div id="willDiv" class="progress-bar bg-danger"></div>
 										</div>
@@ -148,8 +149,7 @@
 									<!-- /.progress-group -->
 
 									<div class="progress-group">
-										배송중
-										<span id="ingProgress" class="float-right"></span>
+										배송중 <span id="ingProgress" class="float-right"></span>
 										<div class="progress progress-sm active">
 											<div id="ingDiv" class="progress-bar bg-warning"></div>
 										</div>
@@ -157,8 +157,8 @@
 
 									<!-- /.progress-group -->
 									<div class="progress-group">
-										<span class="progress-text">배송완료</span>
-										<span id="ppProgress" class="float-right"></span>
+										<span class="progress-text">배송완료</span> <span id="ppProgress"
+											class="float-right"></span>
 										<div class="progress progress-sm active">
 											<div id="ppDiv" class="progress-bar bg-success"></div>
 										</div>
@@ -896,64 +896,6 @@
 #ulsan{ left:200px; top:225px; }
 #jeju{ left:80px; top:340px; } */
 </style>
-
-	<div style="width: 100%; height: 400px;">
-		<div id="canvas">
-			<div id="south"></div>
-			<div id="seoul">
-				<h2>서울특별시</h2>
-			</div>
-			<div id="gygg">
-				<h2>경기도</h2>
-			</div>
-			<div id="incheon">
-				<h2>인천광역시</h2>
-			</div>
-			<div id="gangwon">
-				<h2>강원도</h2>
-			</div>
-			<div id="chungbuk">
-				<h2>충청북도</h2>
-			</div>
-			<div id="chungnam">
-				<h2>충청남도</h2>
-			</div>
-			<div id="daejeon">
-				<h2>대전광역시</h2>
-			</div>
-			<div id="sejong">
-				<h2>세종특별자치시</h2>
-			</div>
-			<div id="gwangju">
-				<h2>광주광역시</h2>
-			</div>
-			<div id="jeonbuk">
-				<h2>전라북도</h2>
-			</div>
-			<div id="jeonnam">
-				<h2>전라남도</h2>
-			</div>
-			<div id="gyeongbuk">
-				<h2>경상북도</h2>
-			</div>
-			<div id="gyeongnam">
-				<h2>경상남도</h2>
-			</div>
-			<div id="daegu">
-				<h2>대구광역시</h2>
-			</div>
-			<div id="busan">
-				<h2>부산광역시</h2>
-			</div>
-			<div id="ulsan">
-				<h2>울산광역시</h2>
-			</div>
-			<div id="jeju">
-				<h2>제주특별자치도</h2>
-			</div>
-		</div>
-	</div>
-
 	<div class="card">
 		<div class="card-header border-transparent">
 			<h3 class="card-title">잇힝 잇힝 &gt_&ltv</h3>
@@ -1005,6 +947,93 @@
 		<!-- /.card-footer -->
 	</div>
 
+	<div class="card">
+		<div class="card-header border-transparent">
+			<h3 class="card-title">잇힝 잇힝2 &gt_&ltv</h3>
+			<div class="card-tools">
+				<button type="button" class="btn btn-tool"
+					data-card-widget="collapse">
+					<i class="fas fa-minus"></i>
+				</button>
+				<button type="button" class="btn btn-tool" data-card-widget="remove">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+		</div>
+
+		<!-- /.card-header -->
+		<div class="card-body p-0">
+			<div class="row">
+				<div class="col-sm-4">
+					<div style="width: 100%; height: 400px;">
+						<div id="canvas">
+							<div id="south"></div>
+							<div id="seoul">
+								<h2>서울특별시</h2>
+							</div>
+							<div id="gygg">
+								<h2>경기도</h2>
+							</div>
+							<div id="incheon">
+								<h2>인천광역시</h2>
+							</div>
+							<div id="gangwon">
+								<h2>강원도</h2>
+							</div>
+							<div id="chungbuk">
+								<h2>충청북도</h2>
+							</div>
+							<div id="chungnam">
+								<h2>충청남도</h2>
+							</div>
+							<div id="daejeon">
+								<h2>대전광역시</h2>
+							</div>
+							<div id="sejong">
+								<h2>세종특별자치시</h2>
+							</div>
+							<div id="gwangju">
+								<h2>광주광역시</h2>
+							</div>
+							<div id="jeonbuk">
+								<h2>전라북도</h2>
+							</div>
+							<div id="jeonnam">
+								<h2>전라남도</h2>
+							</div>
+							<div id="gyeongbuk">
+								<h2>경상북도</h2>
+							</div>
+							<div id="gyeongnam">
+								<h2>경상남도</h2>
+							</div>
+							<div id="daegu">
+								<h2>대구광역시</h2>
+							</div>
+							<div id="busan">
+								<h2>부산광역시</h2>
+							</div>
+							<div id="ulsan">
+								<h2>울산광역시</h2>
+							</div>
+							<div id="jeju">
+								<h2>제주특별자치도</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-7" id = "branchFeeChartP">
+				<!-- 여기가 옆쪽 -->
+				<canvas id="branchFeeChart" class="chartjs-render-monitor"></canvas>
+				</div>
+			</div>
+		</div>
+		
+		<!-- /.card-body -->
+		<div class="card-footer clearfix"></div>
+		<!-- /.card-footer -->
+	</div>
+	
 </body>
 <script src="/static/js/home.js"></script>
 </html>

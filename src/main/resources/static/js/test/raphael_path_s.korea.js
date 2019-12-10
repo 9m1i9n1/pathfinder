@@ -1,4 +1,4 @@
-window.onload = function () {
+function loadingMap() {
  	var R = Raphael("south", 320, 400);
 	var attr = {
 		fill: "rgb(52, 52, 52)",
@@ -53,6 +53,7 @@ window.onload = function () {
 	aus.jeju = R.path("M96,377 105,367 120,368 126,365 134,365 142,370 136,380 127,384 114,386 104,384 100,385 94,377 z").attr(attr);
 
 	var current = null;
+	var keyword = null;
 	for (var state in aus) {
 		aus[state].color = Raphael.getColor();
 		(function (st, state) {
@@ -90,61 +91,136 @@ window.onload = function () {
 				switch(state) {
 					case "seoul":
 						current = state;
+						sendBranchsKeyword(1);
 						break;
 					case "gygg":
 						current = state;
+						sendBranchsKeyword(8);
 						break;
 					case "incheon":
 						current = state;
+						sendBranchsKeyword(4);
 						break;
 					case "gangwon":
 						current = state;
+						sendBranchsKeyword(9);
 						break;
 					case "chungbuk":
 						current = state;
+						sendBranchsKeyword(10);
 						break;
 					case "chungnam":
 						current = state;
+						sendBranchsKeyword(11);
 						break;
 					case "daejeon":
 						current = state;
+						sendBranchsKeyword(6);
 						break;
 					case "sejong":
 						current = state;
+						sendBranchsKeyword(17);
 						break;
 					case "jeonbuk":
 						current = state;
+						sendBranchsKeyword(12);
 						break;
 					case "gwangju":
 						current = state;
+						sendBranchsKeyword(5);
 						break;
 					case "jeonnam":
 						current = state;
+						sendBranchsKeyword(13);
 						break;
 					case "gyeongbuk":
 						current = state;
+						sendBranchsKeyword(14);
 						break;
 					case "daegu":
 						current = state;
+						sendBranchsKeyword(3);
 						break;
 					case "gyeongnam":
 						current = state;
+						sendBranchsKeyword(15);
 						break;
 					case "ulsan":
 						current = state;
+						sendBranchsKeyword(7);
 						break;
 					case "busan":
 						current = state;
+						sendBranchsKeyword(2);
 						break;
 					case "jeju":
 						current = state;
+						sendBranchsKeyword(16);
 						break;
 
 					default:
 						break;
 				}
+				//함수적용
 			};
 
 		})(aus[state], state);
 	}
 };
+
+
+function showBranchsFeeChart(branchNameArr, branchValueArr) {
+	
+	var myBarChart = new Chart($('#branchFeeChart'), {
+	    type: 'bar',
+	    data: {
+	    	labels: branchNameArr,
+	        datasets: [{
+	        	label: "운반비",
+	        	backgroundColor: 'red',
+	        	borderColor: 'red',
+	        	borderWidth: 0.5,
+	            barPercentage: 0.5,
+	            barThickness: 6,
+	            maxBarThickness: 8,
+	            minBarLength: 2,
+	            data: branchValueArr
+	        }]
+	    },
+	    options : {
+	    	    scales: {
+	    	        xAxes: [{
+	    	            gridLines: {
+	    	                offsetGridLines: true
+	    	            }
+	    	        }]
+	    	    }
+	    	}
+	});
+	
+
+};
+function sendBranchsKeyword(keyword) {
+	
+	$('#branchFeeChart').remove();
+	$('#branchFeeChartP').append(`<canvas id="branchFeeChart" class="chartjs-render-monitor"></canvas>`);
+	
+	$.ajax({
+	url : "/home/barChart",
+	type : "get",
+	data: {keyword:keyword},
+	contentType: "application/json; charset=utf-8",
+	success : function(res) {
+		var branchNameArr = [];
+		var branchValueArr = [];
+		$.each(
+				res.data,
+				function(key, value) {
+					branchNameArr.push(value.branchName);
+					branchValueArr.push(value.branchValue);
+				});
+		
+		showBranchsFeeChart(branchNameArr, branchValueArr);
+	}
+});
+}

@@ -3,13 +3,18 @@ package com.douzone.bit.pathfinder.service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.douzone.bit.pathfinder.model.entity.BranchTb;
 import com.douzone.bit.pathfinder.model.entity.UserTb;
+import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
+import com.douzone.bit.pathfinder.repository.AreaRepository;
 import com.douzone.bit.pathfinder.repository.BranchRepository;
 import com.douzone.bit.pathfinder.repository.UserRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
@@ -26,6 +31,9 @@ public class HomeService {
 	
 	@Autowired
 	BranchRepository branchRepository;
+	
+	@Autowired
+	AreaRepository areaRepository;
 	
 	public int[] getTotalCount(boolean myDelivery) {
 		int count[] = new int[3];
@@ -67,4 +75,23 @@ public class HomeService {
 		System.out.println("히스토리 수 : " + historyTotalCount);
 		return historyTotalCount;
 	}
+
+	public Header<List<AdminBranchResponse>> barChart(Long keyword) {
+		
+		List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(keyword));
+		List<AdminBranchResponse> branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
+		return Header.OK(branchResponseList);
+	}
+	
+	private AdminBranchResponse response(BranchTb branch) {
+		AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder()
+				.branchIndex(branch.getBranchIndex())
+				.branchName(branch.getBranchName())
+				.branchValue(branch.getBranchValue())
+				.area(branch.getArea().getAreaName())
+				.areaIndex(branch.getArea().getAreaIndex())
+				.build();
+		return adminBranchResponse;
+	}
+
 }
