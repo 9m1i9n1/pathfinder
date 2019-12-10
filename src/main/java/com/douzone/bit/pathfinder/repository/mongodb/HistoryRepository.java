@@ -34,11 +34,11 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	Long findAllCount();
 	
 	//오늘 배송할 총갯수
-	@Query(value = "{$and :[{'dlvrdate' : {'$gte' : ?0} },{'dlvrdate' :{'$lte' : ?1 } }]}", count = true)
+	@Query(value = "{$and :[{'arrivedate' : {'$gte' : ?0} },{'arrivedate' :{'$lte' : ?1 } }]}", count = true)
 	Integer findAllByTotalToday(Date LocalTime1, Date LocalTime2);
 	
 	//오늘거배송된 갯수
-	@Query(value = "{$and : [{$and :[{'dlvrdate' : {'$gte' : ?0} },{'dlvrdate' :{'$lte' : ?1 } }]}, "
+	@Query(value = "{$and : [{$and :[{'arrivedate' : {'$gte' : ?0} },{'arrivedate' :{'$lte' : ?1 } }]}, "
 			+ "{'arrivedate' : {'$lte' : ?2} }]}", count = true)
 	Integer findAllByDoingToday(Date LocalTime1, Date LocalTime2, Date LocalTime3);
 	

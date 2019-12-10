@@ -41,8 +41,8 @@
 			<div class="row">
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box">
-						<span class="info-box-icon bg-info elevation-1"><i
-							class="fas fa-cog"></i></span>
+						<span class="info-box-icon bg-info elevation-1">
+						<i class="fas fa-shipping-fast"></i></span>
 
 						<div class="info-box-content">
 							<span class="info-box-text">오늘의 배송 현황</span> <span
@@ -57,7 +57,7 @@
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
 						<span class="info-box-icon bg-danger elevation-1"><i
-							class="fas fa-thumbs-up"></i></span>
+							class="fas fa-users"></i></span>
 
 						<div class="info-box-content">
 							<span class="info-box-text">전체 사용자</span> <span
@@ -74,8 +74,8 @@
 
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
-						<span class="info-box-icon bg-success elevation-1"><i
-							class="fas fa-shopping-cart"></i></span>
+						<span class="info-box-icon bg-success elevation-1">
+						<i class="far fa-building"></i></span>
 
 						<div class="info-box-content">
 							<span class="info-box-text">지점</span> <span
@@ -88,8 +88,8 @@
 				<!-- /.col -->
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
-						<span class="info-box-icon bg-warning elevation-1"><i
-							class="fas fa-users"></i></span>
+						<span class="info-box-icon bg-warning elevation-1">
+						<i class="fas fa-history"></i></span>
 
 						<div class="info-box-content">
 							<span class="info-box-text">기록</span> <span
