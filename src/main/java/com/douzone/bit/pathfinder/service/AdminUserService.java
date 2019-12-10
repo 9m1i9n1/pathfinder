@@ -84,7 +84,9 @@ public class AdminUserService {
 
     Page<UserTb> users = mappingUser(nodeType, nodeIndex, "", "", pageable);
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
-
+    if (users.getTotalElements() == 0) {
+		return Header.ERROR("조회 결과가 없습니다.");
+	}
     Pagination pagination = Pagination.builder().totalPages(users.getTotalPages())
         .totalElements(users.getTotalElements()).currentPage(users.getNumber())
         .currentElements(users.getNumberOfElements()).nodeType(nodeType).nodeIndex(nodeIndex).build();
@@ -101,7 +103,11 @@ public class AdminUserService {
     Page<UserTb> users = mappingUser(nodeType, nodeIndex, type, value, pageable);
 
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
-
+	
+    if (users.getTotalElements() == 0) {
+		return Header.ERROR("조회 결과가 없습니다.");
+	}
+    
     Pagination pagination = Pagination.builder().totalPages(users.getTotalPages())
         .totalElements(users.getTotalElements()).currentPage(users.getNumber())
         .currentElements(users.getNumberOfElements()).nodeType(nodeType).nodeIndex(nodeIndex).build();

@@ -85,9 +85,6 @@ function printHistory(selectPage, id, keyword) {
 									+ ")'>상세보기</button></td>";
 							str += "</tr>";
 						});
-
-					$("#tableListBody").html(str);
-
 				pageButton(res.pagination.totalPages,
 					res.pagination.currentPage, id);
 			} else {
@@ -100,8 +97,8 @@ function printHistory(selectPage, id, keyword) {
 				str += `</td>`;
 				str += `</tr>`;
 				
-				$("#tableListBody").html(str);
 			}
+			$("#tableListBody").html(str);
 			
 		}
 	})

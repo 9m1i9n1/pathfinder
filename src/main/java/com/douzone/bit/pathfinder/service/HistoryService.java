@@ -164,7 +164,9 @@ public class HistoryService extends QuerydslRepositorySupport {
 				e.printStackTrace();
 			}
 		}
-
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		return Header.OK(historyList);
 	}
 
@@ -201,12 +203,11 @@ public class HistoryService extends QuerydslRepositorySupport {
 			}
 
 		}
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		
-		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
-				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
-				.currentElements(historys.getNumberOfElements()).build();
-
-		return Header.OK(historyList, pagination);
+		return Header.OK(historyList);
 	}
 
 	public Header<HistoryRoutesResponse> readRoutes(ObjectId id) {

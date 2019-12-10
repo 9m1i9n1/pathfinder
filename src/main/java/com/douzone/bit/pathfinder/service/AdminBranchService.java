@@ -169,7 +169,9 @@ public class AdminBranchService {
 		default:
 			break;
 		}
-
+	    if (branchs.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		Pagination pagination = Pagination.builder().totalPages(branchs.getTotalPages())
 				.totalElements(branchs.getTotalElements()).currentPage(branchs.getNumber())
 				.currentElements(branchs.getNumberOfElements()).build();

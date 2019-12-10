@@ -155,7 +155,9 @@ public class AdminCarService {
 		default:
 			break;
 		}
-
+	    if (cars.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		Pagination pagination = Pagination.builder().totalPages(cars.getTotalPages()).totalElements(cars.getTotalElements())
 				.currentPage(cars.getNumber()).currentElements(cars.getNumberOfElements()).build();
 

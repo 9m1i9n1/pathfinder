@@ -103,18 +103,27 @@ function branchsearch(searchUrl, searchpage=0) {
 		contentType : 'application/json',
 		success : function(res) {
 			var str = "";
-			$.each(res.data,function(key, value) {
-				str += `<tr class="tr-shadow"><td>` + value.area +'</td>';
-				str += '<td>' + value.branchName +'</td>';
-				str += '<td>' + value.branchOwner +'</td>';
-				str += '<td>' + value.branchAddr +'</td>';
-				str	+= '<td>' + value.branchPhone + '</td>';
-				str += '<td>' + (value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 원" +'</td>';
-				str += "<td><div class='table-data-feature'>"
-				str	+= `<button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
-				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
-				str += `</td>'+ '</tr>`;
-				});
+			if (res.resultCode !== "ERROR") {
+				$.each(res.data,function(key, value) {
+					str += `<tr class="tr-shadow"><td>` + value.area +'</td>';
+					str += '<td>' + value.branchName +'</td>';
+					str += '<td>' + value.branchOwner +'</td>';
+					str += '<td>' + value.branchAddr +'</td>';
+					str	+= '<td>' + value.branchPhone + '</td>';
+					str += '<td>' + (value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 원" +'</td>';
+					str += "<td><div class='table-data-feature'>"
+					str	+= `<button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
+					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
+					str += `</td>'+ '</tr>`;
+					});
+			} else {	
+					str += `<tr class="tr-shadow">`;
+					str += `<td colspan="8">`;
+					str += `${res.description}`;
+					str += `</td>`;
+					str += `</tr>`;
+					
+				}
 			$("#tableListBody").html(str);
 			var buttonAll = "";
 			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';

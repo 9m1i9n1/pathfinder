@@ -1,7 +1,6 @@
 $(document).ready(function() {
-	recentlyHistory();
-	todayHistory();
 	drawDoughnut();
+	todayHistory();
 	userCount()
 	branchCount()
 	historyTotalCount()
@@ -87,7 +86,7 @@ function recentlyHistory() {
 
 		success : function(res) {
 			var str = "";
-			
+			if (res.resultCode !== "ERROR") {
 			$.each(
 					res.data,
 					function(key, value) {
@@ -107,7 +106,16 @@ function recentlyHistory() {
 						str += "<td>" + value.carname + "</td>";
 						str += "</tr>";
 					});
-
+			} else {
+				$("#tableListBody").html("");
+				$("#page").html("");
+				
+				str += `<tr class="tr-shadow">`;
+				str += `<td colspan="8">`;
+				str += `${res.description}`;
+				str += `</td>`;
+				str += `</tr>`;
+			}
 				$("#schedule").html(str);
 		}
 	})
