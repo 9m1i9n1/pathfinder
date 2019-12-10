@@ -332,6 +332,27 @@ const carculateData = lrmData => {
 
 const drawTimeline = routeInfo => {
   console.log("#routeInfo", routeInfo);
+
+  let str = "<ul>";
+
+  $.each(routeInfo.routes, function(key, value) {
+    str += "<li><span></span>";
+    str += "<div>";
+    str += `<div class="title">${value.rdep} → ${value.rarvl}</div>`;
+    str += `<div class="info">${value.rdist}km</div>`;
+    str += `<div class="type">${value.rfee}원</div>`;
+    str += "</div>";
+
+    str += `<span class="number">
+            <span>10:00</span>
+            <span>12:00</span>
+            </span>`;
+    str += "</li>";
+  });
+
+  str += "</ul>";
+
+  $(".tmline").html(str);
 };
 
 const loadCalendar = () => {

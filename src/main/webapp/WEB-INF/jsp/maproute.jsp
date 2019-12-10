@@ -237,34 +237,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 >
                   <div class="card-body">
                     <div id="routeResult" class="scrollbar-outer">
-                      <div class="tmline">
-                        <ul>
-                          <li>
-                            <span></span>
-                            <div>
-                              <div class="title">서울 → 대전</div>
-                              <div class="info">150km</div>
-                              <div class="type">45만원</div>
-                            </div>
-                            <span class="number">
-                              <span>10:00</span><span>12:00</span>
-                            </span>
-                          </li>
-                          <li>
-                            <div>
-                              <span></span>
-                              <div class="title">대전 → 부산</div>
-                              <div class="info">
-                                75km
-                              </div>
-                              <div class="type">100만원</div>
-                            </div>
-                            <span class="number">
-                              <span>13:00</span> <span>14:00</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
+                      <div class="tmline"></div>
                     </div>
                   </div>
 
