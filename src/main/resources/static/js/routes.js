@@ -137,7 +137,16 @@ const depCarlist = res => {
 $("#carSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
-  loadCalendar();
+  
+  //TODO AJAX 추가하여 날짜값 전송.
+  $.ajax({
+		url : "/maproute/getDate.do",
+		type : "get",
+		data : {carIndex : 120},
+		success : function(res) {
+			  loadCalendar(res);
+		}
+	});
 });
 
 // 경유지 선택 Draw
@@ -332,7 +341,9 @@ const drawTimeline = routeInfo => {
   console.log("#routeInfo", routeInfo);
 };
 
-const loadCalendar = () => {
+const loadCalendar = (res) => {
+	console.log(res.data);
+	
   $("#calendarBox").html("<div id='calendar'></div>");
   $("#dateSelect").val("");
 
@@ -345,6 +356,7 @@ const loadCalendar = () => {
     format: "yyyy-MM-dd",
     startWeek: 0,
     selectedRang: [moment(), moment().add(3, "M")],
+    disableDay: res.data,
     weekArray: ["일", "월", "화", "수", "목", "금", "토"],
     monthArray: [
       "1월",
