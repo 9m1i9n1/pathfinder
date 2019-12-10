@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  $(".scrollbar-outer").scrollbar();
   branchlist(depBranchlist);
   // branchlist(drawBranchlist);
 
@@ -224,7 +225,8 @@ $(".next").click(function(e) {
 
   $.each(collapse.find("input, select, textarea"), function() {
     if (!$(this).valid()) {
-      sectionValid = false;
+      //? valid 주석해놓음 (테스트 불편)
+      // sectionValid = false;
     }
   });
 

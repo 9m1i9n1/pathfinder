@@ -92,6 +92,11 @@ pageEncoding="UTF-8"%>
 <%-- moment --%>
 <script src="/static/route/js/moment.js"></script>
 
+<%-- scrollBar --%>
+<link rel="stylesheet" href="/static/css/scroll.css" />
+<script src="/static/js/jquery.scrollbar.js"></script>
+
+
 <script type="text/javascript">
   window.getCookie = function(name) {
     let match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));

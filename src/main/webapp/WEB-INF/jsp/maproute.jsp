@@ -18,7 +18,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <script src="/static/js/swiper.min.js"></script>
     <link href="/static/css/swiper.min.css" rel="stylesheet" />
 
-    <link href="/static/route/css/maproute.css" rel="stylesheet" />
+    <!-- <link href="/static/route/css/maproute.css" rel="stylesheet" /> -->
+
+    <link href="/static/route/css/timeline.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -40,10 +42,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
       <!-- /.container-fluid -->
     </section>
 
-    <div class="container-fluid vh-80">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-9">
-          <div class="vh-80" id="map"></div>
+          <div class="vh-85" id="map"></div>
         </div>
 
         <div class="col-3">
@@ -179,25 +181,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   <h3 class="card-title">
                     4. 경유 지점 선택
                   </h3>
-
-                  <%-- 이전 검색. class명 확인차 주석 --%> <%--
-                  <div class="card-header">
-                    검색
-                    <input
-                      type="text"
-                      name="keyword"
-                      id="keyword"
-                      style="text-align: center; width: 60%"
-                    />
-                    <input
-                      type="button"
-                      name="btnSearch"
-                      id="btnSearch"
-                      value="확인"
-                      style="width: 20%"
-                    />
-                  </div>
-                  --%>
                 </div>
 
                 <div
@@ -231,81 +214,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     </button>
                   </div>
                 </div>
-                <%--
-                <div>
-                  <div class="card-header">
-                    <h3 class="card-title">지점 목록</h3>
-
-                    <div class="card-tools">
-                      <div
-                        class="input-group input-group-sm"
-                        style="width: 150px;"
-                      >
-                        <input
-                          type="text"
-                          name="selected_search"
-                          class="form-control float-right"
-                          placeholder="검색"
-                        />
-
-                        <div class="input-group-append">
-                          <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="tableEdge">
-                      <table
-                        class="table table-hover table-mc-light-blue"
-                        style="text-align: center;"
-                        id="selectRoute"
-                      ></table>
-                    </div>
-                  </div>
-
-                  <div id="tableEdge">
-                    <table
-                      class="table table-hover table-mc-light-blue"
-                      style="text-align: center;"
-                      id="allDataTable"
-                    ></table>
-                  </div>
                 </div>
 
-                <div class="card-header">
-                  <h3 class="card-title">선택된 지점</h3>
-
-                  <div class="card-tools">
-                    <div
-                      class="input-group input-group-sm"
-                      style="width: 150px;"
-                    >
-                      <input
-                        type="text"
-                        name="selected_search"
-                        class="form-control float-right"
-                        placeholder="검색"
-                      />
-
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="tableEdge">
-                    <table
-                      class="table table-hover table-mc-light-blue"
-                      style="text-align: center;"
-                      id="selectRoute"
-                    ></table>
-                  </div>
-                  --%>
-                </div>
-
-                <!-- 차량 선택 -->
+                <!-- 경로 타임라인 -->
                 <div class="card">
                   <div class="card-header" id="headingRoad">
                     <h3 class="card-title">
@@ -320,7 +231,33 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     data-parent="#accordion-select"
                   >
                     <div class="card-body">
-                      <div id="routeResult"></div>
+                      <div id="routeResult" class="scrollbar-outer">
+                        <div class="tmline">
+                          <ul>
+                              <li><span></span>
+                                  <div>
+                                      <div class="title">Codify</div>
+                                      <div class="info">Let&apos;s make coolest things in css</div>
+                                      <div class="type">Presentation</div>
+                                  </div> <span class="number"><span>10:00</span> <span>12:00</span></span>
+                              </li>
+                              <li>
+                                  <div><span></span>
+                                      <div class="title">Codify</div>
+                                      <div class="info">Let&apos;s make coolest things in javascript</div>
+                                      <div class="type">Presentation</div>
+                                  </div> <span class="number"><span>13:00</span> <span>14:00</span></span>
+                              </li>
+                              <li>
+                                  <div><span></span>
+                                      <div class="title">Codify</div>
+                                      <div class="info">Let&apos;s make coolest things in css</div>
+                                      <div class="type">Review</div>
+                                  </div> <span class="number"><span>15:00</span> <span>17:45</span></span>
+                              </li>
+                          </ul>
+                      </div>
+                    </div>
                     </div>
 
                     <div class="card-footer">
@@ -344,7 +281,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     </div>
                   </div>
                 </div>
-              </div>
               <!--  accordion div -->
             </div>
           </form>
