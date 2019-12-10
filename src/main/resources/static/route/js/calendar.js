@@ -281,6 +281,7 @@
 //        this.top = this.options.top;
         this.date = this.options.date;
         this.selectedRang = this.options.selectedRang;
+        this.disableDay = this.options.disableDay;
         this.data = this.options.data;
         this.init();
     }
@@ -296,6 +297,10 @@
                 if ((start && day < start.clearTime()) || (end && day > end.clearTime())) {
                     action = DISABLED;
                 }
+            }
+
+            //TODO 이부분 수정하면 됨. 받는 타입은 리스트
+            if (this.disableDay) {
             }
 
             return action;
