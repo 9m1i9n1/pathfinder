@@ -74,23 +74,22 @@ public class HomeController {
 
 	// 전체사용자 수
 	@GetMapping("/totalUserCount")
-	public Header<List<AdminUserResponse>> userList(@RequestParam String treeId,
-			@PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
+	public Long userCount() {
 
-		return adminUserService.list(treeId, pageable);
+		return homeService.userCount();
 	}
 
 	// 전체지점 수
 	@GetMapping("/totalBranchCount")
-	public Header<List<AdminBranchResponse>> branchList(
-			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
-		return adminBranchService.listpage(pageable);
+	public Long branchCount() {
+		
+		return homeService.branchCount();
 	}
 
 	// 전체히스토리 수
 	@GetMapping("/totalHistoryCount")
-	public Header<List<HistoryTb>> historyAll() {
+	public Long historyCount() {
 
-		return historyService.historyAll();
+		return homeService.historyAll();
 	}
 }

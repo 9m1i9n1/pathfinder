@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,9 @@ import com.douzone.bit.pathfinder.repository.custom.CustomUserRepository;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserTb, Long> {
+	
+	@Query(value ="SELECT count(*) FROM user_tb", nativeQuery = true)
+	Long findAllUserCount();
 	
 	public UserTb findByUserId(String userId);
 
