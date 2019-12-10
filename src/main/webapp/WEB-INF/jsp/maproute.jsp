@@ -143,7 +143,8 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                       <input
                         type="text"
                         class="form-control"
-                        id="dateSelect" name="dateSelect"
+                        id="dateSelect"
+                        name="dateSelect"
                         readonly
                       />
                     </div>
@@ -190,7 +191,11 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   data-parent="#accordion-select"
                 >
                   <div class="card-body">
-                    <select id="branchSelect" name="branchSelect" multiple="multiple">
+                    <select
+                      id="branchSelect"
+                      name="branchSelect"
+                      multiple="multiple"
+                    >
                       <option></option>
                     </select>
                   </div>
@@ -214,73 +219,73 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     </button>
                   </div>
                 </div>
+              </div>
+
+              <!-- 경로 타임라인 -->
+              <div class="card">
+                <div class="card-header" id="headingRoad">
+                  <h3 class="card-title">
+                    5. 추천 경로
+                  </h3>
                 </div>
 
-                <!-- 경로 타임라인 -->
-                <div class="card">
-                  <div class="card-header" id="headingRoad">
-                    <h3 class="card-title">
-                      5. 추천 경로
-                    </h3>
-                  </div>
-
-                  <div
-                    id="col-selectRoad"
-                    class="collapse"
-                    aria-labelledby="headingRoad"
-                    data-parent="#accordion-select"
-                  >
-                    <div class="card-body">
-                      <div id="routeResult" class="scrollbar-outer">
-                        <div class="tmline">
-                          <ul>
-                              <li><span></span>
-                                  <div>
-                                      <div class="title">Codify</div>
-                                      <div class="info">Let&apos;s make coolest things in css</div>
-                                      <div class="type">Presentation</div>
-                                  </div> <span class="number"><span>10:00</span> <span>12:00</span></span>
-                              </li>
-                              <li>
-                                  <div><span></span>
-                                      <div class="title">Codify</div>
-                                      <div class="info">Let&apos;s make coolest things in javascript</div>
-                                      <div class="type">Presentation</div>
-                                  </div> <span class="number"><span>13:00</span> <span>14:00</span></span>
-                              </li>
-                              <li>
-                                  <div><span></span>
-                                      <div class="title">Codify</div>
-                                      <div class="info">Let&apos;s make coolest things in css</div>
-                                      <div class="type">Review</div>
-                                  </div> <span class="number"><span>15:00</span> <span>17:45</span></span>
-                              </li>
-                          </ul>
+                <div
+                  id="col-selectRoad"
+                  class="collapse"
+                  aria-labelledby="headingRoad"
+                  data-parent="#accordion-select"
+                >
+                  <div class="card-body">
+                    <div id="routeResult" class="scrollbar-outer">
+                      <div class="tmline">
+                        <ul>
+                          <li>
+                            <span></span>
+                            <div>
+                              <div class="title">서울 → 대전</div>
+                              <div class="info">150km</div>
+                              <div class="type">45만원</div>
+                            </div>
+                            <span class="number">
+                              <span>10:00</span><span>12:00</span>
+                            </span>
+                          </li>
+                          <li>
+                            <div>
+                              <span></span>
+                              <div class="title">대전 → 부산</div>
+                              <div class="info">
+                                75km
+                              </div>
+                              <div class="type">100만원</div>
+                            </div>
+                            <span class="number">
+                              <span>13:00</span> <span>14:00</span>
+                            </span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
-                    </div>
+                  </div>
 
-                    <div class="card-footer">
-                      <button
-                        class="btn btn-primary"
-                        id="resultPrev"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#col-selectBranch"
-                        aria-expanded="false"
-                        aria-controls="col-selectBranch"
-                      >
-                        이전
-                      </button>
-                      <button
-                        class="btn btn-primary"
-                        type="submit"
-                      >
-                        등록
-                      </button>
-                    </div>
+                  <div class="card-footer">
+                    <button
+                      class="btn btn-primary"
+                      id="resultPrev"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#col-selectBranch"
+                      aria-expanded="false"
+                      aria-controls="col-selectBranch"
+                    >
+                      이전
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                      등록
+                    </button>
                   </div>
                 </div>
+              </div>
               <!--  accordion div -->
             </div>
           </form>

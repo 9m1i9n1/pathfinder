@@ -226,7 +226,7 @@ $(".next").click(function(e) {
   $.each(collapse.find("input, select, textarea"), function() {
     if (!$(this).valid()) {
       //? valid 주석해놓음 (테스트 불편)
-      // sectionValid = false;
+      sectionValid = false;
     }
   });
 
