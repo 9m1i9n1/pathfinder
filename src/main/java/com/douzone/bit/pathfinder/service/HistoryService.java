@@ -297,25 +297,28 @@ public class HistoryService extends QuerydslRepositorySupport {
 	
 	public double todayHistoryPercent() {
 	
-	Date localTime1 = new Date();
-	localTime1.setHours(0);
-	localTime1.setMinutes(0);
-	localTime1.setSeconds(0);
-	localTime1.setDate(localTime1.getDate());
-	Date localTime2 = new Date();
-	localTime2.setDate(localTime1.getDate()+1);
-	localTime2.setHours(0);
-	localTime2.setMinutes(0);
-	localTime2.setSeconds(0);
+	//현재시간
+	Calendar nowTime = Calendar.getInstance();
 	
-	Date localTime3 =  new Date();
+	//오늘날짜 2019-12-10 00:00:00 
+	Calendar todayDate = Calendar.getInstance();
+	todayDate.set(Calendar.HOUR, 0 );
+	todayDate.set(Calendar.MINUTE, 0 );
+	todayDate.set(Calendar.SECOND, 0 );
 	
-	System.out.println(localTime1);
-	System.out.println(localTime2);
-	System.out.println(localTime3);
+	//내일날짜 2019-12-11 00:00:00
+	Calendar tomorrowDate = Calendar.getInstance();
+	tomorrowDate.add(Calendar.DAY_OF_MONTH ,1);
+	tomorrowDate.set(Calendar.HOUR, 0 );
+	tomorrowDate.set(Calendar.MINUTE, 0 );
+	tomorrowDate.set(Calendar.SECOND, 0 );
 	
-	int denominator = historyRepository.findAllByTotalToday(localTime1, localTime2);
-	int molecular = historyRepository.findAllByDoingToday(localTime1, localTime2, localTime3);
+	System.out.println("현재시간 : " + nowTime.getTime());
+	System.out.println("오늘날짜" +todayDate.getTime());
+	System.out.println("내일날짜" +tomorrowDate.getTime());
+	
+	int denominator = historyRepository.findAllByTotalToday(todayDate.getTime(), tomorrowDate.getTime());
+	int molecular = historyRepository.findAllByDoingToday(todayDate.getTime(), tomorrowDate.getTime(), nowTime.getTime());
 		System.out.println((double)denominator);
 		System.out.println((double)molecular);
 	double result = Math.round(((double)molecular/(double)denominator)*1000) /10.00;
