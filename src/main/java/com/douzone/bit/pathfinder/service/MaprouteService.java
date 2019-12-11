@@ -16,6 +16,7 @@ import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.RoutesTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.request.HistoryRequest;
+import com.douzone.bit.pathfinder.model.network.request.MaprouteInsertRequest;
 import com.douzone.bit.pathfinder.model.network.request.MaprouteRequest;
 import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
@@ -29,7 +30,7 @@ public class MaprouteService {
 
 	@Autowired
 	HistoryRepository historyRepository;
-	
+
 	@Autowired
 	RoutesRepository routesRepository;
 
@@ -45,38 +46,34 @@ public class MaprouteService {
 
 		return Header.OK(sortMarkerList);
 	}
-	
-	public Header<String> insertHistory(HistoryRequest history) {
+
+	public Header<String> insertPlan(MaprouteInsertRequest routeList) {
 		Date now = Calendar.getInstance().getTime();
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-		
+
 		RoutesTb routesTb = new RoutesTb();
-		
-		routesTb.setDetail(history.getRoutes());
-		
+
+		routesTb.setDetail(routeList.getRoutes());
+
 		RoutesTb resultRoute = routesRepository.save(routesTb);
-		
-		if (resultRoute != null) {
-			HistoryTb historyTb = HistoryTb.builder()
-					.regdate(now).username(userName)
-					.carname(history.getCarIndex()).dep(history.getDep())
-					.arvl(history.getArvl()).dist(history.getDist())
-					.fee(history.getFee()).dlvrdate(history.getDlvrdate())
-					.arrivedate(history.getArrivedate()).routes(routesTb.getId())
-					.build();
-			
-			HistoryTb resultHistory = historyRepository.save(historyTb);
-			
-			if (resultHistory == null) {
-				routesRepository.deleteById(resultRoute.getId().toString());
-				
-				return Header.ERROR("데이터 삽입에 실패했습니다!");
-			}
-		} else {
-			
-			return Header.ERROR("데이터 삽입에 실패했습니다!");
-		}
-		
+
+		// if (resultRoute != null) {
+		// 	HistoryTb historyTb = HistoryTb.builder().regdate(now).username(userName).carname(routeList.getCarIndex())
+		// 			.dep(routeList.getDep()).arvl(routeList.getArvl()).dist(routeList.getDist()).fee(routeList.getFee())
+		// 			.dlvrdate(routeList.getDlvrdate()).arrivedate(routeList.getArrivedate()).routes(routesTb.getId()).build();
+
+		// 	HistoryTb resultHistory = historyRepository.save(historyTb);
+
+		// 	if (resultHistory == null) {
+		// 		routesRepository.deleteById(resultRoute.getId().toString());
+
+		// 		return Header.ERROR("데이터 삽입에 실패했습니다!");
+		// 	}
+		// } else {
+
+		// 	return Header.ERROR("데이터 삽입에 실패했습니다!");
+		// }
+
 		return Header.OK("데이터 삽입에 성공했습니다!");
 	}
 
