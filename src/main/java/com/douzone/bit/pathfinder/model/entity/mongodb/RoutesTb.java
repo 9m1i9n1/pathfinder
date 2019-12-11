@@ -21,6 +21,6 @@ public class RoutesTb {
 
 	@Id
 	private ObjectId id;
-//	private ObjectId hindex;
+
 	private List<Object> detail;
 }

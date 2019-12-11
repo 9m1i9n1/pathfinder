@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import com.douzone.bit.pathfinder.model.MapCost;
-import com.douzone.bit.pathfinder.model.network.request.MaprouteRequest;
+import com.douzone.bit.pathfinder.model.network.request.MaprouteSortRequest;
 import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
 
 public class CreateMap {
 	// public static int map[][], d[][], MAX = 987654321;
 	private double[][] map;
-	private List<MaprouteRequest> unsortList;
+	private List<MaprouteSortRequest> unsortList;
 	private List<MaprouteResponse> sortList;
 
-	public CreateMap(List<MaprouteRequest> unsortList) {
+	public CreateMap(List<MaprouteSortRequest> unsortList) {
 		this.unsortList = unsortList;
 	}
 
@@ -57,7 +57,7 @@ public class CreateMap {
 
 		map = new double[size][size];
 
-		for (MaprouteRequest item : unsortList) {
+		for (MaprouteSortRequest item : unsortList) {
 			costList.add(item.getBranchValue());
 		}
 
@@ -87,7 +87,7 @@ public class CreateMap {
 		}
 	}
 
-	private MaprouteResponse response(MaprouteRequest marker, Double cost) {
+	private MaprouteResponse response(MaprouteSortRequest marker, Double cost) {
 		Optional<Double> oCost = Optional.ofNullable(cost);
 		cost = oCost.orElse(0.0);
 
