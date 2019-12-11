@@ -323,7 +323,7 @@ const carculateData = lrmData => {
 
     let dlvrdate = moment(
       $("#dateSelect").val() + " 09:00:00",
-      "yyyy-MM-dd HH:mm:ss"
+      "YYYY-MM-DD HH:mm:ss"
     ).format("YYYY-MM-DD HH:mm:ss");
 
     let arrivedate = moment(dlvrdate, "YYYY-MM-DD HH:mm:ss")
@@ -334,25 +334,20 @@ const carculateData = lrmData => {
     routeInfo.dlvrdate = dlvrdate;
     routeInfo.arrivedate = arrivedate;
     routeInfo.dist = (lrmData.summary.totalDistance / 1000.0).toFixed(3);
-    routeInfo.time = lrmData.summary.totalTime.toFixed(3);
+    routeInfo.time = lrmData.summary.totalTime.toFixed(0);
     routeInfo.fee = fee;
     routeInfo.dep = routes[0].rdep;
     routeInfo.arvl = routes[routes.length - 1].rarvl;
     routeInfo.routes = $.extend(true, [], routes);
 
-    // 임시 세팅
-    routeInfo.fee = "100";
-    routeInfo.arrivedate = $("#dateSelect").val();
-    //
-    
     resolve(routeInfo);
   });
 };
 
 // 타임라인 그리기
 const drawTimeline = routeInfo => {
-  routeList = $.extend(true, [], routeInfo);
-  console.log("#routeInfo", routeInfo);
+  routeList = $.extend(true, {}, routeInfo);
+  console.log("#routeInfo", routeList);
 
   let sumTime = 0;
 
@@ -379,8 +374,6 @@ const drawTimeline = routeInfo => {
 };
 
 const loadCalendar = res => {
-  console.log(res.data);
-
   $("#calendarBox").html("<div id='calendar'></div>");
   $("#dateSelect").val("");
 
@@ -411,10 +404,6 @@ const loadCalendar = res => {
     ],
     onSelected: (view, date, data) => {
       $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
-    },
-    // 이전달 다음달 변경 시
-    viewChange: (view, y, m) => {
-      console.log(view, y, m);
     }
   });
 };
@@ -473,18 +462,22 @@ $("#routeForm").validate({
 
   // valid 성공시
   submitHandler: form => {
-    planCreate(routeList);
+    console.log(routeList);
+
+    insertPlan(routeList);
   }
 });
 
 // 회원 생성
-function planCreate(req) {
+function insertPlan(req) {
+  console.log(JSON.stringify(req));
+
   $.ajax({
-    url: "/maproute/inserHistory.do",
+    url: "/maproute/insertPlan.do",
     type: "post",
     contentType: "application/json",
     // 이름 : routeList
-    data: req
+    data: JSON.stringify(req)
   }).then(res => {
     alert("등록되었습니다.");
   });
