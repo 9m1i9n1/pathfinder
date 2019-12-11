@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.request.HistoryRequest;
 import com.douzone.bit.pathfinder.model.network.response.HistoryResponse;
 import com.douzone.bit.pathfinder.model.network.response.HistoryRoutesResponse;
 import com.douzone.bit.pathfinder.service.HistoryService;
@@ -53,15 +54,14 @@ public class HistoryController {
 	@GetMapping("/getroutes.do")
 	public Header<HistoryRoutesResponse> getRoutes(
 			@RequestParam("routesIndex") ObjectId id) {
+		
 		return historyService.readRoutes(id);
 	}
 
 	@DeleteMapping("/removeroutes.do")
 	public Header<String> removeRoutes(
-			ObjectId id) {
+			@RequestBody ObjectId id) {
 
-		System.out.println(id);
-//		return historyService.removeRoutes(id);
-		return null;
+		return historyService.removeRoutes(id);
 	}
 }

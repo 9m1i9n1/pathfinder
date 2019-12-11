@@ -69,8 +69,10 @@ public class MaprouteController {
 	}
 	
 	@PostMapping("/inserHistory.do")
-	public Header<String> insertHistory(@RequestBody HistoryRequest history) {
+	public Header<String> insertHistory(@RequestBody HistoryRequest req) {
 		
-		return MaprouteService.insertHistory(history);
+		System.out.println(req);
+//		return MaprouteService.insertHistory(history);
+		return null;
 	}
 }

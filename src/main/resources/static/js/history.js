@@ -121,14 +121,14 @@ function removeRoutes(history) {
 		$.ajax({
 			url : "/history/removeroutes.do",
 			type : "delete",
-			data : {
-				id : history.id
-			},
+			data : JSON.stringify(history.id),
 			contentType : "application/json; charset=UTF-8",
 			success : function(res) {
 				alert("삭제 되었습니다.");
 				$("#detailsModal").modal("hide");
-				getHistory(0);
+				
+				let tabId = sessionStorage.getItem("tabId");
+				getHistory(0,tabId);
 			}
 		})
 	}

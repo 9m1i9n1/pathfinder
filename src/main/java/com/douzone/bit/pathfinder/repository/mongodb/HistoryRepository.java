@@ -16,6 +16,8 @@ import java.util.List;
 
 public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 
+	HistoryTb findById(ObjectId id);
+	
 	Object findByRoutes(ObjectId routes);
 
 	// 검색 페이지

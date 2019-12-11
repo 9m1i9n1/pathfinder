@@ -222,9 +222,10 @@ public class HistoryService extends QuerydslRepositorySupport {
 	//TODO hindex로 제거하는게 아니라 부모가 가지고 있던 Routes의 Index 값으로 삭제 구현
 	public Header<String> removeRoutes(ObjectId id) {
 
+		HistoryTb history = historyRepository.findById(id);
 		historyRepository.deleteById(id.toString());
-		routesRepository.deleteById(id.toString());
-
+		routesRepository.deleteById(history.getRoutes().toString());
+		
 		return Header.OK();
 	}
 
@@ -274,20 +275,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 				.detail(routes.getDetail()).build();
 
 		return response;
-	}
-	
-
-	public Header<List<HistoryResponse>> readHistoryTest(Pageable pageable) {
-
-		Page<HistoryTb> historys = historyRepository.findAll(pageable);
-		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
-				.collect(Collectors.toList());
-
-		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
-				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
-				.currentElements(historys.getNumberOfElements()).build();
-
-		return Header.OK(historyList, pagination);
 	}
 
 	public Header<List<HistoryTb>> historyAll() {
