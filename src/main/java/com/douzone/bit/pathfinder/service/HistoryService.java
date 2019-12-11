@@ -307,10 +307,10 @@ public class HistoryService extends QuerydslRepositorySupport {
 	
 	int denominator = historyRepository.findAllByTotalToday(todayDate.getTime(), tomorrowDate.getTime());
 	int molecular = historyRepository.findAllByDoingToday(todayDate.getTime(), tomorrowDate.getTime(), nowTime.getTime());
-		System.out.println((double)denominator);
-		System.out.println((double)molecular);
+	if(molecular == 0)
+		return 0;
+	
 	double result = Math.round(((double)molecular/(double)denominator)*1000) /10.00;
-	System.out.println(result);
 	return result;
 	}
 

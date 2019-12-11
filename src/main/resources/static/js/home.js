@@ -1,12 +1,5 @@
 $(document).ready(function() {
-	recentlyHistory();
-	todayHistory();
-	drawDoughnut(false);
-	checkEvent();
-	userCount();
-	branchCount();
-	historyTotalCount();
-	todayHistoryPercent();
+	init();
 });
 
 function checkEvent() {
@@ -208,8 +201,12 @@ function todayHistoryPercent() {
 		url : "/home/todayHistoryPercent",
 		type : "get",
 		success : function(res) {
-			console.log(res)
-			$("#todayPercent").html(res + '<small>%</small>');
+			if (res !== 0) {
+				$("#todayPercent").html(res + '<small>%</small>');
+			} else {
+				$("#todayPercent").html(' -');
+			}
+			
 		}
 	});
 }
@@ -247,4 +244,16 @@ function historyTotalCount() {
 			$("#totalHistoryCount").html(res + " 개");
 		}
 	});
+}
+
+function init(){
+	todayHistory();
+	drawDoughnut(false);
+	checkEvent();
+	userCount();
+	branchCount();
+	historyTotalCount();
+	todayHistoryPercent();
+	loadingMap();
+	sendBranchsKeyword(1);
 }

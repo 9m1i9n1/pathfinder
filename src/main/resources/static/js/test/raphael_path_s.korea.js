@@ -1,9 +1,9 @@
-window.onload = function () {
+function loadingMap() {
  	var R = Raphael("south", 320, 400);
 	var attr = {
 		fill: "rgb(52, 52, 52)",
 		stroke: "#5d5d5d",
-		"stroke-width": 0.5,
+		"stroke-width": 0.1,
 		"stroke-linejoin": "round"
 	};
 	var aus = {};
@@ -17,7 +17,8 @@ window.onload = function () {
 // 인천 : 서울왼쪽상단 경계에서 아래쪽으로 시작
 	aus.incheon = R.path("M96,109 98,115 102,117 108,119 110,120 107,123.5 98,121, 97,122 95,120 96,119 90,110 89,110 89,104 99,105z M79,105 84,105 85,107 85,111 80,110 79,105z").attr(attr);
 
-	//aus.ganghwa = R.path("M79,105 84,105 85,107 85,111 80,110 79,105z").attr(attr);
+	// aus.ganghwa = R.path("M79,105 84,105 85,107 85,111 80,110
+	// 79,105z").attr(attr);
 
 // 강원도 : 서울오른쪽상단겹치는부분에서 시작
 	aus.gangwon = R.path("M98,60 104,58 113,56 116,68 121,68 124,72 130,74 132,79 142,88 142,90 136,94 139,100 137,107 156,116 150,118 152,124 149,129 148,139 146,145 152,150 152,150 153.5,145 157,137 160,135 161,138 169,141 181,140 175,146 189,147 192,149 199,148 205,153 207,148 211,153 224,150 231,154 239,143 234,139 234,132 225,118 222,108 199,81 180,33 175,34 151,6 147,7 142,4 145,18 137,16 134,22 130,23 131,30 125,29 124,20 121,18 123,8 120,5 115,11 117,17 108,20 106,18 105,24 99,25 93,30 86,31 90,40 87,45 89,47 91,53 98,60 z").attr(attr);
@@ -38,9 +39,11 @@ window.onload = function () {
 
 	aus.gyeongbuk = R.path("M198,153 188,160 186,171 177,169 165,172 166,177 158,177 158,187 152,185 151,185 156,191 157,200 153,205 161,207 166,216 161,218 157,226 156,236 160,241 168,241 173,253 180,256 178,252 183,250 182,246 189,241 184,238 186,232 193,232 200,230 203,233 207,241 200,249 194,248 191,254 193,259 201,260 207,264 215,258 220,259 229,249 238,255 240,251 246,255 250,240 252,232 248,235 241,235 244,227 242,213 246,176 245,157 241,144 233,154 230,156 224,152 211,155 208,151 206,155.5 200,151 198,153z M273,145 276,142 278,141 283,140 280,148 276,147 275,145 273,145z M306,150 310,150 309,152z M311,152 315,150 314,152z").attr(attr);
 
-	//aus.ulleung = R.path("M273,145 276,144 283,140 280,148 276,147 275,145 273,145 z").attr(attr);
+	// aus.ulleung = R.path("M273,145 276,144 283,140 280,148 276,147 275,145
+	// 273,145 z").attr(attr);
 
-	//aus.dokdo = R.path("M312,150 316,150 315,152z M317,152 321,150 320,152z").attr(attr);
+	// aus.dokdo = R.path("M312,150 316,150 315,152z M317,152 321,150
+	// 320,152z").attr(attr);
 
 	aus.daegu = R.path("M184,258 180,253 185,251 184,247 191.5,241 185.5,237 187.5,234 193,234 200,232 201.5,235 205.5,241 199.5,247 193,247 189.5,253 191,259 186,256 184,258 z").attr(attr);
 
@@ -53,13 +56,14 @@ window.onload = function () {
 	aus.jeju = R.path("M96,377 105,367 120,368 126,365 134,365 142,370 136,380 127,384 114,386 104,384 100,385 94,377 z").attr(attr);
 
 	var current = null;
+	var keyword = null;
 	for (var state in aus) {
 		aus[state].color = Raphael.getColor();
 		(function (st, state) {
 			st[0].onmouseover = function () { // onover
 				current && aus[current].animate({fill: "rgb(52, 52, 52)", stroke: "#5d5d5d"}, 500) && (document.getElementById(current).style.display = "");
 				st.animate({fill: st.color, stroke: "#5d5d5d"}, 500);
-				//st.toFront();
+				// st.toFront();
 				R.safari();
 				document.getElementById(state).style.display = "block";
 				current = state;
@@ -67,7 +71,7 @@ window.onload = function () {
 
 			st[0].onmouseout = function () {
 				st.animate({fill: "rgb(52, 52, 52)", stroke: "#5d5d5d"}, 500);
-				//st.toFront();
+				// st.toFront();
 				R.safari();
 			};
 
@@ -86,65 +90,167 @@ window.onload = function () {
 
 
 			st[0].onclick = function () {
-
+				
 				switch(state) {
 					case "seoul":
 						current = state;
+						sendBranchsKeyword(1,'서울');
 						break;
 					case "gygg":
 						current = state;
+						sendBranchsKeyword(8,'경기');
 						break;
 					case "incheon":
 						current = state;
+						sendBranchsKeyword(4,'인천');
 						break;
 					case "gangwon":
 						current = state;
+						sendBranchsKeyword(9,'강원');
 						break;
 					case "chungbuk":
 						current = state;
+						sendBranchsKeyword(10,'충북');
 						break;
 					case "chungnam":
 						current = state;
+						sendBranchsKeyword(11,'충남');
 						break;
 					case "daejeon":
 						current = state;
+						sendBranchsKeyword(6,'대전');
 						break;
 					case "sejong":
 						current = state;
+						sendBranchsKeyword(17,'세종특별자치시');
 						break;
 					case "jeonbuk":
 						current = state;
+						sendBranchsKeyword(12,'전북');
 						break;
 					case "gwangju":
 						current = state;
+						sendBranchsKeyword(5,'광주');
 						break;
 					case "jeonnam":
 						current = state;
+						sendBranchsKeyword(13,'전남');
 						break;
 					case "gyeongbuk":
 						current = state;
+						sendBranchsKeyword(14,'경북');
 						break;
 					case "daegu":
 						current = state;
+						sendBranchsKeyword(3,'대구');
 						break;
 					case "gyeongnam":
 						current = state;
+						sendBranchsKeyword(15,'경남');
 						break;
 					case "ulsan":
 						current = state;
+						sendBranchsKeyword(7,'울산');
 						break;
 					case "busan":
 						current = state;
+						sendBranchsKeyword(2,'부산');
 						break;
 					case "jeju":
 						current = state;
+						sendBranchsKeyword(16,'제주특별자치도');
 						break;
 
 					default:
 						break;
 				}
+				// 함수적용
 			};
 
 		})(aus[state], state);
 	}
 };
+
+
+function showBranchsFeeChart(branchNameArr, branchValueArr, selectedArea="서울") {
+	
+	console.log(selectedArea)
+	var myBarChart = new Chart($('#branchFeeChart'), {
+	    type: 'bar',
+	    data: {
+	    	labels: branchNameArr,
+	        datasets: [{
+	        	label: "운반비",
+	        	backgroundColor: '#FFB7B7',
+	        	borderColor: '#FFB7B7',
+	        	borderWidth: 0.5,
+	            barPercentage: 0.5,
+	            barThickness: 1,
+	            maxBarThickness: 1,
+	            minBarLength: 0.1,
+	            data: branchValueArr
+	           
+	        }]
+	    },
+		    options : {
+			tooltips : {
+				callbacks : {
+					label : function(tooltipItem) {
+						return Number(tooltipItem.yLabel) + " 원";
+					},
+					footer : function(tooltipItem) {
+						return [
+								'1톤 : ' + (Number(tooltipItem[0].yLabel) * (1 / 6)).toFixed(0) + '원',
+								'2톤 : ' + (Number(tooltipItem[0].yLabel) * (2 / 6)).toFixed(0) + '원',
+								'2.5톤 : ' +(Number(tooltipItem[0].yLabel) * (2.5 / 6)).toFixed(0) + '원',
+								'5톤 : ' + (Number(tooltipItem[0].yLabel) * (5 / 6)).toFixed(0) + '원',
+								'10톤 : ' + (Number(tooltipItem[0].yLabel) * (10 / 6)).toFixed(0) + '원',
+								'20톤 : ' + (Number(tooltipItem[0].yLabel) * (20 / 6)).toFixed(0) + '원',
+								];
+					}
+				}
+			},
+	            title: {
+	                      display: true,
+	                      text: selectedArea + " 지역 운반비",
+	                      position: 'top'
+	                  },
+	           legend: {
+	                      position: 'bottom'
+	                    },
+	            scales: {
+	                yAxes: [{
+	                    ticks: {
+	                        beginAtZero:true
+	                    }
+	                }]
+	            }
+	    	}
+	});
+	
+
+};
+function sendBranchsKeyword(keyword,selectedArea) {
+	
+	$('#branchFeeChart').remove();
+	$('#branchFeeChartP').append(`<canvas id="branchFeeChart" class="chartjs-render-monitor"></canvas>`);
+	
+	$.ajax({
+	url : "/home/barChart",
+	type : "get",
+	data: {keyword:keyword},
+	contentType: "application/json; charset=utf-8",
+	success : function(res) {
+		var branchNameArr = [];
+		var branchValueArr = [];
+		$.each(
+				res.data,
+				function(key, value) {
+					branchNameArr.push(value.branchName);
+					branchValueArr.push(value.branchValue);
+				});
+		
+		showBranchsFeeChart(branchNameArr, branchValueArr, selectedArea);
+	}
+});
+}
