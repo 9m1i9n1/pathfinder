@@ -164,9 +164,7 @@ public class HistoryService extends QuerydslRepositorySupport {
 				e.printStackTrace();
 			}
 		}
-		if (historys.getTotalElements() == 0) {
-			return Header.ERROR("조회 결과가 없습니다.");
-		}
+
 		return Header.OK(historyList);
 	}
 
@@ -203,11 +201,12 @@ public class HistoryService extends QuerydslRepositorySupport {
 			}
 
 		}
-		if (historys.getTotalElements() == 0) {
-			return Header.ERROR("조회 결과가 없습니다.");
-		}
 		
-		return Header.OK(historyList);
+		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
+				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
+				.currentElements(historys.getNumberOfElements()).build();
+
+		return Header.OK(historyList, pagination);
 	}
 
 	public Header<HistoryRoutesResponse> readRoutes(ObjectId id) {
@@ -298,19 +297,21 @@ public class HistoryService extends QuerydslRepositorySupport {
 	
 	public double todayHistoryPercent() {
 	
+
+	
 	//현재시간
 	Calendar nowTime = Calendar.getInstance();
 	
 	//오늘날짜 2019-12-10 00:00:00 
 	Calendar todayDate = Calendar.getInstance();
-	todayDate.set(Calendar.HOUR, 0 );
+	todayDate.set(Calendar.HOUR_OF_DAY, 0 );
 	todayDate.set(Calendar.MINUTE, 0 );
 	todayDate.set(Calendar.SECOND, 0 );
 	
 	//내일날짜 2019-12-11 00:00:00
 	Calendar tomorrowDate = Calendar.getInstance();
 	tomorrowDate.add(Calendar.DAY_OF_MONTH ,1);
-	tomorrowDate.set(Calendar.HOUR, 0 );
+	tomorrowDate.set(Calendar.HOUR_OF_DAY, 0 );
 	tomorrowDate.set(Calendar.MINUTE, 0 );
 	tomorrowDate.set(Calendar.SECOND, 0 );
 	
