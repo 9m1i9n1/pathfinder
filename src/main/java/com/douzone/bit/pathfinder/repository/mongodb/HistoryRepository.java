@@ -103,4 +103,8 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	
 	@Query(value = "{$and : [ {'arrivedate' : { '$lt' : ?0 }}, {'dlvrdate' : { '$gte' : ?1 }}]}", count = true)
 	int findAllByPpAndDateAndCnt(Date LocalTime, Date thisMonth);
+
+	// 차량 날짜 검색
+	@Query("{$and : [ {'carname' : ?0}, {'dlvrdate' : { '$gte' : ?1}}, {'dlvrdate' : { '$lte' : ?2 }}]}")
+	List<HistoryTb> findAllByCarnameAndDate(int carIndex, Date start, Date end);
 }
