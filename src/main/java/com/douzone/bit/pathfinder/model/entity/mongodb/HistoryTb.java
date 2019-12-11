@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class HistoryTb {
 	@Id
 	private ObjectId id;
-	private String regdate;
+	private Date regdate;
 	private String username;
 	private String carname;
 	private String dep;

@@ -24,6 +24,8 @@ public interface CarRepository extends JpaRepository<CarTb, Long> {
 
 	// 차량번호검색
 	public Page<CarTb> findByCarNumberLike(String carNumber, Pageable pageable);
+	
+	public CarTb findByCarIndex(Long carIndex);
 
 	public Boolean existsByCarNumber(String carNumber);
 }

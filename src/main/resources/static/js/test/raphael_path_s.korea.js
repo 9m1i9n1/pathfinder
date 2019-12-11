@@ -173,8 +173,7 @@ function loadingMap() {
 
 
 function showBranchsFeeChart(branchNameArr, branchValueArr, selectedArea="서울") {
-	
-	console.log(selectedArea)
+
 	var myBarChart = new Chart($('#branchFeeChart'), {
 	    type: 'bar',
 	    data: {
