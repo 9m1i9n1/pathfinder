@@ -142,7 +142,9 @@ public class HistoryService extends QuerydslRepositorySupport {
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
 		System.out.println("PageRequest - " + pageable);
 		Page<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
-
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
 		
@@ -178,7 +180,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 		
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("arrivedate").descending());
 		Page<HistoryTb> historys = historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
-		
 		if (historys.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
@@ -324,7 +325,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 	int molecular = historyRepository.findAllByDoingToday(todayDate.getTime(), tomorrowDate.getTime(), nowTime.getTime());
 	if(molecular == 0)
 		return 0;
-	
 	double result = Math.round(((double)molecular/(double)denominator)*1000) /10.00;
 	return result;
 	}
