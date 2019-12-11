@@ -22,7 +22,7 @@ public class HistoryTb {
 	private ObjectId id;
 	private Date regdate;
 	private String username;
-	private Long carname;
+	private String carname;
 	private String dep;
 	private String arvl;
 	private String dist;

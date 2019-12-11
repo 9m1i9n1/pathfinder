@@ -18,7 +18,7 @@ public class HistoryResponse {
 	private ObjectId id;
 	private String regdate;
 	private String username;
-	private Long carname;
+	private String carname;
 	private String dep;
 	private String arvl;
 	private String dist;
