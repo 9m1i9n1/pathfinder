@@ -148,7 +148,7 @@ function recentlyHistory() {
 						str += "<td>" + value.username + "</td>";
 						str += "<td>" + value.dep + "</td>";
 						str += "<td>" + value.arvl + "</td>";
-						str += "<td>" + value.carindex + "</td>";
+						str += "<td>" + value.carname + "</td>";
 						str += "</tr>";
 					});
 			} else {

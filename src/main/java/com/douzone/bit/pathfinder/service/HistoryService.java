@@ -31,6 +31,7 @@ import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.response.HistoryResponse;
 import com.douzone.bit.pathfinder.model.network.response.HistoryRoutesResponse;
+import com.douzone.bit.pathfinder.repository.CarRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 
@@ -51,6 +52,9 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 	@Autowired
 	private RoutesRepository routesRepository;
+
+	@Autowired
+	private CarRepository carRepository;
 
 	public Header<List<HistoryResponse>> readHistory(int page, String id, boolean myhistory, String keyword) {
 		Pageable pageable;
@@ -140,7 +144,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 		Date currentTime = Calendar.getInstance().getTime();
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
-		System.out.println("PageRequest - " + pageable);
 		Page<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
 		if (historys.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
@@ -264,8 +267,10 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+		String carNumber = carRepository.findByCarIndex(Long.parseLong(history.getCarname())).getCarNumber();
+		
 		HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(format.format(history.getRegdate()))
-				.username(history.getUsername()).carname(history.getCarname()).dep(history.getDep())
+				.username(history.getUsername()).carname(carNumber).dep(history.getDep())
 				.arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(format.format(history.getDlvrdate())).arrivedate(format.format(history.getArrivedate()))
 				.routes(history.getRoutes().toString()).build();
@@ -282,7 +287,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 	}
 
 	public Header<List<HistoryTb>> historyAll() {
-		System.out.println(historyRepository.findAll());
 		return Header.OK(historyRepository.findAll());
 	}
 
@@ -304,10 +308,6 @@ public class HistoryService extends QuerydslRepositorySupport {
 	tomorrowDate.set(Calendar.HOUR, 0 );
 	tomorrowDate.set(Calendar.MINUTE, 0 );
 	tomorrowDate.set(Calendar.SECOND, 0 );
-	
-	System.out.println("현재시간 : " + nowTime.getTime());
-	System.out.println("오늘날짜" +todayDate.getTime());
-	System.out.println("내일날짜" +tomorrowDate.getTime());
 	
 	int denominator = historyRepository.findAllByTotalToday(todayDate.getTime(), tomorrowDate.getTime());
 	int molecular = historyRepository.findAllByDoingToday(todayDate.getTime(), tomorrowDate.getTime(), nowTime.getTime());
