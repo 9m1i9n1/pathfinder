@@ -12,8 +12,9 @@ function checkEvent() {
 
 function initDoughnut(res) {
 	let data = null;
+	let total = res[0] + res[1] + res[2];
 	
-	if (res[2] !== 0) {
+	if (total !== 0) {
 		data = {
 			datasets: [{
 				data: [],
