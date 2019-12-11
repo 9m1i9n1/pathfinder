@@ -62,7 +62,7 @@ body {
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.5;
   color: #212529;
   text-align: left;
@@ -80,6 +80,7 @@ hr {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
@@ -28504,18 +28505,20 @@ a.text-muted:hover {
   background-color: #ffffff;
   border-color: #dee2e6;
 }
-/*# sourceMappingURL=adminlte.css.map */
 
 /* Custom CSS */
 .height100 {
   height: 100%; 
 }
 
-.height675px{
- height: 750px;
+.height675px {
+  height: 750px;
 }
 
-<<<<<<< HEAD
+.vh-85 {
+  min-height: 85vh;
+}
+
 .modal-body table {
 	width: 100%; /* 140px * 5 column + 16px scrollbar width */
 	border-spacing: 0;
@@ -28546,10 +28549,3 @@ a.text-muted:hover {
 .modal-body td:last-child {
 	width: 140px; 
 }
-
-
-/*# sourceMappingURL=adminlte.css.map */
-.vh-85 {
-  min-height: 85vh;
-}
-

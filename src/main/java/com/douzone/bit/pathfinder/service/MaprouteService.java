@@ -39,9 +39,9 @@ public class MaprouteService {
 		return Header.OK(sortMarkerList);
 	}
 
-	public Header<List<String>> getDate(int carIndex) {
+	public Header<List<String>> getDate(Long carIndex) {
 		SimpleDateFormat format = new SimpleDateFormat("yyy-MM-dd");
-		
+
 		List<String> disableDate = new ArrayList<String>();
 
 		Calendar startCal = Calendar.getInstance();

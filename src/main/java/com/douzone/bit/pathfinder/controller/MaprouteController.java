@@ -60,11 +60,10 @@ public class MaprouteController {
 
 		return adminCarService.search(null, searchType, areaIndex);
 	}
-	
-	@GetMapping("/getDate.do")
-	public Header<List<String>> getDate(
-			@RequestParam("carIndex") int carIndex) {
-		
+
+	@GetMapping("/getReserve.do")
+	public Header<List<String>> getDate(@RequestParam Long carIndex) {
+
 		return MaprouteService.getDate(carIndex);
 	}
 }

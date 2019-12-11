@@ -1,9 +1,6 @@
 $(document).ready(() => {
   $(".scrollbar-outer").scrollbar();
   branchlist(depBranchlist);
-  // branchlist(drawBranchlist);
-
-  // showClickRoute();
 });
 
 $("#testButton").on("click", e => {
@@ -35,9 +32,6 @@ L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 
 var routeControl = L.Routing.control({
   serviceUrl: "http://218.39.221.89:5000/route/v1",
-  // router: L.Routing.osrmv1({
-  //   serviceUrl: "http://218.39.221.89:5000/route/v1"
-  // }),
   routeWhileDragging: false,
   draggableWaypoints: false,
   createMarker: () => {
@@ -138,16 +132,13 @@ const depCarlist = res => {
 $("#carSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
-  
-  //TODO AJAX 추가하여 날짜값 전송.
   $.ajax({
-		url : "/maproute/getDate.do",
-		type : "get",
-		data : {carIndex : 120},
-		success : function(res) {
-			  loadCalendar(res);
-		}
-	});
+    url: "/maproute/getReserve.do",
+    data: { carIndex: selectData.carIndex },
+    type: "get"
+  }).then(res => {
+    loadCalendar(res);
+  });
 });
 
 // 경유지 선택 Draw
@@ -299,10 +290,12 @@ const requestSort = markerList => {
 const carculateData = lrmData => {
   return new Promise((resolve, reject) => {
     let routeInfo = {};
+    let fee = 0;
+
+    let routes = [];
     let rdist = 0,
       rtime = 0,
       index = 1;
-    let routes = [];
 
     lrmData.instructions.forEach(item => {
       rdist += item.distance;
@@ -315,35 +308,50 @@ const carculateData = lrmData => {
         rdist /= 1000;
         routes.push({
           rdist: rdist.toFixed(3),
-          rtime: rtime.toFixed(3),
+          rtime: rtime,
           rdep: sortList[index - 1].branchName,
           rarvl: sortList[index].branchName,
           rfee: sortList[index - 1].routeCost
         });
 
+        fee += sortList[index - 1].routeCost;
         rdist = 0;
         rtime = 0;
         index++;
       }
     });
 
+    let dlvrdate = moment(
+      $("#dateSelect").val() + " 09:00:00",
+      "yyyy-MM-dd HH:mm:ss"
+    ).format("YYYY-MM-DD HH:mm:ss");
+
+    let arrivedate = moment(dlvrdate, "YYYY-MM-DD HH:mm:ss")
+      .add(lrmData.summary.totalTime.toFixed(0), "s")
+      .format("YYYY-MM-DD HH:mm:ss");
+
     routeInfo.carIndex = $("#carSelect").val();
-    routeInfo.dlvrdate = $("#dateSelect").val();
+    routeInfo.dlvrdate = dlvrdate;
+    routeInfo.arrivedate = arrivedate;
     routeInfo.dist = (lrmData.summary.totalDistance / 1000.0).toFixed(3);
     routeInfo.time = lrmData.summary.totalTime.toFixed(3);
-    routeInfo.routes = $.extend(true, [], routes);
+    routeInfo.fee = fee;
     routeInfo.dep = routes[0].rdep;
     routeInfo.arvl = routes[routes.length - 1].rarvl;
+    routeInfo.routes = $.extend(true, [], routes);
 
     resolve(routeInfo);
   });
 };
 
+// 타임라인 그리기
 const drawTimeline = routeInfo => {
+  routeList = $.extend(true, [], routeInfo);
   console.log("#routeInfo", routeInfo);
 
-  let str = "<ul>";
+  let sumTime = 0;
 
+  let str = "<ul>";
   $.each(routeInfo.routes, function(key, value) {
     str += "<li><span></span>";
     str += "<div>";
@@ -352,10 +360,11 @@ const drawTimeline = routeInfo => {
     str += `<div class="type">${value.rfee}원</div>`;
     str += "</div>";
 
-    str += `<span class="number">
-            <span>10:00</span>
-            <span>12:00</span>
-            </span>`;
+    str += "<span class='number'>";
+    str += `<span>${sumTime.toHHMMSS()}</span>`;
+
+    sumTime += value.rtime;
+    str += `<span>${sumTime.toHHMMSS()}</span></span>`;
     str += "</li>";
   });
 
@@ -364,9 +373,9 @@ const drawTimeline = routeInfo => {
   $(".tmline").html(str);
 };
 
-const loadCalendar = (res) => {
-	console.log(res.data);
-	
+const loadCalendar = res => {
+  console.log(res.data);
+
   $("#calendarBox").html("<div id='calendar'></div>");
   $("#dateSelect").val("");
 
@@ -459,14 +468,25 @@ $("#routeForm").validate({
 
   // valid 성공시
   submitHandler: form => {
-    const formId = $(form).attr("id");
-    const req = $(form).serializeObject();
-
-    return false;
+    planCreate(routeList);
   }
 });
 
-Number.prototype.toHHMMSS = () => {
+// 회원 생성
+function planCreate(req) {
+  $.ajax({
+    url: "/maproute/inserHistory.do",
+    type: "post",
+    contentType: "application/json",
+    async: false,
+    // 이름 : routeList
+    data: req
+  }).then(res => {
+    alert("등록되었습니다.");
+  });
+}
+
+Number.prototype.toHHMMSS = function() {
   var sec_num = Math.floor(this / 1);
   var hours = Math.floor(sec_num / 3600);
   var minutes = Math.floor((sec_num - hours * 3600) / 60);
