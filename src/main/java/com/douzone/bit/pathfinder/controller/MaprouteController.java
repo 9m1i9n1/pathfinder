@@ -63,9 +63,9 @@ public class MaprouteController {
 	}
 
 	@GetMapping("/getReserve.do")
-	public Header<List<String>> getDate(@RequestParam Long carIndex) {
+	public Header<List<String>> getReserveDate(@RequestParam Long carIndex) {
 
-		return MaprouteService.getDate(carIndex);
+		return MaprouteService.getReserveDate(carIndex);
 	}
 
 	@PostMapping("/insertPlan.do")

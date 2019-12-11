@@ -76,7 +76,7 @@ public class MaprouteService {
 	}
 
 	// 차량선택시 예약 날짜 던지기
-	public Header<List<String>> getDate(Long carIndex) {
+	public Header<List<String>> getReserveDate(Long carIndex) {
 		LocalDateTime startDate = LocalDate.now().atTime(0, 0);
 		LocalDateTime endDate = startDate.plusMonths(3);
 
