@@ -80,9 +80,9 @@ public class MaprouteService {
 		return Header.OK("데이터 삽입에 성공했습니다!");
 	}
 
-	public Header<List<String>> getDate(int carIndex) {
+	public Header<List<String>> getDate(Long carIndex) {
 		SimpleDateFormat format = new SimpleDateFormat("yyy-MM-dd");
-		
+
 		List<String> disableDate = new ArrayList<String>();
 
 		Calendar startCal = Calendar.getInstance();
