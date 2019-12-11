@@ -91,7 +91,6 @@ public class HomeService {
 				.area(branch.getArea().getAreaName())
 				.areaIndex(branch.getArea().getAreaIndex())
 				.build();
-		System.out.println(0/0);
 		return adminBranchResponse;
 	}
 
