@@ -21,8 +21,8 @@ public class HistoryResponse {
 	private String carname;
 	private String dep;
 	private String arvl;
-	private String dist;
-	private String fee;
+	private Double dist;
+	private Integer fee;
 	private String dlvrdate;
 	private String arrivedate;
 	private String routes;

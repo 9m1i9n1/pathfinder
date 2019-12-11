@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MaprouteRequest {
+public class MaprouteSortRequest {
 
   private Long branchIndex;
 

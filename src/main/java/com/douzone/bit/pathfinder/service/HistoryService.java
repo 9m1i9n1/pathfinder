@@ -267,7 +267,7 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		String carNumber = carRepository.findByCarIndex(Long.parseLong(history.getCarname())).getCarNumber();
+		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
 		
 		HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(format.format(history.getRegdate()))
 				.username(history.getUsername()).carname(carNumber).dep(history.getDep())

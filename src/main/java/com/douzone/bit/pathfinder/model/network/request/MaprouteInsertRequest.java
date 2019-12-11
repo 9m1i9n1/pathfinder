@@ -25,17 +25,15 @@ public class MaprouteInsertRequest {
 
   private String arvl;
 
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime dlvrdate;
+  private String dlvrdate;
 
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime arrivedate;
+  private String arrivedate;
 
   private Integer fee;
 
-  private String time;
+  private Integer time;
 
-  private String dist;
+  private Double dist;
 
   private List<Object> routes;
 }
