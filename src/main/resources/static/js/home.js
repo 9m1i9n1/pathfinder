@@ -243,7 +243,6 @@ function historyTotalCount() {
 }
 
 function init(){
-	recentlyHistory();
 	todayHistory();
 	drawDoughnut(false);
 	checkEvent();
