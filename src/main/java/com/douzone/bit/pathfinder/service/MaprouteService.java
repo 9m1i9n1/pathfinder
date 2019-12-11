@@ -17,7 +17,7 @@ import com.douzone.bit.pathfinder.model.entity.mongodb.RoutesTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.request.HistoryRequest;
 import com.douzone.bit.pathfinder.model.network.request.MaprouteInsertRequest;
-import com.douzone.bit.pathfinder.model.network.request.MaprouteRequest;
+import com.douzone.bit.pathfinder.model.network.request.MaprouteSortRequest;
 import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
@@ -37,7 +37,8 @@ public class MaprouteService {
 	private CreateMap createMap;
 	private Recursive recursive;
 
-	public Header<List<MaprouteResponse>> markerSort(List<MaprouteRequest> markerList) {
+	// sortData 처리
+	public Header<List<MaprouteResponse>> markerSort(List<MaprouteSortRequest> markerList) {
 		createMap = new CreateMap(markerList);
 		recursive = new Recursive(createMap.getMap());
 
@@ -47,32 +48,28 @@ public class MaprouteService {
 		return Header.OK(sortMarkerList);
 	}
 
+	// route정보 Insert
 	public Header<String> insertPlan(MaprouteInsertRequest routeList) {
-		Date now = Calendar.getInstance().getTime();
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		RoutesTb routesTb = new RoutesTb();
+		RoutesTb routesTb = RoutesTb.builder().detail(routeList.getRoutes()).build();
+		routesTb = routesRepository.save(routesTb);
 
-		routesTb.setDetail(routeList.getRoutes());
+		if (routesTb != null) {
+			try {
+				HistoryTb historyTb = HistoryTb.builder().username(userName).carname(routeList.getCarIndex())
+						.dep(routeList.getDep()).arvl(routeList.getArvl()).dist(routeList.getDist()).fee(routeList.getFee())
+						.dlvrdate(formatter.parse(routeList.getDlvrdate())).arrivedate(formatter.parse(routeList.getArrivedate()))
+						.routes(routesTb.getId()).build();
 
-		RoutesTb resultRoute = routesRepository.save(routesTb);
+				historyRepository.save(historyTb);
+			} catch (Exception e) {
+				routesRepository.deleteById(routesTb.getId().toString());
 
-		// if (resultRoute != null) {
-		// 	HistoryTb historyTb = HistoryTb.builder().regdate(now).username(userName).carname(routeList.getCarIndex())
-		// 			.dep(routeList.getDep()).arvl(routeList.getArvl()).dist(routeList.getDist()).fee(routeList.getFee())
-		// 			.dlvrdate(routeList.getDlvrdate()).arrivedate(routeList.getArrivedate()).routes(routesTb.getId()).build();
-
-		// 	HistoryTb resultHistory = historyRepository.save(historyTb);
-
-		// 	if (resultHistory == null) {
-		// 		routesRepository.deleteById(resultRoute.getId().toString());
-
-		// 		return Header.ERROR("데이터 삽입에 실패했습니다!");
-		// 	}
-		// } else {
-
-		// 	return Header.ERROR("데이터 삽입에 실패했습니다!");
-		// }
+				return Header.ERROR("데이터 삽입에 실패했습니다!");
+			}
+		}
 
 		return Header.OK("데이터 삽입에 성공했습니다!");
 	}
@@ -100,21 +97,21 @@ public class MaprouteService {
 
 		List<HistoryTb> dateList = historyRepository.findAllByCarnameAndDate(carIndex, start, end);
 
-		if (dateList != null) {
-			for (int date = 0; date < dateList.size(); date++) {
-				Date listStart = dateList.get(date).getDlvrdate();
-				Date listEnd = dateList.get(date).getArrivedate();
+		// if (dateList != null) {
+		// for (int date = 0; date < dateList.size(); date++) {
+		// Date listStart = dateList.get(date).getDlvrdate();
+		// Date listEnd = dateList.get(date).getArrivedate();
 
-				sample.setTime(listStart);
+		// sample.setTime(listStart);
 
-				while (sample.getTime().before(listEnd)) {
-					disableDate.add(format.format(sample.getTime()));
-					sample.add(Calendar.DATE, 1);
-				}
-			}
-		} else {
-			return Header.ERROR("Empty Date");
-		}
+		// while (sample.getTime().before(listEnd)) {
+		// disableDate.add(format.format(sample.getTime()));
+		// sample.add(Calendar.DATE, 1);
+		// }
+		// }
+		// } else {
+		// return Header.ERROR("Empty Date");
+		// }
 
 		return Header.OK(disableDate);
 	}
