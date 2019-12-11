@@ -24,7 +24,7 @@ pageEncoding="UTF-8"%>
 
 <!-- Google Font: Source Sans Pro -->
 <link
-  href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300&display=swap&subset=korean"
+  href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean"
   rel="stylesheet"
 />
 
@@ -96,6 +96,8 @@ pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/static/css/scroll.css" />
 <script src="/static/js/jquery.scrollbar.js"></script>
 
+<%-- axios --%>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script type="text/javascript">
   window.getCookie = function(name) {
