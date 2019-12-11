@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.request.HistoryRequest;
 import com.douzone.bit.pathfinder.model.network.request.MaprouteRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.AdminCarResponse;
@@ -66,5 +67,11 @@ public class MaprouteController {
 			@RequestParam("carIndex") int carIndex) {
 		
 		return MaprouteService.getDate(carIndex);
+	}
+	
+	@PostMapping("/inserHistory.do")
+	public Header<String> insertHistory(@RequestBody HistoryRequest history) {
+		
+		return MaprouteService.insertHistory(history);
 	}
 }

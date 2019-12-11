@@ -335,6 +335,11 @@ const carculateData = lrmData => {
     routeInfo.dep = routes[0].rdep;
     routeInfo.arvl = routes[routes.length - 1].rarvl;
 
+    // 임시 세팅
+    routeInfo.fee = "100";
+    routeInfo.arrivedate = $("#dateSelect").val();
+    //
+    
     resolve(routeInfo);
   });
 };
@@ -342,6 +347,9 @@ const carculateData = lrmData => {
 const drawTimeline = routeInfo => {
   console.log("#routeInfo", routeInfo);
 
+  //TODO 서버로 전송하는 AJAX 구현
+  sendHistoryDate(routeInfo);
+  
   let str = "<ul>";
 
   $.each(routeInfo.routes, function(key, value) {
@@ -364,9 +372,22 @@ const drawTimeline = routeInfo => {
   $(".tmline").html(str);
 };
 
-const loadCalendar = (res) => {
-	console.log(res.data);
+
+const sendHistoryDate = routeInfo => {
+	console.log("#sendHistoryDate",routeInfo);
 	
+	$.ajax({
+		url : "/maproute/inserHistory.do",
+		type : "post",
+		contentType: "application/json",
+		data : JSON.stringify(routeInfo),
+		success : function(res) {
+			  loadCalendar(res);
+		}
+	})
+}
+
+const loadCalendar = (res) => {
   $("#calendarBox").html("<div id='calendar'></div>");
   $("#dateSelect").val("");
 

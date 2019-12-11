@@ -164,7 +164,9 @@ public class HistoryService extends QuerydslRepositorySupport {
 				e.printStackTrace();
 			}
 		}
-
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		return Header.OK(historyList);
 	}
 
@@ -201,12 +203,11 @@ public class HistoryService extends QuerydslRepositorySupport {
 			}
 
 		}
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		
-		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
-				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
-				.currentElements(historys.getNumberOfElements()).build();
-
-		return Header.OK(historyList, pagination);
+		return Header.OK(historyList);
 	}
 
 	public Header<HistoryRoutesResponse> readRoutes(ObjectId id) {
@@ -218,10 +219,11 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK(routes);
 	}
 
-	public Header<String> removeRoutes(HistoryTb history) {
+	//TODO hindex로 제거하는게 아니라 부모가 가지고 있던 Routes의 Index 값으로 삭제 구현
+	public Header<String> removeRoutes(ObjectId id) {
 
-		historyRepository.deleteById((history.getId().toString()));
-		routesRepository.deleteByHindex(history.getId());
+		historyRepository.deleteById(id.toString());
+		routesRepository.deleteById(id.toString());
 
 		return Header.OK();
 	}
@@ -257,19 +259,18 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(history.getRegdate())
+		HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(format.format(history.getRegdate()))
 				.username(history.getUsername()).carname(history.getCarname()).dep(history.getDep())
 				.arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(format.format(history.getDlvrdate())).arrivedate(format.format(history.getArrivedate()))
-				.routes(history.getRoutes()).build();
+				.routes(history.getRoutes().toString()).build();
 
 		return response;
 	}
 
 	private HistoryRoutesResponse routesResponse(RoutesTb routes) {
 
-		HistoryRoutesResponse response = HistoryRoutesResponse.builder().hindex(routes.getHindex())
-
+		HistoryRoutesResponse response = HistoryRoutesResponse.builder()/* .hindex(routes.getHindex()) */
 				.detail(routes.getDetail()).build();
 
 		return response;
@@ -297,21 +298,19 @@ public class HistoryService extends QuerydslRepositorySupport {
 	
 	public double todayHistoryPercent() {
 	
-
-	
 	//현재시간
 	Calendar nowTime = Calendar.getInstance();
 	
 	//오늘날짜 2019-12-10 00:00:00 
 	Calendar todayDate = Calendar.getInstance();
-	todayDate.set(Calendar.HOUR_OF_DAY, 0 );
+	todayDate.set(Calendar.HOUR, 0 );
 	todayDate.set(Calendar.MINUTE, 0 );
 	todayDate.set(Calendar.SECOND, 0 );
 	
 	//내일날짜 2019-12-11 00:00:00
 	Calendar tomorrowDate = Calendar.getInstance();
 	tomorrowDate.add(Calendar.DAY_OF_MONTH ,1);
-	tomorrowDate.set(Calendar.HOUR_OF_DAY, 0 );
+	tomorrowDate.set(Calendar.HOUR, 0 );
 	tomorrowDate.set(Calendar.MINUTE, 0 );
 	tomorrowDate.set(Calendar.SECOND, 0 );
 	

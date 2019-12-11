@@ -9,13 +9,17 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
+import com.douzone.bit.pathfinder.model.entity.mongodb.RoutesTb;
 import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.network.request.HistoryRequest;
 import com.douzone.bit.pathfinder.model.network.request.MaprouteRequest;
 import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
+import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 import com.douzone.bit.pathfinder.service.algorithm.CreateMap;
 import com.douzone.bit.pathfinder.service.algorithm.Recursive;
 
@@ -25,6 +29,9 @@ public class MaprouteService {
 
 	@Autowired
 	HistoryRepository historyRepository;
+	
+	@Autowired
+	RoutesRepository routesRepository;
 
 	private CreateMap createMap;
 	private Recursive recursive;
@@ -37,6 +44,40 @@ public class MaprouteService {
 		List<MaprouteResponse> sortMarkerList = createMap.getSortList(sortIndexList);
 
 		return Header.OK(sortMarkerList);
+	}
+	
+	public Header<String> insertHistory(HistoryRequest history) {
+		Date now = Calendar.getInstance().getTime();
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		RoutesTb routesTb = new RoutesTb();
+		
+		routesTb.setDetail(history.getRoutes());
+		
+		RoutesTb resultRoute = routesRepository.save(routesTb);
+		
+		if (resultRoute != null) {
+			HistoryTb historyTb = HistoryTb.builder()
+					.regdate(now).username(userName)
+					.carname(history.getCarIndex()).dep(history.getDep())
+					.arvl(history.getArvl()).dist(history.getDist())
+					.fee(history.getFee()).dlvrdate(history.getDlvrdate())
+					.arrivedate(history.getArrivedate()).routes(routesTb.getId())
+					.build();
+			
+			HistoryTb resultHistory = historyRepository.save(historyTb);
+			
+			if (resultHistory == null) {
+				routesRepository.deleteById(resultRoute.getId().toString());
+				
+				return Header.ERROR("데이터 삽입에 실패했습니다!");
+			}
+		} else {
+			
+			return Header.ERROR("데이터 삽입에 실패했습니다!");
+		}
+		
+		return Header.OK("데이터 삽입에 성공했습니다!");
 	}
 
 	public Header<List<String>> getDate(int carIndex) {

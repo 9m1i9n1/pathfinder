@@ -116,12 +116,14 @@ var detailsModal = $("#detailsModal");
 
 function removeRoutes(history) {
 	let alertBox = confirm('해당 기록을 삭제하시겠습니까?');
-
+	
 	if (alertBox) {
 		$.ajax({
 			url : "/history/removeroutes.do",
-			type : "post",
-			data : JSON.stringify(history),
+			type : "delete",
+			data : {
+				id : history.id
+			},
 			contentType : "application/json; charset=UTF-8",
 			success : function(res) {
 				alert("삭제 되었습니다.");
@@ -132,7 +134,8 @@ function removeRoutes(history) {
 	}
 }
 
-function getRoutes(routes) {
+function getRoutes(routes) {;
+	
 	$.ajax({
 		url : "/history/getroutes.do",
 		type : "get",

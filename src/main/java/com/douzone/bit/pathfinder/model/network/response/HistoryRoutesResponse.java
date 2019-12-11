@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HistoryRoutesResponse {
 
-	private ObjectId hindex;
+//	private ObjectId hindex;
 	private List<Object> detail; 
 }
