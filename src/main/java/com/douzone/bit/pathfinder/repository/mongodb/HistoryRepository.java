@@ -13,11 +13,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 
 	HistoryTb findById(ObjectId id);
-	
+
 	Object findByRoutes(ObjectId routes);
 
 	// 검색 페이지
