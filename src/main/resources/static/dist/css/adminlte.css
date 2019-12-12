@@ -28519,33 +28519,33 @@ a.text-muted:hover {
   min-height: 85vh;
 }
 
-.modal-body table {
+.tableScroll table {
 	width: 100%; /* 140px * 5 column + 16px scrollbar width */
 	border-spacing: 0;
 }
 
-.modal-body tbody, .modal-body thead tr {
+.tableScroll tbody, .tableScroll thead tr {
 	display: block;
 }
 
-.modal-body tbody {
+.tableScroll tbody {
 	height: 150px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 
-.modal-body tbody tr, .modal-body thead th {
+.tableScroll tbody tr, .tableScroll thead th {
 	width: 150px;
 }
 
-.modal-body td {
+.tableScroll td {
 	width: 140px;
 }
 
-.modal-body thead th:last-child {
+.tableScroll thead th:last-child {
 	width: 170px;
 }
 
-.modal-body td:last-child {
+.tableScroll td:last-child {
 	width: 140px; 
 }

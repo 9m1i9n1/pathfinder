@@ -1,6 +1,5 @@
 package com.douzone.bit.pathfinder.service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +22,6 @@ import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 import com.douzone.bit.pathfinder.service.algorithm.CreateMap;
 import com.douzone.bit.pathfinder.service.algorithm.Recursive;
-import com.douzone.bit.pathfinder.util.DateUtil;
 
 @Service
 @Transactional
@@ -96,8 +94,6 @@ public class MaprouteService {
 				disableDates.add(d.toString());
 			}
 		}
-
-		System.out.println(disableDates);
 
 		return Header.OK(disableDates);
 	}

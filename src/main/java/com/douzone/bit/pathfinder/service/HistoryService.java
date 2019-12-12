@@ -249,7 +249,7 @@ public class HistoryService {
 				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(history.getDlvrdate().format(formatter)).arrivedate(history.getArrivedate().format(formatter))
 				.routes(history.getRoutes().toString()).build();
-				
+
 		return response;
 	}
 
@@ -280,5 +280,4 @@ public class HistoryService {
 		double result = Math.round(((double) molecular / (double) denominator) * 1000) / 10.00;
 		return result;
 	}
-
 }

@@ -1,9 +1,6 @@
 package com.douzone.bit.pathfinder.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -16,7 +13,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +44,7 @@ public class AdminUserController {
 
 	// 회원 리스트 뷰
 	@GetMapping({ "", "/" })
-	public ModelAndView userManage(ModelAndView mv ,HttpServletRequest request) {
+	public ModelAndView userManage(ModelAndView mv, HttpServletRequest request) {
 		System.out.println(request.getParameter("pageName"));
 		mv.setViewName("/admin/userManage");
 
@@ -58,7 +54,7 @@ public class AdminUserController {
 	// 회원 한명 정보 불러오기 (update에서 사용)
 	@GetMapping("/userread.do")
 	public Header<AdminUserResponse> userRead(@RequestParam Long userIndex) {
-		
+
 		return adminUserService.read(userIndex);
 	}
 

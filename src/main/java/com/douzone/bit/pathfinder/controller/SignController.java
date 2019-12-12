@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.dto.SignDTO;
 import com.douzone.bit.pathfinder.model.network.request.SignRequest;
-import com.douzone.bit.pathfinder.service.SignService;
 import com.douzone.bit.pathfinder.util.JwtUtil;
 
 @RestController

@@ -23,8 +23,7 @@ $("#testButton").on("click", e => {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map").setView([36.441163, 127.861612], 7);
-
+let map = L.map("map").setView([36.1358642, 128.0785804], 7);
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -51,27 +50,44 @@ var routeControl = L.Routing.control({
   // .on("routesfound routingerror", hideSpinner)
   .addTo(map);
 
-//히스토리에 등록할 sortList
+//! 변수구간 ==========================
 let sortList;
 let routeList;
 
-const branchlist = handleFunc => {
-  $.ajax({
-    url: "/maproute/branchLoding",
-    type: "get"
-  }).then(res => {
-    handleFunc(res);
-  });
-};
+//! 화면 Draw 구간 ====================
+const loadCalendar = res => {
+  $("#calendarBox").html("<div id='calendar'></div>");
+  $("#dateSelect").val("");
 
-// 차량 선택 Draw
-const carlist = (handleFunc, areaIndex) => {
-  $.ajax({
-    url: "/maproute/carLoading",
-    data: { areaIndex },
-    type: "get"
-  }).then(res => {
-    handleFunc(res);
+  let calendarSize = $("#headingDate").width();
+  let disableList = res.data;
+
+  $("#calendar").calendar({
+    width: calendarSize,
+    height: calendarSize * 0.8,
+    date: new Date(),
+    format: "yyyy-MM-dd",
+    startWeek: 0,
+    selectedRang: [moment().add(1, "D"), moment().add(3, "M")],
+    disableDay: disableList,
+    weekArray: ["일", "월", "화", "수", "목", "금", "토"],
+    monthArray: [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월"
+    ],
+    onSelected: (view, date, data) => {
+      $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
+    }
   });
 };
 
@@ -94,17 +110,14 @@ const depBranchlist = res => {
   });
 };
 
-// 출발지 선택시 Event
-$("#depSelect").on("select2:select", e => {
-  let selectData = e.params.data;
-
-  markerGroup.clearLayers();
-  markerAdd(selectData);
-
-  carlist(depCarlist, selectData.areaIndex);
-
-  $("#branchSelect").empty();
-});
+const branchlist = handleFunc => {
+  $.ajax({
+    url: "/maproute/branchLoding",
+    type: "get"
+  }).then(res => {
+    handleFunc(res);
+  });
+};
 
 // 차량 선택 Draw
 const depCarlist = res => {
@@ -127,19 +140,6 @@ const depCarlist = res => {
     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)) // 앞에 숫자로 정렬되게 해야함.
   });
 };
-
-// 차량 선택시 Event
-$("#carSelect").on("select2:select", e => {
-  let selectData = e.params.data;
-
-  $.ajax({
-    url: "/maproute/getReserve.do",
-    data: { carIndex: selectData.carIndex },
-    type: "get"
-  }).then(res => {
-    loadCalendar(res);
-  });
-});
 
 // 경유지 선택 Draw
 const selectBranchlist = res => {
@@ -166,6 +166,61 @@ const selectBranchlist = res => {
   });
 };
 
+// 타임라인 그리기
+const drawTimeline = routeInfo => {
+  routeList = $.extend(true, {}, routeInfo);
+  console.log("#routeInfo", routeList);
+
+  let sumTime = 0;
+
+  let str = "<ul>";
+  $.each(routeInfo.routes, function(key, value) {
+    str += "<li>";
+    str += "<div>";
+    str += `<div class="title">${value.rdep} → ${value.rarvl}</div>`;
+    str += `<div class="info">${value.rdist}km</div>`;
+    str += `<div class="type">${value.rfee}원</div>`;
+    str += "</div>";
+
+    str += "<span class='number'>";
+    str += `<span>${sumTime.toHHMMSS()}</span>`;
+
+    sumTime += value.rtime;
+    str += `<span>${sumTime.toHHMMSS()}</span></span>`;
+    str += "</li>";
+  });
+
+  str += "</ul>";
+
+  $(".tmline").html(str);
+};
+
+//! 선택 Event 구간 ===================
+// 출발지 선택시 Event
+$("#depSelect").on("select2:select", e => {
+  let selectData = e.params.data;
+
+  markerGroup.clearLayers();
+  markerAdd(selectData);
+
+  carlist(depCarlist, selectData.areaIndex);
+
+  $("#branchSelect").empty();
+});
+
+// 차량 선택시 Event
+$("#carSelect").on("select2:select", e => {
+  let selectData = e.params.data;
+
+  $.ajax({
+    url: "/maproute/getReserve.do",
+    data: { carIndex: selectData.carIndex },
+    type: "get"
+  }).then(res => {
+    loadCalendar(res);
+  });
+});
+
 // 경유지 선택시 Event
 $("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
@@ -180,7 +235,7 @@ $("#branchSelect").on("select2:unselect", e => {
   markerRemove(selectData);
 });
 
-//! 마커 그룹
+//! 마커 부분 ======================
 let markerGroup = L.layerGroup().addTo(map);
 
 // 마커 추가
@@ -214,7 +269,7 @@ const markerRemove = selectData => {
   });
 };
 
-//! 이벤트 객체 부분
+//! 버튼 이벤트 부분 ==========================
 // 다음버튼 누를 경우에
 // Lambda의 bind 형식때문에 function으로 사용
 $(".next").click(function(e) {
@@ -249,6 +304,7 @@ $("#resultButton").click(e => {
   mapSort();
 });
 
+//! route 경로 관련 부분 ========================
 // sort 요청
 const mapSort = () => {
   let markerList = [];
@@ -344,71 +400,6 @@ const carculateData = lrmData => {
   });
 };
 
-// 타임라인 그리기
-const drawTimeline = routeInfo => {
-  routeList = $.extend(true, {}, routeInfo);
-  console.log("#routeInfo", routeList);
-
-  let sumTime = 0;
-
-  let str = "<ul>";
-  $.each(routeInfo.routes, function(key, value) {
-    str += "<li>";
-    str += "<div>";
-    str += `<div class="title">${value.rdep} → ${value.rarvl}</div>`;
-    str += `<div class="info">${value.rdist}km</div>`;
-    str += `<div class="type">${value.rfee}원</div>`;
-    str += "</div>";
-
-    str += "<span class='number'>";
-    str += `<span>${sumTime.toHHMMSS()}</span>`;
-
-    sumTime += value.rtime;
-    str += `<span>${sumTime.toHHMMSS()}</span></span>`;
-    str += "</li>";
-  });
-
-  str += "</ul>";
-
-  $(".tmline").html(str);
-};
-
-const loadCalendar = res => {
-  $("#calendarBox").html("<div id='calendar'></div>");
-  $("#dateSelect").val("");
-
-  let calendarSize = $("#headingDate").width();
-  let disableList = res.data;
-
-  $("#calendar").calendar({
-    width: calendarSize,
-    height: calendarSize * 0.8,
-    date: new Date(),
-    format: "yyyy-MM-dd",
-    startWeek: 0,
-    selectedRang: [moment().add(1, "D"), moment().add(3, "M")],
-    disableDay: disableList,
-    weekArray: ["일", "월", "화", "수", "목", "금", "토"],
-    monthArray: [
-      "1월",
-      "2월",
-      "3월",
-      "4월",
-      "5월",
-      "6월",
-      "7월",
-      "8월",
-      "9월",
-      "10월",
-      "11월",
-      "12월"
-    ],
-    onSelected: (view, date, data) => {
-      $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
-    }
-  });
-};
-
 $("#routeForm").validate({
   onkeyup: false,
   // ignore: "",
@@ -467,13 +458,13 @@ $("#routeForm").validate({
   }
 });
 
+//! 데이터 가공 부분 ===============
 // 회원 생성
 function insertPlan(req) {
   $.ajax({
     url: "/maproute/insertPlan.do",
     type: "post",
     contentType: "application/json",
-    // 이름 : routeList
     data: JSON.stringify(req)
   }).then(res => {
     let text = res.data;
@@ -483,6 +474,7 @@ function insertPlan(req) {
   });
 }
 
+//! 유틸 부분 =====================
 Number.prototype.toHHMMSS = function() {
   var sec_num = Math.floor(this / 1);
   var hours = Math.floor(sec_num / 3600);

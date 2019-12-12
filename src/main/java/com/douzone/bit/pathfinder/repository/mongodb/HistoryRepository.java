@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.lang.Long;
 
@@ -66,13 +65,16 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 
 	// 내 글 검색 & 날짜로 검색
 	@Query("{$and : [ {'dlvrdate' : { '$gt' : ?0 }}, {'username' : ?1 }, {'dlvrdate' : { '$gte' : ?2 }}] }")
-	Page<HistoryTb> findAllByWillAndUsernameAndDate(Pageable pageable, LocalDateTime time, String username, LocalDateTime keyword);
+	Page<HistoryTb> findAllByWillAndUsernameAndDate(Pageable pageable, LocalDateTime time, String username,
+			LocalDateTime keyword);
 
 	@Query("{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 } }, { 'dlvrdate' :{'$gte' : ?2 } }, {'username' : ?1} ] }")
-	Page<HistoryTb> findAllByIngAndUsernameAndDate(Pageable pageable, LocalDateTime time, String username, LocalDateTime keyword);
+	Page<HistoryTb> findAllByIngAndUsernameAndDate(Pageable pageable, LocalDateTime time, String username,
+			LocalDateTime keyword);
 
 	@Query("{$and : [ {'arrivedate' : { '$lt' : ?0 }}, {'username' : ?1}, {'dlvrdate' : { '$gte' : ?2 } }]}")
-	Page<HistoryTb> findAllByPpAndUsernameAndDate(Pageable pageable, LocalDateTime LocalTime, String username, LocalDateTime keyword);
+	Page<HistoryTb> findAllByPpAndUsernameAndDate(Pageable pageable, LocalDateTime LocalTime, String username,
+			LocalDateTime keyword);
 
 	// 내 글 & 카운트
 	@Query(value = "{$and : [ {'dlvrdate' : { '$gt' : ?0 }}, {'username' : ?1 }] }", count = true)
