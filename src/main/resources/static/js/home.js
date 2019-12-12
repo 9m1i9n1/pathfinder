@@ -202,7 +202,7 @@ function todayHistoryPercent() {
 		url : "/home/todayHistoryPercent",
 		type : "get",
 		success : function(res) {
-			if (res !== 0) {
+			if (res !== -1) {
 				$("#todayPercent").html(res + '<small>%</small>');
 			} else {
 				$("#todayPercent").html(' -');

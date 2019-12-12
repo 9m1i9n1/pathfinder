@@ -308,7 +308,7 @@ public class HistoryService extends QuerydslRepositorySupport {
 	int denominator = historyRepository.findAllByTotalToday(todayDate.getTime(), tomorrowDate.getTime());
 	int molecular = historyRepository.findAllByDoingToday(todayDate.getTime(), tomorrowDate.getTime(), nowTime.getTime());
 	if(molecular == 0)
-		return 0;
+		return -1;
 	
 	double result = Math.round(((double)molecular/(double)denominator)*1000) /10.00;
 	return result;

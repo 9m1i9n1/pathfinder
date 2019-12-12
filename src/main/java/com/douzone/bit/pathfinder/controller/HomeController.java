@@ -67,7 +67,7 @@ public class HomeController {
 		return homeService.getTotalCount(myDelivery);
 	}
 
-		// 오늘의 배송현황
+	// 오늘의 배송현황
 	@GetMapping("/todayHistoryPercent")
 	public double todayHistoryPercent() {
 

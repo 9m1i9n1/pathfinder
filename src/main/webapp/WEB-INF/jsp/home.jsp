@@ -129,51 +129,37 @@
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body p-0">
-							<div class="row text-center justify-content-center align-items-center pr-5">
+							<div
+								class="row text-center justify-content-center align-items-center pr-5">
 								<div class="col-md-5 ">
-									<div >
+									<div>
 										<div id="canvas" class="col-md-4">
-											<div id="south" ></div>
-											<div id="seoul">
-											</div>
-											<div id="gygg">
-											</div>
-											<div id="incheon">
-											</div>
-											<div id="gangwon">
-											</div>
-											<div id="chungbuk">
-											</div>
-											<div id="chungnam">
-											</div>
-											<div id="daejeon">
-											</div>
-											<div id="sejong">
-											</div>
-											<div id="gwangju">
-											</div>
-											<div id="jeonbuk">
-											</div>
-											<div id="jeonnam">
-											</div>
-											<div id="gyeongbuk">
-											</div>
-											<div id="gyeongnam">
-											</div>
-											<div id="daegu">
-											</div>
-											<div id="busan">
-											</div>
-											<div id="ulsan">
-											</div>
-											<div id="jeju">
-											</div>
+											<div id="south"></div>
+											<div id="seoul"></div>
+											<div id="gygg"></div>
+											<div id="incheon"></div>
+											<div id="gangwon"></div>
+											<div id="chungbuk"></div>
+											<div id="chungnam"></div>
+											<div id="daejeon"></div>
+											<div id="sejong"></div>
+											<div id="gwangju"></div>
+											<div id="jeonbuk"></div>
+											<div id="jeonnam"></div>
+											<div id="gyeongbuk"></div>
+											<div id="gyeongnam"></div>
+											<div id="daegu"></div>
+											<div id="busan"></div>
+											<div id="ulsan"></div>
+											<div id="jeju"></div>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-7 justify-content-center align-items-center" id="branchFeeChartP">
+								<div class="col-md-7 justify-content-center align-items-center"
+									id="branchFeeChartP">
 									<!-- 여기가 옆쪽 -->
-									<canvas id="branchFeeChart" class="chartjs-render-monitor col-md-8 "></canvas>
+									<canvas id="branchFeeChart"
+										class="chartjs-render-monitor col-md-8 "></canvas>
 								</div>
 							</div>
 							<!-- /.d-md-flex -->
@@ -365,6 +351,68 @@
 					</div>
 					<!-- /.row -->
 
+					<!-- 슬라이드 -->
+					<div class="row ">
+						<div class="col-md-12">
+							<div class="card">
+								<!-- div class="card-header">
+									<h3 class="card-title">Carousel</h3>
+								</div> -->
+								<!-- /.card-header -->
+								<div class="card-body">
+									<div id="carouselExampleIndicators" class="carousel slide"
+										data-ride="carousel">
+										<ol class="carousel-indicators">
+											<li data-target="#carouselExampleIndicators"
+												data-slide-to="0" class=""></li>
+											<li data-target="#carouselExampleIndicators"
+												data-slide-to="1" class="active"></li>
+											<li data-target="#carouselExampleIndicators"
+												data-slide-to="2" class=""></li>
+										</ol>
+										<div class="carousel-inner">
+											<div class="carousel-item">
+												<img class="d-block w-100" 
+													src="https://placehold.it/900x500/3333CC/ffffff&amp;text=PathFinder""
+													alt="First slide">
+											</div>
+											<div class="carousel-item active" >
+												<a href="http://www.douzone.com/">
+												 <img
+													class="d-block w-100"
+													src="http://imgnews.naver.net/image/5046/2018/06/01/0000071590_001_20180601151004593.jpg"
+													alt="Second slide">
+												</a>
+												홈페이지 바로가기
+											</div>
+											<div class="carousel-item">
+
+												<img class="d-block w-100"
+													src="https://placehold.it/900x500/f39c12/ffffff&amp;text=PathFinder"
+													alt="Third slide">
+
+											</div>
+										</div>
+										<a class="carousel-control-prev"
+											href="#carouselExampleIndicators" role="button"
+											data-slide="prev"> <span
+											class="carousel-control-prev-icon" aria-hidden="true"></span>
+											<span class="sr-only">Previous</span>
+										</a> <a class="carousel-control-next"
+											href="#carouselExampleIndicators" role="button"
+											data-slide="next"> <span
+											class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="sr-only">Next</span>
+										</a>
+									</div>
+								</div>
+								<!-- /.card-body -->
+							</div>
+						</div>
+					</div>
+					<!-- 슬라이드끝1 -->
+
+
 				</div>
 				<!-- /.col -->
 			</div>
@@ -383,10 +431,6 @@
 	</script>
 
 	<style>
-
-
-
-
 </style>
 
 
