@@ -373,7 +373,7 @@
 										<div class="carousel-inner">
 											<div class="carousel-item">
 												<img class="d-block w-100" 
-													src="https://placehold.it/900x500/3333CC/ffffff&amp;text=PathFinder""
+													src="https://placehold.it/900x500/3333CC/ffffff&amp;text=PathFinder"
 													alt="First slide">
 											</div>
 											<div class="carousel-item active" >
