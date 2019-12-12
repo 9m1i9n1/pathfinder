@@ -213,18 +213,18 @@ function getRoutes(routes) {;
 }
 
 $("#printBtn").on('click', function () {
-	let content = $("#print_page").html();
-	let myWindow = window.open('', 'Print', 'height=600, width=800');
+	let domClone = document.getElementById("printThis").cloneNode(true);
+	let $printSection = document.getElementById("printSection");
 	
-	myWindow.document.write('<html><head><title>Print</title>');
-	myWindow.document.write('');
-	myWindow.document.write('</head><body>');
-	myWindow.document.write(content);	
-	myWindow.document.write('</body>');
-	myWindow.document.write('</html>');
+	if (!$printSection) {
+		$printSection = document.createElement("div");
+		
+		$printSection.id = "printSection";
+		
+		document.body.appendChild($printSection);
+	}
 	
-	myWindow.document.close();
-	myWindow.focus();
-	myWindow.print();
-	myWindow.close();
+	$printSection.innerHTML = "";
+	$printSection.appendChild(domClone);
+	window.print();
 });

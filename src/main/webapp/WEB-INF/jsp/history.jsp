@@ -18,6 +18,8 @@
 <!-- 캘린더 표시 -->
 <link rel="stylesheet" href="/static/route/css/calendar.css" />
 <script src="/static/route/js/calendar.js"></script>
+
+<link rel="stylesheet" href="static/css/print.css">
 </head>
 <body>
 	<section class="content-header">
