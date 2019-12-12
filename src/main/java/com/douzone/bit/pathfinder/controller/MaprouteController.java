@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.network.Header;
-import com.douzone.bit.pathfinder.model.network.request.MaprouteRequest;
+import com.douzone.bit.pathfinder.model.network.request.MaprouteInsertRequest;
+import com.douzone.bit.pathfinder.model.network.request.MaprouteSortRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.AdminCarResponse;
 import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
@@ -43,7 +44,7 @@ public class MaprouteController {
 	}
 
 	@PostMapping("/mapsort")
-	public Header<List<MaprouteResponse>> mapsort(@RequestBody List<MaprouteRequest> markerList) {
+	public Header<List<MaprouteResponse>> mapsort(@RequestBody List<MaprouteSortRequest> markerList) {
 
 		return MaprouteService.markerSort(markerList);
 	}
@@ -60,11 +61,16 @@ public class MaprouteController {
 
 		return adminCarService.search(null, searchType, areaIndex);
 	}
-	
-	@GetMapping("/getDate.do")
-	public Header<List<String>> getDate(
-			@RequestParam("carIndex") int carIndex) {
-		
-		return MaprouteService.getDate(carIndex);
+
+	@GetMapping("/getReserve.do")
+	public Header<List<String>> getReserveDate(@RequestParam Long carIndex) {
+
+		return MaprouteService.getReserveDate(carIndex);
+	}
+
+	@PostMapping("/insertPlan.do")
+	public Header<String> insertPlan(@RequestBody MaprouteInsertRequest request) {
+
+		return MaprouteService.insertPlan(request);
 	}
 }

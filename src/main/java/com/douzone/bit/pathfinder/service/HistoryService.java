@@ -125,10 +125,14 @@ public class HistoryService extends QuerydslRepositorySupport {
 		if (historys.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
-
+		
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
 
+		if (historyList == null) {
+			return Header.ERROR("에러가 발생하였습니다.");
+		}
+		
 		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
 				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
 				.currentElements(historys.getNumberOfElements()).build();
@@ -148,8 +152,13 @@ public class HistoryService extends QuerydslRepositorySupport {
 		if (historys.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
+		
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
+		
+		if (historyList == null) {
+			return Header.ERROR("에러가 발생하였습니다.");
+		}
 		
 		for (int i = 0; i < historyList.size(); i++) {
 			try {
@@ -169,7 +178,9 @@ public class HistoryService extends QuerydslRepositorySupport {
 				e.printStackTrace();
 			}
 		}
-
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		return Header.OK(historyList);
 	}
 
@@ -186,8 +197,13 @@ public class HistoryService extends QuerydslRepositorySupport {
 		if (historys.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
+		
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
+		
+		if (historyList == null) {
+			return Header.ERROR("에러가 발생하였습니다.");
+		}
 
 		for (int i = 0; i < historyList.size(); i++) {
 			try {
@@ -208,12 +224,11 @@ public class HistoryService extends QuerydslRepositorySupport {
 			}
 
 		}
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 		
-		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
-				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
-				.currentElements(historys.getNumberOfElements()).build();
-
-		return Header.OK(historyList, pagination);
+		return Header.OK(historyList);
 	}
 
 	public Header<HistoryRoutesResponse> readRoutes(ObjectId id) {
@@ -225,76 +240,42 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK(routes);
 	}
 
-	public Header<String> removeRoutes(HistoryTb history) {
+	//TODO hindex로 제거하는게 아니라 부모가 가지고 있던 Routes의 Index 값으로 삭제 구현
+	public Header<String> removeRoutes(ObjectId id) {
 
-		historyRepository.deleteById((history.getId().toString()));
-		routesRepository.deleteByHindex(history.getId());
-
+		HistoryTb history = historyRepository.findById(id);
+		historyRepository.deleteById(id.toString());
+		routesRepository.deleteById(history.getRoutes().toString());
+		
 		return Header.OK();
-	}
-
-	public ArrayList<String> calcDate(String startDate, String EndDate) {
-		String DATE_PATTERN = "yyyy-MM-dd";
-		ArrayList<String> dates = new ArrayList<String>();
-
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-
-			Date start = sdf.parse(startDate);
-			Date end = sdf.parse(EndDate);
-
-			Date currentDate = start;
-
-			while (currentDate.compareTo(end) <= 0) {
-				dates.add(sdf.format(currentDate));
-				Calendar c = Calendar.getInstance();
-				c.setTime(currentDate);
-				c.add(Calendar.DAY_OF_MONTH, 1);
-				currentDate = c.getTime();
-			}
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return dates;
 	}
 
 	private HistoryResponse historyResponse(HistoryTb history) {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		String carNumber = carRepository.findByCarIndex(Long.parseLong(history.getCarname())).getCarNumber();
-		HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(format.format(history.getRegdate()))
-				.username(history.getUsername()).carname(carNumber).dep(history.getDep())
-				.arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
-				.dlvrdate(format.format(history.getDlvrdate())).arrivedate(format.format(history.getArrivedate()))
-				.routes(history.getRoutes()).build();
-
-		return response;
+		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
+		
+		try {
+			HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(format.format(history.getRegdate()))
+					.username(history.getUsername()).carname(carNumber).dep(history.getDep())
+					.arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
+					.dlvrdate(format.format(history.getDlvrdate())).arrivedate(format.format(history.getArrivedate()))
+					.routes(history.getRoutes().toString()).build();
+		
+			return response;
+		} catch (Exception e) {
+			
+			return null;
+		}
 	}
 
 	private HistoryRoutesResponse routesResponse(RoutesTb routes) {
 
-		HistoryRoutesResponse response = HistoryRoutesResponse.builder().hindex(routes.getHindex())
-
+		HistoryRoutesResponse response = HistoryRoutesResponse.builder()/* .hindex(routes.getHindex()) */
 				.detail(routes.getDetail()).build();
 
 		return response;
-	}
-	
-
-	public Header<List<HistoryResponse>> readHistoryTest(Pageable pageable) {
-
-		Page<HistoryTb> historys = historyRepository.findAll(pageable);
-		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
-				.collect(Collectors.toList());
-
-		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
-				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
-				.currentElements(historys.getNumberOfElements()).build();
-
-		return Header.OK(historyList, pagination);
 	}
 
 	public Header<List<HistoryTb>> historyAll() {
@@ -302,30 +283,29 @@ public class HistoryService extends QuerydslRepositorySupport {
 	}
 
 	
-	public double todayHistoryPercent() {
-	
-	//현재시간
-	Calendar nowTime = Calendar.getInstance();
-	
-	//오늘날짜 2019-12-10 00:00:00 
-	Calendar todayDate = Calendar.getInstance();
-	todayDate.set(Calendar.HOUR_OF_DAY, 0 );
-	todayDate.set(Calendar.MINUTE, 0 );
-	todayDate.set(Calendar.SECOND, 0 );
-	
-	//내일날짜 2019-12-11 00:00:00
-	Calendar tomorrowDate = Calendar.getInstance();
-	tomorrowDate.add(Calendar.DAY_OF_MONTH ,1);
-	tomorrowDate.set(Calendar.HOUR_OF_DAY, 0 );
-	tomorrowDate.set(Calendar.MINUTE, 0 );
-	tomorrowDate.set(Calendar.SECOND, 0 );
-	
-	int denominator = historyRepository.findAllByTotalToday(todayDate.getTime(), tomorrowDate.getTime());
-	int molecular = historyRepository.findAllByDoingToday(todayDate.getTime(), tomorrowDate.getTime(), nowTime.getTime());
-	if(molecular == 0)
-		return 0;
-	double result = Math.round(((double)molecular/(double)denominator)*1000) /10.00;
-	return result;
+	public double todayHistoryPercent() {	
+		//현재시간
+		Calendar nowTime = Calendar.getInstance();
+		
+		//오늘날짜 2019-12-10 00:00:00 
+		Calendar todayDate = Calendar.getInstance();
+		todayDate.set(Calendar.HOUR, 0 );
+		todayDate.set(Calendar.MINUTE, 0 );
+		todayDate.set(Calendar.SECOND, 0 );
+		
+		//내일날짜 2019-12-11 00:00:00
+		Calendar tomorrowDate = Calendar.getInstance();
+		tomorrowDate.add(Calendar.DAY_OF_MONTH ,1);
+		tomorrowDate.set(Calendar.HOUR, 0 );
+		tomorrowDate.set(Calendar.MINUTE, 0 );
+		tomorrowDate.set(Calendar.SECOND, 0 );
+		
+		int denominator = historyRepository.findAllByTotalToday(todayDate.getTime(), tomorrowDate.getTime());
+		int molecular = historyRepository.findAllByDoingToday(todayDate.getTime(), tomorrowDate.getTime(), nowTime.getTime());
+		if(molecular == 0)
+			return 0;
+		double result = Math.round(((double)molecular/(double)denominator)*1000) /10.00;
+		return result;
 	}
 
 

@@ -5,19 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Builder
-public class MaprouteRequest {
-
-  private Long branchIndex;
-
-  private String branchName;
-
-  private double branchLat;
-
-  private double branchLng;
-
-  private int branchValue;
+public class RoutesRequest {
+	
+	private String rarvl;
+	private String rdep;
+	private String rdist;
+	private int rfee;
+	private String rtime;
 }

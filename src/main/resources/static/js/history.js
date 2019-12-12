@@ -116,23 +116,26 @@ var detailsModal = $("#detailsModal");
 
 function removeRoutes(history) {
 	let alertBox = confirm('해당 기록을 삭제하시겠습니까?');
-
+	
 	if (alertBox) {
 		$.ajax({
 			url : "/history/removeroutes.do",
-			type : "post",
-			data : JSON.stringify(history),
+			type : "delete",
+			data : JSON.stringify(history.id),
 			contentType : "application/json; charset=UTF-8",
 			success : function(res) {
 				alert("삭제 되었습니다.");
 				$("#detailsModal").modal("hide");
-				getHistory(0);
+				
+				let tabId = sessionStorage.getItem("tabId");
+				getHistory(0,tabId);
 			}
 		})
 	}
 }
 
-function getRoutes(routes) {
+function getRoutes(routes) {;
+	
 	$.ajax({
 		url : "/history/getroutes.do",
 		type : "get",
@@ -208,3 +211,50 @@ function getRoutes(routes) {
 		}
 	})
 }
+
+
+//-----------------------------새창 O
+//$("#printBtn").click(function () {
+//    let $container = $("#print_page").clone()    // 프린트 할 특정 영역 복사
+//    let cssText = ""                            // 스타일 복사
+//    for (const node of $("style")) {
+//        cssText += node.innerHTML
+//    }
+//    /** 팝업 */
+//    let innerHtml = $container[0].innerHTML
+//    let popupWindow = window.open("", "_blank", "width=700,height=800")
+//    popupWindow.document.write("<!DOCTYPE html>"+
+//      "<html>"+
+//        "<head>"+
+//        "<style>"+cssText+"</style>"+
+//        "</head>"+
+//        "<body>"+innerHtml+"</body>"+
+//      "</html>")
+//   
+//    popupWindow.document.close()
+//    popupWindow.focus()
+//
+//    /** 1초 지연 */
+//    setTimeout(() => {
+//        popupWindow.print()         // 팝업의 프린트 도구 시작
+//        popupWindow.close()         // 프린트 도구 닫혔을 경우 팝업 닫기
+//    }, 1000)
+//})
+
+//-----------------------------새창 x
+//var initBody;
+//function beforePrint()
+//{
+//    initBody = document.body.innerHTML;
+//    document.body.innerHTML = print_page.innerHTML;
+//}
+//function afterPrint()
+//{
+//    document.body.innerHTML = initBody;
+//}
+//function pageprint()
+//{
+//    window.onbeforeprint = beforePrint;
+//    window.onafterprint = afterPrint;
+//    window.print();
+//}
