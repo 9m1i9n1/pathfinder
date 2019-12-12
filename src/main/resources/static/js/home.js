@@ -217,17 +217,18 @@ function todayHistory() {
 }
 
 function todayHistoryPercent() {
-  $.ajax({
-    url: "/home/todayHistoryPercent",
-    type: "get",
-    success: function(res) {
-      if (res !== 0) {
-        $("#todayPercent").html(res + "<small>%</small>");
-      } else {
-        $("#todayPercent").html(" -");
-      }
-    }
-  });
+	$.ajax({
+		url : "/home/todayHistoryPercent",
+		type : "get",
+		success : function(res) {
+			if (res !== -1) {
+				$("#todayPercent").html(res + '<small>%</small>');
+			} else {
+				$("#todayPercent").html(' -');
+			}
+			
+		}
+	});
 }
 
 function branchCount() {
