@@ -45,4 +45,6 @@ public class HistoryTb {
 	private LocalDateTime arrivedate;
 
 	private ObjectId routes;
+
+	private int stat;
 }

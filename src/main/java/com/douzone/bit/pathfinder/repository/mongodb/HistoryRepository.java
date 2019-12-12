@@ -20,6 +20,11 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	// 검색 페이지
 	List<HistoryTb> findByUsernameLike(String username, Pageable pageable);
 
+	// 검색 페이지
+	@Query(value = "{'username' : ?0}", sort = "{'regdate': 1}")
+	List<HistoryTb> findAllByUsername(String username);
+
+	// findTop5ByIngByOrderByArrivedateDesc
 	// 전체 갯수
 	@Query(value = "{}", count = true)
 	Long findAllCount();

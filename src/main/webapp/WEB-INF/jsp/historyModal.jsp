@@ -82,6 +82,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" id='printBtn'>인쇄</button>
 				<button class="btn btn-secondary" type="button" id="deleteBtn">삭제</button>
