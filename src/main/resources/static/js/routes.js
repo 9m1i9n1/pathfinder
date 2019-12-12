@@ -29,6 +29,16 @@ L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+var LeafIcon = L.Icon.extend({
+  options: {
+    iconSize: [38, 95],
+    shadowSize: [50, 64],
+    iconAnchor: [22, 94],
+    shadowAnchor: [4, 62],
+    popupAnchor: [-3, -76]
+  }
+});
+
 var routeControl = L.Routing.control({
   serviceUrl: "http://218.39.221.89:5000/route/v1",
   routeWhileDragging: false,
@@ -53,6 +63,7 @@ var routeControl = L.Routing.control({
 //! 변수구간 ==========================
 let sortList;
 let routeList;
+let markerImg;
 
 //! 화면 Draw 구간 ====================
 const loadCalendar = res => {
@@ -210,9 +221,10 @@ const drawTimeline = routeInfo => {
 // 출발지 선택시 Event
 $("#depSelect").on("select2:select", e => {
   let selectData = e.params.data;
+  let icon = new LeafIcon({ iconUrl: "/static/img/marker/start.png" });
 
   markerGroup.clearLayers();
-  markerAdd(selectData);
+  markerAdd(selectData, icon);
 
   carlist(depCarlist, selectData.areaIndex);
 
@@ -250,8 +262,10 @@ $("#branchSelect").on("select2:unselect", e => {
 let markerGroup = L.layerGroup().addTo(map);
 
 // 마커 추가
-const markerAdd = selectData => {
-  let marker = L.marker([selectData.branchLat, selectData.branchLng]);
+const markerAdd = (selectData, icon) => {
+  let marker = L.marker([selectData.branchLat, selectData.branchLng], {
+    icon: icon
+  });
   marker.id = selectData.branchIndex;
   marker.name = selectData.branchName;
   marker.cost = selectData.branchValue;

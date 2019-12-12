@@ -14,8 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.repository.support.QuerydslRepositorySupport;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -120,100 +118,36 @@ public class HistoryService {
 
 	// TODO 이부분 코드 문제있음.
 	public Header<List<HistoryResponse>> readRecentlyHistoryUseHome() {
-
 		SecurityContext securityContext = SecurityContextHolder.getContext();
-
 		String username = securityContext.getAuthentication().getName();
-		LocalDateTime currentDate = LocalDateTime.now();
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
-		Page<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
-		if (historys.getTotalElements() == 0) {
+		List<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
+
+		// 이부분 수정해야함 null값 받는지 모르겠음.
+		if (historys == null) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
 
-		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
+		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponseUseHome(history))
 				.collect(Collectors.toList());
-
-		System.out.println("#historys");
-		System.out.println(historys);
-
-		if (historyList == null) {
-			return Header.ERROR("에러가 발생하였습니다.");
-		}
-
-		// for (int i = 0; i < historyList.size(); i++) {
-		// try {
-		// Date start = new SimpleDateFormat("yyyy-MM-dd
-		// HH:mm:ss").parse(historyList.get(i).getDlvrdate());// 출발
-		// Date end = new SimpleDateFormat("yyyy-MM-dd
-		// HH:mm:ss").parse(historyList.get(i).getArrivedate());// 도착
-
-		// // end가 currnt보다 느림
-		// if (currentTime.compareTo(end) > 0) {
-		// historyList.get(i).setStat(-1);
-		// } else if (currentTime.compareTo(start) > 0) {
-		// historyList.get(i).setStat(0);
-		// } else {
-		// historyList.get(i).setStat(1);
-		// }
-		// } catch (ParseException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
-
-		if (historys.getTotalElements() == 0) {
-			return Header.ERROR("조회 결과가 없습니다.");
-		}
 
 		return Header.OK(historyList);
 	}
 
 	public Header<List<HistoryResponse>> readTodayHistoryUseHome() {
-
-		SecurityContext securityContext = SecurityContextHolder.getContext();
-
-		String username = securityContext.getAuthentication().getName();
 		LocalDateTime currentDate = LocalDateTime.now();
 
-		Pageable pageable = PageRequest.of(0, 5, Sort.by("arrivedate").descending());
-		Page<HistoryTb> historys = historyRepository.findAllByIng(pageable, currentDate);
-		if (historys.getTotalElements() == 0) {
+		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
+		List<HistoryTb> historys = historyRepository.findAllByIngList(pageable, currentDate);
+
+		// 이부분 수정해야함 null값 받는지 모르겠음.
+		if (historys == null) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
 
-		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
+		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponseUseHome(history))
 				.collect(Collectors.toList());
-
-		if (historyList == null) {
-			return Header.ERROR("에러가 발생하였습니다.");
-		}
-
-		// for (int i = 0; i < historyList.size(); i++) {
-		// try {
-		// Date start = new SimpleDateFormat("yyyy-MM-dd
-		// HH:mm:ss").parse(historyList.get(i).getDlvrdate());// 출발
-		// Date end = new SimpleDateFormat("yyyy-MM-dd
-		// HH:mm:ss").parse(historyList.get(i).getArrivedate());// 도착
-
-		// // end가 currnt보다 느림
-		// if (currentTime.compareTo(end) > 0) {
-		// historyList.get(i).setStat(-1);
-		// } else if (currentTime.compareTo(start) > 0) {
-		// historyList.get(i).setStat(0);
-		// } else {
-		// historyList.get(i).setStat(1);
-		// }
-		// } catch (ParseException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
-
-		if (historys.getTotalElements() == 0) {
-			return Header.ERROR("조회 결과가 없습니다.");
-		}
 
 		return Header.OK(historyList);
 	}
@@ -241,7 +175,6 @@ public class HistoryService {
 
 		// SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
 		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
 
 		HistoryResponse response = HistoryResponse.builder().id(history.getId())
@@ -249,6 +182,30 @@ public class HistoryService {
 				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(history.getDlvrdate().format(formatter)).arrivedate(history.getArrivedate().format(formatter))
 				.routes(history.getRoutes().toString()).build();
+
+		return response;
+	}
+
+	private HistoryResponse historyResponseUseHome(HistoryTb history) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
+
+		LocalDateTime currentDate = LocalDateTime.now();
+		LocalDateTime start = history.getDlvrdate();// 출발
+		LocalDateTime end = history.getArrivedate();// 도착
+
+		int stat = 0;
+		if (currentDate.isBefore(start)) {
+			stat = 1;
+		} else if (currentDate.isAfter(end)) {
+			stat = -1;
+		}
+
+		HistoryResponse response = HistoryResponse.builder().id(history.getId())
+				.regdate(history.getRegdate().format(formatter)).username(history.getUsername()).carname(carNumber)
+				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
+				.dlvrdate(history.getDlvrdate().format(formatter)).arrivedate(history.getArrivedate().format(formatter))
+				.stat(stat).routes(history.getRoutes().toString()).build();
 
 		return response;
 	}

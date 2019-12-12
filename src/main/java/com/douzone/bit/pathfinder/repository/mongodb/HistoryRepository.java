@@ -18,7 +18,7 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	Object findByRoutes(ObjectId routes);
 
 	// 검색 페이지
-	Page<HistoryTb> findByUsernameLike(String username, Pageable pageable);
+	List<HistoryTb> findByUsernameLike(String username, Pageable pageable);
 
 	// 전체 갯수
 	@Query(value = "{}", count = true)
@@ -31,7 +31,7 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	// 오늘거배송된 갯수
 	@Query(value = "{$and : [{$and :[{'arrivedate' : {'$gte' : ?0} },{'arrivedate' :{'$lte' : ?1 } }]}, "
 			+ "{'arrivedate' : {'$lte' : ?2} }]}", count = true)
-	Integer findAllByDoingToday(LocalDateTime LocalTime1, LocalDateTime LocalTime2, LocalDateTime LocalTime3);
+	Integer findAllByDoingToday(LocalDateTime LocalTime1, LocalDateTime LocalfindAllByIngTime2, LocalDateTime LocalTime3);
 
 	// 전체 검색
 	@Query("{'arrivedate' : { '$lt' : ?0 }}")
@@ -39,6 +39,9 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 
 	@Query("{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 }}]}")
 	Page<HistoryTb> findAllByIng(Pageable pageable, LocalDateTime LocalTime);
+
+	@Query("{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 }}]}")
+	List<HistoryTb> findAllByIngList(Pageable pageable, LocalDateTime LocalTime);
 
 	@Query("{'dlvrdate' : { '$gt' : ?0 }}")
 	Page<HistoryTb> findAllByWill(Pageable pageable, LocalDateTime LocalTime);
