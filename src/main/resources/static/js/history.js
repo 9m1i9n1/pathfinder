@@ -212,49 +212,19 @@ function getRoutes(routes) {;
 	})
 }
 
-
-//-----------------------------새창 O
-//$("#printBtn").click(function () {
-//    let $container = $("#print_page").clone()    // 프린트 할 특정 영역 복사
-//    let cssText = ""                            // 스타일 복사
-//    for (const node of $("style")) {
-//        cssText += node.innerHTML
-//    }
-//    /** 팝업 */
-//    let innerHtml = $container[0].innerHTML
-//    let popupWindow = window.open("", "_blank", "width=700,height=800")
-//    popupWindow.document.write("<!DOCTYPE html>"+
-//      "<html>"+
-//        "<head>"+
-//        "<style>"+cssText+"</style>"+
-//        "</head>"+
-//        "<body>"+innerHtml+"</body>"+
-//      "</html>")
-//   
-//    popupWindow.document.close()
-//    popupWindow.focus()
-//
-//    /** 1초 지연 */
-//    setTimeout(() => {
-//        popupWindow.print()         // 팝업의 프린트 도구 시작
-//        popupWindow.close()         // 프린트 도구 닫혔을 경우 팝업 닫기
-//    }, 1000)
-//})
-
-//-----------------------------새창 x
-//var initBody;
-//function beforePrint()
-//{
-//    initBody = document.body.innerHTML;
-//    document.body.innerHTML = print_page.innerHTML;
-//}
-//function afterPrint()
-//{
-//    document.body.innerHTML = initBody;
-//}
-//function pageprint()
-//{
-//    window.onbeforeprint = beforePrint;
-//    window.onafterprint = afterPrint;
-//    window.print();
-//}
+$("#printBtn").on('click', function () {
+	let content = $("#print_page").html();
+	let myWindow = window.open('', 'Print', 'height=600, width=800');
+	
+	myWindow.document.write('<html><head><title>Print</title>');
+	myWindow.document.write('');
+	myWindow.document.write('</head><body>');
+	myWindow.document.write(content);	
+	myWindow.document.write('</body>');
+	myWindow.document.write('</html>');
+	
+	myWindow.document.close();
+	myWindow.focus();
+	myWindow.print();
+	myWindow.close();
+});
