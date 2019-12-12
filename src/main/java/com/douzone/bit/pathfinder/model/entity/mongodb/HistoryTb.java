@@ -1,11 +1,13 @@
 package com.douzone.bit.pathfinder.model.entity.mongodb;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Id;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,8 +26,7 @@ public class HistoryTb {
 	@Id
 	private ObjectId id;
 
-	@CreatedDate
-	private Date regdate;
+	private LocalDateTime regdate;
 
 	private String username;
 
@@ -39,9 +40,9 @@ public class HistoryTb {
 
 	private Integer fee;
 
-	private Date dlvrdate;
+	private LocalDateTime dlvrdate;
 
-	private Date arrivedate;
+	private LocalDateTime arrivedate;
 
 	private ObjectId routes;
 }
