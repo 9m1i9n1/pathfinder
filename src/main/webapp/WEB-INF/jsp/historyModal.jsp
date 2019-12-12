@@ -79,7 +79,6 @@
 					<div id="fee"></div>
 				</div>
 
-
 			</div>
 
 			<div class="modal-footer">

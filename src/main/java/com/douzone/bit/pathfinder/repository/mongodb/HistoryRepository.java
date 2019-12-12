@@ -21,6 +21,10 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	// 검색 페이지
 	Page<HistoryTb> findByUsernameLike(String username, Pageable pageable);
 
+	// 검색 페이지
+	@Query(value = "{'username' : ?0}", sort = "{'regdate': 1}")
+	List<HistoryTb> findAllByUsername(String username);
+		//findTop5ByIngByOrderByArrivedateDesc
 	// 전체 갯수
 	@Query(value = "{}", count = true)
 	Long findAllCount();
@@ -41,6 +45,10 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	@Query("{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 }}]}")
 	Page<HistoryTb> findAllByIng(Pageable pageable, LocalDateTime LocalTime);
 
+	@Query(value = "{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 }}]}", sort = "{'arrivedate': 1}")
+	List<HistoryTb> findAllByIng(LocalDateTime LocalTime);
+
+	
 	@Query("{'dlvrdate' : { '$gt' : ?0 }}")
 	Page<HistoryTb> findAllByWill(Pageable pageable, LocalDateTime LocalTime);
 
