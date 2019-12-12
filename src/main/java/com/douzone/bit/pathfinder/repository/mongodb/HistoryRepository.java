@@ -14,23 +14,13 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.lang.Long;
 
 public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 
 	HistoryTb findById(ObjectId id);
 
 	Object findByRoutes(ObjectId routes);
-
-	// 검색 페이지
-	Page<HistoryTb> findByCarnameLike(String carname, Pageable pageable);
-
-	Page<HistoryTb> findByRegdate(String regdate, Pageable pageable);
-
-	Page<HistoryTb> findByUsernameLike(String username, Pageable pageable);
-
-	Page<HistoryTb> findByDep(String dep, Pageable pageable);
-
-	Page<HistoryTb> findByArvl(String arvl, Pageable pageable);
 
 	// 전체 갯수
 	@Query(value = "{}", count = true)
