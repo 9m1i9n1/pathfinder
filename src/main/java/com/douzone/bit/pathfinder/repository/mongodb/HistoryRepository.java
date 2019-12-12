@@ -22,6 +22,9 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 
 	Object findByRoutes(ObjectId routes);
 
+	// 검색 페이지
+	Page<HistoryTb> findByUsernameLike(String username, Pageable pageable);
+
 	// 전체 갯수
 	@Query(value = "{}", count = true)
 	Long findAllCount();
