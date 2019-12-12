@@ -120,6 +120,17 @@ const branchlist = handleFunc => {
 };
 
 // 차량 선택 Draw
+const carlist = (handleFunc, areaIndex) => {
+  $.ajax({
+    url: "/maproute/carLoading",
+    data: { areaIndex },
+    type: "get"
+  }).then(res => {
+    handleFunc(res);
+  });
+};
+
+// 차량 선택 Draw
 const depCarlist = res => {
   res = res.data;
 
