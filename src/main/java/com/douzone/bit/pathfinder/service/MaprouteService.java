@@ -40,7 +40,7 @@ public class MaprouteService {
 	}
 
 	public Header<List<String>> getDate(int carIndex) {
-		SimpleDateFormat format = new SimpleDateFormat("yyy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		List<String> disableDate = new ArrayList<String>();
 
