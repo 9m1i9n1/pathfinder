@@ -353,7 +353,7 @@ const drawTimeline = routeInfo => {
 
   let str = "<ul>";
   $.each(routeInfo.routes, function(key, value) {
-    str += "<li><span></span>";
+    str += "<li>";
     str += "<div>";
     str += `<div class="title">${value.rdep} → ${value.rarvl}</div>`;
     str += `<div class="info">${value.rdist}km</div>`;

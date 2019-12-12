@@ -3,6 +3,7 @@ package com.douzone.bit.pathfinder.service;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class MaprouteService {
 	// route정보 Insert
 	public Header<String> insertPlan(MaprouteInsertRequest routeList) {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 		// RoutesTb도 Exception 처리 해야함.
 		RoutesTb routesTb = RoutesTb.builder().detail(routeList.getRoutes()).build();
@@ -59,12 +60,15 @@ public class MaprouteService {
 
 		if (routesTb != null) {
 			try {
-				HistoryTb historyTb = HistoryTb.builder().username(userName).carIndex(routeList.getCarIndex())
-						.dep(routeList.getDep()).arvl(routeList.getArvl()).dist(routeList.getDist()).fee(routeList.getFee())
-						.dlvrdate(formatter.parse(routeList.getDlvrdate())).arrivedate(formatter.parse(routeList.getArrivedate()))
-						.routes(routesTb.getId()).build();
+				HistoryTb history = HistoryTb.builder().regdate(LocalDateTime.now()).username(userName)
+						.carIndex(routeList.getCarIndex()).dep(routeList.getDep()).arvl(routeList.getArvl())
+						.dist(routeList.getDist()).fee(routeList.getFee())
+						.dlvrdate(LocalDateTime.parse(routeList.getDlvrdate(), formatter))
+						.arrivedate(LocalDateTime.parse(routeList.getArrivedate(), formatter)).routes(routesTb.getId()).build();
 
-				historyRepository.save(historyTb);
+				System.out.println("#historytb" + history);
+
+				historyRepository.save(history);
 			} catch (Exception e) {
 				routesRepository.deleteById(routesTb.getId().toString());
 
@@ -80,19 +84,20 @@ public class MaprouteService {
 		LocalDateTime startDate = LocalDate.now().atTime(0, 0);
 		LocalDateTime endDate = startDate.plusMonths(3);
 
-		List<HistoryTb> historyList = historyRepository.findAllByCarnameAndDate(carIndex, DateUtil.asDate(startDate),
-				DateUtil.asDate(endDate));
+		List<HistoryTb> historyList = historyRepository.findAllByCarnameAndDate(carIndex, startDate, endDate);
 
 		List<String> disableDates = new ArrayList<>();
 
 		for (HistoryTb history : historyList) {
-			LocalDate start = DateUtil.asLocalDate(history.getDlvrdate());
-			LocalDate end = DateUtil.asLocalDate(history.getArrivedate());
+			LocalDateTime start = history.getDlvrdate();
+			LocalDateTime end = history.getArrivedate();
 
-			for (LocalDate d = start; !d.isAfter(end); d = d.plusDays(1)) {
+			for (LocalDateTime d = start; !d.isAfter(end); d = d.plusDays(1)) {
 				disableDates.add(d.toString());
 			}
 		}
+
+		System.out.println(disableDates);
 
 		return Header.OK(disableDates);
 	}
