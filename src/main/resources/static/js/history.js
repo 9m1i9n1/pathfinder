@@ -211,3 +211,20 @@ function getRoutes(routes) {;
 		}
 	})
 }
+
+$("#printBtn").on('click', function () {
+	let domClone = document.getElementById("printThis").cloneNode(true);
+	let $printSection = document.getElementById("printSection");
+	
+	if (!$printSection) {
+		$printSection = document.createElement("div");
+		
+		$printSection.id = "printSection";
+		
+		document.body.appendChild($printSection);
+	}
+	
+	$printSection.innerHTML = "";
+	$printSection.appendChild(domClone);
+	window.print();
+});
