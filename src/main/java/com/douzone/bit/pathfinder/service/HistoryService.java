@@ -1,13 +1,8 @@
 package com.douzone.bit.pathfinder.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,88 +26,75 @@ import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.response.HistoryResponse;
 import com.douzone.bit.pathfinder.model.network.response.HistoryRoutesResponse;
+import com.douzone.bit.pathfinder.repository.CarRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 
 @Service
 @Transactional
-public class HistoryService extends QuerydslRepositorySupport {
-
-	@Autowired
-	private MongoOperations mongoOperations;
-
-	public HistoryService(MongoOperations operations) {
-		super(operations);
-		// TODO Auto-generated constructor stub
-	}
-
+public class HistoryService {
 	@Autowired
 	private HistoryRepository historyRepository;
 
 	@Autowired
 	private RoutesRepository routesRepository;
 
+	@Autowired
+	private CarRepository carRepository;
+
 	public Header<List<HistoryResponse>> readHistory(int page, String id, boolean myhistory, String keyword) {
 		Pageable pageable;
 		Page<HistoryTb> historys = null;
 		String userName = null;
-		Date date = null;
+		LocalDateTime date = null;
 		if (myhistory) {
 			userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		}
 
 		try {
 			if (keyword != null) {
-				SimpleDateFormat transDate = new SimpleDateFormat("yyyy-MM-dd");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-				date = transDate.parse(keyword);
+				date = LocalDateTime.parse(keyword, formatter);
 			}
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		LocalDateTime currentDate = LocalDateTime.now();
 
 		switch (id) {
 		case "will":
 			pageable = PageRequest.of(page, 10, Sort.by("dlvrdate").ascending());
 			if (keyword == null) {
-				historys = (myhistory)
-						? historyRepository.findAllByWillAndUsername(pageable, Calendar.getInstance().getTime(),
-								userName)
-						: historyRepository.findAllByWill(pageable, Calendar.getInstance().getTime());
+				historys = (myhistory) ? historyRepository.findAllByWillAndUsername(pageable, currentDate, userName)
+						: historyRepository.findAllByWill(pageable, currentDate);
 			} else {
 				historys = (myhistory)
-						? historyRepository.findAllByWillAndUsernameAndDate(pageable, Calendar.getInstance().getTime(),
-								userName, date)
-						: historyRepository.findAllByWillAndDate(pageable, Calendar.getInstance().getTime(), date);
+						? historyRepository.findAllByWillAndUsernameAndDate(pageable, currentDate, userName, date)
+						: historyRepository.findAllByWillAndDate(pageable, currentDate, date);
 			}
 
 			break;
 		case "ing":
 			pageable = PageRequest.of(page, 10, Sort.by("arrivedate").ascending());
 			if (keyword == null) {
-				historys = (myhistory)
-						? historyRepository.findAllByIngAndUsername(pageable, Calendar.getInstance().getTime(),
-								userName)
-						: historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
+				historys = (myhistory) ? historyRepository.findAllByIngAndUsername(pageable, currentDate, userName)
+						: historyRepository.findAllByIng(pageable, currentDate);
 			} else {
-				historys = (myhistory)
-						? historyRepository.findAllByIngAndUsernameAndDate(pageable, Calendar.getInstance().getTime(),
-								userName, date)
-						: historyRepository.findAllByIngAndDate(pageable, Calendar.getInstance().getTime(), date);
+				historys = (myhistory) ? historyRepository.findAllByIngAndUsernameAndDate(pageable, currentDate, userName, date)
+						: historyRepository.findAllByIngAndDate(pageable, currentDate, date);
 			}
 
 			break;
 		case "pp":
 			pageable = PageRequest.of(page, 10, Sort.by("arrivedate").descending());
 			if (keyword == null) {
-				historys = (myhistory)
-						? historyRepository.findAllByPpAndUsername(pageable, Calendar.getInstance().getTime(), userName)
-						: historyRepository.findAllByPp(pageable, Calendar.getInstance().getTime() );
+				historys = (myhistory) ? historyRepository.findAllByPpAndUsername(pageable, currentDate, userName)
+						: historyRepository.findAllByPp(pageable, currentDate);
 			} else {
-				historys = (myhistory)
-						? historyRepository.findAllByPpAndUsernameAndDate(pageable, Calendar.getInstance().getTime(),
-								userName, date)
-						: historyRepository.findAllByPpAndDate(pageable, Calendar.getInstance().getTime(), date);
+				historys = (myhistory) ? historyRepository.findAllByPpAndUsernameAndDate(pageable, currentDate, userName, date)
+						: historyRepository.findAllByPpAndDate(pageable, currentDate, date);
 			}
 
 			break;
@@ -124,6 +106,10 @@ public class HistoryService extends QuerydslRepositorySupport {
 
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
+
+		if (historyList == null) {
+			return Header.ERROR("에러가 발생하였습니다.");
+		}
 
 		Pagination pagination = Pagination.builder().totalPages(historys.getTotalPages())
 				.totalElements(historys.getTotalElements()).currentPage(historys.getNumber())
@@ -132,41 +118,55 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK(historyList, pagination);
 	}
 
+	// TODO 이부분 코드 문제있음.
 	public Header<List<HistoryResponse>> readRecentlyHistoryUseHome() {
 
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 
 		String username = securityContext.getAuthentication().getName();
-		Date currentTime = Calendar.getInstance().getTime();
+		LocalDateTime currentDate = LocalDateTime.now();
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
-		System.out.println("PageRequest - " + pageable);
 		Page<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
-
-		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
-				.collect(Collectors.toList());
-		
-		for (int i = 0; i < historyList.size(); i++) {
-			try {
-				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(historyList.get(i).getDlvrdate());// 출발
-				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(historyList.get(i).getArrivedate());// 도착
-
-				// end가 currnt보다 느림
-				if (currentTime.compareTo(end) > 0){
-					historyList.get(i).setStat(-1);
-				} else if (currentTime.compareTo(start) > 0){
-					historyList.get(i).setStat(0);
-				} else {
-					historyList.get(i).setStat(1);				
-				}
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		if (historys.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
+
+		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
+				.collect(Collectors.toList());
+
+		System.out.println("#historys");
+		System.out.println(historys);
+
+		if (historyList == null) {
+			return Header.ERROR("에러가 발생하였습니다.");
+		}
+
+		// for (int i = 0; i < historyList.size(); i++) {
+		// try {
+		// Date start = new SimpleDateFormat("yyyy-MM-dd
+		// HH:mm:ss").parse(historyList.get(i).getDlvrdate());// 출발
+		// Date end = new SimpleDateFormat("yyyy-MM-dd
+		// HH:mm:ss").parse(historyList.get(i).getArrivedate());// 도착
+
+		// // end가 currnt보다 느림
+		// if (currentTime.compareTo(end) > 0) {
+		// historyList.get(i).setStat(-1);
+		// } else if (currentTime.compareTo(start) > 0) {
+		// historyList.get(i).setStat(0);
+		// } else {
+		// historyList.get(i).setStat(1);
+		// }
+		// } catch (ParseException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
+
 		return Header.OK(historyList);
 	}
 
@@ -175,38 +175,46 @@ public class HistoryService extends QuerydslRepositorySupport {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 
 		String username = securityContext.getAuthentication().getName();
+		LocalDateTime currentDate = LocalDateTime.now();
 
-		Date currentTime = Calendar.getInstance().getTime();
-		
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("arrivedate").descending());
-		Page<HistoryTb> historys = historyRepository.findAllByIng(pageable, Calendar.getInstance().getTime());
+		Page<HistoryTb> historys = historyRepository.findAllByIng(pageable, currentDate);
+		if (historys.getTotalElements() == 0) {
+			return Header.ERROR("조회 결과가 없습니다.");
+		}
 
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponse(history))
 				.collect(Collectors.toList());
 
-		for (int i = 0; i < historyList.size(); i++) {
-			try {
-				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(historyList.get(i).getDlvrdate());// 출발
-				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(historyList.get(i).getArrivedate());// 도착
-
-				// end가 currnt보다 느림
-				if (currentTime.compareTo(end) > 0){
-					historyList.get(i).setStat(-1);
-				} else if (currentTime.compareTo(start) > 0){
-					historyList.get(i).setStat(0);
-				} else {
-					historyList.get(i).setStat(1);				
-				}
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+		if (historyList == null) {
+			return Header.ERROR("에러가 발생하였습니다.");
 		}
+
+		// for (int i = 0; i < historyList.size(); i++) {
+		// try {
+		// Date start = new SimpleDateFormat("yyyy-MM-dd
+		// HH:mm:ss").parse(historyList.get(i).getDlvrdate());// 출발
+		// Date end = new SimpleDateFormat("yyyy-MM-dd
+		// HH:mm:ss").parse(historyList.get(i).getArrivedate());// 도착
+
+		// // end가 currnt보다 느림
+		// if (currentTime.compareTo(end) > 0) {
+		// historyList.get(i).setStat(-1);
+		// } else if (currentTime.compareTo(start) > 0) {
+		// historyList.get(i).setStat(0);
+		// } else {
+		// historyList.get(i).setStat(1);
+		// }
+		// } catch (ParseException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+
 		if (historys.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
-		
+
 		return Header.OK(historyList);
 	}
 
@@ -219,53 +227,29 @@ public class HistoryService extends QuerydslRepositorySupport {
 		return Header.OK(routes);
 	}
 
-	//TODO hindex로 제거하는게 아니라 부모가 가지고 있던 Routes의 Index 값으로 삭제 구현
+	// TODO hindex로 제거하는게 아니라 부모가 가지고 있던 Routes의 Index 값으로 삭제 구현
 	public Header<String> removeRoutes(ObjectId id) {
 
 		HistoryTb history = historyRepository.findById(id);
 		historyRepository.deleteById(id.toString());
 		routesRepository.deleteById(history.getRoutes().toString());
-		
+
 		return Header.OK();
-	}
-
-	public ArrayList<String> calcDate(String startDate, String EndDate) {
-		String DATE_PATTERN = "yyyy-MM-dd";
-		ArrayList<String> dates = new ArrayList<String>();
-
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-
-			Date start = sdf.parse(startDate);
-			Date end = sdf.parse(EndDate);
-
-			Date currentDate = start;
-
-			while (currentDate.compareTo(end) <= 0) {
-				dates.add(sdf.format(currentDate));
-				Calendar c = Calendar.getInstance();
-				c.setTime(currentDate);
-				c.add(Calendar.DAY_OF_MONTH, 1);
-				currentDate = c.getTime();
-			}
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return dates;
 	}
 
 	private HistoryResponse historyResponse(HistoryTb history) {
 
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-		HistoryResponse response = HistoryResponse.builder().id(history.getId()).regdate(format.format(history.getRegdate()))
-				.username(history.getUsername()).carname(history.getCarname()).dep(history.getDep())
-				.arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
-				.dlvrdate(format.format(history.getDlvrdate())).arrivedate(format.format(history.getArrivedate()))
+		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
+
+		HistoryResponse response = HistoryResponse.builder().id(history.getId())
+				.regdate(history.getRegdate().format(formatter)).username(history.getUsername()).carname(carNumber)
+				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
+				.dlvrdate(history.getDlvrdate().format(formatter)).arrivedate(history.getArrivedate().format(formatter))
 				.routes(history.getRoutes().toString()).build();
-
+				
 		return response;
 	}
 
@@ -278,41 +262,24 @@ public class HistoryService extends QuerydslRepositorySupport {
 	}
 
 	public Header<List<HistoryTb>> historyAll() {
-		System.out.println(historyRepository.findAll());
 		return Header.OK(historyRepository.findAll());
 	}
 
-	
 	public double todayHistoryPercent() {
-	
-	//현재시간
-	Calendar nowTime = Calendar.getInstance();
-	
-	//오늘날짜 2019-12-10 00:00:00 
-	Calendar todayDate = Calendar.getInstance();
-	todayDate.set(Calendar.HOUR, 0 );
-	todayDate.set(Calendar.MINUTE, 0 );
-	todayDate.set(Calendar.SECOND, 0 );
-	
-	//내일날짜 2019-12-11 00:00:00
-	Calendar tomorrowDate = Calendar.getInstance();
-	tomorrowDate.add(Calendar.DAY_OF_MONTH ,1);
-	tomorrowDate.set(Calendar.HOUR, 0 );
-	tomorrowDate.set(Calendar.MINUTE, 0 );
-	tomorrowDate.set(Calendar.SECOND, 0 );
-	
-	System.out.println("현재시간 : " + nowTime.getTime());
-	System.out.println("오늘날짜" +todayDate.getTime());
-	System.out.println("내일날짜" +tomorrowDate.getTime());
-	
-	int denominator = historyRepository.findAllByTotalToday(todayDate.getTime(), tomorrowDate.getTime());
-	int molecular = historyRepository.findAllByDoingToday(todayDate.getTime(), tomorrowDate.getTime(), nowTime.getTime());
-	if(molecular == 0)
-		return -1;
-	
-	double result = Math.round(((double)molecular/(double)denominator)*1000) /10.00;
-	return result;
-	}
 
+		// 현재시간
+		LocalDateTime currentDate = LocalDateTime.now();
+
+		LocalDateTime todayDate = LocalDate.now().atTime(0, 0);
+		LocalDateTime tomorrowDate = todayDate.plusDays(1);
+
+		int denominator = historyRepository.findAllByTotalToday(todayDate, tomorrowDate);
+		int molecular = historyRepository.findAllByDoingToday(todayDate, tomorrowDate, currentDate);
+
+		if (molecular == 0)
+			return 0;
+		double result = Math.round(((double) molecular / (double) denominator) * 1000) / 10.00;
+		return result;
+	}
 
 }

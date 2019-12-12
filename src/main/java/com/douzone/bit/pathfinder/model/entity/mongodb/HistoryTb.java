@@ -1,10 +1,14 @@
 package com.douzone.bit.pathfinder.model.entity.mongodb;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Id;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -16,18 +20,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-@Document(collection="history")
+@Document(collection = "history")
 public class HistoryTb {
+
 	@Id
 	private ObjectId id;
-	private Date regdate;
+
+	private LocalDateTime regdate;
+
 	private String username;
-	private Long carname;
+
+	private Long carIndex;
+
 	private String dep;
+
 	private String arvl;
-	private String dist;
-	private String fee;
-	private Date dlvrdate;
-	private Date arrivedate;
+
+	private Double dist;
+
+	private Integer fee;
+
+	private LocalDateTime dlvrdate;
+
+	private LocalDateTime arrivedate;
+
 	private ObjectId routes;
 }

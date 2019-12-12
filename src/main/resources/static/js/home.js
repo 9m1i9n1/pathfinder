@@ -172,7 +172,8 @@ function todayHistory() {
 		type : "get",
 		success : function(res) {
 			var str = "";
-			
+
+			if (res.resultCode !== "ERROR") {
 			$.each(
 					res.data,
 					function(key, value) {
@@ -191,7 +192,16 @@ function todayHistory() {
 						str += "<td>" + value.carname + "</td>";
 						str += "</tr>";
 					});
-
+			} else {
+				$("#tableListBody").html("");
+				$("#page").html("");
+				
+				str += `<tr class="tr-shadow">`;
+				str += `<td colspan="8">`;
+				str += `${res.description}`;
+				str += `</td>`;
+				str += `</tr>`;
+			}
 				$("#schedule").html(str);
 		}
 	})

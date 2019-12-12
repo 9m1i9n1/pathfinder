@@ -18,11 +18,11 @@ public class HistoryResponse {
 	private ObjectId id;
 	private String regdate;
 	private String username;
-	private Long carname;
+	private String carname;
 	private String dep;
 	private String arvl;
-	private String dist;
-	private String fee;
+	private Double dist;
+	private Integer fee;
 	private String dlvrdate;
 	private String arrivedate;
 	private String routes;

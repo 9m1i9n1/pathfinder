@@ -67,17 +67,19 @@
   font-size: 15px;
 }
 
+.tmline div .info {
+  font-weight: 300;
+  margin-top: 5px;
+}
+
 .tmline div .type {
   font-weight: 400;
+  margin-top: 3px;
   /* font-size: 13px; */
 }
 
-.tmline div .info {
-  font-weight: 300;
-}
-
 .tmline div > div {
-  margin-top: 5px;
+  /* margin-top: 5px; */
 }
 
 .tmline span.number {
