@@ -35,14 +35,5 @@ public class RouteInsertRequest {
 
   private Double dist;
 
-<<<<<<< HEAD:src/main/java/com/douzone/bit/pathfinder/model/network/request/RouteInsertRequest.java
-<<<<<<< HEAD:src/main/java/com/douzone/bit/pathfinder/model/network/request/RouteInsertRequest.java
-  private List<MongoRoutesDTO> routes;
-=======
-  private List<Object> routes;
->>>>>>> parent of 7da44b8... Convert Second to HH:mm:ss:src/main/java/com/douzone/bit/pathfinder/model/network/request/MaprouteInsertRequest.java
-}
-=======
   private List<Object> routes;
 }
->>>>>>> parent of 7da44b8... Convert Second to HH:mm:ss:src/main/java/com/douzone/bit/pathfinder/model/network/request/MaprouteInsertRequest.java
