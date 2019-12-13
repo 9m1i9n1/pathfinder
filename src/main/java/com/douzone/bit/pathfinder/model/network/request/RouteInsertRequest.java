@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MaprouteInsertRequest {
+public class RouteInsertRequest {
 
   private Long carIndex;
 

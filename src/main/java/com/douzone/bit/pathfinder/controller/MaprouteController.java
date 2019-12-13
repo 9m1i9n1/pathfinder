@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.network.Header;
-import com.douzone.bit.pathfinder.model.network.request.MaprouteInsertRequest;
-import com.douzone.bit.pathfinder.model.network.request.MaprouteSortRequest;
+import com.douzone.bit.pathfinder.model.network.request.RouteInsertRequest;
+import com.douzone.bit.pathfinder.model.network.request.RouteSortRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.AdminCarResponse;
 import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
@@ -43,7 +43,7 @@ public class MaprouteController {
 	}
 
 	@PostMapping("/mapsort")
-	public Header<List<MaprouteResponse>> mapsort(@RequestBody List<MaprouteSortRequest> markerList) {
+	public Header<List<MaprouteResponse>> mapsort(@RequestBody List<RouteSortRequest> markerList) {
 
 		return MaprouteService.markerSort(markerList);
 	}
@@ -68,7 +68,7 @@ public class MaprouteController {
 	}
 
 	@PostMapping("/insertPlan.do")
-	public Header<String> insertPlan(@RequestBody MaprouteInsertRequest request) {
+	public Header<String> insertPlan(@RequestBody RouteInsertRequest request) {
 
 		return MaprouteService.insertPlan(request);
 	}
