@@ -140,6 +140,8 @@ const carlist = (handleFunc, areaIndex) => {
 
 // 차량 선택 Draw
 const depCarlist = res => {
+	uploadImage();
+	
   res = res.data;
 
   let carData = $.map(res, obj => {
@@ -483,7 +485,7 @@ $("#routeForm").validate({
 
 //! 데이터 가공 부분 ===============
 // 회원 생성
-function insertPlan(req) {
+function insertPlan(req) {	
   $.ajax({
     url: "/maproute/insertPlan.do",
     type: "post",
@@ -495,6 +497,25 @@ function insertPlan(req) {
     alert(text);
     location.reload();
   });
+}
+
+function uploadImage() {
+
+	let file = $('#img')[0].files[0];
+	let formData = new FormData();
+	formData.append('data', file);
+	
+	$.ajax({
+		type: 'post',
+		url: '/maproute/upload',
+		data: formData,
+		processData: false,
+		contentType: false
+	}).done(function (data) {
+		console.log(data);
+	}).fail(function (error) {
+		console.log(error);
+	})
 }
 
 //! 유틸 부분 =====================
