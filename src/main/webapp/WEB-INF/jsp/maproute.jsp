@@ -45,7 +45,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
         <div class="col-9">
           <div class="vh-85" id="map"></div>
         </div>
-
         <div class="col-3">
           <form id="routeForm">
             <div class="accordion md-accordion" id="accordion-select">
@@ -55,6 +54,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   <h3 class="card-title">
                     1. 출발 지점 선택
                   </h3>
+                  
                 </div>
 
                 <div
@@ -70,6 +70,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   </div>
 
                   <div class="card-footer">
+                  	<input type="file" id="img">
                     <button class="btn btn-primary next" type="button">
                       다음
                     </button>

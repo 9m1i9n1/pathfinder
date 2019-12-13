@@ -171,8 +171,6 @@ function getRoutes(routes) {;
 			});
 
 			$("#routesListBody").html(str);
-
-			$('#mapImg').attr('src', imgSrc);
 			
 			detailsModal
 			.find("#index")
