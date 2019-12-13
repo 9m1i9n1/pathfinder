@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import com.douzone.bit.pathfinder.model.dto.MongoRoutesDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,5 +36,5 @@ public class RouteInsertRequest {
 
   private Double dist;
 
-  private List<Object> routes;
+  private List<MongoRoutesDTO> routes;
 }
