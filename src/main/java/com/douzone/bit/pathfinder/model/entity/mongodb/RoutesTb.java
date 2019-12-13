@@ -7,8 +7,6 @@ import javax.persistence.Id;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.douzone.bit.pathfinder.model.dto.MongoRoutesDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,5 +22,5 @@ public class RoutesTb {
 	@Id
 	private ObjectId id;
 
-	private List<MongoRoutesDTO> detail;
+	private List<Object> detail;
 }
