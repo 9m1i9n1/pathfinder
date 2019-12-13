@@ -43,7 +43,7 @@ var routeControl = L.Routing.control({
   draggableWaypoints: false,
   createMarker: (index, wp, size) => {
     let iconUrlFrame = "/static/img/marker/marker_";
-    let iconItem = index !== size ? index + ".png" : "end.png";
+    let iconItem = index !== size - 1 ? index + ".png" : "end.png";
     let icon = new LeafIcon({ iconUrl: iconUrlFrame + iconItem });
 
     let marker = L.marker(wp.latLng, {
