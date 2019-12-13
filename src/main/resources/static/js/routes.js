@@ -229,6 +229,9 @@ const drawTimeline = routeInfo => {
   str += "</ul>";
 
   $(".tmline").html(str);
+  $("#tmlineResult").html(
+    `${routeInfo.dist}km | ${routeInfo.fee}원 | ${sumTime.toHHMMSS()}`
+  );
 };
 
 //! 선택 Event 구간 ===================

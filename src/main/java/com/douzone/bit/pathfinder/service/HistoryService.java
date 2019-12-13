@@ -179,7 +179,6 @@ public class HistoryService {
 
 	private HistoryResponse historyResponse(HistoryTb history) {
 
-		// SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
 
@@ -187,8 +186,8 @@ public class HistoryService {
 				.regdate(history.getRegdate().format(formatter)).username(history.getUsername()).carname(carNumber)
 				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(history.getDlvrdate().format(formatter))
-				.arrivedate(history.getArrivedate().format(formatter))
-				.routes(history.getRoutes().toString()).build();
+				// .imgSrc(history.getImgSrc())
+				.arrivedate(history.getArrivedate().format(formatter)).routes(history.getRoutes().toString()).build();
 
 		return response;
 	}
@@ -278,7 +277,7 @@ public class HistoryService {
 
 		if (denominator == 0)
 			return -1;
-		double result = Math.round(((double) molecular / (double) denominator ) * 1000) / 10.00;
+		double result = Math.round(((double) molecular / (double) denominator) * 1000) / 10.00;
 		return result;
 	}
 }
