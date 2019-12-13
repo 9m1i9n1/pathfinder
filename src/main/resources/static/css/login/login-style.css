@@ -190,4 +190,9 @@ img { max-width: 100%; }
 	h1, h2 { font-size: 32px; }
 
 }
-
+.logInForm {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%)
+}

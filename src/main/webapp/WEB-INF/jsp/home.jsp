@@ -433,7 +433,6 @@
 	<style>
 </style>
 
-
 </body>
 <script src="/static/js/home.js"></script>
 </html>
