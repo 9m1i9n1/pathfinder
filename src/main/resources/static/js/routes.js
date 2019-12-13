@@ -41,10 +41,16 @@ var routeControl = L.Routing.control({
   serviceUrl: "http://218.39.221.89:5000/route/v1",
   routeWhileDragging: false,
   draggableWaypoints: false,
+  lineOptions: {
+    styles: [{ color: "green", opacity: 1, weight: 5 }],
+    addWaypoints: false
+  },
   createMarker: (index, wp, size) => {
-    let iconUrlFrame = "/static/img/marker/marker_";
-    let iconItem = index !== size - 1 ? index + ".png" : "end.png";
-    let icon = new LeafIcon({ iconUrl: iconUrlFrame + iconItem });
+    let iconUrl =
+      index !== size - 1
+        ? "/static/img/marker/marker_" + index + ".png"
+        : "/static/img/marker/marker_end.png";
+    let icon = new LeafIcon({ iconUrl });
 
     let marker = L.marker(wp.latLng, {
       icon: icon
