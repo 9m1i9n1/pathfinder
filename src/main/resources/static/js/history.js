@@ -213,18 +213,17 @@ function getRoutes(routes) {;
 }
 
 $("#printBtn").on('click', function () {
-	let domClone = document.getElementById("printThis").cloneNode(true);
-	let $printSection = document.getElementById("printSection");
+	let domClone = $("#printThis").clone();
+	let $printSection = $("#printSection").get(0);
 	
 	if (!$printSection) {
-		$printSection = document.createElement("div");
-		
-		$printSection.id = "printSection";
-		
-		document.body.appendChild($printSection);
+		$printSection = $('<div id="printSection"></div>');
+
+		$(document.body).append($printSection);
 	}
 	
-	$printSection.innerHTML = "";
-	$printSection.appendChild(domClone);
+	$("#printSection").html("");
+	$("#printSection").append(domClone);
+	
 	window.print();
 });
