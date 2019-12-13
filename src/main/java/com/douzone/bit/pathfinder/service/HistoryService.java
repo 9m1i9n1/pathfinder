@@ -224,18 +224,18 @@ public class HistoryService {
 	}
 
 	public double todayHistoryPercent() {
+
 		// 현재시간
 		LocalDateTime currentDate = LocalDateTime.now();
-
 		LocalDateTime todayDate = LocalDate.now().atTime(0, 0);
 		LocalDateTime tomorrowDate = todayDate.plusDays(1);
 
 		int denominator = historyRepository.findAllByTotalToday(todayDate, tomorrowDate);
 		int molecular = historyRepository.findAllByDoingToday(todayDate, tomorrowDate, currentDate);
 
-		if (molecular == 0)
-			return 0;
-		double result = Math.round(((double) molecular / (double) denominator) * 1000) / 10.00;
+		if (denominator == 0)
+			return -1;
+		double result = Math.round(((double) molecular / (double) denominator ) * 1000) / 10.00;
 		return result;
 	}
 }
