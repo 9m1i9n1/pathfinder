@@ -11,14 +11,15 @@ $("#testButton").on("click", e => {
 
 // 다음 지도 사용
 // var map = new L.Map("map", {
-//   center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
-//   zoom: 0.5, //Leaflet.KoreanTmsProviders.js : resolutions기준 줌 레벨(Level 12)
-//   crs: L.Proj.CRS.Daum, //Leaflet.KoreanTmsProviders.js : 새로 정의된 Daum Map CRS
-//   worldCopyJump: false //https://leafletjs.com/reference-1.3.2.html#map-worldcopyjump 참조
+// center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
+// zoom: 0.5, //Leaflet.KoreanTmsProviders.js : resolutions기준 줌 레벨(Level 12)
+// crs: L.Proj.CRS.Daum, //Leaflet.KoreanTmsProviders.js : 새로 정의된 Daum Map CRS
+// worldCopyJump: false
+// //https://leafletjs.com/reference-1.3.2.html#map-worldcopyjump 참조
 // });
 // var baseLayers = L.tileLayer.koreaProvider("DaumMap.Street").addTo(map);
 // baseLayers.on("load", function() {
-//   console.log("맵 로딩");
+// console.log("맵 로딩");
 // });
 
 // 나중에 미국 추가 -
@@ -57,12 +58,12 @@ var routeControl = L.Routing.control({
   // .on("routesfound routingerror", hideSpinner)
   .addTo(map);
 
-//! 변수구간 ==========================
+// ! 변수구간 ==========================
 let sortList;
 let routeList;
 let markerImg;
 
-//! 화면 Draw 구간 ====================
+// ! 화면 Draw 구간 ====================
 const loadCalendar = res => {
   $("#calendarBox").html("<div id='calendar'></div>");
   $("#dateSelect").val("");
@@ -156,7 +157,10 @@ const depCarlist = res => {
     width: "100%",
     placeholder: "차량 선택",
     data: carData,
-    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)) // 앞에 숫자로 정렬되게 해야함.
+    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)) // 앞에
+																		// 숫자로
+																		// 정렬되게
+																		// 해야함.
   });
 };
 
@@ -214,7 +218,7 @@ const drawTimeline = routeInfo => {
   $(".tmline").html(str);
 };
 
-//! 선택 Event 구간 ===================
+// ! 선택 Event 구간 ===================
 // 출발지 선택시 Event
 $("#depSelect").on("select2:select", e => {
   let selectData = e.params.data;
@@ -244,7 +248,7 @@ $("#carSelect").on("select2:select", e => {
 // 경유지 선택시 Event
 $("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
-  let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_5.png" });
+  let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
 
   markerAdd(selectData, icon);
 });
@@ -256,7 +260,7 @@ $("#branchSelect").on("select2:unselect", e => {
   markerRemove(selectData);
 });
 
-//! 마커 부분 ======================
+// ! 마커 부분 ======================
 let markerGroup = L.layerGroup().addTo(map);
 
 // 마커 추가
@@ -292,7 +296,7 @@ const markerRemove = selectData => {
   });
 };
 
-//! 버튼 이벤트 부분 ==========================
+// ! 버튼 이벤트 부분 ==========================
 // 다음버튼 누를 경우에
 // Lambda의 bind 형식때문에 function으로 사용
 $(".next").click(function(e) {
@@ -303,7 +307,7 @@ $(".next").click(function(e) {
 
   $.each(collapse.find("input, select, textarea"), function() {
     if (!$(this).valid()) {
-      //? valid 주석해놓음 (테스트 불편)
+      // ? valid 주석해놓음 (테스트 불편)
       sectionValid = false;
     }
   });
@@ -327,7 +331,7 @@ $("#resultButton").click(e => {
   mapSort();
 });
 
-//! route 경로 관련 부분 ========================
+// ! route 경로 관련 부분 ========================
 // sort 요청
 const mapSort = () => {
   let markerList = [];
@@ -351,7 +355,36 @@ const requestSort = markerList => {
     url: "/maproute/mapsort",
     type: "post",
     contentType: "application/json",
-    data: JSON.stringify(markerList)
+    data: JSON.stringify(markerList),
+    success:function(res) {
+	   console.log("asdasdasd - ", res);}, 
+    beforeSend: function () {
+           var width = 0;
+           var height = 0;
+           var left = 0;
+           var top = 0;
+
+           width = 50;
+           height = 50;
+
+           top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+           left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+           if($("#div_ajax_load_image").length != 0) {
+                  $("#div_ajax_load_image").css({
+                         "top": top+"px",
+                         "left": left+"px"
+                  });
+                  $("#div_ajax_load_image").show();
+                  sleep(10000);
+           }
+           else {
+                  $('body').append('<div id="div_ajax_load_image" style="position: absolute; background:#000000; opacity:0.3; top: 0px; left: 0px; width: 200vh; height: 100vh;z-index: 9998;"><img src="/static/img/viewLoading.gif" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; filter:alpha(opacity=50); margin:auto; padding:0; "></div>');
+           }
+    },
+	complete: function () {
+       $("#div_ajax_load_image").hide();
+   }
   })
     .then(res => {
       sortList = $.extend(true, [], res.data);
@@ -481,7 +514,7 @@ $("#routeForm").validate({
   }
 });
 
-//! 데이터 가공 부분 ===============
+// ! 데이터 가공 부분 ===============
 // 회원 생성
 function insertPlan(req) {
   $.ajax({
@@ -497,7 +530,7 @@ function insertPlan(req) {
   });
 }
 
-//! 유틸 부분 =====================
+// ! 유틸 부분 =====================
 Number.prototype.toHHMMSS = function() {
   var sec_num = Math.floor(this / 1);
   var hours = Math.floor(sec_num / 3600);
