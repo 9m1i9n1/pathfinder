@@ -31,11 +31,8 @@ L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 
 var LeafIcon = L.Icon.extend({
   options: {
-    iconSize: [38, 95],
-    shadowSize: [50, 64],
-    iconAnchor: [22, 94],
-    shadowAnchor: [4, 62],
-    popupAnchor: [-3, -76]
+    iconSize: [40, 40],
+    popupAnchor: [0, -35]
   }
 });
 
@@ -43,7 +40,7 @@ var routeControl = L.Routing.control({
   serviceUrl: "http://218.39.221.89:5000/route/v1",
   routeWhileDragging: false,
   draggableWaypoints: false,
-  createMarker: () => {
+  createMarker: (i, wp, nWps) => {
     return null;
   }
 })
@@ -247,8 +244,9 @@ $("#carSelect").on("select2:select", e => {
 // 경유지 선택시 Event
 $("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
+  let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_5.png" });
 
-  markerAdd(selectData);
+  markerAdd(selectData, icon);
 });
 
 // 경유지 삭제시 Event
