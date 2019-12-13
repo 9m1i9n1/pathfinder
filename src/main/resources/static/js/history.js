@@ -133,7 +133,7 @@ function removeRoutes(history) {
 	}
 }
 
-function getRoutes(routes) {;
+function getRoutes(routes) {
 	let imgSrc = routes.imgSrc;
 
 	$.ajax({
@@ -143,16 +143,17 @@ function getRoutes(routes) {;
 			routesIndex : routes.routes
 		},
 		success : function(res) {
+			
 			let str = "";
 			let count = 0;
 			let totalTime = 0;
-			$.each(res.data.detail, function(key, value) {
+			$.each(res.data, function(key, value) {
 			
 				str += `<tr class="tr-shadow" id="ModalTr">`;
 				str += "<td>" + ++count + "</td>";
 				str += "<td>" + value.rdep + "</td>";
 				str += "<td>" + value.rarvl + "</td>";
-				str += "<td>" + value.rdist + "</td>";
+				str += "<td>" + value.rdist + "Km" + "</td>";
 				str += "<td>" + value.rtime + "</td>";
 				str += "<td>" + value.rfee + "</td>";
 				str += "</tr>";
@@ -202,7 +203,7 @@ function getRoutes(routes) {;
 			
 			detailsModal
 			.find("#dist")
-			.text("총 거리 : " + routes.dist +" km");
+			.text("총 거리 : " + routes.dist +" Km");
 			
 			detailsModal
 			.find("#fee")
