@@ -36,8 +36,8 @@
 						<h3 class="card-title" style="height:30px">조직도</h3>
 					</div>
 
-					<div class="card-body small height100">
-						<div id="jstree"></div>
+					<div class="card-body small height675px">
+						<div id="jstree" class="myScrollableBlock"></div>
 					</div>
 				</div>
 			</div>
