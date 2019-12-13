@@ -36,8 +36,8 @@
 							<h3 class="card-title" style="height: 30px">조직도</h3>
 						</div>
 
-						<div class="card-body small height100">
-							<div id="jstree"></div>
+						<div class="card-body small height675px">
+							<div id="jstree" class="myScrollableBlock"></div>
 						</div>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 						</div>
 
 						<div
-							class="card-body box-profile table-responsive p-0 height700px">
+							class="card-body box-profile table-responsive p-0 height675px">
 							<table class="table table-hover" id="tableTest">
 								<thead>
 									<tr>
@@ -81,15 +81,9 @@
 										<th style="width: 10%">수정/삭제</th>
 									</tr>
 								</thead>
-
 								<tbody id="tableListBody" class="small"></tbody>
-
 							</table>
-
-						
 						</div>
-						
-						
 					</div>
 				</div>
 			</div>

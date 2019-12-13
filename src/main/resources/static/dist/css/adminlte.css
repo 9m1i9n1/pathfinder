@@ -11831,9 +11831,9 @@ body,
   background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
-
+/* 여기임다 */
 [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active, [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active:hover, [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active:focus {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #6c757d;
   color: #343a40;
 }
 
@@ -28511,41 +28511,62 @@ a.text-muted:hover {
   height: 100%; 
 }
 
+.height90 {
+  height: 90%; 
+}
+
 .height675px {
-  height: 750px;
+  height: 625px;
 }
 
 .vh-85 {
   min-height: 85vh;
 }
 
-.tableScroll table {
+.modal-body table {
 	width: 100%; /* 140px * 5 column + 16px scrollbar width */
 	border-spacing: 0;
 }
 
-.tableScroll tbody, .tableScroll thead tr {
+.modal-body tbody, .modal-body thead tr {
 	display: block;
 }
 
-.tableScroll tbody {
+.modal-body tbody {
 	height: 150px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 
-.tableScroll tbody tr, .tableScroll thead th {
+.modal-body tbody tr, .modal-body thead th {
 	width: 150px;
 }
 
-.tableScroll td {
+.modal-body td {
 	width: 140px;
 }
 
-.tableScroll thead th:last-child {
+.modal-body thead th:last-child {
 	width: 170px;
 }
 
-.tableScroll td:last-child {
+.modal-body td:last-child {
 	width: 140px; 
+}
+
+
+.boardHeaderColor-red {
+	border-radius: 3px; border-top-style: solid; border-top-color: #dd4b39;
+}
+.boardHeaderColor-green {
+	border-radius: 3px; border-top-style: solid; border-top-color: #00a65a;
+}
+.boardHeaderColor-blue {
+	border-radius: 3px; border-top-style: solid; border-top-color: #0073b7;
+}
+
+.myScrollableBlock {
+  display: block;
+  height: 620px;
+  overflow: auto;
 }

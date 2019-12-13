@@ -65,7 +65,7 @@ pageEncoding="UTF-8"%>
 
 <%-- bootstrap-select --%>
 <link rel="stylesheet" href="/static/css/select2-bootstrap4.css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<link href="/static/css/select2.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 
 <%-- <link

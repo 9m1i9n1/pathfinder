@@ -373,22 +373,21 @@
 										<div class="carousel-inner">
 											<div class="carousel-item">
 												<img class="d-block w-100" 
-													src="https://placehold.it/900x500/3333CC/ffffff&amp;text=PathFinder"
+													src="https://placehold.it/900x470/3333CC/ffffff&amp;text=PathFinder"
 													alt="First slide">
 											</div>
 											<div class="carousel-item active" >
 												<a href="http://www.douzone.com/">
 												 <img
 													class="d-block w-100"
-													src="http://imgnews.naver.net/image/5046/2018/06/01/0000071590_001_20180601151004593.jpg"
+													src="/static/img/imgs/douzoneLogo.jpg"
 													alt="Second slide">
 												</a>
-												홈페이지 바로가기
 											</div>
 											<div class="carousel-item">
 
 												<img class="d-block w-100"
-													src="https://placehold.it/900x500/f39c12/ffffff&amp;text=PathFinder"
+													src="https://placehold.it/900x470/f39c12/ffffff&amp;text=PathFinder"
 													alt="Third slide">
 
 											</div>

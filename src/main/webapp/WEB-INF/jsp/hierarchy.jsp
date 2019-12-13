@@ -8,16 +8,16 @@
 </head>
 
 <body>
-	<section class="content-header">
+	<section class="content-header  ">
 		<div class="container-fluid">
-			<div class="row mb-2">
-				<div class="col-md-2 col-md-6">
+			<div class="row mb-2 ">
+				<div class="col-md-2 col-md-6 ">
 					<h1>조직도</h1>
 				</div>
-				<div class="col-md-6">
-					<ol class="breadcrumb float-sm-right" id="headInfo">
+				<div class="col-md-6 ">
+					<ol class="breadcrumb float-sm-right " id="headInfo">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">조직도</li>
+						<li class="breadcrumb-item active ">조직도</li>
 					</ol>
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 		<!-- /.container-fluid -->
 	</section>
 
-	<div class="container-fluid">
+	<div class="container-fluid height675px">
 		<div class="row vh-80">
 			<div class="col-md-2">
 				<div class="card height100">
@@ -33,8 +33,8 @@
 						<h3 class="card-title" style="height: 30px">부서 조직도</h3>
 					</div>
 					
-					<div class="card-body small height100">
-						<div id="jstree"></div>
+					<div class="card-body small height675px">
+						<div id="jstree" class="myScrollableBlock"></div>
 					</div>
 					
 				</div>

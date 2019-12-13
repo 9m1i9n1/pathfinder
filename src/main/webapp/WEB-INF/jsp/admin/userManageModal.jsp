@@ -4,7 +4,7 @@
 <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="insertModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header boardHeaderColor-yellow">
         <h5 class="modal-title" id="title">사용자 추가</h5>
       </div>
 
@@ -101,7 +101,7 @@
 <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="modifyModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header boardHeaderColor-yellow">
         <h5 class="modal-title" id="title">사용자 수정</h5>
       </div>
 
