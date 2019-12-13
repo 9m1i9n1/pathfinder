@@ -67,8 +67,7 @@ function printHistory(selectPage, id, keyword) {
 			let str = "";
 			
 			if (res.resultCode !== "ERROR") {
-				$.each(
-						res.data,
+				$.each(res.data,
 						function(key, value) {
 							str += `<tr class="tr-shadow">`;
 							str += "<td>" + value.regdate + "</td>";
@@ -135,7 +134,8 @@ function removeRoutes(history) {
 }
 
 function getRoutes(routes) {;
-	
+	let imgSrc = routes.imgSrc;
+
 	$.ajax({
 		url : "/history/getroutes.do",
 		type : "get",
@@ -172,6 +172,8 @@ function getRoutes(routes) {;
 
 			$("#routesListBody").html(str);
 
+			$('#mapImg').attr('src', imgSrc);
+			
 			detailsModal
 			.find("#index")
 			.text('총 소요시간 '+routes.index);
