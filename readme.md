@@ -2,7 +2,7 @@
 **http://218.39.221.89:8181/**
 
 ## Jenkins Server URL 
-**https://e64b00e5.ngrok.io**
+**https://c5a0e0c7.ngrok.io**
 
 ## Port
 **8787** : jenkins  
