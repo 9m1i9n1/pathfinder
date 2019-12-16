@@ -157,8 +157,6 @@ const carlist = (handleFunc, areaIndex) => {
 
 // 차량 선택 Draw
 const depCarlist = res => {
-  uploadImage();
-
   res = res.data;
 
   let carData = $.map(res, obj => {
@@ -381,45 +379,45 @@ const requestSort = markerList => {
     type: "post",
     contentType: "application/json",
     data: JSON.stringify(markerList),
-    success: function(res) {
-      console.log("asdasdasd - ", res);
-    },
-    beforeSend: function() {
-      var width = 0;
-      var height = 0;
-      var left = 0;
-      var top = 0;
+    // success: function(res) {
+    //   console.log("asdasdasd - ", res);
+    // },
+    // beforeSend: function() {
+    //   var width = 0;
+    //   var height = 0;
+    //   var left = 0;
+    //   var top = 0;
 
-      width = 50;
-      height = 50;
+    //   width = 50;
+    //   height = 50;
 
-      top = ($(window).height() - height) / 2 + $(window).scrollTop();
-      left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+    //   top = ($(window).height() - height) / 2 + $(window).scrollTop();
+    //   left = ($(window).width() - width) / 2 + $(window).scrollLeft();
 
-      if ($("#div_ajax_load_image").length != 0) {
-        $("#div_ajax_load_image").css({
-          top: top + "px",
-          left: left + "px"
-        });
-        $("#div_ajax_load_image").show();
-        sleep(10000);
-      } else {
-        $("body").append(
-          '<div id="div_ajax_load_image" style="position: absolute; background:#000000; opacity:0.3; top: 0px; left: 0px; width: 200vh; height: 100vh;z-index: 9998;"><img src="/static/img/viewLoading.gif" style="position:absolute; top:' +
-            top +
-            "px; left:" +
-            left +
-            "px; width:" +
-            width +
-            "px; height:" +
-            height +
-            'px; z-index:9999; filter:alpha(opacity=50); margin:auto; padding:0; "></div>'
-        );
-      }
-    },
-    complete: function() {
-      $("#div_ajax_load_image").hide();
-    }
+    //   if ($("#div_ajax_load_image").length != 0) {
+    //     $("#div_ajax_load_image").css({
+    //       top: top + "px",
+    //       left: left + "px"
+    //     });
+    //     $("#div_ajax_load_image").show();
+    //     sleep(10000);
+    //   } else {
+    //     $("body").append(
+    //       '<div id="div_ajax_load_image" style="position: absolute; background:#000000; opacity:0.3; top: 0px; left: 0px; width: 200vh; height: 100vh;z-index: 9998;"><img src="/static/img/viewLoading.gif" style="position:absolute; top:' +
+    //         top +
+    //         "px; left:" +
+    //         left +
+    //         "px; width:" +
+    //         width +
+    //         "px; height:" +
+    //         height +
+    //         'px; z-index:9999; filter:alpha(opacity=50); margin:auto; padding:0; "></div>'
+    //     );
+    //   }
+    // },
+    // complete: function() {
+    //   $("#div_ajax_load_image").hide();
+    // }
   })
     .then(res => {
       sortList = $.extend(true, [], res.data);
@@ -551,7 +549,9 @@ $("#routeForm").validate({
 
 // ! 데이터 가공 부분 ===============
 // 회원 생성
-function insertPlan(req) {
+const insertPlan = req => {
+  leafletImage(map, upload);
+
   $.ajax({
     url: "/maproute/insertPlan.do",
     type: "post",
@@ -561,9 +561,30 @@ function insertPlan(req) {
     let text = res.data;
 
     alert(text);
-    location.reload();
+    // location.reload();
   });
-}
+};
+
+const upload = (err, canvas) => {
+  let imgDataUrl = canvas.toDataURL("image/png");
+
+  let formData = new FormData();
+  formData.append("data", imgDataUrl);
+
+  $.ajax({
+    type: "post",
+    url: "/maproute/upload",
+    data: formData,
+    processData: false,
+    contentType: false
+  })
+    .done(function(data) {
+      console.log(data);
+    })
+    .fail(function(error) {
+      console.log(error);
+    });
+};
 
 function uploadImage() {
   let file = $("#img")[0].files[0];

@@ -19,6 +19,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <link href="/static/css/swiper.min.css" rel="stylesheet" />
 
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
+
+    <%-- leaflet-image --%>
+    <script src='/unpkg.com/leaflet-image@0.4.0/index.js'></script>
   </head>
 
   <body>
@@ -70,7 +73,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   </div>
 
                   <div class="card-footer">
-                  	<input type="file" id="img">
                     <button class="btn btn-primary next" type="button">
                       다음
                     </button>
