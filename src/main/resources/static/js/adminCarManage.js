@@ -329,7 +329,8 @@ function areaLoading(modal) {
       modal.find("#carArea").select2({
         width: "100%",
         placeholder: "지역 선택",
-        data: areaData
+        data: areaData,
+        style:"height:100px"
       });
 
       selectInit(modal);

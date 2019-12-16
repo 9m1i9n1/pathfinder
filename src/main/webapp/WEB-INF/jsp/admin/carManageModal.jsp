@@ -6,7 +6,7 @@
 	aria-labelledby="insertModalTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header boardHeaderColor-blue">
 				<h5 class="modal-title" id="title">차량 추가</h5>
 			</div>
 
@@ -17,7 +17,7 @@
 					<div class="form-group row">
 						<label for="areaIndex" class="col-sm-3 col-form-label-sm">지역</label>
 						<div class="col-sm-8">
-							<select id="carArea" name="carArea">
+							<select id="carArea" name="carArea" >
 								<option></option>
 							</select>
 						</div>

@@ -28,15 +28,15 @@
 	</section>
 
 	<div class="container-fluid">
-		<div class="row height675px">
+		<div class="row vh-80">
 			<div class="col-md-2">
 				<div class="card height100">
 					<div class="card-header">
 						<h3 class="card-title" style="height: 30px">조직도</h3>
 					</div>
 
-					<div class="card-body small height100">
-						<div id="jstree"></div>
+					<div class="card-body small height675px">
+						<div id="jstree" class="myScrollableBlock"></div>
 					</div>
 				</div>
 			</div>
@@ -68,7 +68,7 @@
 						</div>
 					</div>
 
-					<div class="card-body table-responsive p-0 height700px">
+					<div class="card-body table-responsive p-0 ">
 						<table id="table" class="table table-hover">
 							<thead>
 								<tr>
