@@ -11567,6 +11567,7 @@ body,
 .user-panel .info {
   display: inline-block;
   padding: 5px 5px 5px 10px;
+  width: 100%;
 }
 
 .user-panel .status,
