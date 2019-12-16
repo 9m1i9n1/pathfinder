@@ -56,6 +56,7 @@ var routeControl = L.Routing.control({
     let marker = L.marker(wp.latLng, {
       icon: icon
     });
+    marker.bindPopup(wp.name);
 
     return marker;
   }
@@ -156,8 +157,8 @@ const carlist = (handleFunc, areaIndex) => {
 
 // 차량 선택 Draw
 const depCarlist = res => {
-	uploadImage();
-	
+  uploadImage();
+
   res = res.data;
 
   let carData = $.map(res, obj => {
@@ -175,9 +176,9 @@ const depCarlist = res => {
     placeholder: "차량 선택",
     data: carData,
     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)) // 앞에
-																		// 숫자로
-																		// 정렬되게
-																		// 해야함.
+    // 숫자로
+    // 정렬되게
+    // 해야함.
   });
 };
 
@@ -269,7 +270,7 @@ $("#carSelect").on("select2:select", e => {
 $("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
-  let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
+  let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
 
   markerAdd(selectData, icon);
 });
@@ -380,35 +381,45 @@ const requestSort = markerList => {
     type: "post",
     contentType: "application/json",
     data: JSON.stringify(markerList),
-    success:function(res) {
-	   console.log("asdasdasd - ", res);}, 
-    beforeSend: function () {
-           var width = 0;
-           var height = 0;
-           var left = 0;
-           var top = 0;
-
-           width = 50;
-           height = 50;
-
-           top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
-           left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-           if($("#div_ajax_load_image").length != 0) {
-                  $("#div_ajax_load_image").css({
-                         "top": top+"px",
-                         "left": left+"px"
-                  });
-                  $("#div_ajax_load_image").show();
-                  sleep(10000);
-           }
-           else {
-                  $('body').append('<div id="div_ajax_load_image" style="position: absolute; background:#000000; opacity:0.3; top: 0px; left: 0px; width: 200vh; height: 100vh;z-index: 9998;"><img src="/static/img/viewLoading.gif" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; filter:alpha(opacity=50); margin:auto; padding:0; "></div>');
-           }
+    success: function(res) {
+      console.log("asdasdasd - ", res);
     },
-	complete: function () {
-       $("#div_ajax_load_image").hide();
-   }
+    beforeSend: function() {
+      var width = 0;
+      var height = 0;
+      var left = 0;
+      var top = 0;
+
+      width = 50;
+      height = 50;
+
+      top = ($(window).height() - height) / 2 + $(window).scrollTop();
+      left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+      if ($("#div_ajax_load_image").length != 0) {
+        $("#div_ajax_load_image").css({
+          top: top + "px",
+          left: left + "px"
+        });
+        $("#div_ajax_load_image").show();
+        sleep(10000);
+      } else {
+        $("body").append(
+          '<div id="div_ajax_load_image" style="position: absolute; background:#000000; opacity:0.3; top: 0px; left: 0px; width: 200vh; height: 100vh;z-index: 9998;"><img src="/static/img/viewLoading.gif" style="position:absolute; top:' +
+            top +
+            "px; left:" +
+            left +
+            "px; width:" +
+            width +
+            "px; height:" +
+            height +
+            'px; z-index:9999; filter:alpha(opacity=50); margin:auto; padding:0; "></div>'
+        );
+      }
+    },
+    complete: function() {
+      $("#div_ajax_load_image").hide();
+    }
   })
     .then(res => {
       sortList = $.extend(true, [], res.data);
@@ -540,7 +551,7 @@ $("#routeForm").validate({
 
 // ! 데이터 가공 부분 ===============
 // 회원 생성
-function insertPlan(req) {	
+function insertPlan(req) {
   $.ajax({
     url: "/maproute/insertPlan.do",
     type: "post",
@@ -555,22 +566,23 @@ function insertPlan(req) {
 }
 
 function uploadImage() {
+  let file = $("#img")[0].files[0];
+  let formData = new FormData();
+  formData.append("data", file);
 
-	let file = $('#img')[0].files[0];
-	let formData = new FormData();
-	formData.append('data', file);
-	
-	$.ajax({
-		type: 'post',
-		url: '/maproute/upload',
-		data: formData,
-		processData: false,
-		contentType: false
-	}).done(function (data) {
-		console.log(data);
-	}).fail(function (error) {
-		console.log(error);
-	})
+  $.ajax({
+    type: "post",
+    url: "/maproute/upload",
+    data: formData,
+    processData: false,
+    contentType: false
+  })
+    .done(function(data) {
+      console.log(data);
+    })
+    .fail(function(error) {
+      console.log(error);
+    });
 }
 
 //! 유틸 부분 =====================
