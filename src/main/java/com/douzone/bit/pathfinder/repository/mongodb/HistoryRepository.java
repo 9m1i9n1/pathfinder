@@ -52,14 +52,14 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	Page<HistoryTb> findAllByWill(Pageable pageable, LocalDateTime LocalTime);
 
 	// 전체 검색 & 날짜로 검색
-	@Query("{$and : [{'arrivedate' : { '$lt' : ?0 }}, {'dlvrdate' : { '$gte' : ?1 }}]}")
-	Page<HistoryTb> findAllByPpAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword);
+	@Query("{$and : [{'arrivedate' : { '$lt' : ?0 }}, {'dlvrdate' : { '$gte' : ?1 }}, {'dlvrdate' : { '$lte' : ?2 }}]}")
+	Page<HistoryTb> findAllByPpAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword, LocalDateTime endDate);
 
-	@Query("{$and :[ {arrivedate : { '$gte' : ?0} }, { 'dlvrdate' : {'$lte' : ?0 } }, { 'dlvrdate' : {'$gte' : ?1 }}]}")
-	Page<HistoryTb> findAllByIngAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword);
+	@Query("{$and :[ {arrivedate : { '$gte' : ?0} }, { 'dlvrdate' : {'$lte' : ?0 } }, { 'dlvrdate' : {'$gte' : ?1 }}, {'dlvrdate' : { '$lte' : ?2 }}]}")
+	Page<HistoryTb> findAllByIngAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword, LocalDateTime endDate);
 
-	@Query("{$and : [{'dlvrdate' : { '$gt' : ?0 }}, { 'dlvrdate' : {'$gte' : ?1 }}]}")
-	Page<HistoryTb> findAllByWillAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword);
+	@Query("{$and : [{'dlvrdate' : { '$gt' : ?0 }}, { 'dlvrdate' : {'$gte' : ?1 }}, {'dlvrdate' : { '$lte' : ?2 }}]}")
+	Page<HistoryTb> findAllByWillAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword, LocalDateTime endDate);
 
 	// 내 글 검색
 	@Query("{$and : [ {'dlvrdate' : { '$gt' : ?0 }}, {'username' : ?1}] }")
@@ -72,17 +72,17 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	Page<HistoryTb> findAllByPpAndUsername(Pageable pageable, LocalDateTime LocalTime, String username);
 
 	// 내 글 검색 & 날짜로 검색
-	@Query("{$and : [ {'dlvrdate' : { '$gt' : ?0 }}, {'username' : ?1 }, {'dlvrdate' : { '$gte' : ?2 }}] }")
+	@Query("{$and : [ {'dlvrdate' : { '$gt' : ?0 }}, {'username' : ?1 }, {'dlvrdate' : { '$gte' : ?2 }}, {'dlvrdate' : { '$lte' : ?3 }}] }")
 	Page<HistoryTb> findAllByWillAndUsernameAndDate(Pageable pageable, LocalDateTime time, String username,
-			LocalDateTime keyword);
+			LocalDateTime keyword, LocalDateTime endDate);
 
-	@Query("{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 } }, { 'dlvrdate' :{'$gte' : ?2 } }, {'username' : ?1} ] }")
+	@Query("{$and :[ {arrivedate : {'$gte' : ?0} }, { 'dlvrdate' :{'$lte' : ?0 } }, { 'dlvrdate' :{'$gte' : ?2 } }, {'dlvrdate' : { '$lte' : ?3 }}, {'username' : ?1} ] }")
 	Page<HistoryTb> findAllByIngAndUsernameAndDate(Pageable pageable, LocalDateTime time, String username,
-			LocalDateTime keyword);
+			LocalDateTime keyword, LocalDateTime endDate);
 
-	@Query("{$and : [ {'arrivedate' : { '$lt' : ?0 }}, {'username' : ?1}, {'dlvrdate' : { '$gte' : ?2 } }]}")
+	@Query("{$and : [ {'arrivedate' : { '$lt' : ?0 }}, {'username' : ?1}, {'dlvrdate' : { '$gte' : ?2 } }, {'dlvrdate' : { '$lte' : ?3 }}]}")
 	Page<HistoryTb> findAllByPpAndUsernameAndDate(Pageable pageable, LocalDateTime LocalTime, String username,
-			LocalDateTime keyword);
+			LocalDateTime keyword, LocalDateTime endDate);
 
 	// 내 글 & 카운트
 	@Query(value = "{$and : [ {'dlvrdate' : { '$gt' : ?0 }}, {'username' : ?1 }] }", count = true)

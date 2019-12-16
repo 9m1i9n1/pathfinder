@@ -60,6 +60,7 @@
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="carBuy" name="carBuy"
 								placeholder="날짜넣기" readonly />
+							<div id="calendar"></div>
 						</div>
 					</div>
 

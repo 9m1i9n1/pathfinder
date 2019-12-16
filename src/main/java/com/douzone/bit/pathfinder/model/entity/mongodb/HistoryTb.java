@@ -31,6 +31,8 @@ public class HistoryTb {
 	private String username;
 
 	private Long carIndex;
+	
+	private String imgSrc;
 
 	private String dep;
 

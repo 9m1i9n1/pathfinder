@@ -49,13 +49,9 @@ public class AdminCarService {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate dateTime = LocalDate.parse(request.getCarBuy(), format);
 
-		System.out.println("wan" + dateTime);
-
 		CarTb car = CarTb.builder().carName(request.getCarName()).carFuel(request.getCarFuel())
 				.carNumber(request.getCarNumber()).carBuy(dateTime).carArea(areaRepository.getOne(request.getCarArea()))
 				.build();
-
-		System.out.println("after build");
 
 		CarTb newCar = carRepository.save(car);
 
@@ -65,7 +61,6 @@ public class AdminCarService {
 
 	// car page
 	public Header<List<AdminCarResponse>> listpage(Pageable pageable) {
-		System.out.println("list 입니당");
 		Page<CarTb> cars = carRepository.findAll(pageable);
 
 		List<AdminCarResponse> carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
@@ -133,7 +128,6 @@ public class AdminCarService {
 
 		case "carNumber":
 			cars = carRepository.findByCarNumberLike("%" + keyword + "%", pageable);
-			System.out.println(cars);
 			carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
 			break;
 		case "carName":

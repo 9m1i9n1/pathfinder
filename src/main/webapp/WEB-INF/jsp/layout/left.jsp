@@ -43,11 +43,21 @@ function setNavigation() {
 		<div class="sidebar">
 			<!-- Sidebar user panel (optional) -->
 			<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-				<div class="info">
-					<a href="/userinfo" class="d-block"> <!-- 로그인한 유저 정보 가져오기 --> <sec:authentication
-							property="principal.userFullName" />
-					</a> <a href="<c:url value='/logout'/>">Logout</a>
+			<div class="image">
+				<img src="/static/img/imgs/position_2.png" class="img-circle elevation-2" alt="User Image">
+			</div>
+			<div class="info">
+				<div class="row">
+					<!-- 로그인한 유저 정보 가져오기 --> 
+					<a href="/userinfo" class="d-block"> 
+					<sec:authentication
+						property="principal.userFullName" />
+					</a>
 				</div>
+				<div class="row float-right pr-2 small">
+					<a href="<c:url value='/logout'/>">Logout</a>
+				</div>
+			</div>
 			</div>
 
 			<!-- Sidebar Menu -->

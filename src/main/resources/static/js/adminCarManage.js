@@ -290,18 +290,18 @@ insertModal.find("#carArea").change(function() {
   // branchLoading(insertModal, selected);
 });
 
-insertModal.find('#carBuy').click(function(){
-	let selected = $(this);
-	selected.datepicker({
-		changeYear:true,
-		changeMonth:true,
-		dateFormat:'yy-mm-dd',
-		nextText: '다음 달',
-        prevText: '이전 달',
-		dayNamesMin:['일','월','화','수','목','금','토'],
-		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
-	});
-})
+$("#calendar").calendar({
+    width: 280,
+    height: 280,
+    trigger: '#carBuy',
+    zIndex: 999,
+    format:'yyyy-mm-dd',
+    weekArray: ['일', '월', '화', '수', '목', '금', '토'],
+    monthArray: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    onClose: function (view, date, data) {
+    	$("#carBuy").val(moment(date).format("YYYY-MM-DD"));
+    }
+});
 
 // 모달 내 지역 로딩
 function arrayToObject(array) {
@@ -322,7 +322,6 @@ function areaLoading(modal) {
     type: "get",
     async: false,
     success: function(res) {
-    	console.log("@@@@@@@@")
       let areaData = arrayToObject(res.data);
 
       modal.find("#carArea").html("<option></option>");

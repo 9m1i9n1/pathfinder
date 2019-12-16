@@ -9,6 +9,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <head>
 <title>차량 관리 페이지</title>
+
+<!-- 캘린더 표시 -->
+<link rel="stylesheet" href="/static/route/css/calendar.css" />
+<script src="/static/route/js/calendar.js"></script>
 </head>
 <body>
 <section class="content-header">
