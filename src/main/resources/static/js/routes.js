@@ -34,11 +34,17 @@ $("#testButton").on("click", e => {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map").setView([36.1358642, 128.0785804], 7);
+let map = L.map("map").setView([36.1358642, 128.0785804], 7)
+.on('easyPrint-finished', e => {
+	console.log(e.event);
+});
+
+
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+})
+.addTo(map);
 
 var LeafIcon = L.Icon.extend({
   options: {
@@ -50,7 +56,7 @@ var LeafIcon = L.Icon.extend({
 
 let printPlugin = L.easyPrint({
 	title: 'Chapture Map',
-	exportOnly: true,
+	outputMode: 'event',
 	hidden: true,
 	sizeModes: ['A4Portrait']
 }).addTo(map);
@@ -526,6 +532,7 @@ $("#routeForm").validate({
 // 회원 생성
 const insertPlan = req => {
 	let test = printPlugin.printMap('CurrentSize', 'MyManualPrint');
+	console.log(test);
   //TODO leaflet 라이브러리 사용
 //  leafletImage(map, upload);
 	

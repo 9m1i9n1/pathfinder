@@ -9,6 +9,8 @@
 
 	<!-- 지도 캡쳐 -->
 	<script src="/static/route/js/print.js"></script>
+	<script src="/static/route/js/domtoimage.js"></script>
+	<script src="/static/route/js/filesaver.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 	<link href='http://fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
