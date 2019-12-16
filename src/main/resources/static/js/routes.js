@@ -531,8 +531,8 @@ $("#routeForm").validate({
 // ! 데이터 가공 부분 ===============
 // 회원 생성
 const insertPlan = req => {
-	let test = printPlugin.printMap('CurrentSize', 'MyManualPrint');
-	console.log(test);
+	printPlugin.printMap('CurrentSize', 'MyManualPrint');
+	
   //TODO leaflet 라이브러리 사용
 //  leafletImage(map, upload);
 	
