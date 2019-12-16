@@ -39,7 +39,7 @@ public class MaprouteController {
 
 	@Autowired
 	private AdminCarService adminCarService;
-	
+
 	private final S3Uploader s3Uploader;
 
 	@GetMapping({ "", "/" })
@@ -80,10 +80,11 @@ public class MaprouteController {
 
 		return MaprouteService.insertPlan(request);
 	}
-	
+
 	@PostMapping("/upload")
 	public String upload(@RequestBody MultipartFile data) throws IOException {
-		
+
+		System.out.println("hello");
 		return s3Uploader.upload(data, "static");
 	}
 }

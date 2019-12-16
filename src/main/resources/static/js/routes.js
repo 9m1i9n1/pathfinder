@@ -310,9 +310,6 @@ const markerAdd = (selectData, icon) => {
 
 // 경로 그리기
 const drawRoute = () => {
-  let iconUrlFrame = "/static/img/marker/marker_";
-  let size = sortList.length;
-
   let wayPoints = sortList.map((branch, index) => {
     return L.Routing.waypoint(
       L.latLng(branch.branchLat, branch.branchLng),
@@ -521,40 +518,84 @@ $("#routeForm").validate({
 // ! 데이터 가공 부분 ===============
 // 회원 생성
 const insertPlan = req => {
+  //TODO leaflet 라이브러리 사용
   leafletImage(map, upload);
 
-  $.ajax({
-    url: "/maproute/insertPlan.do",
-    type: "post",
-    contentType: "application/json",
-    data: JSON.stringify(req)
-  }).then(res => {
-    let text = res.data;
+  //TODO html2canvas 사용
+  // upload();
 
-    alert(text);
-    // location.reload();
-  });
+  //! 데이터 등록하는 부분. 현재 편의상 주석처리
+  // $.ajax({
+  //   url: "/maproute/insertPlan.do",
+  //   type: "post",
+  //   contentType: "application/json",
+  //   data: JSON.stringify(req)
+  // }).then(res => {
+  //   let text = res.data;
+
+  //   alert(text);
+  //   // location.reload();
+  // });
 };
 
+//TODO html2canvas 사용
+// const upload = () => {
+//   html2canvas(document.getElementById("testCap")).then(function(canvas) {
+//     let imgDataUrl = canvas.toDataURL("image/jpeg");
+
+//     let aTag = document.createElement("a");
+//     aTag.download = "from_canvas.jpeg";
+//     aTag.href = imgDataUrl;
+//     aTag.click();
+
+//       // let formData = new FormData();
+//       // formData.append("data", dataURItoBlob(imgDataUrl));
+
+//       // $.ajax({
+//       //   type: "post",
+//       //   url: "/maproute/upload",
+//       //   data: formData,
+//       //   // data 파라미터 강제 string 변환 방지
+//       //   processData: false,
+//       //   // application/x-www-form-urlencoded; 방지
+//       //   contentType: false
+//       // })
+//       //   .done(function(data) {
+//       //     console.log(data);
+//       //   })
+//       //   .fail(function(error) {
+//       //     console.log(error);
+//       //   });
+//   });
+// };
+
+//TODO leaflet 라이브러리 사용
 const upload = (err, canvas) => {
-  let imgDataUrl = canvas.toDataURL("image/png");
+  let imgDataUrl = canvas.toDataURL("image/jpeg");
 
-  let formData = new FormData();
-  formData.append("data", imgDataUrl);
+  let aTag = document.createElement("a");
+  aTag.download = "from_canvas.jpeg";
+  aTag.href = imgDataUrl;
+  aTag.click();
 
-  $.ajax({
-    type: "post",
-    url: "/maproute/upload",
-    data: formData,
-    processData: false,
-    contentType: false
-  })
-    .done(function(data) {
-      console.log(data);
-    })
-    .fail(function(error) {
-      console.log(error);
-    });
+  // let formData = new FormData();
+  // formData.append("data", dataURItoBlob(imgDataUrl));
+
+  // $.ajax({
+  //   type: "post",
+  //   url: "/maproute/upload",
+  //   data: formData,
+  //   // data 파라미터 강제 string 변환 방지
+  //   processData: false,
+  //   // application/x-www-form-urlencoded; 방지
+  //   contentType: false
+  // })
+  //   .done(function(data) {
+  //     console.log(data);
+  //   })
+  //   .fail(function(error) {
+  //     console.log(error);
+  //   });
 };
 
 function uploadImage() {
@@ -595,6 +636,15 @@ Number.prototype.toHHMMSS = function() {
   }
   return hours + ":" + minutes + ":" + seconds;
 };
+
+function dataURItoBlob(dataURI) {
+  var binary = atob(dataURI.split(",")[1]);
+  var array = [];
+  for (var i = 0; i < binary.length; i++) {
+    array.push(binary.charCodeAt(i));
+  }
+  return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
+}
 
 //? 이전 소스
 // var tbody;

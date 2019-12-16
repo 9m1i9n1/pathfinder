@@ -22,7 +22,8 @@
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
 
     <%-- leaflet-image --%>
-    <script src='/unpkg.com/leaflet-image@0.4.0/index.js'></script>
+    <script src="/static/route/js/html2canvas.js"></script>
+    <script src=' https://unpkg.com/leaflet-image@latest/leaflet-image.js'></script>
   </head>
 
   <body>
@@ -50,7 +51,7 @@
       <!-- /.container-fluid -->
     </section>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="testCap">
       <div class="row">
         <div class="col-9">
           <div class="vh-85" id="map"></div>
