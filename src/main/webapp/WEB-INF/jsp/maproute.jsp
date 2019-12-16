@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
+	pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html>
@@ -25,6 +26,12 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
   </head>
 
   <body>
+  	<div id="ajaxLoadingImage"
+		style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 200vh; height: 100vh; z-index: 9998;">
+		<img src="/static/img/viewLoading.gif"
+			style="position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; z-index: 9999; filter: alpha(opacity = 50); margin: auto; padding: 0;">
+	  </div>
+
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
