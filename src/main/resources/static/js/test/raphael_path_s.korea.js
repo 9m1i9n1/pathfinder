@@ -51,25 +51,26 @@ function loadingMap() {
 
    var current = null;
    var keyword = null;
-   var a = null;
+   var a = 0;
    for (var state in aus) {
       aus[state].color = Raphael.getColor();
       (function (st, state) {
 
          st[0].onmouseover = function () { // onover
 
-            current && aus[current].animate({fill: "rgb(52, 52, 52)", stroke: "#5d5d5d"}, 500);
+            if(st.id === a)
+            current && aus[current].animate({fill: "rgb(52, 52, 52)", stroke: "#5d5d5d"}, 500) && (document.getElementById(current).style.display = "");
             st.animate({fill: st.color, stroke: "#5d5d5d"}, 500);
-            st.toFront();
+            // st.toFront();
             R.safari();
             document.getElementById(state).style.display = "block";
             current = state;
           }
          
          st[0].onmouseout = function () {
-            
+            if(st.id !== a)
             st.animate({fill: "rgb(52, 52, 52)", stroke: "#5d5d5d"}, 500);
-             st.toFront();
+            // st.toFront();
             R.safari();
          };
 
@@ -88,12 +89,12 @@ function loadingMap() {
 
 
          st[0].onclick = function () {
-
-            console.log("a - ", a)
+            
+         for (var t in aus) {
+            if(aus[t].id !== st.id)
+            aus[t].animate({fill: "rgb(52, 52, 52)", stroke: "#5d5d5d"}, 500)
+         }
          
-            console.log("st.id - ", st.id)
-               st.animate({fill: "rgb(52,52,52)", stroke: "#5d5d5d"}, 500);
-        
             switch(state) {
                case "seoul":
                   current = state;
