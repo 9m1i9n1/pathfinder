@@ -83,10 +83,6 @@
 							<p class="text-muted ml-4 mr-3"><sec:authentication property="principal.userPosition"/></p>
 
 							<hr>
-							<strong><i class="fas fa-user-cog mr-1"></i>
-								Authorization</strong>
-							<p class="text-muted ml-4 mr-3"><sec:authentication property="principal.authorities"/></p>
-							<hr>
 						</div>
 						<!-- /.card-body -->
 					</div>

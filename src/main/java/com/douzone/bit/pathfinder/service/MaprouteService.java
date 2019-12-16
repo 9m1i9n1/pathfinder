@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.RoutesTb;
 import com.douzone.bit.pathfinder.model.network.Header;
-import com.douzone.bit.pathfinder.model.network.request.MaprouteInsertRequest;
-import com.douzone.bit.pathfinder.model.network.request.MaprouteSortRequest;
+import com.douzone.bit.pathfinder.model.network.request.RouteInsertRequest;
+import com.douzone.bit.pathfinder.model.network.request.RouteSortRequest;
 import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
@@ -37,7 +37,7 @@ public class MaprouteService {
 	private Recursive recursive;
 
 	// sortData 처리
-	public Header<List<MaprouteResponse>> markerSort(List<MaprouteSortRequest> markerList) {
+	public Header<List<MaprouteResponse>> markerSort(List<RouteSortRequest> markerList) {
 		createMap = new CreateMap(markerList);
 		recursive = new Recursive(createMap.getMap());
 
@@ -48,7 +48,7 @@ public class MaprouteService {
 	}
 
 	// route정보 Insert
-	public Header<String> insertPlan(MaprouteInsertRequest routeList) {
+	public Header<String> insertPlan(RouteInsertRequest routeList) {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

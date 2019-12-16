@@ -191,7 +191,7 @@ img { max-width: 100%; }
 
 }
 
-#logInForm {
+.logInForm {
 	position: absolute;
 	top: 45%;
 	left: 50%;

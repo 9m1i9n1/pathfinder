@@ -43,10 +43,6 @@ function setNavigation() {
 		<div class="sidebar">
 			<!-- Sidebar user panel (optional) -->
 			<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-				<div class="image">
-					<img src="/static/dist/img/user2-160x160.jpg"
-						class="img-circle elevation-2" alt="User Image">
-				</div>
 				<div class="info">
 					<a href="/userinfo" class="d-block"> <!-- 로그인한 유저 정보 가져오기 --> <sec:authentication
 							property="principal.userFullName" />
