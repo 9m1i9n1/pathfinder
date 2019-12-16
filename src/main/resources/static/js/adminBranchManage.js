@@ -197,6 +197,14 @@ function branchupdate(updateData, barea) {
 		data : updateData,
 		contentType : 'application/json',
 		success : function() {
+			console.log(" 테스트")
+			console.log(barea);
+			if(barea==="제주특별자치도"){
+				barea="제주";
+			}
+			if(barea==="세종특별자치시"){
+				barea="세종"
+			}
 			if(!!barea){
 				let Bname =areaNameTrans(barea);
 				console.log(Bname);
@@ -221,6 +229,12 @@ function branchdelete(idx, bname, barea) {
 		data : {},
 		success :
 			function() {
+			if(barea==="제주특별자치도"){
+				barea="제주";
+			}
+			if(barea==="세종특별자치시"){
+				barea="세종"
+			}
 			if(!!barea){
 			let Bname =areaNameTrans(barea);
 			console.log(Bname);
