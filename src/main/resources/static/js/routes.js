@@ -1,7 +1,18 @@
 $(document).ready(() => {
   $(".scrollbar-outer").scrollbar();
   branchlist(depBranchlist);
+
+  $('#ajaxLoadingImage').hide(); //첫 시작시 로딩바를 숨겨준다.
+
 });
+
+$(document).ajaxStart(function(){
+		$('#ajaxLoadingImage').show(); //ajax실행시 로딩바를 보여준다.
+	});
+
+$(document).ajaxStop(function(){
+		$('#ajaxLoadingImage').hide(); //ajax종료시 로딩바를 숨겨준다.
+	});
 
 $("#testButton").on("click", e => {
   $("#depSelect")
@@ -380,35 +391,7 @@ const requestSort = markerList => {
     type: "post",
     contentType: "application/json",
     data: JSON.stringify(markerList),
-    success:function(res) {
-	   console.log("asdasdasd - ", res);}, 
-    beforeSend: function () {
-           var width = 0;
-           var height = 0;
-           var left = 0;
-           var top = 0;
 
-           width = 50;
-           height = 50;
-
-           top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
-           left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-           if($("#div_ajax_load_image").length != 0) {
-                  $("#div_ajax_load_image").css({
-                         "top": top+"px",
-                         "left": left+"px"
-                  });
-                  $("#div_ajax_load_image").show();
-                  sleep(10000);
-           }
-           else {
-                  $('body').append('<div id="div_ajax_load_image" style="position: absolute; background:#000000; opacity:0.3; top: 0px; left: 0px; width: 200vh; height: 100vh;z-index: 9998;"><img src="/static/img/viewLoading.gif" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; filter:alpha(opacity=50); margin:auto; padding:0; "></div>');
-           }
-    },
-	complete: function () {
-       $("#div_ajax_load_image").hide();
-   }
   })
     .then(res => {
       sortList = $.extend(true, [], res.data);

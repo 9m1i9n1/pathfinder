@@ -425,9 +425,6 @@
 	<script type="text/javascript" src="/static/js/test/raphael_min.js"></script>
 	<script type="text/javascript"
 		src="/static/js/test/raphael_path_s.korea.js"></script>
-	<script>
-		var sca = '01';
-	</script>
 
 	<style>
 </style>
