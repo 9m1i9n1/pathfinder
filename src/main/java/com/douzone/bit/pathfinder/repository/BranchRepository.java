@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.douzone.bit.pathfinder.model.entity.AreaTb;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
+import com.douzone.bit.pathfinder.model.entity.UserTb;
 
 @Repository
 public interface BranchRepository extends JpaRepository<BranchTb, Long> {
@@ -38,5 +39,22 @@ public interface BranchRepository extends JpaRepository<BranchTb, Long> {
 	public Page<BranchTb> findByBranchNameLike(String branchName, Pageable pageable);
 
 	public Page<BranchTb> findByArea(AreaTb area, Pageable pageable);
+	//어드레스 또는 이름에 포함된 문자열 &
+	// + areaIndex가 내가 보내는 값이랑 일치
+	// aeraIndex -> areaTb -> areaIndex areaName
+	// branchTb List -> areaIndex
+	// List <= 
+	//%Name%AndareaIndex
+	//여쪽붙터 해야함
+
+	public Page<BranchTb> findByAreaAndBranchNameLike(AreaTb area, String branchName, Pageable pageable);
+
+	public Page<BranchTb> findByAreaAndBranchAddrLike(AreaTb area, String branchAddr, Pageable pageable);
+	
+	//public Page<BranchTb> findByBranchAddrLike(List<BranchTb> branchs1, String branchAddr, Pageable pageable);
+
+	//public Page<BranchTb> findByBranchNameInAndBranchNameLike(List<BranchTb> branchs1, String branchName, Pageable pageable);
+
+
 
 }

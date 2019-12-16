@@ -18,9 +18,13 @@ $("#updateModal").on("hidden.bs.modal", function() {
 // 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
+	var treeId = sessionStorage.getItem("treeId");
+	
 	var url = "";    
 	url = url + "?searchType=" + $('#searchType').val();
 	url = url + "&keyword=" + $('#keyword').val();
+	url = url + "&selectedArea="+treeId;
+	console.log(url)
 	branchsearch(url);
 });
 
@@ -97,6 +101,8 @@ $.fn.serializeObject = function() {
 
 // 검색뷰
 function branchsearch(searchUrl, searchpage=0) {
+	console.log("여기")
+	console.log(searchUrl)
 	$.ajax({
 		type : "GET",
 		url : "/admin/branchmanage/search" + searchUrl +"&page=" +searchpage ,
@@ -129,6 +135,7 @@ function branchsearch(searchUrl, searchpage=0) {
 			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
 			$("#seachAll").html(buttonAll);
 			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
+			
 		}
 	});
 }
@@ -306,6 +313,8 @@ function treeLoading() {
   }
   $("#jstree").on("select_node.jstree", function(e, data) {
 	    var id = data.instance.get_node(data.selected).id;
+	    sessionStorage.setItem("treeId", id);
+	    console.log(id,"wlwlwlwl")
 	    let vid = id.slice(5)
 	    if(vid != "ny:1"){
 	    if (data.node.children.length > 0) {
@@ -314,7 +323,7 @@ function treeLoading() {
 	        .toggle_node(data.node);
 	    }
 	    var url = "";   
-	    url = url + "?searchType=area&keyword="+vid;
+	    url = url + "?searchType=area&keyword="+vid+"&selectedArea="+id;
 	    branchsearch(url)
 	    }else{
 	    	branchlist()
