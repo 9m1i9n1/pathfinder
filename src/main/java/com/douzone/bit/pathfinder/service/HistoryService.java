@@ -18,10 +18,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.douzone.bit.pathfinder.model.dto.MongoRoutesDTO;
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.RoutesTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
+import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
 import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.model.network.response.HistoryResponse;
 import com.douzone.bit.pathfinder.model.network.response.HistoryRoutesResponse;
@@ -153,13 +155,16 @@ public class HistoryService {
 		return Header.OK(historyList);
 	}
 
-	public Header<HistoryRoutesResponse> readRoutes(ObjectId id) {
+	public Header<List<HistoryRoutesResponse>> readRoutes(ObjectId id) {
 
 		RoutesTb routesTb = routesRepository.findById(id);
+		
+		List<HistoryRoutesResponse> historyRoutesResponseList = routesTb.getDetail()
+				.stream().map(route -> routesResponse(route)).collect(Collectors.toList());
 
-		HistoryRoutesResponse routes = routesResponse(routesTb);
+//		HistoryRoutesResponse routes = routesResponse(routesTb);
 
-		return Header.OK(routes);
+		return Header.OK(historyRoutesResponseList);
 	}
 
 	// TODO hindex로 제거하는게 아니라 부모가 가지고 있던 Routes의 Index 값으로 삭제 구현
@@ -174,15 +179,15 @@ public class HistoryService {
 
 	private HistoryResponse historyResponse(HistoryTb history) {
 
-		// SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
 
 		HistoryResponse response = HistoryResponse.builder().id(history.getId())
 				.regdate(history.getRegdate().format(formatter)).username(history.getUsername()).carname(carNumber)
 				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
-				.dlvrdate(history.getDlvrdate().format(formatter)).arrivedate(history.getArrivedate().format(formatter))
-				.routes(history.getRoutes().toString()).build();
+				.dlvrdate(history.getDlvrdate().format(formatter))
+				// .imgSrc(history.getImgSrc())
+				.arrivedate(history.getArrivedate().format(formatter)).routes(history.getRoutes().toString()).build();
 
 		return response;
 	}
@@ -211,16 +216,53 @@ public class HistoryService {
 		return response;
 	}
 
-	private HistoryRoutesResponse routesResponse(RoutesTb routes) {
-
-		HistoryRoutesResponse response = HistoryRoutesResponse.builder()/* .hindex(routes.getHindex()) */
-				.detail(routes.getDetail()).build();
+	private HistoryRoutesResponse routesResponse(MongoRoutesDTO routes) {
+		
+		int second = (int) Math.floor(routes.getRtime());
+		
+		String result = intToTime(second);
+		
+		HistoryRoutesResponse response = HistoryRoutesResponse.builder()
+				.rdist(routes.getRdist()).rtime(result).rdep(routes.getRdep())
+				.rarvl(routes.getRarvl()).rfee(routes.getRfee())
+				.build();
+		
+//		List<HistoryRoutesResponse> response = HistoryRoutesResponse.builder()
+//				.detail(routes.getDetail()).build();
 
 		return response;
 	}
 
 	public Header<List<HistoryTb>> historyAll() {
 		return Header.OK(historyRepository.findAll());
+	}
+	
+	public String intToTime(int second) {
+		int hours = second / 3600;
+		int min = (second - (hours * 3600)) / 60;
+		int sec = second - (hours * 3600) - (min * 60);
+		
+		String sHours = "", sMin = "", sSec = "";
+		
+		if (hours < 10) {
+			sHours = "0" + hours;
+		} else {
+			sHours = Integer.toString(hours);
+		}
+		
+		if (min < 10) {
+			sMin = "0" + min;
+		} else {
+			sMin = Integer.toString(min);
+		}
+		
+		if (sec < 10) {
+			sSec = "0" + sec;
+		} else {
+			sSec = Integer.toString(sec);
+		}
+		
+		return sHours + ":" + sMin + ":" + sSec;
 	}
 
 	public double todayHistoryPercent() {
@@ -235,7 +277,7 @@ public class HistoryService {
 
 		if (denominator == 0)
 			return -1;
-		double result = Math.round(((double) molecular / (double) denominator ) * 1000) / 10.00;
+		double result = Math.round(((double) molecular / (double) denominator) * 1000) / 10.00;
 		return result;
 	}
 }

@@ -37,9 +37,6 @@
                           Info
                         </div>
                       </div>
-								<img class="profile-user-img img-fluid img-circle elevation-2"
-									src="https://imgnn.seoul.co.kr/img//upload/2017/01/24/SSI_20170124151021_V.jpg"
-									alt="User profile picture">
 							</div>
 							<h3 class="profile-username text-center"><sec:authentication property="principal.userFullName"/></h3>
 							<p class="text-muted text-center">회사이름</p>

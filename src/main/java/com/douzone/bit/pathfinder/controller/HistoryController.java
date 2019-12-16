@@ -41,7 +41,7 @@ public class HistoryController {
 	}
 
 	@GetMapping("/getroutes.do")
-	public Header<HistoryRoutesResponse> getRoutes(@RequestParam("routesIndex") ObjectId id) {
+	public Header<List<HistoryRoutesResponse>> getRoutes(@RequestParam("routesIndex") ObjectId id) {
 
 		return historyService.readRoutes(id);
 	}

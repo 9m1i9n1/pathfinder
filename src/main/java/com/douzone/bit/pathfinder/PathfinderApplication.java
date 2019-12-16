@@ -7,8 +7,17 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 public class PathfinderApplication extends SpringBootServletInitializer {
+	
+	public static final String APPICATION_LOCATIONS = "spring.config.location="
+			+ "classpath:application.properties,"
+			+ "classpath:aws.properties";
+	
 	public static void main(String[] args) {
-		SpringApplication.run(PathfinderApplication.class, args);
+		
+		new SpringApplicationBuilder(PathfinderApplication.class)
+			.properties(APPICATION_LOCATIONS)
+			.run(args);
+//		SpringApplication.run(PathfinderApplication.class, args);
 	}
 
 	@Override

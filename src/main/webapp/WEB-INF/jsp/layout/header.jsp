@@ -9,7 +9,7 @@ pageEncoding="UTF-8"%>
 />
 
 <title>PathFinder</title>
-
+<link rel="shortcut icon" href="/static/img/favicon.ico">
 <!-- jQuery -->
 <script src="/static/plugins/jquery/jquery.min.js"></script>
 

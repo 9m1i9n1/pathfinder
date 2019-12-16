@@ -18,8 +18,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <script src="/static/js/swiper.min.js"></script>
     <link href="/static/css/swiper.min.css" rel="stylesheet" />
 
-    <!-- <link href="/static/route/css/maproute.css" rel="stylesheet" /> -->
-
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
   </head>
 
@@ -47,16 +45,16 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
         <div class="col-9">
           <div class="vh-85" id="map"></div>
         </div>
-
         <div class="col-3">
           <form id="routeForm">
             <div class="accordion md-accordion" id="accordion-select">
-              <%-- 출발지점 선택 --%>
+              <!-- 출발지점 선택 -->
               <div class="card">
                 <div class="card-header" id="headingDep">
                   <h3 class="card-title">
                     1. 출발 지점 선택
                   </h3>
+                  
                 </div>
 
                 <div
@@ -72,6 +70,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   </div>
 
                   <div class="card-footer">
+                  	<input type="file" id="img">
                     <button class="btn btn-primary next" type="button">
                       다음
                     </button>
@@ -150,9 +149,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     </div>
                     <!-- /.input group -->
                   </div>
-                  <!-- <div class="alert alert-light" role="alert" id="selectDate">
-                      배송날짜를 선택해주세요!
-                    </div> -->
 
                   <div class="card-footer">
                     <button
@@ -239,6 +235,8 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                     <div id="routeResult" class="scrollbar-outer">
                       <div class="tmline"></div>
                     </div>
+
+                    <div id="tmlineResult"></div>
                   </div>
 
                   <div class="card-footer">
@@ -264,35 +262,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
           </form>
         </div>
       </div>
-
-      <%-- 아래쪽 div --%> <%--
-      <div class="row" style="margin-top: 5px;">
-        <div class="col-9">
-          <div class="card">
-            <div class="card-header">
-              <b>경로</b>
-            </div>
-            <div
-              class="row flex-row flex-nowrap"
-              id="box"
-              class="box"
-              style="min-height:200px; max-height: 200px;"
-            ></div>
-          </div>
-        </div>
-
-        <div class="col-3">
-          <div class="card">
-            <div class="card-header">
-              <b>최종값</b>
-            </div>
-            <div class="card-body" style="min-height: 200px;">
-              <div id="finalPathDiv"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      --%>
     </div>
 
     <script src="/static/js/routes.js"></script>

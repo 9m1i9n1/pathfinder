@@ -6,8 +6,9 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Document</title>
+<title>로구인 &gt_&ltv</title>
 <!-- CSS -->
+<link rel="shortcut icon" href="/static/img/favicon.ico">
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 <link rel="stylesheet"
@@ -26,7 +27,7 @@
 	<!-- Top content -->
 	<div class="top-content">
 		<div class="inner-bg">
-			<div class="container">
+			<div class="container logInForm">
 				<div class="row justify-content-center">
 					<div class="col-sm-8 col-sm-offset-2 text">
 						<h1>
