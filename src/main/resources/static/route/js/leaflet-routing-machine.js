@@ -17027,7 +17027,6 @@ module.exports = L.Routing = {
 		_addSegment: function(coords, styles, mouselistener) {
 			var i,
 				pl;
-
 			for (i = 0; i < styles.length; i++) {
 				pl = L.polyline(coords, styles[i]);
 				this.addLayer(pl);

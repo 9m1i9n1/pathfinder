@@ -48,6 +48,13 @@ var LeafIcon = L.Icon.extend({
   }
 });
 
+let printPlugin = L.easyPrint({
+	title: 'Chapture Map',
+	exportOnly: true,
+	hidden: true,
+	sizeModes: ['A4Portrait']
+}).addTo(map);
+
 var routeControl = L.Routing.control({
   serviceUrl: "http://218.39.221.89:5000/route/v1",
   routeWhileDragging: false,
@@ -518,11 +525,12 @@ $("#routeForm").validate({
 // ! 데이터 가공 부분 ===============
 // 회원 생성
 const insertPlan = req => {
+	let test = printPlugin.printMap('CurrentSize', 'MyManualPrint');
   //TODO leaflet 라이브러리 사용
-  leafletImage(map, upload);
-
+//  leafletImage(map, upload);
+	
   //TODO html2canvas 사용
-  // upload();
+//   upload();
 
   //! 데이터 등록하는 부분. 현재 편의상 주석처리
   // $.ajax({
@@ -540,7 +548,7 @@ const insertPlan = req => {
 
 //TODO html2canvas 사용
 // const upload = () => {
-//   html2canvas(document.getElementById("testCap")).then(function(canvas) {
+//   html2canvas(document.getElementById("map")).then(function(canvas) {
 //     let imgDataUrl = canvas.toDataURL("image/jpeg");
 
 //     let aTag = document.createElement("a");
@@ -572,7 +580,7 @@ const insertPlan = req => {
 //TODO leaflet 라이브러리 사용
 const upload = (err, canvas) => {
   let imgDataUrl = canvas.toDataURL("image/jpeg");
-
+  
   let aTag = document.createElement("a");
   aTag.download = "from_canvas.jpeg";
   aTag.href = imgDataUrl;

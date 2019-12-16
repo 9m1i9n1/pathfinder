@@ -7,6 +7,12 @@
   <head>
     <title>CSS</title>
 
+	<!-- 지도 캡쳐 -->
+	<script src="/static/route/js/print.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	<link href='http://fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- 한국 지도 표시 -->
     <script src="/static/route/js/proj4.js"></script>
     <script src="/static/route/js/proj4leaflet.js"></script>
@@ -23,7 +29,7 @@
 
     <%-- leaflet-image --%>
     <script src="/static/route/js/html2canvas.js"></script>
-    <script src=' https://unpkg.com/leaflet-image@latest/leaflet-image.js'></script>
+    <script src='https://unpkg.com/leaflet-image@latest/leaflet-image.js'></script>
   </head>
 
   <body>
