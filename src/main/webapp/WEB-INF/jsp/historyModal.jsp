@@ -70,8 +70,6 @@
 						</thead>
 
 						<tbody id="routesListBody"></tbody>
-
-
 					</table>
 
 					<div class="container text-right">
