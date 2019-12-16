@@ -57,7 +57,6 @@ public class AdminCarController {
 	// 차량추가 중복확인
 	@GetMapping("/carcheck.do")
 	public Boolean idCheck(@RequestParam String carNumber) {
-		System.out.println("여기는 컨트롤러");
 		return adminCarService.carCheck(carNumber);
 	}
 
