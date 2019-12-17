@@ -42,10 +42,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-9">
+        <div class="col-md-9">
           <div class="vh-85" id="map"></div>
         </div>
-        <div class="col-3">
+        <div class="col-md-3">
           <form id="routeForm">
             <div class="accordion md-accordion" id="accordion-select">
               <!-- 출발지점 선택 -->
