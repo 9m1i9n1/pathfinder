@@ -242,9 +242,9 @@
 						<imageTag>${maven.build.timestamp}</imageTag>
 					</imageTags>
 					<baseImage>java</baseImage>
-					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+					<entryPoint>["java", "-jar", "/${project.build.finalName}.war"]</entryPoint>
 					<!-- dockerfile 파일 경로-->
-					<dockerDirectory></dockerDirectory>
+					<dockerDirectory>src/main/docker</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
