@@ -437,7 +437,9 @@ hr {
 
 small,
 .small {
-  font-size: 90%;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #212529;
+  font-size: 90%; 
   font-weight: 400;
 }
 

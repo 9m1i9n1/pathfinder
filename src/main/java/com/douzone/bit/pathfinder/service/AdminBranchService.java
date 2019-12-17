@@ -42,7 +42,6 @@ public class AdminBranchService {
 	// branch create
 	public Header<AdminBranchResponse> create(AdminBranchRequest request) {
 
-		System.out.println(request);
 
 		BranchTb branch = BranchTb.builder().branchAddr(request.getBranchAddr()).branchDaddr(request.getBranchDaddr())
 				.branchLat(request.getBranchLat()).branchLng(request.getBranchLng())

@@ -37,7 +37,6 @@ public class HierarchyService {
 
 	public Header<HierarchyResponse> readCompany() {
 		Map<String, Boolean> state = new HashMap<String, Boolean>();
-System.out.println(4);
 		state.put("opened", true);
 		state.put("selected", true);
 
@@ -53,12 +52,10 @@ System.out.println(4);
 
 		List<HierarchyResponse> areaList = areas.stream().map(area -> areaResponse(area)).collect(Collectors.toList());
 
-		System.out.println("1 " + areas.get(0));
 		return areaList;
 	}
 
 	public List<HierarchyResponse> readBranch(Long areaIndex, String parent) {
-		System.out.println(5);
 		List<BranchTb> branchs = branchRepository.findByArea(areaRepository.getOne(areaIndex));
 
 		List<HierarchyResponse> branchList = branchs.stream().map(branch -> branchResponse(branch))
@@ -68,7 +65,6 @@ System.out.println(4);
 	}
 
 	private HierarchyResponse areaResponse(AreaTb area) {
-		System.out.println("2 ");
 		String childParent = "area:" + area.getAreaIndex();
 
 		HierarchyResponse treeResponse = HierarchyResponse.builder().id("area:" + area.getAreaIndex())
@@ -78,7 +74,6 @@ System.out.println(4);
 	}
 
 	private HierarchyResponse branchResponse(BranchTb branch) {
-		System.out.println("3 ");
 		HierarchyResponse treeResponse = HierarchyResponse.builder().id("branch:" + branch.getBranchIndex())
 				.text(branch.getBranchName()).build();
 		return treeResponse;

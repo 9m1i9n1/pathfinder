@@ -44,14 +44,12 @@ public class AdminBranchController {
 	@PostMapping("")
 	public Header<AdminBranchResponse> branchCreate(@RequestBody @Valid AdminBranchRequest request,
 			BindingResult bindingResult) {
-		System.out.println(request);
 		return adminBranchService.create(request);
 	}
 
 	// branch read
 	@GetMapping("/read/{branchIndex}")
 	public Optional<BranchTb> read(@PathVariable Long branchIndex) {
-		System.out.println(adminBranchService.read(branchIndex));
 		return adminBranchService.read(branchIndex);
 	}
 
@@ -96,7 +94,6 @@ public class AdminBranchController {
 	// branch update
 	@PutMapping("/update")
 	public Header<AdminBranchResponse> branchUpdate(@RequestBody AdminBranchRequest request) {
-		System.out.println(adminBranchService.update(request));
 		return adminBranchService.update(request);
 	}
 

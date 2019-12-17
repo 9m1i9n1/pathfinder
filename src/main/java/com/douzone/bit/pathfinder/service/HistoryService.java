@@ -131,12 +131,10 @@ public class HistoryService {
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
 		List<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
-
-		// 이부분 수정해야함 null값 받는지 모르겠음.
-		if (historys == null) {
+		
+		if (historys.isEmpty()) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
-
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponseUseHome(history))
 				.collect(Collectors.toList());
 
@@ -148,15 +146,13 @@ public class HistoryService {
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
 		List<HistoryTb> historys = historyRepository.findAllByIngList(pageable, currentDate);
-
-		// 이부분 수정해야함 null값 받는지 모르겠음.
-		if (historys == null) {
+		if (historys.isEmpty()) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
 
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponseUseHome(history))
 				.collect(Collectors.toList());
-
+		
 		return Header.OK(historyList);
 	}
 
