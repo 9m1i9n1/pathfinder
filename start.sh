@@ -19,7 +19,7 @@ fi
 
 # if [ -n "$image" ] || [ "$image" -eq 1 ]; 
 # then docker rmi "$image"
-fi
+# fi
 
 # docker build -t "$maintaner"/"$app" "$script_path"
 # docker run --restart=always -p 8181:8181 -d --name "$app" "$maintaner"/"$app"
