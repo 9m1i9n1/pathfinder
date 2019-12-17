@@ -41,7 +41,6 @@ public class AdminBranchService {
 	// branch create
 	public Header<AdminBranchResponse> create(AdminBranchRequest request) {
 
-		System.out.println(request);
 
 		BranchTb branch = BranchTb.builder().branchAddr(request.getBranchAddr()).branchDaddr(request.getBranchDaddr())
 				.branchLat(request.getBranchLat()).branchLng(request.getBranchLng()).branchPhone(request.getBranchPhone())
@@ -151,7 +150,6 @@ public class AdminBranchService {
 		switch (searchType) {
 		case "branchName":
 			branchs = branchRepository.findByBranchNameLike("%" + keyword + "%", pageable);
-			System.out.println(branchs);
 			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
 			break;
 

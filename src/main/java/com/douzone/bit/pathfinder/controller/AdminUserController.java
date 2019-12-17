@@ -45,7 +45,6 @@ public class AdminUserController {
 	// 회원 리스트 뷰
 	@GetMapping({ "", "/" })
 	public ModelAndView userManage(ModelAndView mv, HttpServletRequest request) {
-		System.out.println(request.getParameter("pageName"));
 		mv.setViewName("/admin/userManage");
 
 		return mv;
@@ -68,7 +67,6 @@ public class AdminUserController {
 
 	@GetMapping("/idcheck.do")
 	public Boolean idCheck(@RequestParam String userId) {
-		System.out.println("접속");
 
 		return adminUserService.idCheck(userId);
 	}
