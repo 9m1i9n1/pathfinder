@@ -2,6 +2,7 @@ package com.douzone.bit.pathfinder.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.Marker;
 import com.douzone.bit.pathfinder.model.network.request.RouteInsertRequest;
 import com.douzone.bit.pathfinder.model.network.request.RouteSortRequest;
 import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.AdminCarResponse;
-import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
+import com.douzone.bit.pathfinder.model.network.response.RouteSortResponse;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
 import com.douzone.bit.pathfinder.service.AdminCarService;
 import com.douzone.bit.pathfinder.service.MaprouteService;
@@ -39,7 +41,7 @@ public class MaprouteController {
 
 	@Autowired
 	private AdminCarService adminCarService;
-	
+
 	private final S3Uploader s3Uploader;
 
 	@GetMapping({ "", "/" })
@@ -51,9 +53,14 @@ public class MaprouteController {
 	}
 
 	@PostMapping("/mapsort")
-	public Header<List<MaprouteResponse>> mapsort(@RequestBody List<RouteSortRequest> markerList) {
+	public Header<Map<String, List<RouteSortResponse>>> mapsort(@RequestBody RouteSortRequest sortRequest) {
+		List<Marker> markerList = sortRequest.getMarkerList();
+		Long carIndex = sortRequest.getCarIndex();
 
-		return MaprouteService.markerSort(markerList);
+		System.out.println(markerList);
+		System.out.println(carIndex);
+
+		return MaprouteService.markerSort(markerList, carIndex);
 	}
 
 	@GetMapping("/branchLoding")
@@ -80,10 +87,11 @@ public class MaprouteController {
 
 		return MaprouteService.insertPlan(request);
 	}
-	
+
 	@PostMapping("/upload")
 	public String upload(@RequestBody MultipartFile data) throws IOException {
-		
+
+		System.out.println("hello");
 		return s3Uploader.upload(data, "static");
 	}
 }

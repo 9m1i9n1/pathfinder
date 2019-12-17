@@ -45,7 +45,7 @@ public class LocationDistance {
 		dist = dist * 60 * 1.1515;
 		dist = dist * 1.609344;
 
-		return (dist);
+		return dist;
 	}
 
 	private static double deg2rad(double deg) {
