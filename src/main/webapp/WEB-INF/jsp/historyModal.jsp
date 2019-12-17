@@ -52,7 +52,6 @@
 
 						<div class="col-md-7">
 							<img id="mapImg"
-								src="https://t1.daumcdn.net/cfile/tistory/99C7E93359E0E2DC1C"
 								width="100%" height="100%" class="pb-4">
 						</div>
 					</div>
@@ -71,8 +70,6 @@
 						</thead>
 
 						<tbody id="routesListBody"></tbody>
-
-
 					</table>
 
 					<div class="container text-right">

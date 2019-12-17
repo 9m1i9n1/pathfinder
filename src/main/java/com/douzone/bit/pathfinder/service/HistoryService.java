@@ -48,6 +48,8 @@ public class HistoryService {
 		Page<HistoryTb> historys = null;
 		String userName = null;
 		LocalDateTime date = null;
+		LocalDateTime endDate = null;
+		
 		if (myhistory) {
 			userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		}
@@ -56,7 +58,10 @@ public class HistoryService {
 			if (keyword != null) {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-				date = LocalDateTime.parse(keyword, formatter);
+				LocalDate localDate = LocalDate.parse(keyword, formatter);
+
+				date = localDate.atTime(0, 0);
+				endDate = localDate.atTime(23, 59);	
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,8 +77,8 @@ public class HistoryService {
 						: historyRepository.findAllByWill(pageable, currentDate);
 			} else {
 				historys = (myhistory)
-						? historyRepository.findAllByWillAndUsernameAndDate(pageable, currentDate, userName, date)
-						: historyRepository.findAllByWillAndDate(pageable, currentDate, date);
+						? historyRepository.findAllByWillAndUsernameAndDate(pageable, currentDate, userName, date, endDate)
+						: historyRepository.findAllByWillAndDate(pageable, currentDate, date, endDate);
 			}
 
 			break;
@@ -83,8 +88,8 @@ public class HistoryService {
 				historys = (myhistory) ? historyRepository.findAllByIngAndUsername(pageable, currentDate, userName)
 						: historyRepository.findAllByIng(pageable, currentDate);
 			} else {
-				historys = (myhistory) ? historyRepository.findAllByIngAndUsernameAndDate(pageable, currentDate, userName, date)
-						: historyRepository.findAllByIngAndDate(pageable, currentDate, date);
+				historys = (myhistory) ? historyRepository.findAllByIngAndUsernameAndDate(pageable, currentDate, userName, date, endDate)
+						: historyRepository.findAllByIngAndDate(pageable, currentDate, date, endDate);
 			}
 
 			break;
@@ -94,8 +99,8 @@ public class HistoryService {
 				historys = (myhistory) ? historyRepository.findAllByPpAndUsername(pageable, currentDate, userName)
 						: historyRepository.findAllByPp(pageable, currentDate);
 			} else {
-				historys = (myhistory) ? historyRepository.findAllByPpAndUsernameAndDate(pageable, currentDate, userName, date)
-						: historyRepository.findAllByPpAndDate(pageable, currentDate, date);
+				historys = (myhistory) ? historyRepository.findAllByPpAndUsernameAndDate(pageable, currentDate, userName, date, endDate)
+						: historyRepository.findAllByPpAndDate(pageable, currentDate, date, endDate);
 			}
 
 			break;
@@ -126,12 +131,10 @@ public class HistoryService {
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
 		List<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
-
-		// 이부분 수정해야함 null값 받는지 모르겠음.
-		if (historys == null) {
+		
+		if (historys.isEmpty()) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
-
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponseUseHome(history))
 				.collect(Collectors.toList());
 
@@ -143,15 +146,13 @@ public class HistoryService {
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
 		List<HistoryTb> historys = historyRepository.findAllByIngList(pageable, currentDate);
-
-		// 이부분 수정해야함 null값 받는지 모르겠음.
-		if (historys == null) {
+		if (historys.isEmpty()) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
 
 		List<HistoryResponse> historyList = historys.stream().map(history -> historyResponseUseHome(history))
 				.collect(Collectors.toList());
-
+		
 		return Header.OK(historyList);
 	}
 
@@ -162,12 +163,9 @@ public class HistoryService {
 		List<HistoryRoutesResponse> historyRoutesResponseList = routesTb.getDetail()
 				.stream().map(route -> routesResponse(route)).collect(Collectors.toList());
 
-//		HistoryRoutesResponse routes = routesResponse(routesTb);
-
 		return Header.OK(historyRoutesResponseList);
 	}
 
-	// TODO hindex로 제거하는게 아니라 부모가 가지고 있던 Routes의 Index 값으로 삭제 구현
 	public Header<String> removeRoutes(ObjectId id) {
 
 		HistoryTb history = historyRepository.findById(id);
@@ -186,7 +184,7 @@ public class HistoryService {
 				.regdate(history.getRegdate().format(formatter)).username(history.getUsername()).carname(carNumber)
 				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(history.getDlvrdate().format(formatter))
-				// .imgSrc(history.getImgSrc())
+				.imgSrc(history.getImgSrc())
 				.arrivedate(history.getArrivedate().format(formatter)).routes(history.getRoutes().toString()).build();
 
 		return response;
@@ -226,9 +224,6 @@ public class HistoryService {
 				.rdist(routes.getRdist()).rtime(result).rdep(routes.getRdep())
 				.rarvl(routes.getRarvl()).rfee(routes.getRfee())
 				.build();
-		
-//		List<HistoryRoutesResponse> response = HistoryRoutesResponse.builder()
-//				.detail(routes.getDetail()).build();
 
 		return response;
 	}

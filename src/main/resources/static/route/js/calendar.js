@@ -193,7 +193,7 @@
         var y = this.getFullYear(),
             m = this.getMonth() + 1,
             d = this.getDate();
-
+            
         return exp.replace('yyyy', y).replace('mm', m).replace('dd', d);
     }
 

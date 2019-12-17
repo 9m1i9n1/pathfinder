@@ -19,6 +19,7 @@ public class HistoryResponse {
 	private String regdate;
 	private String username;
 	private String carname;
+	private String imgSrc;
 	private String dep;
 	private String arvl;
 	private Double dist;

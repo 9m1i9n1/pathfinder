@@ -25,11 +25,8 @@ function datePicker() {
         offset: [-95, 3],
         weekArray: ['일', '월', '화', '수', '목', '금', '토'],
         monthArray: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        onSelected: function (view, date, data) {
-
-        },
         onClose: function (view, date, data) {
-
+        	$("#keyword").val(moment(date).format("YYYY-MM-DD"));
         }
     });
 }
@@ -170,8 +167,12 @@ function getRoutes(routes) {
 			$("#deleteBtn").off().on('click', function() {
 				removeRoutes(routes);
 			});
-
+			
 			$("#routesListBody").html(str);
+			
+			detailsModal
+			.find("#mapImg")
+			.attr("src", routes.imgSrc);
 			
 			detailsModal
 			.find("#index")
