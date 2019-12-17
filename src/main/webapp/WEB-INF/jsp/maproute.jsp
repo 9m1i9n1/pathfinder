@@ -195,5 +195,4 @@
 
 	<script src="/static/js/routes.js"></script>
 </body>
->>>>>>> origin/master
 </html>
