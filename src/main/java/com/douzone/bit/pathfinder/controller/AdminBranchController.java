@@ -65,7 +65,7 @@ public class AdminBranchController {
 	public Header<List<AdminBranchResponse>> branchSearch(
 			@RequestParam(required = false, defaultValue = "branchName") String searchType,
 			@RequestParam(required = false) String keyword,
-			@RequestParam(required = false) String selectedArea,
+			@RequestParam(required = false, defaultValue = "company:1") String selectedArea,
 			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC) Pageable pageable) {
 		
 		return adminBranchService.search(pageable, searchType, keyword, selectedArea);

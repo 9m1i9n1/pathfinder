@@ -169,10 +169,11 @@ function branchinsert(insertData, barea) {
 		data : insertData,
 		contentType : 'application/json',
 		success : function(data) {
-			if(!!barea){
+			var treeId = sessionStorage.getItem("treeId");
+			if(treeId !== "company:1"){
 				let Bname =areaNameTrans(barea);
 				console.log(Bname);
-				var treeId = sessionStorage.getItem("treeId");
+			
 				 var url = "";   
 				 url = url + "?searchType=area&keyword="+Bname +"&selectedArea="+treeId;
 				 branchsearch(url);
@@ -205,8 +206,7 @@ function branchupdate(updateData, barea) {
 		data : updateData,
 		contentType : 'application/json',
 		success : function() {
-			console.log(" 테스트")
-			console.log(barea);
+			
 			if(barea==="제주특별자치도"){
 				barea="제주";
 			}

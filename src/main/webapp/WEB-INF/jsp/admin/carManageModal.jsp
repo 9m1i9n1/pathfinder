@@ -11,7 +11,7 @@
 			</div>
 
 			<div class="modal-body">
-				<form id="carCreateForm">
+				<form id="carCreateForm" name="carCreateForm">
 
 
 					<div class="form-group row">

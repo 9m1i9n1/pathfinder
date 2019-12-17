@@ -11,9 +11,11 @@ $("#insertModal").on("hidden.bs.modal", function() {
 // 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
+	var treeId = sessionStorage.getItem("treeId");
 	var url = "";    
 	url = url + "?searchType=" + $('#searchType').val();
 	url = url + "&keyword=" + $('#keyword').val();
+	url = url + "&selectedArea="+treeId;
 	carsearch(url);
 });
 
@@ -51,23 +53,22 @@ function pageButton1(totalPages, currentPage, url) {
 
 //폼 내용 Json으로 변경
 $.fn.serializeObject = function() {
-  let result = {};
-  let extend = function(i, element) {
-    let node = result[element.name];
-    if ("undefined" !== typeof node && node !== null) {
-      if ($.isArray(node)) {
-        node.push(element.value);
-      } else {
-        result[element.name] = [node, element.value];
-      }
-    } else {
-      result[element.name] = element.value;
-    }
-  };
-
-  $.each(this.serializeArray(), extend);
-  return JSON.stringify(result);
-};
+	var result = {}
+	var extend = function(i, element) {
+		var node = result[element.name]
+		if ("undefined" !== typeof node && node !== null) {
+			if ($.isArray(node)) {
+				node.push(element.value)
+			} else {
+				result[element.name] = [ node, element.value ]
+			}
+		} else {
+			result[element.name] = element.value
+		}
+	}
+	$.each(this.serializeArray(), extend)
+	return result
+}
 // 검색뷰
 function carsearch(searchUrl, searchpage=0) {
 	$.ajax({
@@ -85,7 +86,7 @@ function carsearch(searchUrl, searchpage=0) {
 					str	+= '<td>' + value.carFuel + '</td>';
 					str	+= '<td>' + value.carBuy.year +'.'+value.carBuy.month+'.'+value.carBuy.day+ '</td>';
 					str += "<td><div class='table-data-feature'>"
-					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName+ `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
+					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(`+ value.carIndex +`, '` + value.carName+ `', '` + value.carArea + `')"><i class="fas fa-trash-alt"></i></button>`;
 					str += `</td>'+ '</tr>`;
 					});
 				buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
@@ -105,9 +106,9 @@ function carsearch(searchUrl, searchpage=0) {
 }
 
 // 추가
-function carinsert(insertData) {
-	let carName = $('[name=carName]').val()
-	var result = confirm(carName +" 차량을 추가하시겠습니까?");
+function carinsert(insertData, carea) {
+	let carNumber = $('[name=carNumber]').val()
+	var result = confirm(carNumber +" 차량을 추가하시겠습니까?");
 	if(result){
 	$.ajax({
 		type : "POST",
@@ -115,7 +116,16 @@ function carinsert(insertData) {
 		data : insertData,
 		contentType : 'application/json',
 		success : function(data) {
-		carlist();
+			var treeId = sessionStorage.getItem("treeId");
+			console.log(55555)
+			if(treeId !== "company:1"){
+			
+				 var url = "";   
+				 url = url + "?searchType=area&keyword="+carea +"&selectedArea="+treeId;
+				 carsearch(url);
+				}else{
+					carlist();
+				}
 		},
 		error: function(request, status, error) {
 		      alert(
@@ -135,7 +145,7 @@ function carinsert(insertData) {
 }
 
 // 삭제
-function cardelete(idx, carname, cararea) {
+function cardelete(idx, carname, carea) {
 	var result = confirm(carname +" 차량이 맞습니까?");
 	if(result){
 	$.ajax({
@@ -143,14 +153,24 @@ function cardelete(idx, carname, cararea) {
 		url : "/admin/carmanage/delete/" + idx,
 		data : {},
 		success :
+			
 			function() {
-			if(!!cararea){
-			let Cname =areaNameTrans(cararea)
+			var treeId = sessionStorage.getItem("treeId");
+			console.log(11)
+			if(treeId !== "company:1"){
+				console.log(22)
+				console.log(carea)
+			let Cname =areaNameTrans(carea)
+			console.log(33)
 			 var url = "";
-			 url = url + "?searchType=area&keyword="+Cname;
-			 carlist();
+			 url = url + "?searchType=area&keyword="+Cname +"&selectedArea="+treeId;
+			 console.log(44)
+			 carsearch(url);
+			 console.log(55)
 			}else{
+				console.log(66)
 			 carlist();
+				console.log(77)
 			}
 		}
 	});
@@ -213,6 +233,7 @@ function treeLoading() {
   }
   $("#jstree").on("select_node.jstree", function(e, data) {
 	    var id = data.instance.get_node(data.selected).id;
+	    sessionStorage.setItem("treeId", id);
 	    let vid = id.slice(5)
 	    if(vid != "ny:1"){
 	    if (data.node.children.length > 0) {
@@ -221,7 +242,7 @@ function treeLoading() {
 	        .toggle_node(data.node);
 	    }
 	    var url = "";   
-	    url = url + "?searchType=area&keyword="+vid;
+	    url = url + "?searchType=area&keyword="+vid+"&selectedArea="+id;
 	    carsearch(url)
 	    }else{
 	    	carlist()
@@ -371,9 +392,9 @@ $(".selectpicker").on("change", function() {
   $(this).blur();
 });
 
-// 모든 폼 valid 적용
-$("form").each(function() {
-  $(this).validate({
+
+
+var carInsertValid = $('#carCreateForm').validate({
     onkeyup: false,
     ignore: ":hidden, [readonly]",
 	rules : {
@@ -445,25 +466,17 @@ $("form").each(function() {
 
     // valid 성공시
     submitHandler: function(form) {
-      var formId = $(form).attr("id");
-      var req = $(form).serializeObject();
-
-      switch (formId) {
-        case "carCreateForm":{
-        	carinsert(req);
-        	insertModal.modal("hide");
-        	break;
-        }
-        
-        default:{
-        	alert("valid 에러");
-        	break;
-        }
-      }
-
-      return false;
-    }
+        event.preventDefault();
+	     console.log("인서트 접속");
+	 	 var formData = $('[name=carCreateForm]').serializeObject()
+	 	 console.log(formData,"허허허")
+	 	 console.log(formData.carArea,"하하하")
+	 	 carinsert(JSON.stringify(formData), formData.carArea)
+	 	 $('#insertModal').modal("hide");
+	 	 carInsertValid.resetForm();
+	     return false;
+	   }
   });
-});
+
 
 
