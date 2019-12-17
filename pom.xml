@@ -244,7 +244,7 @@
 					<baseImage>java</baseImage>
 					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
 					<!-- dockerfile 파일 경로-->
-					<dockerDirectory>/</dockerDirectory>
+					<dockerDirectory></dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
