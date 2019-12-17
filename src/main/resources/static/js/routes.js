@@ -226,7 +226,7 @@ const drawTimeline = routeInfo => {
   let sumTime = 0;
 
   let str = "<ul>";
-  $.each(routeInfo.routes, function(key, value) {
+  $.each(routeInfo.routes, function(index, value) {
     str += "<li>";
     str += "<div>";
     str += `<div class="title">${value.rdep} → ${value.rarvl}</div>`;
@@ -244,7 +244,7 @@ const drawTimeline = routeInfo => {
   str += "</ul>";
 
   let result = "<div class='text-left'>";
-  result += `<small class='badge badge-warning'>결과</small>`;
+  result += `<small class='badge badge-warning'>정보</small>`;
   result += `<small class='text-success float-right'><i class='fas fa-arrow-up'></i>10%</small>`;
   result += "</div>";
 
