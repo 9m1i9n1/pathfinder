@@ -17,9 +17,13 @@ then
 	docker rm "$container"
 fi
 
-if [ -n "$image" ] || [ "$image" -eq 1 ]; 
-then docker rmi "$image"
+# if [ -n "$image" ] || [ "$image" -eq 1 ]; 
+# then docker rmi "$image"
 fi
 
-docker build -t "$maintaner"/"$app" "$script_path"
-docker run --restart=always -p 8181:8181 -d --name "$app" "$maintaner"/"$app"
+# docker build -t "$maintaner"/"$app" "$script_path"
+# docker run --restart=always -p 8181:8181 -d --name "$app" "$maintaner"/"$app"
+
+# push용 New command
+docker push "$maintaner"/"$app"
+docker run -p 8181:8181 -d --name "$app" "$maintaner"/"$app":latest

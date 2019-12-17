@@ -73,7 +73,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   data-parent="#accordion-select"
                 >
                   <div class="card-body">
-                    <select class="select2-olive" id="depSelect" name="depSelect">
+                    <select class="select2-success" id="depSelect" name="depSelect">
                       <option></option>
                     </select>
                   </div>
