@@ -13,11 +13,11 @@ $(document).ajaxStop(function() {
   $("#ajaxLoadingImage").hide(); //ajax종료시 로딩바를 숨겨준다.
 });
 
-$("#testButton").on("click", e => {
-  $("#depSelect")
-    .val("652")
-    .trigger("change");
-});
+// $("#testButton").on("click", e => {
+//   $("#depSelect")
+//     .val("652")
+//     .trigger("change");
+// });
 
 // 다음 지도 사용
 // var map = new L.Map("map", {
@@ -53,7 +53,13 @@ var routeControl = L.Routing.control({
   routeWhileDragging: false,
   draggableWaypoints: false,
   lineOptions: {
-    styles: [{ color: "green", opacity: 1, weight: 5 }],
+    styles: [
+      {
+        color: "#CF4444",
+        opacity: 0.8,
+        weight: 5
+      }
+    ],
     addWaypoints: false
   },
   createMarker: (index, wp, size) => {
@@ -101,10 +107,10 @@ const loadCalendar = res => {
   $("#calendar").calendar({
     width: calendarSize,
     height: calendarSize * 0.8,
-    date: new Date(),
+    // date: new Date(),
     format: "yyyy-MM-dd",
     startWeek: 0,
-    selectedRang: [moment().add(1, "D"), moment().add(3, "M")],
+    selectedRang: [moment().add(1, "days"), moment().add(3, "M")],
     disableDay: disableList,
     weekArray: ["일", "월", "화", "수", "목", "금", "토"],
     monthArray: [
@@ -235,13 +241,21 @@ const drawTimeline = routeInfo => {
     str += `<span>${sumTime.toHHMMSS()}</span></span>`;
     str += "</li>";
   });
-
   str += "</ul>";
 
+  let result = "<div class='text-left'>";
+  result += `<small class='badge badge-warning'>결과</small>`;
+  result += `<small class='text-success float-right'><i class='fas fa-arrow-up'></i>10%</small>`;
+  result += "</div>";
+
+  result += "<div class='text-center'>";
+  result += `<div class='float-left'><i class="fas fa-clock"></i><span class="result"><b>${sumTime.toHHMMSS()}</b></span></div>`;
+  result += `<div class='float-right'><i class="fas fa-coins"></i><span class="result"><b>${routeInfo.fee}</b></span>원</div>`;
+  result += `<div><i class="fas fa-road"></i><span class="result"><b>${routeInfo.dist}</b></span>km</div>`;
+  result += "</div>";
+
   $(".tmline").html(str);
-  $("#tmlineResult").html(
-    `${routeInfo.dist}km | ${routeInfo.fee}원 | ${sumTime.toHHMMSS()}`
-  );
+  $("#tmlineResult").html(result);
 };
 
 // ! 선택 Event 구간 ===================
@@ -521,7 +535,7 @@ $("#routeForm").validate({
 
   // valid 성공시
   submitHandler: form => {
-    insertPlan(routeList);
+    insertPlan(routeCostList);
   }
 });
 
@@ -529,23 +543,23 @@ $("#routeForm").validate({
 // 회원 생성
 const insertPlan = req => {
   //TODO leaflet 라이브러리 사용
-  leafletImage(map, upload);
+  // leafletImage(map, upload);
 
   //TODO html2canvas 사용
   // upload();
 
   //! 데이터 등록하는 부분. 현재 편의상 주석처리
-  // $.ajax({
-  //   url: "/maproute/insertPlan.do",
-  //   type: "post",
-  //   contentType: "application/json",
-  //   data: JSON.stringify(req)
-  // }).then(res => {
-  //   let text = res.data;
+  $.ajax({
+    url: "/maproute/insertPlan.do",
+    type: "post",
+    contentType: "application/json",
+    data: JSON.stringify(req)
+  }).then(res => {
+    let text = res.data;
 
-  //   alert(text);
-  //   // location.reload();
-  // });
+    alert(text);
+    location.reload();
+  });
 };
 
 //TODO html2canvas 사용
