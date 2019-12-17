@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.douzone.bit.pathfinder.model.entity.AreaTb;
 import com.douzone.bit.pathfinder.model.entity.BranchTb;
+import com.douzone.bit.pathfinder.model.entity.UserTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
 import com.douzone.bit.pathfinder.model.network.request.AdminBranchRequest;
@@ -44,8 +45,9 @@ public class AdminBranchService {
 		System.out.println(request);
 
 		BranchTb branch = BranchTb.builder().branchAddr(request.getBranchAddr()).branchDaddr(request.getBranchDaddr())
-				.branchLat(request.getBranchLat()).branchLng(request.getBranchLng()).branchPhone(request.getBranchPhone())
-				.branchName(request.getBranchName()).branchOwner(request.getBranchOwner()).branchValue(request.getBranchValue())
+				.branchLat(request.getBranchLat()).branchLng(request.getBranchLng())
+				.branchPhone(request.getBranchPhone()).branchName(request.getBranchName())
+				.branchOwner(request.getBranchOwner()).branchValue(request.getBranchValue())
 				.area(areaRepository.getOne(request.getAreaIndex())).build();
 
 		BranchTb newBranch = branchRepository.save(branch);
@@ -103,8 +105,9 @@ public class AdminBranchService {
 
 	private AdminBranchResponse response(BranchTb branch) {
 		AdminBranchResponse adminBranchResponse = AdminBranchResponse.builder().branchIndex(branch.getBranchIndex())
-				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner()).branchValue(branch.getBranchValue())
-				.branchAddr(branch.getBranchAddr()).branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
+				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner())
+				.branchValue(branch.getBranchValue()).branchAddr(branch.getBranchAddr())
+				.branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
 				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
 				.areaIndex(branch.getArea().getAreaIndex()).build();
 		return adminBranchResponse;
@@ -125,7 +128,8 @@ public class AdminBranchService {
 	public List<HierarchyResponse> readArea() {
 
 		List<AreaTb> areas = areaRepository.findAll();
-		List<HierarchyResponse> areaList = areas.stream().map(area -> areaOnlyResponse(area)).collect(Collectors.toList());
+		List<HierarchyResponse> areaList = areas.stream().map(area -> areaOnlyResponse(area))
+				.collect(Collectors.toList());
 		return areaList;
 	}
 
@@ -144,32 +148,62 @@ public class AdminBranchService {
 	}
 
 	// 지점 검색
-	public Header<List<AdminBranchResponse>> search(Pageable pageable, String searchType, String keyword) {
+	public Header<List<AdminBranchResponse>> search(Pageable pageable, String searchType, String keyword,
+			String selectedArea) {
 
+		String treeId[] = selectedArea.split(":");
+		String nodeType = treeId[0];
+		Long nodeIndex = Long.parseLong(treeId[1]);
+//jsp 디폴트 값 바꾸기.
 		Page<BranchTb> branchs = null;
 		List<AdminBranchResponse> branchResponseList = null;
-		switch (searchType) {
-		case "branchName":
-			branchs = branchRepository.findByBranchNameLike("%" + keyword + "%", pageable);
-			System.out.println(branchs);
-			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
-			break;
+		if(nodeType.equals("company")) {
+			switch (searchType) {
+			case "branchName":
+				branchs = branchRepository.findByBranchNameLike("%" + keyword + "%", pageable);
+				branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());			
+				break;
+				
+			case "branchAddr":
+				branchs = branchRepository.findByBranchAddrLike("%" + keyword + "%", pageable);
+				branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
+				break;
 
-		case "area":
+			default:
+				break;
+			}
+		}
+		else {
+			List<BranchTb> branchs1 = branchRepository.findByArea(areaRepository.getOne(nodeIndex));
+			
+			switch (searchType) {
+			case "area":
 			// http://localhost:8181/admin/branchmanage/search?searchType=area&keyword=1
 			branchs = branchRepository.findByArea(areaRepository.getOne(Long.parseLong(keyword)), pageable);
 			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
 			break;
+			
+			case "branchName":
+				//지역 지점 정보 다가저옴
+				branchs = branchRepository.findByAreaAndBranchNameLike(areaRepository.getOne(nodeIndex), "%" + keyword + "%", pageable);
 
-		case "branchAddr":
-			branchs = branchRepository.findByBranchAddrLike("%" + keyword + "%", pageable);
-			branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());
-			break;
+				branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());			
+				break;
+				
+			case "branchAddr":
+				branchs = branchRepository.findByAreaAndBranchAddrLike(areaRepository.getOne(nodeIndex), "%" + keyword + "%", pageable);
 
-		default:
-			break;
+				branchResponseList = branchs.stream().map(branch -> response(branch)).collect(Collectors.toList());			
+				break;
+
+			default:
+				break;
+			}
+
 		}
-	    if (branchs.getTotalElements() == 0) {
+		
+
+		if (branchs.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
 		Pagination pagination = Pagination.builder().totalPages(branchs.getTotalPages())
@@ -179,5 +213,6 @@ public class AdminBranchService {
 		return Header.OK(branchResponseList, pagination);
 
 	}
+
 
 }
