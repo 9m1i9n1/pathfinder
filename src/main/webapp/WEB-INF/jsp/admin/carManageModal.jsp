@@ -51,7 +51,7 @@
 						<label for="carFuel" class="col-sm-3 col-form-label-sm">연비</label>
 						<div class="col-sm-8">
 							<input type="Number" class="form-control" id="carFuel"
-								name="carFuel" />
+								name="carFuel" placeholder="km" />
 						</div>
 					</div>
 

@@ -372,9 +372,11 @@
 										</ol>
 										<div class="carousel-inner">
 											<div class="carousel-item">
-												<img class="d-block w-100" 
-													src="https://placehold.it/900x470/3333CC/ffffff&amp;text=PathFinder"
-													alt="First slide">
+												<a href="http://www.bitacademy.com/">
+												<img class="d-block w-100"
+													src="/static/img/imgs/bitLogo.jpg"
+													alt="Third slide">
+												</a>
 											</div>
 											<div class="carousel-item active" >
 												<a href="http://www.douzone.com/">
