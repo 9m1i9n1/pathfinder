@@ -34,17 +34,17 @@ $(document).ajaxStop(function() {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map").setView([36.1358642, 128.0785804], 7)
-.on('easyPrint-finished', e => {
-	console.log(e.event);
-});
-
+let map = L.map("map")
+  .setView([36.1358642, 128.0785804], 7)
+  .on("easyPrint-finished", e => {
+    console.log(e.event);
+    insertPlan(routeCostList, e.event);
+  });
 
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-})
-.addTo(map);
+}).addTo(map);
 
 var LeafIcon = L.Icon.extend({
   options: {
@@ -55,10 +55,10 @@ var LeafIcon = L.Icon.extend({
 });
 
 let printPlugin = L.easyPrint({
-	title: 'Chapture Map',
-	outputMode: 'event',
-	hidden: true,
-	sizeModes: ['A4Portrait']
+  title: "Chapture Map",
+  outputMode: "event",
+  hidden: true,
+  sizeModes: ["A4Portrait"]
 }).addTo(map);
 
 var routeControl = L.Routing.control({
@@ -548,32 +548,27 @@ $("#routeForm").validate({
 
   // valid 성공시
   submitHandler: form => {
-    insertPlan(routeCostList);
+    printPlugin.printMap("CurrentSize", "MyManualPrint");
   }
 });
 
 // ! 데이터 가공 부분 ===============
 // 회원 생성
-const insertPlan = req => {
-	printPlugin.printMap('CurrentSize', 'MyManualPrint');
-	
-  //TODO leaflet 라이브러리 사용
-//  leafletImage(map, upload);
-	
-  //TODO html2canvas 사용
-//   upload();
+const insertPlan = (req, blob) => {
+  let plan = $.extend(true, [], req);
+  plan.blob = blob;
 
   //! 데이터 등록하는 부분. 현재 편의상 주석처리
   $.ajax({
     url: "/maproute/insertPlan.do",
     type: "post",
     contentType: "application/json",
-    data: JSON.stringify(req)
+    data: JSON.stringify(plan)
   }).then(res => {
     let text = res.data;
 
     alert(text);
-    location.reload();
+    // location.reload();
   });
 };
 
@@ -611,14 +606,9 @@ const insertPlan = req => {
 //TODO leaflet 라이브러리 사용
 const upload = (err, canvas) => {
   let imgDataUrl = canvas.toDataURL("image/jpeg");
-  
-  let aTag = document.createElement("a");
-  aTag.download = "from_canvas.jpeg";
-  aTag.href = imgDataUrl;
-  aTag.click();
 
-  // let formData = new FormData();
-  // formData.append("data", dataURItoBlob(imgDataUrl));
+  let formData = new FormData();
+  formData.append("data", dataURItoBlob(imgDataUrl));
 
   // $.ajax({
   //   type: "post",
