@@ -56,7 +56,7 @@ var LeafIcon = L.Icon.extend({
 
 let printPlugin = L.easyPrint({
 	title: 'Chapture Map',
-	outputMode: 'event',
+	outputMode: 'download',
 	hidden: true,
 	sizeModes: ['A4Portrait']
 }).addTo(map);
