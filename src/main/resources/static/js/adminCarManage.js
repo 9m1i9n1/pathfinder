@@ -291,12 +291,12 @@ insertModal.on("hidden.bs.modal", function() {
   insertModal
     .find("#carArea")
     .html(str)
-    .selectpicker("refresh");
+//.selectpicker("refresh");
 
-  insertModal.find("#carNumber").selectpicker("refresh");
-  insertModal.find("#carName").selectpicker("refresh");
-  insertModal.find("#carFuel").selectpicker("refresh");
-  insertModal.find("#carBuy").selectpicker("refresh");
+//  insertModal.find("#carNumber").selectpicker("refresh");
+//  insertModal.find("#carName").selectpicker("refresh");
+//  insertModal.find("#carFuel").selectpicker("refresh");
+//  insertModal.find("#carBuy").selectpicker("refresh");
   $("#carCreateForm")
     .validate()
     .resetForm();
