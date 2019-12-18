@@ -37,6 +37,9 @@
 ##### 트럭 종류
 - 1T, 2.5T, 5T, 10.5T, 19T, 25T (비율은 T / 6)
 
+### Docker파일 위치
+- src/main/docker
+
 ## Schema
 **User Table**
 
