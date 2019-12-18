@@ -25,5 +25,5 @@ fi
 # docker run --restart=always -p 8181:8181 -d --name "$app" "$maintaner"/"$app"
 
 # push용 New command
-/usr/bin/docker push "$maintaner"/"$app"
-/usr/bin/docker run --restart="always" -p 8181:8181 -d --name "$app" "$maintaner"/"$app":latest
+docker push "$maintaner"/"$app"
+docker run --restart="always" -p 8181:8181 -d --name "$app" "$maintaner"/"$app":latest
