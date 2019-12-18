@@ -391,7 +391,6 @@
 												<img class="d-block w-100"
 													src="https://placehold.it/900x470/f39c12/ffffff&amp;text=PathFinder"
 													alt="Third slide">
-
 											</div>
 										</div>
 										<a class="carousel-control-prev"
