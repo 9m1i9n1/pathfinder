@@ -11,8 +11,6 @@
 	rel="stylesheet">
 <script
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-<!-- PAGE SCRIPTS -->
-<script src="/static/dist/js/pages/dashboard2.js"></script>
 </head>
 <body>
 	<!-- Content Header (Page header) -->
@@ -370,9 +368,11 @@
 										</ol>
 										<div class="carousel-inner">
 											<div class="carousel-item">
+												<a href="http://www.bitacademy.com/">
 												<img class="d-block w-100"
-													src="https://placehold.it/900x470/3333CC/ffffff&amp;text=PathFinder"
-													alt="First slide">
+													src="/static/img/imgs/bitLogo.jpg"
+													alt="Third slide">
+												</a>
 											</div>
 											<div class="carousel-item active">
 												<a href="http://www.douzone.com/"> <img
@@ -385,7 +385,6 @@
 												<img class="d-block w-100"
 													src="https://placehold.it/900x470/f39c12/ffffff&amp;text=PathFinder"
 													alt="Third slide">
-
 											</div>
 										</div>
 										<a class="carousel-control-prev"

@@ -17027,7 +17027,6 @@ module.exports = L.Routing = {
 		_addSegment: function(coords, styles, mouselistener) {
 			var i,
 				pl;
-
 			for (i = 0; i < styles.length; i++) {
 				pl = L.polyline(coords, styles[i]);
 				this.addLayer(pl);
@@ -17927,7 +17926,7 @@ module.exports = L.Routing = {
 			};
 
 			if (!this.options.suppressDemoServerWarning &&
-				this.options.serviceUrl.indexOf('//218.39.221.89:5000') >= 0) {
+				this.options.serviceUrl.indexOf('//router.project-osrm.org') >= 0) {
 				console.warn('You are using OSRM\'s demo server. ' +
 					'Please note that it is **NOT SUITABLE FOR PRODUCTION USE**.\n' +
 					'Refer to the demo server\'s usage policy: ' +

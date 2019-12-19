@@ -15,7 +15,27 @@ $("#updateModal").on("hidden.bs.modal", function() {
 });
 
 
-// 검색버튼
+//검색 enter press
+function searchEnter(){
+    if (window.event.keyCode == 13) {
+    	searchClick();
+   }
+}
+
+//검색버튼
+function searchClick(){
+	
+	var treeId = sessionStorage.getItem("treeId");
+	
+	var url = "";    
+	url = url + "?searchType=" + $('select#searchType').val();
+	url = url + "&keyword=" + $('#keyword').val();
+	url = url + "&selectedArea="+treeId;
+	console.log(url)
+	branchsearch(url);
+}
+
+/*// 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
 	var treeId = sessionStorage.getItem("treeId");
@@ -27,7 +47,7 @@ $('#btnSearch').click(function(e){
 	console.log(url)
 	branchsearch(url);
 });
-
+*/
 
 // 지역이름 숫자변환
 function areaNameTrans(areaIndex){
@@ -109,6 +129,7 @@ function branchsearch(searchUrl, searchpage=0) {
 		contentType : 'application/json',
 		success : function(res) {
 			var str = "";
+			
 			if (res.resultCode !== "ERROR") {
 				$.each(res.data,function(key, value) {
 					str += `<tr class="tr-shadow"><td>` + value.area +'</td>';
@@ -122,19 +143,20 @@ function branchsearch(searchUrl, searchpage=0) {
 					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
 					str += `</td>'+ '</tr>`;
 					});
+				pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
 			} else {	
 					str += `<tr class="tr-shadow">`;
 					str += `<td colspan="8">`;
 					str += `${res.description}`;
 					str += `</td>`;
 					str += `</tr>`;
-					
+					pageButton1(1, 0, searchUrl);					
 				}
 			$("#tableListBody").html(str);
 			var buttonAll = "";
 			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
+
 			$("#seachAll").html(buttonAll);
-			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
 			
 		}
 	});
@@ -169,10 +191,11 @@ function branchinsert(insertData, barea) {
 		data : insertData,
 		contentType : 'application/json',
 		success : function(data) {
-			if(!!barea){
+			var treeId = sessionStorage.getItem("treeId");
+			if(treeId !== "company:1"){
 				let Bname =areaNameTrans(barea);
 				console.log(Bname);
-				var treeId = sessionStorage.getItem("treeId");
+			
 				 var url = "";   
 				 url = url + "?searchType=area&keyword="+Bname +"&selectedArea="+treeId;
 				 branchsearch(url);
@@ -205,8 +228,7 @@ function branchupdate(updateData, barea) {
 		data : updateData,
 		contentType : 'application/json',
 		success : function() {
-			console.log(" 테스트")
-			console.log(barea);
+			
 			if(barea==="제주특별자치도"){
 				barea="제주";
 			}

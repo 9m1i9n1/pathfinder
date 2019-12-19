@@ -5,6 +5,9 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<!-- User Position -->
+<sec:authentication property="principal.userPosition" var="userPosition"/>
+
 <script>
 $(function() {
 	setNavigation();
@@ -44,7 +47,29 @@ function setNavigation() {
 			<!-- Sidebar user panel (optional) -->
 			<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 			<div class="image">
-				<img src="/static/img/imgs/position_2.png" class="img-circle elevation-2" alt="User Image">
+				<c:choose>
+					<c:when test="${userPosition eq '임원'}">
+						<img id="userImage" src="/static/img/imgs/position_1.png" class="img-circle elevation-2" alt="User Image">
+					</c:when>
+					<c:when test="${userPosition eq '부장'}">
+						<img id="userImage" src="/static/img/imgs/position_2.png" class="img-circle elevation-2" alt="User Image">
+					</c:when>
+					<c:when test="${userPosition eq '차장'}">
+						<img id="userImage" src="/static/img/imgs/position_3.png" class="img-circle elevation-2" alt="User Image">
+					</c:when>
+					<c:when test="${userPosition eq '과장'}">
+						<img id="userImage" src="/static/img/imgs/position_4.png" class="img-circle elevation-2" alt="User Image">
+					</c:when>
+					<c:when test="${userPosition eq '대리'}">
+						<img id="userImage" src="/static/img/imgs/position_5.png" class="img-circle elevation-2" alt="User Image">
+					</c:when>
+					<c:when test="${userPosition eq '사원'}">
+						<img id="userImage" src="/static/img/imgs/position_6.png" class="img-circle elevation-2" alt="User Image">
+					</c:when>
+					<c:otherwise>
+						<img id="userImage" src="/static/img/imgs/position_6.png" class="img-circle elevation-2" alt="User Image">
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="info">
 				<div class="row">

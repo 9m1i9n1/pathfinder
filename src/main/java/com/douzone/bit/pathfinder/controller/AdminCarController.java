@@ -49,9 +49,10 @@ public class AdminCarController {
 	public Header<List<AdminCarResponse>> carSearch(
 			@RequestParam(required = false, defaultValue = "carName") String searchType,
 			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false, defaultValue = "company:1") String selectedArea,
 			@PageableDefault(sort = "carIndex", direction = Sort.Direction.DESC) Pageable pageable) {
-		System.out.println(searchType +" "+ keyword);
-		return adminCarService.search(pageable, searchType, keyword);
+				
+		return adminCarService.search(pageable, searchType, keyword, selectedArea);
 	}
 
 	// 차량추가 중복확인

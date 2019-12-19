@@ -15,7 +15,7 @@
 <script src="/static/route/js/calendar.js"></script>
 </head>
 <body>
-<section class="content-header">
+	<section class="content-header">
 		<div class="container-fluid ">
 			<div class="row mb-2">
 				<div class="col-md-2 col-md-6">
@@ -37,7 +37,7 @@
 			<div class="col-md-2">
 				<div class="card height100">
 					<div class="card-header">
-						<h3 class="card-title" style="height:30px">조직도</h3>
+						<h3 class="card-title" style="height: 30px">조직도</h3>
 					</div>
 
 					<div class="card-body small height675px">
@@ -55,13 +55,16 @@
 						<div class="card-tools">
 							<div class="input-group input-group-sm">
 
-								<select name="searchType" id="searchType" class=" col-md-4 small ">
+								<select name="searchType" id="searchType"
+									class=" col-md-4 small ">
 									<option value="carNumber" class="small">차량번호</option>
 									<option value="carName" class="small">차종</option>
 								</select> <input class="col-md-6 form-control form-control-navbar"
-									type="search" placeholder="Search" name="keyword" id="keyword" />
+									type="search" placeholder="Search" name="keyword" id="keyword"
+									onkeypress="searchEnter()" />
 								<div class="input-group-append">
-									<button class="btn btn-primary" name="btnSearch" id="btnSearch">
+									<button onclick="searchClick()" class="btn btn-primary"
+										name="btnSearch" id="btnSearch">
 										<i class="fas fa-search"></i>
 									</button>
 								</div>
@@ -86,12 +89,12 @@
 
 						</table>
 
-					
+
 					</div>
 				</div>
 			</div>
 		</div>
-			<div id="page"></div>
+		<div id="page"></div>
 	</div>
 	</div>
 </body>

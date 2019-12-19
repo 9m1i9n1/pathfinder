@@ -36,7 +36,7 @@ public class CarTb {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long carIndex;
-	private Integer carName;
+	private Double carName;
 	private Double carFuel;
 	private String carNumber;
 
