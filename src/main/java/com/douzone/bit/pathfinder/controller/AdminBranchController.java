@@ -44,14 +44,12 @@ public class AdminBranchController {
 	@PostMapping("")
 	public Header<AdminBranchResponse> branchCreate(@RequestBody @Valid AdminBranchRequest request,
 			BindingResult bindingResult) {
-		System.out.println(request);
 		return adminBranchService.create(request);
 	}
 
 	// branch read
 	@GetMapping("/read/{branchIndex}")
 	public Optional<BranchTb> read(@PathVariable Long branchIndex) {
-		System.out.println(adminBranchService.read(branchIndex));
 		return adminBranchService.read(branchIndex);
 	}
 
@@ -67,9 +65,10 @@ public class AdminBranchController {
 	public Header<List<AdminBranchResponse>> branchSearch(
 			@RequestParam(required = false, defaultValue = "branchName") String searchType,
 			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false) String selectedArea,
 			@PageableDefault(sort = "branchIndex", direction = Sort.Direction.DESC) Pageable pageable) {
-
-		return adminBranchService.search(pageable, searchType, keyword);
+		
+		return adminBranchService.search(pageable, searchType, keyword, selectedArea);
 	}
 
 	// 지점추가 중복확인
@@ -95,7 +94,6 @@ public class AdminBranchController {
 	// branch update
 	@PutMapping("/update")
 	public Header<AdminBranchResponse> branchUpdate(@RequestBody AdminBranchRequest request) {
-		System.out.println(adminBranchService.update(request));
 		return adminBranchService.update(request);
 	}
 

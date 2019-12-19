@@ -1,4 +1,4 @@
-package com.douzone.bit.pathfinder.model.network.response;
+package com.douzone.bit.pathfinder.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MaprouteResponse {
+public class Marker {
 
   private Long branchIndex;
 
@@ -19,5 +19,5 @@ public class MaprouteResponse {
 
   private double branchLng;
 
-  private int routeCost;
+  private int branchValue;
 }

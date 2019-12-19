@@ -18,9 +18,13 @@ $("#updateModal").on("hidden.bs.modal", function() {
 // 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
+	var treeId = sessionStorage.getItem("treeId");
+	
 	var url = "";    
 	url = url + "?searchType=" + $('#searchType').val();
 	url = url + "&keyword=" + $('#keyword').val();
+	url = url + "&selectedArea="+treeId;
+	console.log(url)
 	branchsearch(url);
 });
 
@@ -97,6 +101,8 @@ $.fn.serializeObject = function() {
 
 // 검색뷰
 function branchsearch(searchUrl, searchpage=0) {
+	console.log("여기")
+	console.log(searchUrl)
 	$.ajax({
 		type : "GET",
 		url : "/admin/branchmanage/search" + searchUrl +"&page=" +searchpage ,
@@ -129,6 +135,7 @@ function branchsearch(searchUrl, searchpage=0) {
 			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
 			$("#seachAll").html(buttonAll);
 			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
+			
 		}
 	});
 }
@@ -165,8 +172,9 @@ function branchinsert(insertData, barea) {
 			if(!!barea){
 				let Bname =areaNameTrans(barea);
 				console.log(Bname);
+				var treeId = sessionStorage.getItem("treeId");
 				 var url = "";   
-				 url = url + "?searchType=area&keyword="+Bname;
+				 url = url + "?searchType=area&keyword="+Bname +"&selectedArea="+treeId;
 				 branchsearch(url);
 				}else{
 				 branchlist();
@@ -197,15 +205,29 @@ function branchupdate(updateData, barea) {
 		data : updateData,
 		contentType : 'application/json',
 		success : function() {
-			if(!!barea){
+			console.log(" 테스트")
+			console.log(barea);
+			if(barea==="제주특별자치도"){
+				barea="제주";
+			}
+			if(barea==="세종특별자치시"){
+				barea="세종"
+			}
+			
+			var treeId = sessionStorage.getItem("treeId");
+			console.log("@@@@ " , treeId )
+			
+			if(treeId !=="company:1"){
 				let Bname =areaNameTrans(barea);
 				console.log(Bname);
 				 var url = "";   
-				 url = url + "?searchType=area&keyword="+Bname;
+				
+				 url = url + "?searchType=area&keyword="+Bname+"&selectedArea="+treeId;
 				 branchsearch(url);
 				}else{
 				 branchlist();
 				}
+			
 		}
 	});
 	alert("해당 지점 정보를 수정하였습니다.");
@@ -221,11 +243,19 @@ function branchdelete(idx, bname, barea) {
 		data : {},
 		success :
 			function() {
+			if(barea==="제주특별자치도"){
+				barea="제주";
+			}
+			if(barea==="세종특별자치시"){
+				barea="세종"
+			}
 			if(!!barea){
 			let Bname =areaNameTrans(barea);
 			console.log(Bname);
 			 var url = "";   
-			 url = url + "?searchType=area&keyword="+Bname;
+			 var treeId = sessionStorage.getItem("treeId");
+			 url = url + "?searchType=area&keyword="+Bname+"&selectedArea="+treeId;
+			 
 			 branchsearch(url);
 			}else{
 			 branchlist();
@@ -292,6 +322,8 @@ function treeLoading() {
   }
   $("#jstree").on("select_node.jstree", function(e, data) {
 	    var id = data.instance.get_node(data.selected).id;
+	    sessionStorage.setItem("treeId", id);
+	    console.log(id,"wlwlwlwl")
 	    let vid = id.slice(5)
 	    if(vid != "ny:1"){
 	    if (data.node.children.length > 0) {
@@ -300,7 +332,7 @@ function treeLoading() {
 	        .toggle_node(data.node);
 	    }
 	    var url = "";   
-	    url = url + "?searchType=area&keyword="+vid;
+	    url = url + "?searchType=area&keyword="+vid+"&selectedArea="+id;
 	    branchsearch(url)
 	    }else{
 	    	branchlist()

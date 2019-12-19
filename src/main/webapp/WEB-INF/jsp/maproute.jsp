@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@page import="java.util.List"%>
+pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html>
@@ -32,23 +31,27 @@
   </head>
 
   <body>
-  	<div id="ajaxLoadingImage"
-		style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 200vh; height: 100vh; z-index: 9998;">
-		<img src="/static/img/viewLoading.gif"
-			style="position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; z-index: 9999; filter: alpha(opacity = 50); margin: auto; padding: 0;">
-	  </div>
+    <div
+      id="ajaxLoadingImage"
+      style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 200vh; height: 100vh; z-index: 9998;"
+    >
+      <img
+        src="/static/img/viewLoading.gif"
+        style="position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; z-index: 9999; filter: alpha(opacity = 50); margin: auto; padding: 0;"
+      />
+    </div>
 
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-md-2 col-md-6">
-            <h1>운송등록</h1>
+            <h1>운송 등록</h1>
           </div>
           <div class="col-md-6">
             <ol class="breadcrumb float-sm-right" id="headInfo">
-              <li class="breadcrumb-item"><a href="#">maproute</a></li>
-              <li class="breadcrumb-item active">운송등록</li>
-              <li><button id="testButton">테스트</button></li>
+              <li class="breadcrumb-item"><a href="#">홈</a></li>
+              <li class="breadcrumb-item active">운송 등록</li>
+              <%-- <li><button id="testButton">테스트</button></li> --%>
             </ol>
           </div>
         </div>
@@ -70,7 +73,6 @@
                   <h3 class="card-title">
                     1. 출발 지점 선택
                   </h3>
-                  
                 </div>
 
                 <div
@@ -80,13 +82,13 @@
                   data-parent="#accordion-select"
                 >
                   <div class="card-body">
-                    <select id="depSelect" name="depSelect">
+                    <select class="select2-success" id="depSelect" name="depSelect">
                       <option></option>
                     </select>
                   </div>
 
-                  <div class="card-footer">
-                    <button class="btn btn-primary next" type="button">
+                  <div class="card-footer text-center">
+                    <button class="btn bg-olive float-right next" type="button">
                       다음
                     </button>
                   </div>
@@ -113,9 +115,9 @@
                     </select>
                   </div>
 
-                  <div class="card-footer">
+                  <div class="card-footer text-right">
                     <button
-                      class="btn btn-primary"
+                      class="btn btn-outline-success"
                       type="button"
                       data-toggle="collapse"
                       data-target="#col-selectDep"
@@ -124,7 +126,7 @@
                     >
                       이전
                     </button>
-                    <button class="btn btn-primary next" type="button">
+                    <button class="btn bg-olive next" type="button">
                       다음
                     </button>
                   </div>
@@ -165,9 +167,9 @@
                     <!-- /.input group -->
                   </div>
 
-                  <div class="card-footer">
+                  <div class="card-footer text-right">
                     <button
-                      class="btn btn-primary"
+                      class="btn btn-outline-success"
                       type="button"
                       data-toggle="collapse"
                       data-target="#col-selectCar"
@@ -177,7 +179,7 @@
                       이전
                     </button>
                     <button
-                      class="btn btn-primary next"
+                      class="btn bg-olive next"
                       type="button"
                       onclick="branchlist(selectBranchlist)"
                     >
@@ -210,9 +212,9 @@
                       <option></option>
                     </select>
                   </div>
-                  <div class="card-footer">
+                  <div class="card-footer text-right">
                     <button
-                      class="btn btn-primary"
+                      class="btn btn-outline-success"
                       type="button"
                       data-toggle="collapse"
                       data-target="#col-selectDate"
@@ -222,7 +224,7 @@
                       이전
                     </button>
                     <button
-                      class="btn btn-primary next"
+                      class="btn bg-olive next"
                       id="resultButton"
                       type="button"
                     >
@@ -250,13 +252,12 @@
                     <div id="routeResult" class="scrollbar-outer">
                       <div class="tmline"></div>
                     </div>
-
-                    <div id="tmlineResult"></div>
                   </div>
+                  <div id="tmlineResult"></div>
 
-                  <div class="card-footer">
+                  <div class="card-footer text-right">
                     <button
-                      class="btn btn-primary"
+                      class="btn btn-outline-success"
                       id="resultPrev"
                       type="button"
                       data-toggle="collapse"
@@ -266,9 +267,22 @@
                     >
                       이전
                     </button>
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn bg-olive btn-success" type="submit">
                       등록
                     </button>
+
+                    <div class="float-left distSwitch">
+                      <div class="custom-control custom-switch">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="showSortDist"
+                        />
+                        <label class="custom-control-label" for="showSortDist"
+                          >거리 순서로</label
+                        >
+                    </div>
+                    </div>
                   </div>
                 </div>
               </div>

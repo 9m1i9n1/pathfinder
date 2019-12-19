@@ -83,14 +83,14 @@ function loadingMap() {
 
   var current = null;
   var keyword = null;
-  var a = 0;
+  var selected = 0;
   for (var state in aus) {
     aus[state].color = Raphael.getColor();
     (function(st, state) {
       st[0].onmouseover = function() {
         // onover
 
-        if (st.id === a)
+        if (st.id === selected)
           current &&
             aus[current].animate(
               { fill: "rgb(52, 52, 52)", stroke: "#5d5d5d" },
@@ -105,7 +105,7 @@ function loadingMap() {
       };
 
       st[0].onmouseout = function() {
-        if (st.id !== a)
+        if (st.id !== selected)
           st.animate({ fill: "rgb(52, 52, 52)", stroke: "#5d5d5d" }, 500);
         // st.toFront();
         R.safari();
@@ -142,87 +142,87 @@ function loadingMap() {
         switch (state) {
           case "seoul":
             current = state;
-            a = 0;
+            selected = 0;
             sendBranchsKeyword(1, "서울");
             break;
           case "gygg":
             current = state;
-            a = 7;
+            selected = 7;
             sendBranchsKeyword(8, "경기");
             break;
           case "incheon":
             current = state;
-            a = 3;
+            selected = 3;
             sendBranchsKeyword(4, "인천");
             break;
           case "gangwon":
             current = state;
-            a = 8;
+            selected = 8;
             sendBranchsKeyword(9, "강원");
             break;
           case "chungbuk":
             current = state;
-            a = 9;
+            selected = 9;
             sendBranchsKeyword(10, "충북");
             break;
           case "chungnam":
             current = state;
-            a = 10;
+            selected = 10;
             sendBranchsKeyword(11, "충남");
             break;
           case "daejeon":
             current = state;
-            a = 5;
+            selected = 5;
             sendBranchsKeyword(6, "대전");
             break;
           case "sejong":
             current = state;
-            a = 16;
+            selected = 16;
             sendBranchsKeyword(17, "세종특별자치시");
             break;
           case "jeonbuk":
             current = state;
-            a = 11;
+            selected = 11;
             sendBranchsKeyword(12, "전북");
             break;
           case "gwangju":
             current = state;
-            a = 4;
+            selected = 4;
             sendBranchsKeyword(5, "광주");
             break;
           case "jeonnam":
             current = state;
-            a = 12;
+            selected = 12;
             sendBranchsKeyword(13, "전남");
             break;
           case "gyeongbuk":
             current = state;
-            a = 13;
+            selected = 13;
             sendBranchsKeyword(14, "경북");
             break;
           case "daegu":
             current = state;
-            a = 2;
+            selected = 2;
             sendBranchsKeyword(3, "대구");
             break;
           case "gyeongnam":
             current = state;
-            a = 14;
+            selected = 14;
             sendBranchsKeyword(15, "경남");
             break;
           case "ulsan":
             current = state;
-            a = 6;
+            selected = 6;
             sendBranchsKeyword(7, "울산");
             break;
           case "busan":
             current = state;
-            a = 1;
+            selected = 1;
             sendBranchsKeyword(2, "부산");
             break;
           case "jeju":
             current = state;
-            a = 15;
+            selected = 15;
             sendBranchsKeyword(16, "제주특별자치도");
             break;
 
