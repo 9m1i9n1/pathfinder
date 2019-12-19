@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.request.AdminUserRequest;
+import com.douzone.bit.pathfinder.model.network.response.AdminBranchResponse;
 import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
 import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.service.AdminBranchService;
@@ -60,11 +61,14 @@ public class AdminUserController {
 	// 회원 리스트 불러오기
 	@GetMapping("/userlist.do")
 	public Header<List<AdminUserResponse>> userList(@RequestParam String treeId,
-			@PageableDefault(sort = { "userIndex" }, direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
+			@RequestParam(required = false, defaultValue = "") String searchType,
+			@RequestParam(required = false, defaultValue = "") String keyword,
+			@PageableDefault(sort = { "userIndex" },
+			direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
-		return adminUserService.list(treeId, pageable);
+		return adminUserService.list(treeId, pageable, searchType, keyword);
 	}
-
+	
 	@GetMapping("/idcheck.do")
 	public Boolean idCheck(@RequestParam String userId) {
 
@@ -127,4 +131,6 @@ public class AdminUserController {
 
 		return adminUserService.delete(userIndex);
 	}
+	
+
 }

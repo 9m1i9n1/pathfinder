@@ -27,7 +27,7 @@ public class RouteInsertRequest {
 
   private Integer fee;
 
-  private Integer time;
+  private String time;
 
   private Double dist;
 

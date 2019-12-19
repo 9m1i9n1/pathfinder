@@ -75,7 +75,7 @@ public class MaprouteService {
 			try {
 				HistoryTb history = HistoryTb.builder().regdate(LocalDateTime.now()).username(userName)
 						.carIndex(routeList.getCarIndex()).dep(routeList.getDep()).arvl(routeList.getArvl())
-						.dist(routeList.getDist()).fee(routeList.getFee())
+						.dist(routeList.getDist()).fee(routeList.getFee()).time(routeList.getTime())
 						.dlvrdate(LocalDateTime.parse(routeList.getDlvrdate(), formatter))
 						.arrivedate(LocalDateTime.parse(routeList.getArrivedate(), formatter)).routes(routesTb.getId()).build();
 

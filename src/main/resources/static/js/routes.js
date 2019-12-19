@@ -469,7 +469,7 @@ const carculateData = lrmData => {
     routeInfo.dlvrdate = dlvrdate;
     routeInfo.arrivedate = arrivedate;
     routeInfo.dist = (lrmData.summary.totalDistance / 1000.0).toFixed(3);
-    routeInfo.time = lrmData.summary.totalTime.toFixed(0);
+    routeInfo.time = lrmData.summary.totalTime.toHHMMSS();
     routeInfo.fee = fee;
     routeInfo.dep = routes[0].rdep;
     routeInfo.arvl = routes[routes.length - 1].rarvl;

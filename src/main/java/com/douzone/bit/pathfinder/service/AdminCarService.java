@@ -120,35 +120,65 @@ public class AdminCarService {
 	}
 
 	// 지점 검색
-	public Header<List<AdminCarResponse>> search(Pageable pageable, String searchType, String keyword) {
+	public Header<List<AdminCarResponse>> search(Pageable pageable, String searchType, String keyword, String selectedArea) {
 
+		String treeId[] = selectedArea.split(":");
+		String nodeType = treeId[0];
+		Long nodeIndex = Long.parseLong(treeId[1]);
+		
 		Page<CarTb> cars = null;
 		List<AdminCarResponse> carResponseList = null;
-		switch (searchType) {
+		
+		if(nodeType.equals("company")) {
+			switch (searchType) {
 
-		case "carNumber":
-			cars = carRepository.findByCarNumberLike("%" + keyword + "%", pageable);
-			carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
-			break;
-		case "carName":
-			cars = carRepository.findByCarNameLike("%" + keyword + "%", pageable);
-			carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
-			break;
+			case "carNumber":
+				cars = carRepository.findByCarNumberLike("%" + keyword + "%", pageable);
+				carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
+				break;
+				
+			case "carName":
+				cars = carRepository.findByCarName(Double.parseDouble(keyword), pageable);
+				carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
+				break;
+				
+			case "branch":
+				List<CarTb> carList = carRepository.findBycarArea(areaRepository.getOne(Long.parseLong(keyword)));
+				carResponseList = carList.stream().map(car -> response(car)).collect(Collectors.toList());
 
-		case "area":
-			cars = carRepository.findBycarArea(areaRepository.getOne(Long.parseLong(keyword)), pageable);
-			carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
-			break;
-
-		case "branch":
-			List<CarTb> carList = carRepository.findBycarArea(areaRepository.getOne(Long.parseLong(keyword)));
-			carResponseList = carList.stream().map(car -> response(car)).collect(Collectors.toList());
-
-			return Header.OK(carResponseList);
-
-		default:
-			break;
+				return Header.OK(carResponseList);
+			
+			default:
+				break;
+			}
 		}
+		else {
+		      switch (searchType) {
+		      
+		    case "area":
+					cars = carRepository.findBycarArea(areaRepository.getOne(Long.parseLong(keyword)), pageable);
+					carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
+					break;
+					
+		  	case "carNumber":
+		  		
+				cars = carRepository.findByCarAreaAndCarNumberLike(areaRepository.getOne(nodeIndex),"%" + keyword + "%", pageable);
+		  		
+				carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
+				break;
+				
+			case "carName":
+				System.out.println("키워드타입 확인" + keyword.getClass());
+				cars = carRepository.findByCarAreaAndCarName(areaRepository.getOne(nodeIndex), Double.parseDouble(keyword) , pageable);
+				
+				carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
+				break;
+				
+			default:
+				break;
+		      }
+		}
+		
 	    if (cars.getTotalElements() == 0) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}

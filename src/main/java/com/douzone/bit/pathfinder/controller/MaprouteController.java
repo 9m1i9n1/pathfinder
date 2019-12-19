@@ -72,8 +72,9 @@ public class MaprouteController {
 	@GetMapping("/carLoading")
 	public Header<List<AdminCarResponse>> carLoading(
 			@RequestParam(required = false, defaultValue = "branch") String searchType, @RequestParam String areaIndex) {
-
-		return adminCarService.search(null, searchType, areaIndex);
+		String selectedArea = "company:1";
+		
+		return adminCarService.search(null, searchType, areaIndex, selectedArea);
 	}
 
 	@GetMapping("/getReserve.do")

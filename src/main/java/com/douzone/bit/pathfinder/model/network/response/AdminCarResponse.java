@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class AdminCarResponse {
 
 	private Long carIndex;
-	private Integer carName;
+	private Double carName;
 	private Double carFuel;
 	private String carNumber;
 	private LocalDate carBuy;

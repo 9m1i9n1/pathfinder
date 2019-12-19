@@ -41,6 +41,8 @@ public class HistoryTb {
 	private Double dist;
 
 	private Integer fee;
+	
+	private String time;
 
 	private LocalDateTime dlvrdate;
 

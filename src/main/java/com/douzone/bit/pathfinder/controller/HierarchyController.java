@@ -46,7 +46,7 @@ public class HierarchyController {
 			@RequestParam("id") String id,
 			@PageableDefault(size = 10) Pageable pageable) {
 
-		return adminUserService.list(id, pageable);
+		return adminUserService.list(id, pageable, "", "");
 	}
 	
 	@GetMapping(value = "/userlist.do", params = {"id", "searchType", "searchValue"})
@@ -55,7 +55,7 @@ public class HierarchyController {
 			@RequestParam("searchType") String searchType,
 			@RequestParam("searchValue") String searchValue,
 			@PageableDefault(size = 10) Pageable pageable) {
-
+		System.out.println(id+" " + searchType +" "+ searchValue);
 		return adminUserService.search(id, searchType, searchValue, pageable);
 	}
 }
