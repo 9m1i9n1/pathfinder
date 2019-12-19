@@ -163,7 +163,10 @@ function getRoutes(routes) {
         str += "<td>" + value.rfee + "</td>";
         str += "</tr>";
 
-        totalTime += parseFloat(value.rtime);
+        console.log(value.rtime);
+        
+        totalTime += value.rtime;
+        
       });
 
       if (userAuth === "[ROLE_ADMIN]" || userName === routes.username) {
