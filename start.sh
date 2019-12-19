@@ -27,3 +27,4 @@ fi
 # push용 New command
 docker push "$maintaner"/"$app"
 docker run --restart="always" -p 8181:8181 -d --name "$app" "$maintaner"/"$app":latest
+docker rmi `docker images | awk '$1 ~ /9m1i9n1/ {print $3}'`
