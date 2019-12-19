@@ -52,18 +52,14 @@ public class MaprouteService {
 		Iterative costIterative = new Iterative(createMap.getCostMap());
 		Iterative distIterative = new Iterative(createMap.getDistanceMap());
 
-		List<List<Double>> sortCostIndexList = costIterative.getTour();
-		List<List<Double>> sortDistIndexList = distIterative.getTour();
-
-		System.out.println("#sortCostIndexList");
-		System.out.println(sortCostIndexList);
+		Map<Integer, Double> sortCostIndexList = costIterative.getTour();
+		Map<Integer, Double> sortDistIndexList = distIterative.getTour();
 
 		Map<String, List<RouteSortResponse>> sortMarkerList = new HashMap();
 		sortMarkerList.put("sortCostMarkerList", createMap.getSortList(sortCostIndexList));
 		sortMarkerList.put("sortDistMarkerList", createMap.getSortList(sortDistIndexList));
 
-		// return Header.OK(sortMarkerList);
-		return Header.OK(null);
+		return Header.OK(sortMarkerList);
 	}
 
 	// route정보 Insert

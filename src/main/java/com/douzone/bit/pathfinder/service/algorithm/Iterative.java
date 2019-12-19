@@ -2,14 +2,18 @@ package com.douzone.bit.pathfinder.service.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 public class Iterative {
 
   private final int N, start;
   private double[][] distance;
-  private List<List<Double>> tour = new ArrayList<>();
+  private Map<Integer, Double> tour = new LinkedHashMap<>();
   private double minTourCost = Integer.MAX_VALUE;
   private boolean ranSolver = false;
 
@@ -30,7 +34,7 @@ public class Iterative {
     return minTourCost;
   }
 
-  public List<List<Double>> getTour() {
+  public Map<Integer, Double> getTour() {
     if (!ranSolver)
       solve();
     return tour;
@@ -86,6 +90,7 @@ public class Iterative {
 
     double prevDist = 0;
     double newDist = 0;
+    double sum = minTourCost;
 
     for (int i = 1; i < N; i++) {
 
@@ -97,25 +102,24 @@ public class Iterative {
           index = j;
         prevDist = memo[index][state] + distance[index][lastIndex];
         newDist = memo[j][state];
+
         if (newDist < prevDist) {
           index = j;
         }
       }
 
-      tour.add(new ArrayList<Double>());
-      tour.get(i - 1).add((double) index);
-      tour.get(i - 1).add(newDist - prevDist);
+      if (i != 1) {
+        tour.put(index, sum - memo[index][state]);
+        sum = memo[index][state];
+      } else {
+        tour.put(index, null);
+      }
 
-      // tour.add(index);
       state = state ^ (1 << index);
       lastIndex = index;
     }
 
-    tour.add(new ArrayList<Double>());
-    tour.get(N - 1).add((double) start);
-    tour.get(N - 1).add(newDist - prevDist);
-    Collections.reverse(tour);
-
+    tour.put(start, distance[0][lastIndex]);
     ranSolver = true;
   }
 

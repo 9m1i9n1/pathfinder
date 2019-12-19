@@ -2,7 +2,10 @@ package com.douzone.bit.pathfinder.service.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Map.Entry;
 
 import com.douzone.bit.pathfinder.model.MapCost;
 import com.douzone.bit.pathfinder.model.Marker;
@@ -34,16 +37,15 @@ public class CreateMap {
 		return map;
 	}
 
-	public List<RouteSortResponse> getSortList(List<List<Double>> sortIndexList) {
+	public List<RouteSortResponse> getSortList(Map<Integer, Double> sortIndexList) {
 		sortList = new ArrayList();
 
-		int listIndex, index = 0;
+		ListIterator<Entry<Integer, Double>> iterator = new ArrayList<Entry<Integer, Double>>(sortIndexList.entrySet())
+				.listIterator(sortIndexList.size());
 
-		for (List<Double> item : sortIndexList) {
-			listIndex = item.get(0).intValue();
-
-			sortList.add(response(unsortList.get(listIndex), item.get(1)));
-			index++;
+		while (iterator.hasPrevious()) {
+			Entry<Integer, Double> entry = iterator.previous();
+			sortList.add(response(unsortList.get(entry.getKey()), entry.getValue()));
 		}
 
 		return sortList;
