@@ -91,7 +91,6 @@ public class MaprouteController {
 	@PostMapping("/upload")
 	public String upload(@RequestBody MultipartFile data) throws IOException {
 
-		System.out.println("hello");
 		return s3Uploader.upload(data, "static");
 	}
 }
