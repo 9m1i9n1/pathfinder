@@ -76,7 +76,7 @@ function userLoading() {
 		  count += `<li class="breadcrumb-item active">0명</li>`;
 			
 			str += `<tr class="tr-shadow">`;
-			str += `<td colspan="8">`;
+			str += `<td colspan="9">`;
 			str += `${res.description}`;
 			str += `</td>`;
 			str += `</tr>`;
