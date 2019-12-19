@@ -3,6 +3,12 @@ $(document).ready(function() {
   treeLoading();
 });
 
+//검색버튼
+$('#btnSearch').click(function(){
+	userLoading();
+	$("#keyword").val("")
+});
+
 // 페이지 버튼 생성
 function pageButton(totalPages, currentPage) {
   $("#page").paging({
@@ -22,10 +28,13 @@ function userLoading() {
   let treeId = sessionStorage.getItem("treeId");
   let selectPage = sessionStorage.getItem("page");
 
+  let searchType = $("select#searchType").val();
+  let keyword = $("#keyword").val();
+  
   $.ajax({
     url: "/admin/usermanage/userlist.do",
     type: "get",
-    data: { treeId: treeId, page: selectPage },
+    data: { treeId: treeId, page: selectPage, searchType: searchType, keyword: keyword },
     success: function(res) {
       let str = "";
       let count = "";

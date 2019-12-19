@@ -55,9 +55,9 @@
 							<div class="input-group input-group-sm">
 
 								<select class=" col-4 small " name="searchType" id="searchType">
-									<option value="userName" class="small">이름</option>
-									<option value="userId" class="small">아이디</option>
-								</select> <input type="search" name="keyword"
+									<option value="name" class="small">이름</option>
+									<option value="position" class="small">직책</option>
+								</select> <input type="search" name="keyword" id="keyword"
 									class="col-sm-7 form-control form-control-navbar"
 									placeholder="Search" />
 								<div class="input-group-append">

@@ -39,5 +39,7 @@ public interface UserRepository extends JpaRepository<UserTb, Long> {
 	public Page<UserTb> findByBranchInAndUserNameLike(List<BranchTb> branch, String username, Pageable pageable);
 
 	public Page<UserTb> findByBranchInAndUserPositionLike(List<BranchTb> branch, String position, Pageable pageable);
-
+	
+	// 유저아이디 검색
+	public Page<UserTb> findByBranchInAndUserIdLike(List<BranchTb> branch, String userid, Pageable pageable);
 }
