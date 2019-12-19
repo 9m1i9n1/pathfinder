@@ -70,10 +70,6 @@ public class CreateMap {
 
 		map = new double[size][size];
 
-		System.out.println("#size" + size);
-		System.out.println("#unsortList");
-		System.out.println(unsortList);
-
 		for (Marker item : unsortList) {
 			costList.add(item.getBranchValue());
 		}
