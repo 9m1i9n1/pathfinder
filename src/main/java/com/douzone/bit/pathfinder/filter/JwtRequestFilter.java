@@ -82,11 +82,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			userId = jwtUtil.extractUserId(token);
 
 			if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-				Claims userClaim = jwtUtil.extractAllClaims(token);
-
-				List<GrantedAuthority> authorities = new ArrayList<>();
-				authorities.add(new SimpleGrantedAuthority(userClaim.get("userAuthority").toString()));
-
 				SignDTO signInfo = (SignDTO) this.signService.loadUserByUsername(userId);
 
 				if (jwtUtil.validateToken(token, signInfo)) {
