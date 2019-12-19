@@ -85,35 +85,26 @@ public class CreateMap {
 		// map create
 		map[size - 1][size - 1] = 0;
 
+		for (row = 0; row < size - 1; row++) {
+		map[row][row] = 0;
+
+		for (col = row + 1; col < size; col++) {
+		locationDistance.setDistance(unsortList.get(row).getBranchLat(),
+		unsortList.get(row).getBranchLng(),
+		unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
+		distance = locationDistance.getDistance();
+
 		if (mode) {
-			for (row = 0; row < size - 1; row++) {
-				map[row][row] = 0;
-
-				for (col = row + 1; col < size; col++) {
-					locationDistance.setDistance(unsortList.get(row).getBranchLat(), unsortList.get(row).getBranchLng(),
-							unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
-					distance = locationDistance.getDistance();
-
-					result = mapCost.getResultCost(distance, col);
-
-					map[col][row] = result;
-					map[row][col] = result;
-				}
-			}
+		result = mapCost.getResultCost(distance, col);
 		} else {
-			for (row = 0; row < size - 1; row++) {
-				map[row][row] = 0;
-
-				for (col = row + 1; col < size; col++) {
-					locationDistance.setDistance(unsortList.get(row).getBranchLat(), unsortList.get(row).getBranchLng(),
-							unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
-					distance = locationDistance.getDistance();
-
-					map[col][row] = distance;
-					map[row][col] = distance;
-				}
-			}
+		result = mapCost.getResultDist(distance, col);
 		}
+
+		map[col][row] = result;
+		map[row][col] = result;
+		}
+		}
+
 	}
 
 	private RouteSortResponse response(Marker marker, Double cost) {

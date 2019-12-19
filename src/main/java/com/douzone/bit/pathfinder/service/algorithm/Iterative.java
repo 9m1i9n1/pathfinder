@@ -84,8 +84,6 @@ public class Iterative {
     int lastIndex = start;
     int state = END_STATE;
 
-    double prevDist = 0;
-    double newDist = 0;
     double sum = minTourCost;
 
     for (int i = 1; i < N; i++) {
@@ -96,8 +94,8 @@ public class Iterative {
           continue;
         if (index == -1)
           index = j;
-        prevDist = memo[index][state] + distance[index][lastIndex];
-        newDist = memo[j][state] + distance[j][lastIndex];
+        double prevDist = memo[index][state] + distance[index][lastIndex];
+        double newDist = memo[j][state] + distance[j][lastIndex];
 
         if (newDist < prevDist) {
           index = j;

@@ -6,10 +6,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
   <head>
     <title>CSS</title>
 
-	<!-- 지도 캡쳐 -->
-	<script src="/static/route/js/print.js"></script>
-	<script src="/static/route/js/domtoimage.js"></script>
-	
+    <!-- 지도 캡쳐 -->
+    <script src="/static/route/js/print.js"></script>
+    <script src="/static/route/js/domtoimage.js"></script>
+
     <!-- 한국 지도 표시 -->
     <script src="/static/route/js/proj4.js"></script>
     <script src="/static/route/js/proj4leaflet.js"></script>
@@ -23,10 +23,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <link href="/static/css/swiper.min.css" rel="stylesheet" />
 
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
-
-    <%-- leaflet-image --%>
-    <script src="/static/route/js/html2canvas.js"></script>
-    <script src='https://unpkg.com/leaflet-image@latest/leaflet-image.js'></script>
   </head>
 
   <body>
@@ -50,7 +46,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
             <ol class="breadcrumb float-sm-right" id="headInfo">
               <li class="breadcrumb-item"><a href="#">홈</a></li>
               <li class="breadcrumb-item active">운송 등록</li>
-              <%-- <li><button id="testButton">테스트</button></li> --%>
+              <%--
+              <li><button id="testButton">테스트</button></li>
+              --%>
             </ol>
           </div>
         </div>
@@ -81,7 +79,11 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   data-parent="#accordion-select"
                 >
                   <div class="card-body">
-                    <select class="select2-success" id="depSelect" name="depSelect">
+                    <select
+                      class="select2-success"
+                      id="depSelect"
+                      name="depSelect"
+                    >
                       <option></option>
                     </select>
                   </div>
@@ -280,7 +282,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                         <label class="custom-control-label" for="showSortDist"
                           >거리 순서로</label
                         >
-                    </div>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -52,6 +52,7 @@ public class MaprouteService {
 
 		Iterative costIterative = new Iterative(createMap.getCostMap());
 		Iterative distIterative = new Iterative(createMap.getDistanceMap());
+		createMap.printMap();
 
 		Map<Integer, Double> sortCostIndexList = costIterative.getTour();
 		Map<Integer, Double> sortDistIndexList = distIterative.getTour();
@@ -59,12 +60,6 @@ public class MaprouteService {
 		Map<String, List<RouteSortResponse>> sortMarkerList = new HashMap();
 		sortMarkerList.put("sortCostMarkerList", createMap.getSortList(sortCostIndexList));
 		sortMarkerList.put("sortDistMarkerList", createMap.getSortList(sortDistIndexList));
-
-		System.out.println("#sortCost");
-		System.out.println(sortCostIndexList);
-
-		System.out.println("#sortDist");
-		System.out.println(sortDistIndexList);
 
 		return Header.OK(sortMarkerList);
 	}
