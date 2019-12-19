@@ -112,6 +112,64 @@
 				<!-- Left col -->
 				<div class="col-md-8">
 					<!-- MAP & BOX PANE -->
+					<div class="row">
+						<div class="col-md-12">
+							<!-- USERS LIST -->
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">Schedule</h3>
+
+									<div class="card-tools">
+										<a href="/history" class="btn btn-sm btn-secondary">전체보기</a>
+										<button type="button" class="btn btn-tool"
+											data-card-widget="collapse">
+											<i class="fas fa-minus"></i>
+										</button>
+										<button type="button" class="btn btn-tool"
+											data-card-widget="remove">
+											<i class="fas fa-times"></i>
+										</button>
+									</div>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body p-0">
+									<ul class="nav nav-pills">
+										<li class="nav-item"><a class="nav-link active"
+											href="#todayHistory" data-toggle="tab"
+											onclick="todayHistory()">오늘의 스케쥴</a></li>
+										<li class="nav-item"><a class="nav-link"
+											href="#recentlyHistory" data-toggle="tab"
+											onclick="recentlyHistory()">나의 히스토리</a></li>
+									</ul>
+									<div class="table-responsive">
+										<table class="table m-0">
+
+											<thead>
+												<tr>
+													<th></th>
+													<th>출발일자</th>
+													<th>도착일자</th>
+													<th>사용자</th>
+													<th>출발지</th>
+													<th>도착지</th>
+													<th>차량번호</th>
+												</tr>
+											</thead>
+											<tbody id="schedule">
+											</tbody>
+										</table>
+									</div>
+									<!-- /.table-responsive -->
+									<!-- /.users-list -->
+								</div>
+								<!-- /.card-body -->
+								<!-- /.card-footer -->
+							</div>
+							<!--/.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
 					<div class="card">
 						<div class="card-header">
 							<h3 class="card-title">지역별 운반비</h3>
@@ -167,66 +225,6 @@
 						<!-- /.card-body -->
 					</div>
 					<!-- /.card -->
-					<div class="row">
-						<div class="col-md-12">
-							<!-- USERS LIST -->
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title">Schedule</h3>
-
-									<div class="card-tools">
-										<button type="button" class="btn btn-tool"
-											data-card-widget="collapse">
-											<i class="fas fa-minus"></i>
-										</button>
-										<button type="button" class="btn btn-tool"
-											data-card-widget="remove">
-											<i class="fas fa-times"></i>
-										</button>
-									</div>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-body p-0">
-									<ul class="nav nav-pills">
-										<li class="nav-item"><a class="nav-link active"
-											href="#todayHistory" data-toggle="tab"
-											onclick="todayHistory()">오늘의 스케쥴</a></li>
-										<li class="nav-item"><a class="nav-link"
-											href="#recentlyHistory" data-toggle="tab"
-											onclick="recentlyHistory()">나의 히스토리</a></li>
-									</ul>
-									<div class="table-responsive">
-										<table class="table m-0">
-
-											<thead>
-												<tr>
-													<th></th>
-													<th>출발일자</th>
-													<th>도착일자</th>
-													<th>사용자</th>
-													<th>출발지</th>
-													<th>도착지</th>
-													<th>차량번호</th>
-												</tr>
-											</thead>
-											<tbody id="schedule">
-											</tbody>
-										</table>
-									</div>
-									<!-- /.table-responsive -->
-									<!-- /.users-list -->
-								</div>
-								<!-- /.card-body -->
-								<div class="card-footer text-center">
-									<a href="/history" class="btn btn-sm btn-secondary float-right">전체보기</a>
-								</div>
-								<!-- /.card-footer -->
-							</div>
-							<!--/.card -->
-						</div>
-						<!-- /.col -->
-					</div>
-					<!-- /.row -->
 				</div>
 				<!-- /.col -->
 
@@ -372,16 +370,14 @@
 										</ol>
 										<div class="carousel-inner">
 											<div class="carousel-item">
-												<img class="d-block w-100" 
+												<img class="d-block w-100"
 													src="https://placehold.it/900x470/3333CC/ffffff&amp;text=PathFinder"
 													alt="First slide">
 											</div>
-											<div class="carousel-item active" >
-												<a href="http://www.douzone.com/">
-												 <img
+											<div class="carousel-item active">
+												<a href="http://www.douzone.com/"> <img
 													class="d-block w-100"
-													src="/static/img/imgs/douzoneLogo.jpg"
-													alt="Second slide">
+													src="/static/img/imgs/douzoneLogo.jpg" alt="Second slide">
 												</a>
 											</div>
 											<div class="carousel-item">

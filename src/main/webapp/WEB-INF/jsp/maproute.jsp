@@ -24,7 +24,7 @@
 
 <body>
 	<div id="ajaxLoadingImage"
-		style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 200vh; height: 100vh; z-index: 9998;">
+		style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 100vw; height: 100vh; z-index: 9998;">
 		<img src="/static/img/viewLoading.gif"
 			style="position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; z-index: 9999; filter: alpha(opacity = 50); margin: auto; padding: 0;">
 	</div>
