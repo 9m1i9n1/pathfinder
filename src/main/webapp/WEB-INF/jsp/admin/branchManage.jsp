@@ -55,10 +55,11 @@
 										<option value="branchName" class="small">지점명</option>
 										<option value="branchAddr" class="small">주소</option>
 									</select> <input class="col-sm-7 form-control form-control-navbar"
-										type="search" placeholder="Search" name="keyword" id="keyword" />
+										type="search" placeholder="Search" name="keyword" id="keyword"
+										onkeypress="searchEnter()" />
 									<div class="input-group-append">
-										<button class="btn btn-primary btn-sm" name="btnSearch"
-											id="btnSearch">
+										<button onclick="searchClick()" class="btn btn-primary btn-sm"
+											name="btnSearch" id="btnSearch">
 											<i class="fas fa-search"></i>
 										</button>
 
@@ -87,7 +88,7 @@
 					</div>
 				</div>
 			</div>
-				<div id="page"></div>
+			<div id="page"></div>
 		</div>
 	</section>
 </body>

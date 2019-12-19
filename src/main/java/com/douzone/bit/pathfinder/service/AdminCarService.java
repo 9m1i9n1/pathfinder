@@ -138,7 +138,7 @@ public class AdminCarService {
 				break;
 				
 			case "carName":
-				cars = carRepository.findByCarNameLike("%" + keyword + "%", pageable);
+				cars = carRepository.findByCarName(Double.parseDouble(keyword), pageable);
 				carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
 				break;
 				
@@ -168,7 +168,8 @@ public class AdminCarService {
 				break;
 				
 			case "carName":
-				cars = carRepository.findByCarAreaAndCarNameLike(areaRepository.getOne(nodeIndex),"%" + keyword + "%", pageable);
+				System.out.println("키워드타입 확인" + keyword.getClass());
+				cars = carRepository.findByCarAreaAndCarName(areaRepository.getOne(nodeIndex), Double.parseDouble(keyword) , pageable);
 				
 				carResponseList = cars.stream().map(car -> response(car)).collect(Collectors.toList());
 				break;

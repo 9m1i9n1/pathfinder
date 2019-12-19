@@ -15,10 +15,10 @@ public class CreateMap {
 
 	private List<Marker> unsortList;
 	private List<RouteSortResponse> sortList;
-	private Integer carName;
+	private Double carName;
 	private Double carMileage;
 
-	public CreateMap(List<Marker> unsortList, Integer carName, Double carMileage) {
+	public CreateMap(List<Marker> unsortList, Double carName, Double carMileage) {
 		this.unsortList = unsortList;
 		this.carName = carName;
 		this.carMileage = carMileage;

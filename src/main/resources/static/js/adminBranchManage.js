@@ -15,7 +15,27 @@ $("#updateModal").on("hidden.bs.modal", function() {
 });
 
 
-// 검색버튼
+//검색 enter press
+function searchEnter(){
+    if (window.event.keyCode == 13) {
+    	searchClick();
+   }
+}
+
+//검색버튼
+function searchClick(){
+	
+	var treeId = sessionStorage.getItem("treeId");
+	
+	var url = "";    
+	url = url + "?searchType=" + $('select#searchType').val();
+	url = url + "&keyword=" + $('#keyword').val();
+	url = url + "&selectedArea="+treeId;
+	console.log(url)
+	branchsearch(url);
+}
+
+/*// 검색버튼
 $('#btnSearch').click(function(e){
 	e.preventDefault();
 	var treeId = sessionStorage.getItem("treeId");
@@ -27,7 +47,7 @@ $('#btnSearch').click(function(e){
 	console.log(url)
 	branchsearch(url);
 });
-
+*/
 
 // 지역이름 숫자변환
 function areaNameTrans(areaIndex){

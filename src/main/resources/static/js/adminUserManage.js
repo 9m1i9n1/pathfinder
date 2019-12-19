@@ -3,11 +3,17 @@ $(document).ready(function() {
   treeLoading();
 });
 
-//검색버튼
-$('#btnSearch').click(function(){
+// 검색 enter press
+function searchEnter(){
+    if (window.event.keyCode == 13) {
+    	searchClick();
+   }
+}
+// 검색버튼
+function searchClick(){
 	userLoading();
 	$("#keyword").val("")
-});
+}
 
 // 페이지 버튼 생성
 function pageButton(totalPages, currentPage) {

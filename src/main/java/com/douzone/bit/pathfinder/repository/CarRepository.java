@@ -20,7 +20,7 @@ public interface CarRepository extends JpaRepository<CarTb, Long> {
 	public List<CarTb> findBycarArea(AreaTb area);
 
 	// 차종검색
-	public Page<CarTb> findByCarNameLike(String carName, Pageable pageable);
+	public Page<CarTb> findByCarName(Double carName, Pageable pageable);
 
 	// 차량번호검색
 	public Page<CarTb> findByCarNumberLike(String carNumber, Pageable pageable);
@@ -33,5 +33,5 @@ public interface CarRepository extends JpaRepository<CarTb, Long> {
 	
 	public Page<CarTb> findByCarAreaAndCarNumberLike(AreaTb area, String carNumber, Pageable pageable);
 
-	public Page<CarTb> findByCarAreaAndCarNameLike(AreaTb area, String carName, Pageable pageable);
+	public Page<CarTb> findByCarAreaAndCarName(AreaTb area, Double carName, Pageable pageable);
 }

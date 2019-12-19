@@ -58,11 +58,12 @@
 									<option value="name" class="small">이름</option>
 									<option value="position" class="small">직책</option>
 								</select> <input type="search" name="keyword" id="keyword"
+									onkeypress="searchEnter()"
 									class="col-sm-7 form-control form-control-navbar"
 									placeholder="Search" />
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-primary btn-sm"
-										id="btnSearch" name="btnSearch">
+									<button onclick="searchClick()" type="submit"
+										class="btn btn-primary btn-sm" id="btnSearch" name="btnSearch">
 										<i class="fas fa-search"></i>
 									</button>
 								</div>
