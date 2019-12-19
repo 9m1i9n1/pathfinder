@@ -34,7 +34,7 @@ $(document).ajaxStop(function() {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map", { minZoom: 7 }).setView([36.1358642, 128.0785804], 7);
+var map = L.map("map", { minZoom: 7 }).setView([36.1358642, 128.0785804], 7);
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
