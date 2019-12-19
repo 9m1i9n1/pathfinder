@@ -53,17 +53,22 @@
 
 						<div class="card-tools">
 							<div class="input-group input-group-sm">
-								<input type="search" name="table_search"
+
+								<select class=" col-4 small " name="searchType" id="searchType">
+									<option value="userName" class="small">이름</option>
+									<option value="userId" class="small">아이디</option>
+								</select> <input type="search" name="keyword"
 									class="col-sm-7 form-control form-control-navbar"
 									placeholder="Search" />
-
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-default">
+									<button type="submit" class="btn btn-primary btn-sm"
+										id="btnSearch" name="btnSearch">
 										<i class="fas fa-search"></i>
 									</button>
 								</div>
 							</div>
 						</div>
+
 					</div>
 
 					<div class="card-body table-responsive p-0 ">

@@ -11846,7 +11846,7 @@ body,
 /* 여기임다 */
 [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active, [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active:hover, [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active:focus {
   background-color: #6c757d;
-  color: #343a40;
+  color: #ffffff;
 }
 
 [class*='sidebar-dark-'] .nav-flat .nav-item .nav-treeview .nav-treeview  {

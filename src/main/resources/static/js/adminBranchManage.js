@@ -109,6 +109,7 @@ function branchsearch(searchUrl, searchpage=0) {
 		contentType : 'application/json',
 		success : function(res) {
 			var str = "";
+			
 			if (res.resultCode !== "ERROR") {
 				$.each(res.data,function(key, value) {
 					str += `<tr class="tr-shadow"><td>` + value.area +'</td>';
@@ -122,19 +123,20 @@ function branchsearch(searchUrl, searchpage=0) {
 					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
 					str += `</td>'+ '</tr>`;
 					});
+				pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
 			} else {	
 					str += `<tr class="tr-shadow">`;
 					str += `<td colspan="8">`;
 					str += `${res.description}`;
 					str += `</td>`;
 					str += `</tr>`;
-					
+					pageButton1(1, 0, searchUrl);					
 				}
 			$("#tableListBody").html(str);
 			var buttonAll = "";
 			buttonAll += '<button id="allSearchB" onclick="allSearch()">전체보기</button>';
+
 			$("#seachAll").html(buttonAll);
-			pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
 			
 		}
 	});

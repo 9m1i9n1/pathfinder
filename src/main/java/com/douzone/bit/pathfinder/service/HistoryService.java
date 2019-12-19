@@ -184,7 +184,7 @@ public class HistoryService {
 				.regdate(history.getRegdate().format(formatter)).username(history.getUsername()).carname(carNumber)
 				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(history.getDlvrdate().format(formatter))
-				.imgSrc(history.getImgSrc())
+				.imgSrc(history.getImgSrc()).time(history.getTime())
 				.arrivedate(history.getArrivedate().format(formatter)).routes(history.getRoutes().toString()).build();
 
 		return response;
