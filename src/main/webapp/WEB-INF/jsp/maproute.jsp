@@ -23,10 +23,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <link href="/static/css/swiper.min.css" rel="stylesheet" />
 
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
-
-    <%-- leaflet-image --%>
-    <script src="/static/route/js/html2canvas.js"></script>
-    <script src='https://unpkg.com/leaflet-image@latest/leaflet-image.js'></script>
   </head>
 
   <body>
