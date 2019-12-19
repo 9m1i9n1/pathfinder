@@ -51,7 +51,7 @@ public class AdminCarController {
 			@RequestParam(required = false) String keyword,
 			@RequestParam(required = false, defaultValue = "company:1") String selectedArea,
 			@PageableDefault(sort = "carIndex", direction = Sort.Direction.DESC) Pageable pageable) {
-		System.out.println(searchType +" "+ keyword);
+				
 		return adminCarService.search(pageable, searchType, keyword, selectedArea);
 	}
 
