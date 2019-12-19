@@ -75,11 +75,9 @@ public class MaprouteService {
 			try {
 				HistoryTb history = HistoryTb.builder().regdate(LocalDateTime.now()).username(userName)
 						.carIndex(routeList.getCarIndex()).dep(routeList.getDep()).arvl(routeList.getArvl())
-						.dist(routeList.getDist()).fee(routeList.getFee())
+						.dist(routeList.getDist()).fee(routeList.getFee()).imgSrc(routeList.getImgSrc())
 						.dlvrdate(LocalDateTime.parse(routeList.getDlvrdate(), formatter))
 						.arrivedate(LocalDateTime.parse(routeList.getArrivedate(), formatter)).routes(routesTb.getId()).build();
-
-				System.out.println("#historytb" + history);
 
 				historyRepository.save(history);
 			} catch (Exception e) {

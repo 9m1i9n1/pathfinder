@@ -37,8 +37,9 @@ $(document).ajaxStop(function() {
 let map = L.map("map")
   .setView([36.1358642, 128.0785804], 7)
   .on("easyPrint-finished", e => {
-    console.log(e.event);
-    insertPlan(routeCostList, e.event);
+	insertImage(e.event)
+	.then(imgSrc => insertPlan(routeCostList, imgSrc))
+	.catch(error => console.log(error));
   });
 
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -58,7 +59,7 @@ let printPlugin = L.easyPrint({
   title: "Chapture Map",
   outputMode: "event",
   hidden: true,
-  sizeModes: ["A4Portrait"]
+  sizeModes: ["Current"]
 }).addTo(map);
 
 var routeControl = L.Routing.control({
@@ -548,16 +549,39 @@ $("#routeForm").validate({
 
   // valid 성공시
   submitHandler: form => {
-    printPlugin.printMap("CurrentSize", "MyManualPrint");
+    printPlugin.printMap("CurrentSize");
   }
 });
 
-// ! 데이터 가공 부분 ===============
-// 회원 생성
-const insertPlan = (req, blob) => {
-  let plan = $.extend(true, [], req);
-  plan.blob = blob;
+// 이미지를 S3에 업로드
+const insertImage = blob => {
+	return new Promise((resolve, reject) => {
+		  let formData = new FormData();
+		  let fileName = ramdomName();
+		  
+		  formData.append("data", blob, fileName);
+		  
+		   $.ajax({
+		     type: "post",
+		     url: "/maproute/upload",
+		     data: formData,
+		     processData: false,
+		     contentType: false
+		   	})
+		     .done(function(imgSrc) {
+		    	 resolve(imgSrc);
+		     })
+		     .fail(function(error) {
+		       reject(error);
+		     });
+	})
+}
 
+// 업로드 된 이미지랑 같이 History 정보 저장.
+const insertPlan = (req, imgSrc) => {
+  let plan = $.extend(true, {}, req);
+  
+  plan.imgSrc = imgSrc;
   //! 데이터 등록하는 부분. 현재 편의상 주석처리
   $.ajax({
     url: "/maproute/insertPlan.do",
@@ -565,87 +589,10 @@ const insertPlan = (req, blob) => {
     contentType: "application/json",
     data: JSON.stringify(plan)
   }).then(res => {
-    let text = res.data;
-
-    alert(text);
-    // location.reload();
+     alert(res.data);
+     location.reload();
   });
 };
-
-//TODO html2canvas 사용
-// const upload = () => {
-//   html2canvas(document.getElementById("map")).then(function(canvas) {
-//     let imgDataUrl = canvas.toDataURL("image/jpeg");
-
-//     let aTag = document.createElement("a");
-//     aTag.download = "from_canvas.jpeg";
-//     aTag.href = imgDataUrl;
-//     aTag.click();
-
-//       // let formData = new FormData();
-//       // formData.append("data", dataURItoBlob(imgDataUrl));
-
-//       // $.ajax({
-//       //   type: "post",
-//       //   url: "/maproute/upload",
-//       //   data: formData,
-//       //   // data 파라미터 강제 string 변환 방지
-//       //   processData: false,
-//       //   // application/x-www-form-urlencoded; 방지
-//       //   contentType: false
-//       // })
-//       //   .done(function(data) {
-//       //     console.log(data);
-//       //   })
-//       //   .fail(function(error) {
-//       //     console.log(error);
-//       //   });
-//   });
-// };
-
-//TODO leaflet 라이브러리 사용
-const upload = (err, canvas) => {
-  let imgDataUrl = canvas.toDataURL("image/jpeg");
-
-  let formData = new FormData();
-  formData.append("data", dataURItoBlob(imgDataUrl));
-
-  // $.ajax({
-  //   type: "post",
-  //   url: "/maproute/upload",
-  //   data: formData,
-  //   // data 파라미터 강제 string 변환 방지
-  //   processData: false,
-  //   // application/x-www-form-urlencoded; 방지
-  //   contentType: false
-  // })
-  //   .done(function(data) {
-  //     console.log(data);
-  //   })
-  //   .fail(function(error) {
-  //     console.log(error);
-  //   });
-};
-
-function uploadImage() {
-  let file = $("#img")[0].files[0];
-  let formData = new FormData();
-  formData.append("data", file);
-
-  $.ajax({
-    type: "post",
-    url: "/maproute/upload",
-    data: formData,
-    processData: false,
-    contentType: false
-  })
-    .done(function(data) {
-      console.log(data);
-    })
-    .fail(function(error) {
-      console.log(error);
-    });
-}
 
 //! 유틸 부분 =====================
 Number.prototype.toHHMMSS = function() {
@@ -666,11 +613,20 @@ Number.prototype.toHHMMSS = function() {
   return hours + ":" + minutes + ":" + seconds;
 };
 
-function dataURItoBlob(dataURI) {
-  var binary = atob(dataURI.split(",")[1]);
-  var array = [];
-  for (var i = 0; i < binary.length; i++) {
-    array.push(binary.charCodeAt(i));
-  }
-  return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
+const ramdomName = function() {
+	var name1 = "";
+	var name2 = "";
+	var resultName = "";
+	
+	var alphabet = "abcdefghijklmnopqrstuvwxyz";
+	var num = "0123456789";
+	
+	for (var i = 0; i< 15; i++) {
+		name1 += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+		name2 += num.charAt(Math.floor(Math.random() * num.length));
+	}
+	
+	resultName = name1 + name2 + ".jpeg";
+	
+	return resultName;
 }
