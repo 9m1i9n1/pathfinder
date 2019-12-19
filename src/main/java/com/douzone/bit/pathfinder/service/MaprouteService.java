@@ -26,7 +26,7 @@ import com.douzone.bit.pathfinder.repository.CarRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 import com.douzone.bit.pathfinder.service.algorithm.CreateMap;
-import com.douzone.bit.pathfinder.service.algorithm.Recursive;
+import com.douzone.bit.pathfinder.service.algorithm.Iterative;
 
 @Service
 @Transactional
@@ -49,15 +49,22 @@ public class MaprouteService {
 		CarTb car = carRepository.findByCarIndex(carIndex);
 
 		createMap = new CreateMap(markerList, car.getCarName(), car.getCarFuel());
-		Recursive costRecursive = new Recursive(createMap.getCostMap());
-		Recursive distRecursive = new Recursive(createMap.getDistanceMap());
 
-		List<List<Double>> sortCostIndexList = costRecursive.getTour();
-		List<List<Double>> sortDistIndexList = distRecursive.getTour();
+		Iterative costIterative = new Iterative(createMap.getCostMap());
+		Iterative distIterative = new Iterative(createMap.getDistanceMap());
+
+		Map<Integer, Double> sortCostIndexList = costIterative.getTour();
+		Map<Integer, Double> sortDistIndexList = distIterative.getTour();
 
 		Map<String, List<RouteSortResponse>> sortMarkerList = new HashMap();
 		sortMarkerList.put("sortCostMarkerList", createMap.getSortList(sortCostIndexList));
 		sortMarkerList.put("sortDistMarkerList", createMap.getSortList(sortDistIndexList));
+
+		System.out.println("#sortCost");
+		System.out.println(sortCostIndexList);
+
+		System.out.println("#sortDist");
+		System.out.println(sortDistIndexList);
 
 		return Header.OK(sortMarkerList);
 	}
@@ -75,11 +82,9 @@ public class MaprouteService {
 			try {
 				HistoryTb history = HistoryTb.builder().regdate(LocalDateTime.now()).username(userName)
 						.carIndex(routeList.getCarIndex()).dep(routeList.getDep()).arvl(routeList.getArvl())
-						.dist(routeList.getDist()).fee(routeList.getFee()).time(routeList.getTime())
+						.dist(routeList.getDist()).fee(routeList.getFee()).time(routeList.getTime()).imgSrc(routeList.getImgSrc())
 						.dlvrdate(LocalDateTime.parse(routeList.getDlvrdate(), formatter))
 						.arrivedate(LocalDateTime.parse(routeList.getArrivedate(), formatter)).routes(routesTb.getId()).build();
-
-				System.out.println("#historytb" + history);
 
 				historyRepository.save(history);
 			} catch (Exception e) {

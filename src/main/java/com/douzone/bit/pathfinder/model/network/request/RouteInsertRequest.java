@@ -1,6 +1,9 @@
 package com.douzone.bit.pathfinder.model.network.request;
 
+import java.util.HashMap;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.douzone.bit.pathfinder.model.dto.MongoRoutesDTO;
 
@@ -24,6 +27,8 @@ public class RouteInsertRequest {
   private String dlvrdate;
 
   private String arrivedate;
+  
+  private String imgSrc;
 
   private Integer fee;
 

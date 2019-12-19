@@ -9,7 +9,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 	<!-- 지도 캡쳐 -->
 	<script src="/static/route/js/print.js"></script>
 	<script src="/static/route/js/domtoimage.js"></script>
-	<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
 	
     <!-- 한국 지도 표시 -->
     <script src="/static/route/js/proj4.js"></script>
