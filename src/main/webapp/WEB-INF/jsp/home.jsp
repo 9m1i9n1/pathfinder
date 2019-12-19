@@ -11,8 +11,6 @@
 	rel="stylesheet">
 <script
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-<!-- PAGE SCRIPTS -->
-<script src="/static/dist/js/pages/dashboard2.js"></script>
 </head>
 <body>
 	<!-- Content Header (Page header) -->

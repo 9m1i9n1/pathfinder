@@ -192,10 +192,13 @@ const depCarlist = res => {
   let carData = $.map(res, obj => {
     obj.id = obj.id || obj.carIndex;
     obj.text = obj.text || `${obj.carName}톤트럭 (${obj.carNumber})`;
-
+    obj.ton = `${obj.carName}`;
+    
     return obj;
   });
-
+  
+  console.log(carData);
+  
   $("#carSelect").empty();
   $("#carSelect").html("<option></option>");
 
@@ -203,7 +206,8 @@ const depCarlist = res => {
     width: "100%",
     placeholder: "차량 선택",
     data: carData,
-    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)) // 앞에 숫자로 정렬되게 해야함.
+    sorter: data => data.sort((a, b) => a.ton.localeCompare(b.ton, 
+    		undefined, {'numeric' : true})) // 앞에 숫자로 정렬되게 해야함.
   });
 };
 
