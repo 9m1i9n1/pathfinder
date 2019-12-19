@@ -80,7 +80,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                 >
                   <div class="card-body">
                     <select
-                      class="select2-success"
                       id="depSelect"
                       name="depSelect"
                     >

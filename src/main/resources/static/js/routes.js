@@ -161,6 +161,7 @@ const depBranchlist = res => {
     width: "100%",
     placeholder: "출발지 선택",
     data: branchData,
+    theme: "bootstrap4",
     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
   });
 };
@@ -193,12 +194,12 @@ const depCarlist = res => {
     obj.id = obj.id || obj.carIndex;
     obj.text = obj.text || `${obj.carName}톤트럭 (${obj.carNumber})`;
     obj.ton = `${obj.carName}`;
-    
+
     return obj;
   });
-  
+
   console.log(carData);
-  
+
   $("#carSelect").empty();
   $("#carSelect").html("<option></option>");
 
@@ -206,8 +207,11 @@ const depCarlist = res => {
     width: "100%",
     placeholder: "차량 선택",
     data: carData,
-    sorter: data => data.sort((a, b) => a.ton.localeCompare(b.ton, 
-    		undefined, {'numeric' : true})) // 앞에 숫자로 정렬되게 해야함.
+    theme: "bootstrap4",
+    sorter: data =>
+      data.sort((a, b) =>
+        a.ton.localeCompare(b.ton, undefined, { numeric: true })
+      ) // 앞에 숫자로 정렬되게 해야함.
   });
 };
 
@@ -231,7 +235,8 @@ const selectBranchlist = res => {
     width: "100%",
     placeholder: "경유지 선택",
     data: branchData,
-    maximumSelectionLength: 19,
+    maximumSelectionLength: 20,
+    theme: "bootstrap4",
     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
   });
 };
