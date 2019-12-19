@@ -56,7 +56,26 @@ public class CreateMap {
 			}
 		}
 	}
-
+	public void printMap2() {
+		for (int i = 0; i < map.length; i++) {
+				System.out.printf("{");
+			for (int j = 0; j < map.length; j++) {
+				if(j ==map.length -1) {
+					System.out.printf("%.0f", map[i][j]);
+					continue;
+				}
+				System.out.printf("%.0f,", map[i][j]);
+			}
+			if(i == map.length-1) {
+				System.out.printf("}");
+				System.out.println();
+				continue;
+			}
+			System.out.printf("},");
+			
+			System.out.println();
+		}
+	}
 	public void makeCostMap(boolean mode) {
 		int row, col;
 		int size = unsortList.size();

@@ -14,18 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.douzone.bit.pathfinder.model.Marker;
 import com.douzone.bit.pathfinder.model.entity.CarTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.RoutesTb;
 import com.douzone.bit.pathfinder.model.network.Header;
-import com.douzone.bit.pathfinder.model.Marker;
-
 import com.douzone.bit.pathfinder.model.network.request.RouteInsertRequest;
 import com.douzone.bit.pathfinder.model.network.response.RouteSortResponse;
 import com.douzone.bit.pathfinder.repository.CarRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 import com.douzone.bit.pathfinder.service.algorithm.CreateMap;
+import com.douzone.bit.pathfinder.service.algorithm.Iterative;
 import com.douzone.bit.pathfinder.service.algorithm.Recursive;
 
 @Service
@@ -49,17 +49,25 @@ public class MaprouteService {
 		CarTb car = carRepository.findByCarIndex(carIndex);
 
 		createMap = new CreateMap(markerList, car.getCarName(), car.getCarFuel());
-		Recursive costRecursive = new Recursive(createMap.getCostMap());
-		Recursive distRecursive = new Recursive(createMap.getDistanceMap());
+		Iterative costIterative = new Iterative(createMap.getCostMap());
+		System.out.println(" -- --");
+		createMap.printMap();
+		System.out.println(" -- --");
+		createMap.printMap2();
+		Recursive distIterative = new Recursive(createMap.getDistanceMap());
 
-		List<List<Double>> sortCostIndexList = costRecursive.getTour();
-		List<List<Double>> sortDistIndexList = distRecursive.getTour();
+		List<List<Double>> sortCostIndexList = costIterative.getTour();
+		List<List<Double>> sortDistIndexList = distIterative.getTour();
+
+		System.out.println("#sortCostIndexList");
+		System.out.println(sortCostIndexList);
 
 		Map<String, List<RouteSortResponse>> sortMarkerList = new HashMap();
 		sortMarkerList.put("sortCostMarkerList", createMap.getSortList(sortCostIndexList));
 		sortMarkerList.put("sortDistMarkerList", createMap.getSortList(sortDistIndexList));
 
-		return Header.OK(sortMarkerList);
+		 return Header.OK(sortMarkerList);
+//		return Header.OK(null);
 	}
 
 	// route정보 Insert
