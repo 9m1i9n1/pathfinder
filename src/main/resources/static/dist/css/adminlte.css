@@ -28532,8 +28532,8 @@ a.text-muted:hover {
 }
 
 .vh-85 {
-  max-height: 600px;
-  min-height: 40vw;
+  height: 85vh;
+  max-height: 80vw;
 }
 
 .distSwitch {

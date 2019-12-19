@@ -49,6 +49,7 @@ public class MaprouteService {
 		CarTb car = carRepository.findByCarIndex(carIndex);
 
 		createMap = new CreateMap(markerList, car.getCarName(), car.getCarFuel());
+
 		Iterative costIterative = new Iterative(createMap.getCostMap());
 		Iterative distIterative = new Iterative(createMap.getDistanceMap());
 
@@ -58,6 +59,12 @@ public class MaprouteService {
 		Map<String, List<RouteSortResponse>> sortMarkerList = new HashMap();
 		sortMarkerList.put("sortCostMarkerList", createMap.getSortList(sortCostIndexList));
 		sortMarkerList.put("sortDistMarkerList", createMap.getSortList(sortDistIndexList));
+
+		System.out.println("#sortCost");
+		System.out.println(sortCostIndexList);
+
+		System.out.println("#sortDist");
+		System.out.println(sortDistIndexList);
 
 		return Header.OK(sortMarkerList);
 	}

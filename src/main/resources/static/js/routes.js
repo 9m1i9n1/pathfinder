@@ -34,12 +34,12 @@ $(document).ajaxStop(function() {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map")
+let map = L.map("map", { minZoom: 7 })
   .setView([36.1358642, 128.0785804], 7)
   .on("easyPrint-finished", e => {
-	insertImage(e.event)
-	.then(imgSrc => insertPlan(routeCostList, imgSrc))
-	.catch(error => console.log(error));
+    insertImage(e.event)
+      .then(imgSrc => insertPlan(routeCostList, imgSrc))
+      .catch(error => console.log(error));
   });
 
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -555,32 +555,32 @@ $("#routeForm").validate({
 
 // 이미지를 S3에 업로드
 const insertImage = blob => {
-	return new Promise((resolve, reject) => {
-		  let formData = new FormData();
-		  let fileName = ramdomName();
-		  
-		  formData.append("data", blob, fileName);
-		  
-		   $.ajax({
-		     type: "post",
-		     url: "/maproute/upload",
-		     data: formData,
-		     processData: false,
-		     contentType: false
-		   	})
-		     .done(function(imgSrc) {
-		    	 resolve(imgSrc);
-		     })
-		     .fail(function(error) {
-		       reject(error);
-		     });
-	})
-}
+  return new Promise((resolve, reject) => {
+    let formData = new FormData();
+    let fileName = ramdomName();
+
+    formData.append("data", blob, fileName);
+
+    $.ajax({
+      type: "post",
+      url: "/maproute/upload",
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+      .done(function(imgSrc) {
+        resolve(imgSrc);
+      })
+      .fail(function(error) {
+        reject(error);
+      });
+  });
+};
 
 // 업로드 된 이미지랑 같이 History 정보 저장.
 const insertPlan = (req, imgSrc) => {
   let plan = $.extend(true, {}, req);
-  
+
   plan.imgSrc = imgSrc;
   //! 데이터 등록하는 부분. 현재 편의상 주석처리
   $.ajax({
@@ -589,8 +589,8 @@ const insertPlan = (req, imgSrc) => {
     contentType: "application/json",
     data: JSON.stringify(plan)
   }).then(res => {
-     alert(res.data);
-     location.reload();
+    alert(res.data);
+    location.reload();
   });
 };
 
@@ -614,19 +614,19 @@ Number.prototype.toHHMMSS = function() {
 };
 
 const ramdomName = function() {
-	var name1 = "";
-	var name2 = "";
-	var resultName = "";
-	
-	var alphabet = "abcdefghijklmnopqrstuvwxyz";
-	var num = "0123456789";
-	
-	for (var i = 0; i< 15; i++) {
-		name1 += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-		name2 += num.charAt(Math.floor(Math.random() * num.length));
-	}
-	
-	resultName = name1 + name2 + ".jpeg";
-	
-	return resultName;
-}
+  var name1 = "";
+  var name2 = "";
+  var resultName = "";
+
+  var alphabet = "abcdefghijklmnopqrstuvwxyz";
+  var num = "0123456789";
+
+  for (var i = 0; i < 15; i++) {
+    name1 += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    name2 += num.charAt(Math.floor(Math.random() * num.length));
+  }
+
+  resultName = name1 + name2 + ".jpeg";
+
+  return resultName;
+};

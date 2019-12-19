@@ -1,12 +1,8 @@
 package com.douzone.bit.pathfinder.service.algorithm;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 public class Iterative {
@@ -101,7 +97,7 @@ public class Iterative {
         if (index == -1)
           index = j;
         prevDist = memo[index][state] + distance[index][lastIndex];
-        newDist = memo[j][state];
+        newDist = memo[j][state] + distance[j][lastIndex];
 
         if (newDist < prevDist) {
           index = j;
