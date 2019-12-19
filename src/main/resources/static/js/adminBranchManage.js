@@ -172,8 +172,9 @@ function branchinsert(insertData, barea) {
 			if(!!barea){
 				let Bname =areaNameTrans(barea);
 				console.log(Bname);
+				var treeId = sessionStorage.getItem("treeId");
 				 var url = "";   
-				 url = url + "?searchType=area&keyword="+Bname;
+				 url = url + "?searchType=area&keyword="+Bname +"&selectedArea="+treeId;
 				 branchsearch(url);
 				}else{
 				 branchlist();
@@ -212,15 +213,21 @@ function branchupdate(updateData, barea) {
 			if(barea==="세종특별자치시"){
 				barea="세종"
 			}
-			if(!!barea){
+			
+			var treeId = sessionStorage.getItem("treeId");
+			console.log("@@@@ " , treeId )
+			
+			if(treeId !=="company:1"){
 				let Bname =areaNameTrans(barea);
 				console.log(Bname);
 				 var url = "";   
-				 url = url + "?searchType=area&keyword="+Bname;
+				
+				 url = url + "?searchType=area&keyword="+Bname+"&selectedArea="+treeId;
 				 branchsearch(url);
 				}else{
 				 branchlist();
 				}
+			
 		}
 	});
 	alert("해당 지점 정보를 수정하였습니다.");
@@ -246,7 +253,9 @@ function branchdelete(idx, bname, barea) {
 			let Bname =areaNameTrans(barea);
 			console.log(Bname);
 			 var url = "";   
-			 url = url + "?searchType=area&keyword="+Bname;
+			 var treeId = sessionStorage.getItem("treeId");
+			 url = url + "?searchType=area&keyword="+Bname+"&selectedArea="+treeId;
+			 
 			 branchsearch(url);
 			}else{
 			 branchlist();

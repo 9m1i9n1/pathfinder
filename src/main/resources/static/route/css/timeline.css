@@ -47,9 +47,9 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  border: 2px solid #ccd5db;
+  border: 1px solid #2790b0;
   position: absolute;
-  background: #86b7e7;
+  background: #2790b0;
   left: -3px;
   top: 0;
 }
@@ -94,7 +94,7 @@
 }
 
 .tmline span.number span:first-child {
-  top: 0;
+  top: -5%;
 }
 
 .tmline span.number span:last-child {
@@ -103,7 +103,16 @@
 
 /* Custom Css */
 #routeResult {
-  min-height: 42.3vh;
-  max-height: 42.3vh;
+  min-height: 34vh;
+  max-height: 34vh;
   overflow: overlay;
+}
+
+#tmlineResult {
+  border-top: 1px dashed #ccd5db;
+  padding: 8px 10px;
+}
+
+#tmlineResult span {
+  padding-left: 4px;
 }

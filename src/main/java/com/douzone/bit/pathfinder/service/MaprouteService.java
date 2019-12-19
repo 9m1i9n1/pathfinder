@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -12,12 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.douzone.bit.pathfinder.model.entity.CarTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.RoutesTb;
 import com.douzone.bit.pathfinder.model.network.Header;
+import com.douzone.bit.pathfinder.model.Marker;
+
 import com.douzone.bit.pathfinder.model.network.request.RouteInsertRequest;
-import com.douzone.bit.pathfinder.model.network.request.RouteSortRequest;
-import com.douzone.bit.pathfinder.model.network.response.MaprouteResponse;
+import com.douzone.bit.pathfinder.model.network.response.RouteSortResponse;
+import com.douzone.bit.pathfinder.repository.CarRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 import com.douzone.bit.pathfinder.service.algorithm.CreateMap;
@@ -33,16 +38,26 @@ public class MaprouteService {
 	@Autowired
 	RoutesRepository routesRepository;
 
+	@Autowired
+	CarRepository carRepository;
+
 	private CreateMap createMap;
-	private Recursive recursive;
 
 	// sortData 처리
-	public Header<List<MaprouteResponse>> markerSort(List<RouteSortRequest> markerList) {
-		createMap = new CreateMap(markerList);
-		recursive = new Recursive(createMap.getMap());
+	// ! 맵 두개받아오면서 쓰레기 코드됨ㅠ 리팩토링 필수.
+	public Header<Map<String, List<RouteSortResponse>>> markerSort(List<Marker> markerList, Long carIndex) {
+		CarTb car = carRepository.findByCarIndex(carIndex);
 
-		List<List<Double>> sortIndexList = recursive.getTour();
-		List<MaprouteResponse> sortMarkerList = createMap.getSortList(sortIndexList);
+		createMap = new CreateMap(markerList, car.getCarName(), car.getCarFuel());
+		Recursive costRecursive = new Recursive(createMap.getCostMap());
+		Recursive distRecursive = new Recursive(createMap.getDistanceMap());
+
+		List<List<Double>> sortCostIndexList = costRecursive.getTour();
+		List<List<Double>> sortDistIndexList = distRecursive.getTour();
+
+		Map<String, List<RouteSortResponse>> sortMarkerList = new HashMap();
+		sortMarkerList.put("sortCostMarkerList", createMap.getSortList(sortCostIndexList));
+		sortMarkerList.put("sortDistMarkerList", createMap.getSortList(sortDistIndexList));
 
 		return Header.OK(sortMarkerList);
 	}

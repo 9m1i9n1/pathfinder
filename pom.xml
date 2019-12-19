@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 
 	<dependencies>
@@ -51,9 +52,9 @@
 
 		<!-- Amazon S3 -->
 		<dependency>
-		    <groupId>com.amazonaws</groupId>
-		    <artifactId>aws-java-sdk-s3</artifactId>
-		    <version>1.11.688</version>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.11.688</version>
 		</dependency>
 
 		<dependency>
@@ -171,14 +172,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 		</dependency>
-
-		<!-- https://github.com/kuljaninemir/spring-boot-ftp-client -->
-		<!-- FTP Setting -->
-		<dependency>
-			<groupId>com.github.kuljaninemir</groupId>
-			<artifactId>spring-boot-ftp-client</artifactId>
-			<version>2.0.05</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -217,6 +210,41 @@
 					</execution>
 
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.2.0</version>
+				<executions>
+					<execution>
+						<id>build-image</id>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- image 이름 -->
+					<imageName>9m1i9n1/${project.artifactId}</imageName>
+					<!-- image 라벨-->
+					<imageTags>
+						<!--여러 태그 지정 가능, 타임스탬프 유형을 만들어 버전을 구분하는 데 사용할 것을 권장-->
+						<imageTag>${maven.build.timestamp}</imageTag>
+					</imageTags>
+					<baseImage>java</baseImage>
+					<entryPoint>["java", "-jar", "/${project.build.finalName}.war"]</entryPoint>
+					<!-- dockerfile 파일 경로-->
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.war</include>
+						</resource>
+					</resources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

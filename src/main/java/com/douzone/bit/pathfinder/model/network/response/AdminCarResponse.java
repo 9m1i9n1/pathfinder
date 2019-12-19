@@ -16,11 +16,10 @@ import lombok.NoArgsConstructor;
 public class AdminCarResponse {
 
 	private Long carIndex;
-	private String carName;
+	private Integer carName;
 	private Double carFuel;
 	private String carNumber;
 	private LocalDate carBuy;
 	private String carArea;
-	
-}
 
+}

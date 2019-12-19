@@ -17,7 +17,7 @@
 <body>
 	<!-- Content Header (Page header) -->
 	<div class="content-header">
-		<div class="container-fluid">
+		<%-- <div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
 					<h1 class="m-0 text-dark">Dashboard v2</h1>
@@ -32,7 +32,7 @@
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->
-		</div>
+		</div> --%>
 		<!-- /.container-fluid -->
 	</div>
 	<!-- /.content-header -->
@@ -76,7 +76,7 @@
 
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
-						<span class="info-box-icon bg-success elevation-1"> <i
+						<span class="info-box-icon bg-green elevation-1"> <i
 							class="far fa-building"></i></span>
 
 						<div class="info-box-content">
