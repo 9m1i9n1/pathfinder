@@ -1,17 +1,18 @@
 $(document).ready(() => {
   $(".scrollbar-outer").scrollbar();
   branchlist(depBranchlist);
-
-  $("#ajaxLoadingImage").hide(); //첫 시작시 로딩바를 숨겨준다.
 });
 
-$(document).ajaxStart(function() {
-  $("#ajaxLoadingImage").show(); //ajax실행시 로딩바를 보여준다.
-});
+//   $("#ajaxLoadingImage").hide(); //첫 시작시 로딩바를 숨겨준다.
+// });
 
-$(document).ajaxStop(function() {
-  $("#ajaxLoadingImage").hide(); //ajax종료시 로딩바를 숨겨준다.
-});
+// $(document).ajaxStart(function() {
+//   $("#ajaxLoadingImage").show(); //ajax실행시 로딩바를 보여준다.
+// });
+
+// $(document).ajaxStop(function() {
+//   $("#ajaxLoadingImage").hide(); //ajax종료시 로딩바를 숨겨준다.
+// });
 
 // $("#testButton").on("click", e => {
 //   $("#depSelect")
@@ -93,14 +94,17 @@ var routeControl = L.Routing.control({
 })
   .on("routesfound", e => {
     let routes = e.routes[0];
-
     carculateData(routes)
       .then(result => drawTimeline(result))
       .catch(error => {
         alert(error);
       });
+
+    hideSpinner($("#col-selectBranch"));
+    hideSpinner($("#col-selectRoad"));
+    $("#col-selectRoad").collapse("show");
   })
-  // .on("routingstart", showSpinner)
+  // .on("routingstart", showSpinner($("#col-selectRoad")))
   // .on("routesfound routingerror", hideSpinner)
   .addTo(map);
 
@@ -108,6 +112,24 @@ var routeControl = L.Routing.control({
 let sortDistList;
 let sortCostList;
 let routeList;
+
+// ! 로딩 함수 구간 =====================
+const showSpinner = (element, text) => {
+  element.loading({
+    stoppable: true,
+    theme: "light",
+    message: text,
+    zIndex: 1e9
+  });
+};
+
+const hideSpinner = element => {
+  element.loading("stop");
+};
+
+const resizeSpinner = element => {
+  element.loading("resize");
+};
 
 // ! 화면 Draw 구간 ====================
 const loadCalendar = res => {
@@ -197,8 +219,6 @@ const depCarlist = res => {
 
     return obj;
   });
-
-  console.log(carData);
 
   $("#carSelect").empty();
   $("#carSelect").html("<option></option>");
@@ -324,6 +344,8 @@ $("#branchSelect").on("select2:unselect", e => {
 });
 
 $("#showSortDist").change(function() {
+  showSpinner($("#col-selectRoad"), "로딩중...");
+
   if ($("#showSortDist").is(":checked")) {
     drawRoute(sortDistList);
   } else {
@@ -393,12 +415,16 @@ $(".next").click(function(e) {
 });
 
 $("#resultPrev").click(e => {
-  e.preventDefault();
-
+  $("#showSortDist").prop("checked", false);
   routeControl.getPlan().setWaypoints([]);
 });
 
-$("#resultButton").click(e => {
+$("#resultButton").click(function(e) {
+  showSpinner($("#col-selectBranch"), "로딩중...");
+
+  $(".tmline").html("");
+  $("#tmlineResult").html("");
+
   mapSort();
 });
 
@@ -416,8 +442,6 @@ const mapSort = () => {
       branchValue: layer.cost
     });
   });
-
-  console.log(markerList);
 
   requestSort(markerList);
 };
@@ -453,8 +477,6 @@ const requestSort = markerList => {
 const carculateData = lrmData => {
   return new Promise((resolve, reject) => {
     let switchState = $("#showSortDist").is(":checked");
-
-    console.log(switchState);
 
     let routeInfo = {};
     let fee = 0;
@@ -576,6 +598,7 @@ $("#routeForm").validate({
 
   // valid 성공시
   submitHandler: form => {
+    showSpinner($("body"), "등록중..");
     printPlugin.printMap("CurrentSize");
   }
 });

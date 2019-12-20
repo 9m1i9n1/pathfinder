@@ -79,6 +79,10 @@ pageEncoding="UTF-8"%>
 <%-- moment --%>
 <script src="/static/route/js/moment.js"></script>
 
+<%-- jquery Loading --%>
+<link rel="stylesheet" href="/static/css/loading.css" />
+<script src="/static/js/loading.js"></script>
+
 <%-- scrollBar --%>
 <link rel="stylesheet" href="/static/css/scroll.css" />
 <script src="/static/js/jquery.scrollbar.js"></script>
