@@ -134,7 +134,7 @@
 									<ul class="nav nav-pills">
 										<li class="nav-item"><a class="nav-link active"
 											href="#todayHistory" data-toggle="tab"
-											onclick="todayHistory()">오늘의 스케쥴</a></li>
+											onclick="todayHistory()">진행중인 배송</a></li>
 										<li class="nav-item"><a class="nav-link"
 											href="#recentlyHistory" data-toggle="tab"
 											onclick="recentlyHistory()">나의 히스토리</a></li>
@@ -420,10 +420,6 @@
 	<script type="text/javascript" src="/static/js/test/raphael_min.js"></script>
 	<script type="text/javascript"
 		src="/static/js/test/raphael_path_s.korea.js"></script>
-
-	<style>
-</style>
-
 </body>
 <script src="/static/js/home.js"></script>
 </html>

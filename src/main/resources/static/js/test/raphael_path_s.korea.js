@@ -241,6 +241,8 @@ function showBranchsFeeChart(
   branchValueArr,
   selectedArea = "서울"
 ) {
+  var color = Chart.helpers.color;
+
   var myBarChart = new Chart($("#branchFeeChart"), {
     type: "bar",
     data: {
@@ -248,13 +250,9 @@ function showBranchsFeeChart(
       datasets: [
         {
           label: "운반비",
-          backgroundColor: "#FFB7B7",
-          borderColor: "#FFB7B7",
-          borderWidth: 0.5,
-          barPercentage: 0.5,
-          barThickness: 1,
-          maxBarThickness: 1,
-          minBarLength: 0.1,
+          backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+          borderColor: window.chartColors.red,
+          borderWidth: 1,
           data: branchValueArr
         }
       ]

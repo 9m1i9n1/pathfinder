@@ -30,7 +30,7 @@
 				</div>
 				<div class="col-md-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a href="#">사용자 메뉴</a></li>
+						<li class="breadcrumb-item"><a href="/home">홈</a></li>
 						<li class="breadcrumb-item active">조회내역</li>
 					</ol>
 				</div>

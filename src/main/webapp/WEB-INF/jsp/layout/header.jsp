@@ -54,7 +54,9 @@ pageEncoding="UTF-8"%>
 <script src="/static/plugins/jquery-mapael/maps/usa_states.min.js"></script>
 
 <!-- ChartJS -->
-<script src="/static/plugins/chart.js/Chart.min.js"></script>
+<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+
 
 <%-- bootstrap-select --%>
 <link rel="stylesheet" href="/static/css/select2-bootstrap4.css">
