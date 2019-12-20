@@ -11,7 +11,7 @@ public class Recursive {
 	private double[][] map;
 	private double minTourCost = Double.POSITIVE_INFINITY;
 
-	private List<List<Double>> tour = new ArrayList<>();
+	private Map<Integer, Double> tour = new LinkedHashMap<>();
 
 	private boolean ranSolver = false;
 
@@ -33,7 +33,7 @@ public class Recursive {
 	}
 
 	// Returns the optimal tour for the traveling salesman problem.
-	public List<List<Double>> getTour() {
+	public Map<Integer, Double> getTour() {
 		long start = System.currentTimeMillis();
 
 		if (!ranSolver)
@@ -52,8 +52,6 @@ public class Recursive {
 		return minTourCost;
 	}
 
-	// int cnt = 0;
-
 	public void solve() {
 
 		// Run the solver
@@ -66,16 +64,11 @@ public class Recursive {
 
 		// Regenerate path
 		int index = START_NODE;
-		int row = 0;
-
 		while (true) {
-			tour.add(new ArrayList<Double>());
-			tour.get(row).add((double) index);
-
 			if (prev[index][state] != null) {
-				tour.get(row).add(map[index][prev[index][state]]);
+        tour.put(index, map[index][prev[index][state]]);
 			} else {
-				tour.get(row).add(null);
+				tour.put(index, null);
 			}
 
 			Integer nextIndex = prev[index][state];
@@ -84,8 +77,6 @@ public class Recursive {
 			int nextState = state | (1 << nextIndex);
 			state = nextState;
 			index = nextIndex;
-
-			row++;
 		}
 		ranSolver = true;
 

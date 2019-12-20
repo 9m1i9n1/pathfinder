@@ -417,6 +417,8 @@ const mapSort = () => {
     });
   });
 
+  console.log(markerList);
+
   requestSort(markerList);
 };
 
