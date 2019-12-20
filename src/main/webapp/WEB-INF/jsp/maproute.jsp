@@ -44,7 +44,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
           </div>
           <div class="col-md-6">
             <ol class="breadcrumb float-sm-right" id="headInfo">
-              <li class="breadcrumb-item"><a href="#">홈</a></li>
+              <li class="breadcrumb-item"><a href="/home">홈</a></li>
               <li class="breadcrumb-item active">운송 등록</li>
               <%--
               <li><button id="testButton">테스트</button></li>
@@ -58,10 +58,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
     <div class="container-fluid" id="testCap">
       <div class="row">
-        <div class="col-9">
+        <div class="col-md-9">
           <div class="vh-85" id="map"></div>
         </div>
-        <div class="col-3">
+        <div class="col-md-3">
           <form id="routeForm">
             <div class="accordion md-accordion" id="accordion-select">
               <!-- 출발지점 선택 -->

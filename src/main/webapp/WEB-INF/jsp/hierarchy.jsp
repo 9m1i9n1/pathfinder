@@ -16,8 +16,8 @@
 				</div>
 				<div class="col-md-6 ">
 					<ol class="breadcrumb float-sm-right " id="headInfo">
-						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active ">조직도</li>
+						<li class="breadcrumb-item"><a href="/home">홈</a></li>
+						<li class="breadcrumb-item active">조직도</li>
 					</ol>
 				</div>
 			</div>
@@ -32,9 +32,8 @@
 					<div class="card-header">
 						<h3 class="card-title" style="height: 30px">부서 조직도</h3>
 					</div>
-					
 					<div class="card-body small height675px">
-						<div id="jstree" class="myScrollableBlock"></div>
+						<div id="jstree" class="myScrollableBlock scrollbar-outer"></div>
 					</div>
 					
 				</div>

@@ -132,20 +132,20 @@ function setNavigation() {
 								<li class="nav-item"><a href="/admin/usermanage"
 									class="nav-link"> <i class="submenu far fa-circle nav-icon"></i>
 										<p>
-											사용자 관리 <i class="right fas fa-angle-left"></i>
+											사용자 관리
 										</p>
 								</a></li>
 								<li class="nav-item"><a href="/admin/branchmanage"
 									class="nav-link "> <i
 										class="submenu far fa-circle nav-icon"></i>
 										<p>
-											지점 관리 <i class="right fas fa-angle-left"></i>
+											지점 관리
 										</p>
 								</a></li>
 								<li class="nav-item"><a href="/admin/carmanage"
 									class="nav-link"> <i class="submenu far fa-circle nav-icon"></i>
 										<p>
-											차량 관리 <i class="right fas fa-angle-left"></i>
+											차량 관리
 										</p>
 								</a></li>
 							</ul></li>
