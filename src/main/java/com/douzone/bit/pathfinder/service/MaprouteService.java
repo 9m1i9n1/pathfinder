@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,8 @@ import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 import com.douzone.bit.pathfinder.service.algorithm.CreateMap;
 import com.douzone.bit.pathfinder.service.algorithm.Iterative;
+import com.douzone.bit.pathfinder.service.algorithm.Recursive;
+
 @Service
 @Transactional
 public class MaprouteService {
@@ -48,16 +51,23 @@ public class MaprouteService {
 
 		createMap = new CreateMap(markerList, car.getCarName(), car.getCarFuel());
 
-		Iterative costIterative = new Iterative(createMap.getCostMap());
-		Iterative distIterative = new Iterative(createMap.getDistanceMap());
+		// Iterative
+		// Iterative costIterative = new Iterative(createMap.getCostMap());
+		// Iterative distIterative = new Iterative(createMap.getDistanceMap());
 
-		Map<Integer, Double> sortCostIndexList = costIterative.getTour();
-		Map<Integer, Double> sortDistIndexList = distIterative.getTour();
+		// Recursive
+		Recursive costRecursive = new Recursive(createMap.getCostMap());
+		Recursive distRecursive = new Recursive(createMap.getDistanceMap());
 
-		Map<String, List<RouteSortResponse>> sortMarkerList = new HashMap();
+		Map<Integer, Double> sortCostIndexList = costRecursive.getTour();
+		Map<Integer, Double> sortDistIndexList = distRecursive.getTour();
+
+		System.out.println("#sortCostIndexList" + sortCostIndexList);
+		System.out.println("#sortDistIndexList" + sortDistIndexList);
+
+		Map<String, List<RouteSortResponse>> sortMarkerList = new LinkedHashMap<>();
 		sortMarkerList.put("sortCostMarkerList", createMap.getSortList(sortCostIndexList));
 		sortMarkerList.put("sortDistMarkerList", createMap.getSortList(sortDistIndexList));
-
 
 		return Header.OK(sortMarkerList);
 	}

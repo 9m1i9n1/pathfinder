@@ -42,13 +42,6 @@ pageEncoding="UTF-8"%>
 />
 <script src="/static/route/js/leaflet-routing-machine.js"></script>
 
-<!-- overlayScrollbars -->
-<script src="/static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<link
-  rel="stylesheet"
-  href="/static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"
-/>
-
 <!-- Theme style -->
 <script src="/static/dist/js/adminlte.js"></script>
 <link rel="stylesheet" href="/static/dist/css/adminlte.css" />
@@ -67,12 +60,6 @@ pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/static/css/select2-bootstrap4.css">
 <link href="/static/css/select2.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
-
-<%-- <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css"
-/>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script> --%>
 
 <%-- paging --%>
 <link rel="stylesheet" href="/static/css/paging.css" />
@@ -95,9 +82,6 @@ pageEncoding="UTF-8"%>
 <%-- scrollBar --%>
 <link rel="stylesheet" href="/static/css/scroll.css" />
 <script src="/static/js/jquery.scrollbar.js"></script>
-
-<%-- axios --%>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script type="text/javascript">
   window.getCookie = function(name) {

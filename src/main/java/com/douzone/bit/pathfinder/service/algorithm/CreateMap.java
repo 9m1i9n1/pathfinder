@@ -40,22 +40,27 @@ public class CreateMap {
 	public List<RouteSortResponse> getSortList(Map<Integer, Double> sortIndexList) {
 		sortList = new ArrayList();
 
-		ListIterator<Entry<Integer, Double>> iterator = new ArrayList<Entry<Integer, Double>>(sortIndexList.entrySet())
-				.listIterator(sortIndexList.size());
-
-		while (iterator.hasPrevious()) {
-			Entry<Integer, Double> entry = iterator.previous();
-			sortList.add(response(unsortList.get(entry.getKey()), entry.getValue()));
+		for(Entry<Integer, Double> item : sortIndexList.entrySet()) {
+			sortList.add(response(unsortList.get(item.getKey()), item.getValue()));
 		}
+
+		System.out.println(sortList);
 
 		return sortList;
 	}
 
 	public void printMap() {
+		// for (int i = 0; i < map.length; i++) {
+		// for (int j = 0; j < map.length; j++) {
+		// System.out.println("i : " + i + " / j : " + j + " / map : " + map[i][j]);
+		// }
+		// }
+
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map.length; j++) {
-				System.out.println("i : " + i + " / j : " + j + " / map : " + map[i][j]);
+				System.out.printf("%f\t\t", map[i][j]);
 			}
+			System.out.println();
 		}
 	}
 	public void printMap2() {
@@ -89,10 +94,6 @@ public class CreateMap {
 
 		map = new double[size][size];
 
-		System.out.println("#size" + size);
-		System.out.println("#unsortList");
-		System.out.println(unsortList);
-
 		for (Marker item : unsortList) {
 			costList.add(item.getBranchValue());
 		}
@@ -108,35 +109,25 @@ public class CreateMap {
 		// map create
 		map[size - 1][size - 1] = 0;
 
-		if (mode) {
-			for (row = 0; row < size - 1; row++) {
-				map[row][row] = 0;
+		for (row = 0; row < size - 1; row++) {
+			map[row][row] = 0;
 
-				for (col = row + 1; col < size; col++) {
-					locationDistance.setDistance(unsortList.get(row).getBranchLat(), unsortList.get(row).getBranchLng(),
-							unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
-					distance = locationDistance.getDistance();
+			for (col = row + 1; col < size; col++) {
+				locationDistance.setDistance(unsortList.get(row).getBranchLat(), unsortList.get(row).getBranchLng(),
+						unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
+				distance = locationDistance.getDistance();
 
+				if (mode) {
 					result = mapCost.getResultCost(distance, col);
-
-					map[col][row] = result;
-					map[row][col] = result;
+				} else {
+					result = mapCost.getResultDist(distance, col);
 				}
-			}
-		} else {
-			for (row = 0; row < size - 1; row++) {
-				map[row][row] = 0;
 
-				for (col = row + 1; col < size; col++) {
-					locationDistance.setDistance(unsortList.get(row).getBranchLat(), unsortList.get(row).getBranchLng(),
-							unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
-					distance = locationDistance.getDistance();
-
-					map[col][row] = distance;
-					map[row][col] = distance;
-				}
+				map[col][row] = result;
+				map[row][col] = result;
 			}
 		}
+
 	}
 
 	private RouteSortResponse response(Marker marker, Double cost) {

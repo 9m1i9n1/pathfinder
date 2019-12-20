@@ -57,9 +57,6 @@ public class MaprouteController {
 		List<Marker> markerList = sortRequest.getMarkerList();
 		Long carIndex = sortRequest.getCarIndex();
 
-		System.out.println(markerList);
-		System.out.println(carIndex);
-
 		return MaprouteService.markerSort(markerList, carIndex);
 	}
 
@@ -73,7 +70,7 @@ public class MaprouteController {
 	public Header<List<AdminCarResponse>> carLoading(
 			@RequestParam(required = false, defaultValue = "branch") String searchType, @RequestParam String areaIndex) {
 		String selectedArea = "company:1";
-		
+
 		return adminCarService.search(null, searchType, areaIndex, selectedArea);
 	}
 

@@ -393,13 +393,13 @@ var branchInsertValid = $('#branchInsertform').validate({
 		branchName: {
 			required: true,
 			rangelength:[3, 15],
-			pattern:/^[가-힣a-zA-Z]+$/,
+			pattern:/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/,
 			remote:"/admin/branchmanage/branchcheck.do"
 		},
 		branchOwner: {
 			required: true,
 			rangelength:[2, 10],
-			pattern:/^[가-힣a-zA-Z]+$/
+			pattern:/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/
 		},
 		branchValue:{
 			required: true,
@@ -495,13 +495,13 @@ var branchUpdateValid = $('#branchUpdateForm').validate({
 		branchName: {
 			required: true,
 			rangelength:[3, 15],
-			pattern:/^[가-힣a-zA-Z]+$/,
+			pattern:/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/,
 			remote:"/admin/branchmanage/branchcheck.do"
 		},
 		branchOwner: {
 			required: true,
 			rangelength:[2, 10],
-			pattern:/^[가-힣a-zA-Z]+$/
+			pattern:/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/
 		},
 		branchValue:{
 			required: true,

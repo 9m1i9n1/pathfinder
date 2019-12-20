@@ -41,4 +41,10 @@ public class MapCost {
 
     return resultCost;
   }
+
+  public double getResultDist(double distance, int index) {
+    resultCost = (distance * (payroll + mileageCost));
+
+    return resultCost;
+  }
 }

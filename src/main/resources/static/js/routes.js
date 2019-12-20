@@ -38,7 +38,7 @@ let map = L.map("map", { minZoom: 7 })
   .setView([36.1358642, 128.0785804], 7)
   .on("easyPrint-finished", e => {
     insertImage(e.event)
-      .then(imgSrc => insertPlan(routeCostList, imgSrc))
+      .then(imgSrc => insertPlan(routeList, imgSrc))
       .catch(error => console.log(error));
   });
 
@@ -107,8 +107,7 @@ var routeControl = L.Routing.control({
 // ! 변수구간 ==========================
 let sortDistList;
 let sortCostList;
-let routeDistList;
-let routeCostList;
+let routeList;
 
 // ! 화면 Draw 구간 ====================
 const loadCalendar = res => {
@@ -162,6 +161,7 @@ const depBranchlist = res => {
     width: "100%",
     placeholder: "출발지 선택",
     data: branchData,
+    theme: "bootstrap4",
     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
   });
 };
@@ -193,9 +193,12 @@ const depCarlist = res => {
   let carData = $.map(res, obj => {
     obj.id = obj.id || obj.carIndex;
     obj.text = obj.text || `${obj.carName}톤트럭 (${obj.carNumber})`;
+    obj.ton = `${obj.carName}`;
 
     return obj;
   });
+
+  console.log(carData);
 
   $("#carSelect").empty();
   $("#carSelect").html("<option></option>");
@@ -204,7 +207,11 @@ const depCarlist = res => {
     width: "100%",
     placeholder: "차량 선택",
     data: carData,
-    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)) // 앞에 숫자로 정렬되게 해야함.
+    theme: "bootstrap4",
+    sorter: data =>
+      data.sort((a, b) =>
+        a.ton.localeCompare(b.ton, undefined, { numeric: true })
+      ) // 앞에 숫자로 정렬되게 해야함.
   });
 };
 
@@ -228,7 +235,8 @@ const selectBranchlist = res => {
     width: "100%",
     placeholder: "경유지 선택",
     data: branchData,
-    maximumSelectionLength: 19,
+    maximumSelectionLength: 20,
+    theme: "bootstrap4",
     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
   });
 };
@@ -315,6 +323,14 @@ $("#branchSelect").on("select2:unselect", e => {
   markerRemove(selectData);
 });
 
+$("#showSortDist").change(function() {
+  if ($("#showSortDist").is(":checked")) {
+    drawRoute(sortDistList);
+  } else {
+    drawRoute(sortCostList);
+  }
+});
+
 // ! 마커 부분 ======================
 let markerGroup = L.layerGroup().addTo(map);
 
@@ -335,8 +351,6 @@ const markerAdd = (selectData, icon) => {
 
 // 경로 그리기
 const drawRoute = sortList => {
-  console.log("#sortList", sortList);
-
   let wayPoints = sortList.map((branch, index) => {
     return L.Routing.waypoint(
       L.latLng(branch.branchLat, branch.branchLng),
@@ -403,6 +417,8 @@ const mapSort = () => {
     });
   });
 
+  console.log(markerList);
+
   requestSort(markerList);
 };
 
@@ -419,8 +435,6 @@ const requestSort = markerList => {
     data: JSON.stringify(sortRequest)
   })
     .then(res => {
-      console.log(res.data);
-
       sortCostList = $.extend(true, [], res.data.sortCostMarkerList);
       sortDistList = $.extend(true, [], res.data.sortDistMarkerList);
 
@@ -438,6 +452,10 @@ const requestSort = markerList => {
 // 현재 쓰레기 코드임. 시간 남으면 리팩토링 필수.
 const carculateData = lrmData => {
   return new Promise((resolve, reject) => {
+    let switchState = $("#showSortDist").is(":checked");
+
+    console.log(switchState);
+
     let routeInfo = {};
     let fee = 0;
 
@@ -458,12 +476,21 @@ const carculateData = lrmData => {
         routes.push({
           rdist: rdist.toFixed(3),
           rtime: rtime,
-          rdep: sortCostList[index - 1].branchName,
-          rarvl: sortCostList[index].branchName,
-          rfee: sortCostList[index - 1].routeCost
+          rdep: switchState
+            ? sortDistList[index - 1].branchName
+            : sortCostList[index - 1].branchName,
+          rarvl: switchState
+            ? sortDistList[index].branchName
+            : sortCostList[index].branchName,
+          rfee: switchState
+            ? sortDistList[index - 1].routeCost
+            : sortCostList[index - 1].routeCost
         });
 
-        fee += sortCostList[index - 1].routeCost;
+        fee += switchState
+          ? sortDistList[index - 1].routeCost
+          : sortCostList[index - 1].routeCost;
+
         rdist = 0;
         rtime = 0;
         index++;
@@ -489,7 +516,7 @@ const carculateData = lrmData => {
     routeInfo.arvl = routes[routes.length - 1].rarvl;
     routeInfo.routes = $.extend(true, [], routes);
 
-    routeCostList = $.extend(true, {}, routeInfo);
+    routeList = $.extend(true, {}, routeInfo);
 
     resolve(routeInfo);
   });
