@@ -83,7 +83,7 @@ public class HistoryService {
 
 			break;
 		case "ing":
-			pageable = PageRequest.of(page, 10, Sort.by("regdate").descending());
+			pageable = PageRequest.of(page, 10, Sort.by("dlvrdate").descending());
 			if (keyword == null) {
 				historys = (myhistory) ? historyRepository.findAllByIngAndUsername(pageable, currentDate, userName)
 						: historyRepository.findAllByIng(pageable, currentDate);
@@ -94,7 +94,7 @@ public class HistoryService {
 
 			break;
 		case "pp":
-			pageable = PageRequest.of(page, 10, Sort.by("regdate").descending());
+			pageable = PageRequest.of(page, 10, Sort.by("dlvrdate").descending());
 			if (keyword == null) {
 				historys = (myhistory) ? historyRepository.findAllByPpAndUsername(pageable, currentDate, userName)
 						: historyRepository.findAllByPp(pageable, currentDate);

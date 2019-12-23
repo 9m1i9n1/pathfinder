@@ -161,6 +161,7 @@
 
         function newCanvas(domNode) {
             var canvas = document.createElement('canvas');
+
             canvas.width = document.getElementById("map").offsetWidth;
             canvas.height = document.getElementById("map").offsetHeight;
 
