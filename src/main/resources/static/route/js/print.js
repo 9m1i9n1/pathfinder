@@ -189,7 +189,7 @@ L.Control.EasyPrint = L.Control.extend({
           var blob = plugin._dataURItoBlob(dataUrl);
           
           if (plugin.options.outputMode === 'download') {
-            fileSaver.saveAs(blob, plugin.options.filename + '.png');
+            saveAs(blob, plugin.options.filename + '.png');
           } else if (plugin.options.outputMode === 'print') {
             plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
           }

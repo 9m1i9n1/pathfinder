@@ -34,10 +34,10 @@ public class MapCost {
     this.tonRatio = ton / 6;
   }
 
-  public double getResultCost(double distance, int index) {
+  public double getResultCost(double distance, int index, int homeIndex) {
     resultCost = (distance * (payroll + mileageCost));
     System.out.println("cost : " + index + " - " + resultCost);
-    resultCost += (costList.get(index) * tonRatio); 
+    resultCost += ((costList.get(index) + costList.get(homeIndex) * 0.4) * tonRatio); 
     System.out.println(index + " : " + costList.get(index) * tonRatio);
     System.out.println("#resultCost" + resultCost);
  

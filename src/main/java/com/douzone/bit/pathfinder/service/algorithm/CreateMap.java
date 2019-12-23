@@ -51,9 +51,12 @@ public class CreateMap {
 		
 		sortList = new ArrayList<RouteSortResponse>();
 		
+		int size = ar.size();
+
 		for (Entry<Integer, Double> item : ar) {
-			if (count < ar.size() - 1) {
-				others = unsortList.get(ar.get(count + 1).getKey()).getBranchValue() * (carName / 6);
+			if (count < size - 1) {
+				others = (unsortList.get(ar.get(count + 1).getKey()).getBranchValue() +
+						unsortList.get(ar.get(count).getKey()).getBranchValue() * 0.4) * (carName / 6);
 				count++;
 			}
 
@@ -115,7 +118,7 @@ public class CreateMap {
 							unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
 					distance = locationDistance.getDistance();
 					
-					result = mode ? mapCost.getResultCost(distance, col) : mapCost.getResultDist(distance, col);
+					result = mode ? mapCost.getResultCost(distance, col, row) : mapCost.getResultDist(distance, col);
 
 					//TODO 고쳐!
 					map[row][col] = result;
