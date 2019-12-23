@@ -20,4 +20,5 @@ public class Marker {
   private double branchLng;
 
   private int branchValue;
+
 }
