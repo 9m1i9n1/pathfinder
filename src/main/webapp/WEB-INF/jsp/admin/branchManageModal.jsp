@@ -43,7 +43,7 @@
 						<div class="input-group">
 							
 							<input type="number" class="form-control" name="branchValue"
-								id="branchValue" step="1000" >
+								id="branchValue" step="100" >
 								
 								</div>
 						</div>
