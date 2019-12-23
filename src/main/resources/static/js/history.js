@@ -161,9 +161,6 @@ function getRoutes(routes) {
         str += "<td>" + value.rtime + "</td>";
         str += "<td>" + value.rfee + "</td>";
         str += "</tr>";
-
-      
-        
       });
 
       if (userAuth === "[ROLE_ADMIN]" || userName === routes.username) {
@@ -201,7 +198,6 @@ function getRoutes(routes) {
       detailsModal.find("#dist").text("총 거리 : " + routes.dist + " Km");
 
       detailsModal.find("#fee").text("전체 비용 : " + routes.fee + " 원");
-      console.log("총 소요시간@@" , routes.time)
     }
   });
 }

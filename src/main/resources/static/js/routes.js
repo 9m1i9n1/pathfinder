@@ -138,6 +138,7 @@ const loadCalendar = res => {
 
   let calendarSize = $("#headingDate").width();
   let disableList = res.data;
+  console.log(res);
 
   $("#calendar").calendar({
     width: calendarSize,
@@ -639,8 +640,10 @@ const insertPlan = (req, imgSrc) => {
     contentType: "application/json",
     data: JSON.stringify(plan)
   }).then(res => {
-    alert(res.data);
-    location.reload();
+	hideSpinner($("body"));
+	$('#alertModal').modal('show');
+//    alert(res.data);
+//    location.reload();
   });
 };
 
