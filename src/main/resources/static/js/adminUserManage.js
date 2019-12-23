@@ -83,14 +83,15 @@ function userLoading() {
         });
         pageButton(res.pagination.totalPages, res.pagination.currentPage);
       } else {
-        count += `<li class="breadcrumb-item active">0명</li>`;
-
-        str += `<tr class="tr-shadow">`;
-        str += `<td colspan="8">`;
-        str += `${res.description}`;
-        str += `</td>`;
-        str += `</tr>`;
-      }
+		  count += `<li class="breadcrumb-item active">0명</li>`;
+			
+			str += `<tr class="tr-shadow">`;
+			str += `<td colspan="9">`;
+			str += `${res.description}`;
+			str += `</td>`;
+			str += `</tr>`;
+			
+		}
       $("#table #body").html(str);
 
 //      $("#headerol").html(count);
