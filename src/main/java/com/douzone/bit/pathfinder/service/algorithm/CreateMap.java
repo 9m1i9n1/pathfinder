@@ -51,8 +51,10 @@ public class CreateMap {
 		
 		sortList = new ArrayList<RouteSortResponse>();
 		
+		int size = ar.size();
+
 		for (Entry<Integer, Double> item : ar) {
-			if (count < ar.size() - 1) {
+			if (count < size - 1) {
 				others = (unsortList.get(ar.get(count + 1).getKey()).getBranchValue() +
 						unsortList.get(ar.get(count).getKey()).getBranchValue() * 0.4) * (carName / 6);
 				count++;
