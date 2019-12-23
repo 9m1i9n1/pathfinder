@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	branchlist();
 	treeLoading();
+	 sessionStorage.setItem("treeId", "company:1");
 });
 
 // insertModal 닫힐 시
@@ -443,7 +444,7 @@ var branchInsertValid = $('#branchInsertform').validate({
 			rangelength:jQuery.validator.format(
 			        "운반비를 {0}자 이상 {1}자 이하로 입력해주세요."
 		      ),
-		    step:"천 단위로 입력해주세요."
+		    step:"백 단위로 입력해주세요."
 		   
 		},
 		branchAddr:{
@@ -533,7 +534,7 @@ var branchUpdateValid = $('#branchUpdateForm').validate({
 			rangelength:jQuery.validator.format(
 			        "운반비를 {0}자 이상 {1}자 이하로 입력해주세요."
 		      ),
-		    step:"천 단위로 입력해주세요."
+		    step:"백 단위로 입력해주세요."
 		},
 		branchPhone:{
 			required: "전화번호를 입역하세요.",
