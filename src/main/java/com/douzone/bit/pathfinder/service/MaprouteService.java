@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,6 @@ import com.douzone.bit.pathfinder.repository.CarRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
 import com.douzone.bit.pathfinder.service.algorithm.CreateMap;
-import com.douzone.bit.pathfinder.service.algorithm.Iterative;
 import com.douzone.bit.pathfinder.service.algorithm.Recursive;
 
 @Service
@@ -57,18 +55,26 @@ public class MaprouteService {
 
 		// Recursive
 		Recursive costRecursive = new Recursive(createMap.getCostMap());
+		System.out.println("#cost");
+		createMap.printMap();
+		
 		Recursive distRecursive = new Recursive(createMap.getDistanceMap());
+		System.out.println("#dist");
+		createMap.printMap();
 
 		Map<Integer, Double> sortCostIndexList = costRecursive.getTour();
 		Map<Integer, Double> sortDistIndexList = distRecursive.getTour();
 
-		System.out.println("#sortCostIndexList" + sortCostIndexList);
-		System.out.println("#sortDistIndexList" + sortDistIndexList);
-
 		Map<String, List<RouteSortResponse>> sortMarkerList = new LinkedHashMap<>();
-		sortMarkerList.put("sortCostMarkerList", createMap.getSortList(sortCostIndexList));
-		sortMarkerList.put("sortDistMarkerList", createMap.getSortList(sortDistIndexList));
+		
+		System.out.println("sortCostIndexList - " + sortCostIndexList);
+		System.out.println("sortDistIndexList - " + sortDistIndexList);
+		
+		sortMarkerList.put("sortCostMarkerList", createMap.getCostSortList(sortCostIndexList));
+		sortMarkerList.put("sortDistMarkerList", createMap.getDistSortList(sortDistIndexList));
 
+		System.out.println("sortCostIndexList - " + createMap.getCostSortList(sortCostIndexList));
+		System.out.println("sortDistIndexList - " + createMap.getDistSortList(sortDistIndexList));
 		return Header.OK(sortMarkerList);
 	}
 

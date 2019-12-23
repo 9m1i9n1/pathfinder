@@ -36,9 +36,12 @@ public class MapCost {
 
   public double getResultCost(double distance, int index) {
     resultCost = (distance * (payroll + mileageCost));
-    
-    resultCost += (costList.get(index) * tonRatio);
-
+    System.out.println("cost : " + index + " - " + resultCost);
+    resultCost += (costList.get(index) * tonRatio); 
+//    resultCost = resultCost*0.0002; 
+    System.out.println(index + " : " + costList.get(index) * tonRatio);
+    System.out.println("#resultCost" + resultCost);
+ 
     return resultCost;
   }
 
