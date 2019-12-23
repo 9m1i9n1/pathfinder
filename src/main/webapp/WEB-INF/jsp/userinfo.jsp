@@ -16,7 +16,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="/home">홈</a></li>
               <li class="breadcrumb-item active">내 정보</li>
             </ol>
           </div>
@@ -39,7 +39,7 @@
                       </div>
 							</div>
 							<h3 class="profile-username text-center"><sec:authentication property="principal.userFullName"/></h3>
-							<p class="text-muted text-center">회사이름</p>
+							<p class="text-muted text-center">더존공장</p>
 
 							<ul class="list-group list-group-unbordered mb-3">
 								<li class="ml-3 mr-3 list-group-item"><b>이름</b> <a

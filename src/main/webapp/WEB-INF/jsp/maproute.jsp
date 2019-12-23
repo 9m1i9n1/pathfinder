@@ -19,14 +19,11 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <link rel="stylesheet" href="/static/route/css/calendar.css" />
     <script src="/static/route/js/calendar.js"></script>
 
-    <script src="/static/js/swiper.min.js"></script>
-    <link href="/static/css/swiper.min.css" rel="stylesheet" />
-
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
   </head>
 
   <body>
-    <div
+    <%-- <div
       id="ajaxLoadingImage"
       style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 100vw; height: 100vh; z-index: 9998;"
     >
@@ -34,7 +31,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
         src="/static/img/viewLoading.gif"
         style="position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; z-index: 9999; filter: alpha(opacity = 50); margin: auto; padding: 0;"
       />
-    </div>
+    </div> --%>
 
     <section class="content-header">
       <div class="container-fluid">
@@ -44,7 +41,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
           </div>
           <div class="col-md-6">
             <ol class="breadcrumb float-sm-right" id="headInfo">
-              <li class="breadcrumb-item"><a href="#">홈</a></li>
+              <li class="breadcrumb-item"><a href="/home">홈</a></li>
               <li class="breadcrumb-item active">운송 등록</li>
               <%--
               <li><button id="testButton">테스트</button></li>
@@ -58,10 +55,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
     <div class="container-fluid" id="testCap">
       <div class="row">
-        <div class="col-9">
+        <div class="col-md-9">
           <div class="vh-85" id="map"></div>
         </div>
-        <div class="col-3">
+        <div class="col-md-3">
           <form id="routeForm">
             <div class="accordion md-accordion" id="accordion-select">
               <!-- 출발지점 선택 -->
@@ -224,7 +221,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                       이전
                     </button>
                     <button
-                      class="btn bg-olive next"
+                      class="btn bg-olive"
                       id="resultButton"
                       type="button"
                     >

@@ -23,7 +23,7 @@
 				</div>
 				<div class="col-md-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a href="#">관리자 메뉴</a></li>
+						<li class="breadcrumb-item">관리자 메뉴</li>
 						<li class="breadcrumb-item active">차량 관리</li>
 					</ol>
 				</div>
@@ -41,7 +41,7 @@
 					</div>
 
 					<div class="card-body small height675px">
-						<div id="jstree" class="myScrollableBlock"></div>
+						<div id="jstree" class="myScrollableBlock scrollbar-outer"></div>
 					</div>
 				</div>
 			</div>

@@ -50,9 +50,9 @@ function userLoading() {
       let str = "";
       let count = "";
 
-      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
+//      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
       if (res.resultCode !== "ERROR") {
-        count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
+//        count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
 
         $.each(res.data, function(key, value) {
           str += "<tr class='tr-shadow'>";
@@ -69,8 +69,8 @@ function userLoading() {
           str +=
             "<td>" +
             (value.userAuth
-              ? '<span class="badge badge-primary">관리자</span>'
-              : '<span class="badge badge-danger:focus">사용자</span>') +
+              ? '<h6><span class="badge badge-primary">관리자</span></h6>'
+              : '<h6><span class="badge badge-danger:focus">사용자</span></h6>') +
             "</td>";
 
           str += "<td><div class='table-data-feature'>";
@@ -94,7 +94,7 @@ function userLoading() {
 		}
       $("#table #body").html(str);
 
-      $("#headerol").html(count);
+//      $("#headerol").html(count);
     },
     error: function(request, status, error) {
       alert(
