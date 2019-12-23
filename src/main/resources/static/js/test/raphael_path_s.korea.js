@@ -249,7 +249,7 @@ function showBranchsFeeChart(
       labels: branchNameArr,
       datasets: [
         {
-          label: "운반비",
+          label: "지점비",
           backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
           borderColor: window.chartColors.red,
           borderWidth: 1,
@@ -289,7 +289,7 @@ function showBranchsFeeChart(
       },
       title: {
         display: true,
-        text: selectedArea + " 지역 운반비",
+        text: selectedArea + " 지역 지점비",
         position: "top"
       },
       legend: {
