@@ -18,7 +18,7 @@
 				</div>
 				<div class="col-md-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a href="#">관리자 메뉴</a></li>
+						<li class="breadcrumb-item">관리자 메뉴</a></li>
 						<li class="breadcrumb-item active">지점 관리</li>
 					</ol>
 				</div>
@@ -37,7 +37,7 @@
 						</div>
 
 						<div class="card-body small height675px">
-							<div id="jstree" class="myScrollableBlock"></div>
+							<div id="jstree" class="myScrollableBlock scrollbar-outer"></div>
 						</div>
 					</div>
 				</div>
@@ -55,10 +55,11 @@
 										<option value="branchName" class="small">지점명</option>
 										<option value="branchAddr" class="small">주소</option>
 									</select> <input class="col-sm-7 form-control form-control-navbar"
-										type="search" placeholder="Search" name="keyword" id="keyword" />
+										type="search" placeholder="Search" name="keyword" id="keyword"
+										onkeypress="searchEnter()" />
 									<div class="input-group-append">
-										<button class="btn btn-primary btn-sm" name="btnSearch"
-											id="btnSearch">
+										<button onclick="searchClick()" class="btn btn-primary btn-sm"
+											name="btnSearch" id="btnSearch">
 											<i class="fas fa-search"></i>
 										</button>
 
@@ -68,7 +69,7 @@
 						</div>
 
 						<div
-							class="card-body box-profile table-responsive p-0 height675px">
+							class="card-body box-profile table-responsive p-0">
 							<table class="table table-hover" id="tableTest">
 								<thead>
 									<tr>
@@ -87,7 +88,7 @@
 					</div>
 				</div>
 			</div>
-				<div id="page"></div>
+			<div id="page"></div>
 		</div>
 	</section>
 </body>

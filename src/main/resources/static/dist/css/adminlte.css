@@ -11567,7 +11567,7 @@ body,
 
 .user-panel .image {
   display: inline-block;
-  padding-left: 0.8rem;
+  padding-left: 0.63rem;
 }
 
 .user-panel img {
@@ -11846,7 +11846,7 @@ body,
 /* 여기임다 */
 [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active, [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active:hover, [class*='sidebar-dark-'] .nav-treeview > .nav-item > .nav-link.active:focus {
   background-color: #6c757d;
-  color: #343a40;
+  color: #ffffff;
 }
 
 [class*='sidebar-dark-'] .nav-flat .nav-item .nav-treeview .nav-treeview  {
@@ -27101,7 +27101,7 @@ input.btn:-moz-focusring {
 }
 
 .bg-teal {
-  background-color: #20c997 !important;
+  background-color: #3EB09D !important;
 }
 
 .bg-teal,
@@ -28532,7 +28532,8 @@ a.text-muted:hover {
 }
 
 .vh-85 {
-  min-height: 85vh;
+  height: 85vh;
+  max-height: 80vw;
 }
 
 .distSwitch {

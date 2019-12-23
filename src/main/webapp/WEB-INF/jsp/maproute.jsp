@@ -6,11 +6,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
   <head>
     <title>CSS</title>
 
-	<!-- 지도 캡쳐 -->
-	<script src="/static/route/js/print.js"></script>
-	<script src="/static/route/js/domtoimage.js"></script>
-	<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
-	
+    <!-- 지도 캡쳐 -->
+    <script src="/static/route/js/print.js"></script>
+    <script src="/static/route/js/domtoimage.js"></script>
+
     <!-- 한국 지도 표시 -->
     <script src="/static/route/js/proj4.js"></script>
     <script src="/static/route/js/proj4leaflet.js"></script>
@@ -20,26 +19,19 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <link rel="stylesheet" href="/static/route/css/calendar.css" />
     <script src="/static/route/js/calendar.js"></script>
 
-    <script src="/static/js/swiper.min.js"></script>
-    <link href="/static/css/swiper.min.css" rel="stylesheet" />
-
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
-
-    <%-- leaflet-image --%>
-    <script src="/static/route/js/html2canvas.js"></script>
-    <script src='https://unpkg.com/leaflet-image@latest/leaflet-image.js'></script>
   </head>
 
   <body>
-    <div
+    <%-- <div
       id="ajaxLoadingImage"
-      style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 200vh; height: 100vh; z-index: 9998;"
+      style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 100vw; height: 100vh; z-index: 9998;"
     >
       <img
         src="/static/img/viewLoading.gif"
         style="position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; z-index: 9999; filter: alpha(opacity = 50); margin: auto; padding: 0;"
       />
-    </div>
+    </div> --%>
 
     <section class="content-header">
       <div class="container-fluid">
@@ -49,9 +41,11 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
           </div>
           <div class="col-md-6">
             <ol class="breadcrumb float-sm-right" id="headInfo">
-              <li class="breadcrumb-item"><a href="#">홈</a></li>
+              <li class="breadcrumb-item"><a href="/home">홈</a></li>
               <li class="breadcrumb-item active">운송 등록</li>
-              <%-- <li><button id="testButton">테스트</button></li> --%>
+              <%--
+              <li><button id="testButton">테스트</button></li>
+              --%>
             </ol>
           </div>
         </div>
@@ -61,10 +55,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
 
     <div class="container-fluid" id="testCap">
       <div class="row">
-        <div class="col-9">
+        <div class="col-md-9">
           <div class="vh-85" id="map"></div>
         </div>
-        <div class="col-3">
+        <div class="col-md-3">
           <form id="routeForm">
             <div class="accordion md-accordion" id="accordion-select">
               <!-- 출발지점 선택 -->
@@ -82,7 +76,10 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                   data-parent="#accordion-select"
                 >
                   <div class="card-body">
-                    <select class="select2-success" id="depSelect" name="depSelect">
+                    <select
+                      id="depSelect"
+                      name="depSelect"
+                    >
                       <option></option>
                     </select>
                   </div>
@@ -224,7 +221,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                       이전
                     </button>
                     <button
-                      class="btn bg-olive next"
+                      class="btn bg-olive"
                       id="resultButton"
                       type="button"
                     >
@@ -281,7 +278,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                         <label class="custom-control-label" for="showSortDist"
                           >거리 순서로</label
                         >
-                    </div>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -4,12 +4,7 @@ public class LocationDistance {
 	public double lat1, lon1, lat2, lon2;
 
 	public LocationDistance() {
-
-		// 킬로미터(Kilo Meter) 단위
-		// double distanceKiloMeter = distance(35.173110, 129.071361, 35.179834,
-		// 129.076637);
-		//
-		// System.out.println(distanceKiloMeter + " 키로미터");
+		
 	}
 
 	public void setDistance(double lat1, double lon1, double lat2, double lon2) {

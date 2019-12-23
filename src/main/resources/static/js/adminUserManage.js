@@ -3,6 +3,18 @@ $(document).ready(function() {
   treeLoading();
 });
 
+// 검색 enter press
+function searchEnter() {
+  if (window.event.keyCode == 13) {
+    searchClick();
+  }
+}
+// 검색버튼
+function searchClick() {
+  userLoading();
+  $("#keyword").val("");
+}
+
 // 페이지 버튼 생성
 function pageButton(totalPages, currentPage) {
   $("#page").paging({
@@ -22,55 +34,66 @@ function userLoading() {
   let treeId = sessionStorage.getItem("treeId");
   let selectPage = sessionStorage.getItem("page");
 
+  let searchType = $("select#searchType").val();
+  let keyword = $("#keyword").val();
+
   $.ajax({
     url: "/admin/usermanage/userlist.do",
     type: "get",
-    data: { treeId: treeId, page: selectPage },
+    data: {
+      treeId: treeId,
+      page: selectPage,
+      searchType: searchType,
+      keyword: keyword
+    },
     success: function(res) {
       let str = "";
       let count = "";
 
-      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
+//      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
       if (res.resultCode !== "ERROR") {
-		  count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
-		
-		  $.each(res.data, function(key, value) {
-		    str += "<tr class='tr-shadow'>";
-		
-		    str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
-		    str += "<td style='display:none;'>" + value.userIndex + "</td>";
-		    str += "<td>" + value.userName + "</td>";
-		    str += "<td>" + value.branchName + "</td>";
-		    str += "<td>" + value.userPosition + "</td>";
-		    str += "<td class='desc'>" + value.userId + "</td>";
-		    str +=
-		      "<td><span class='block-email'>" + value.userEmail + "</span></td>";
-		    str += "<td>" + value.userPhone + "</td>";
-		    str += "<td>" + (value.userAuth ? "<span class=\"badge badge-primary\">관리자</span>" : "<span class=\"badge badge-danger:focus\">사용자</span>") + "</td>";
-		
-		    str += "<td><div class='table-data-feature'>";
-		    str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
-		    str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
-		    str += "</div></td>";
-		    str += "</tr>";
-		
-		    str += "<tr class='spacer'></tr>";
-		  });
-		  pageButton(res.pagination.totalPages, res.pagination.currentPage);
+//        count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
+
+        $.each(res.data, function(key, value) {
+          str += "<tr class='tr-shadow'>";
+
+          str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
+          str += "<td style='display:none;'>" + value.userIndex + "</td>";
+          str += "<td>" + value.userName + "</td>";
+          str += "<td>" + value.branchName + "</td>";
+          str += "<td>" + value.userPosition + "</td>";
+          str += "<td class='desc'>" + value.userId + "</td>";
+          str +=
+            "<td><span class='block-email'>" + value.userEmail + "</span></td>";
+          str += "<td>" + value.userPhone + "</td>";
+          str +=
+            "<td>" +
+            (value.userAuth
+              ? '<h6><span class="badge badge-primary">관리자</span></h6>'
+              : '<h6><span class="badge badge-danger:focus">사용자</span></h6>') +
+            "</td>";
+
+          str += "<td><div class='table-data-feature'>";
+          str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
+          str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
+          str += "</div></td>";
+          str += "</tr>";
+
+          str += "<tr class='spacer'></tr>";
+        });
+        pageButton(res.pagination.totalPages, res.pagination.currentPage);
       } else {
-		  count += `<li class="breadcrumb-item active">0명</li>`;
-			
-			str += `<tr class="tr-shadow">`;
-			str += `<td colspan="8">`;
-			str += `${res.description}`;
-			str += `</td>`;
-			str += `</tr>`;
-			
-		}
+        count += `<li class="breadcrumb-item active">0명</li>`;
+
+        str += `<tr class="tr-shadow">`;
+        str += `<td colspan="8">`;
+        str += `${res.description}`;
+        str += `</td>`;
+        str += `</tr>`;
+      }
       $("#table #body").html(str);
 
-      $("#headerol").html(count);
-
+//      $("#headerol").html(count);
     },
     error: function(request, status, error) {
       alert(
@@ -222,12 +245,14 @@ const selectInit = modal => {
   // init
   modal.find("#branchIndex").select2({
     width: "100%",
-    placeholder: "지점 선택"
+    placeholder: "지점 선택",
+    theme: "bootstrap4"
   });
 
   modal.find("#userPosition").select2({
     width: "100%",
-    placeholder: "직책 선택"
+    placeholder: "직책 선택",
+    theme: "bootstrap4"
   });
 };
 
@@ -301,6 +326,7 @@ function areaLoading(modal) {
       modal.find("#areaIndex").select2({
         width: "100%",
         placeholder: "지역 선택",
+        theme: "bootstrap4",
         data: areaData
       });
 
@@ -336,6 +362,7 @@ function branchLoading(modal, selected) {
       modal.find("#branchIndex").select2({
         width: "100%",
         placeholder: "지점 선택",
+        theme: "bootstrap4",
         data: branchData
       });
     },

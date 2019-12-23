@@ -33,10 +33,10 @@ function getSearch() {
     success: function(res) {
       let str = "";
       let count = "";
-      count += `<li class="breadcrumb-item">조직도 페이지 /&nbsp</a></li>`;
+//      count += `<li class="breadcrumb-item">조직도 /&nbsp</a></li>`;
 
 		if (res.resultCode !== "ERROR") {
-			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
+//			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
       $.each(res.data, function(key, value) {
         str += `<tr class="tr-shadow">`;
         str += "<td>" + value.userName + "</td>";
@@ -63,7 +63,7 @@ function getSearch() {
 		
 	}
       $("#userTable").html(str);
-      $("#headInfo").html(count);
+//      $("#headInfo").html(count);
       
     }
   });
@@ -78,9 +78,9 @@ function getUser(treeId, selectPage) {
       let str = "";
       let count = "";
 
-      count += `<li class="breadcrumb-item">조직도 페이지 /&nbsp</a></li>`;
+//      count += `<li class="breadcrumb-item"><a href="/home">홈</a> / 조직도 /&nbsp</a></li>`;
 	if (res.resultCode !== "ERROR") {
-      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
+//      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
         str += `<tr class="tr-shadow">`;
@@ -110,7 +110,7 @@ function getUser(treeId, selectPage) {
 	}
       $("#userTable").html(str);
 
-      $("#headInfo").html(count);
+//      $("#headInfo").html(count);
 
     }
   });

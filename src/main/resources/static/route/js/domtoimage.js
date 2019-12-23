@@ -161,8 +161,9 @@
 
         function newCanvas(domNode) {
             var canvas = document.createElement('canvas');
-            canvas.width = options.width || util.width(domNode);
-            canvas.height = options.height || util.height(domNode);
+
+            canvas.width = document.getElementById("map").offsetWidth;
+            canvas.height = document.getElementById("map").offsetHeight;
 
             if (options.bgcolor) {
                 var ctx = canvas.getContext('2d');

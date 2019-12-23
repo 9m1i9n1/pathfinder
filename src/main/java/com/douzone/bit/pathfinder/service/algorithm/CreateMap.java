@@ -2,7 +2,10 @@ package com.douzone.bit.pathfinder.service.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Map.Entry;
 
 import com.douzone.bit.pathfinder.model.MapCost;
 import com.douzone.bit.pathfinder.model.Marker;
@@ -15,10 +18,10 @@ public class CreateMap {
 
 	private List<Marker> unsortList;
 	private List<RouteSortResponse> sortList;
-	private Integer carName;
+	private Double carName;
 	private Double carMileage;
 
-	public CreateMap(List<Marker> unsortList, Integer carName, Double carMileage) {
+	public CreateMap(List<Marker> unsortList, Double carName, Double carMileage) {
 		this.unsortList = unsortList;
 		this.carName = carName;
 		this.carMileage = carMileage;
@@ -34,26 +37,30 @@ public class CreateMap {
 		return map;
 	}
 
-	public List<RouteSortResponse> getSortList(List<List<Double>> sortIndexList) {
+	public List<RouteSortResponse> getSortList(Map<Integer, Double> sortIndexList) {
 		sortList = new ArrayList();
 
-		int listIndex, index = 0;
-
-		for (List<Double> item : sortIndexList) {
-			listIndex = item.get(0).intValue();
-
-			sortList.add(response(unsortList.get(listIndex), item.get(1)));
-			index++;
+		for(Entry<Integer, Double> item : sortIndexList.entrySet()) {
+			sortList.add(response(unsortList.get(item.getKey()), item.getValue()));
 		}
+
+		System.out.println(sortList);
 
 		return sortList;
 	}
 
 	public void printMap() {
+		// for (int i = 0; i < map.length; i++) {
+		// for (int j = 0; j < map.length; j++) {
+		// System.out.println("i : " + i + " / j : " + j + " / map : " + map[i][j]);
+		// }
+		// }
+
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map.length; j++) {
-				System.out.println("i : " + i + " / j : " + j + " / map : " + map[i][j]);
+				System.out.printf("%f\t\t", map[i][j]);
 			}
+			System.out.println();
 		}
 	}
 
@@ -67,10 +74,6 @@ public class CreateMap {
 		MapCost mapCost = new MapCost();
 
 		map = new double[size][size];
-
-		System.out.println("#size" + size);
-		System.out.println("#unsortList");
-		System.out.println(unsortList);
 
 		for (Marker item : unsortList) {
 			costList.add(item.getBranchValue());
@@ -87,35 +90,25 @@ public class CreateMap {
 		// map create
 		map[size - 1][size - 1] = 0;
 
-		if (mode) {
-			for (row = 0; row < size - 1; row++) {
-				map[row][row] = 0;
+		for (row = 0; row < size - 1; row++) {
+			map[row][row] = 0;
 
-				for (col = row + 1; col < size; col++) {
-					locationDistance.setDistance(unsortList.get(row).getBranchLat(), unsortList.get(row).getBranchLng(),
-							unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
-					distance = locationDistance.getDistance();
+			for (col = row + 1; col < size; col++) {
+				locationDistance.setDistance(unsortList.get(row).getBranchLat(), unsortList.get(row).getBranchLng(),
+						unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
+				distance = locationDistance.getDistance();
 
+				if (mode) {
 					result = mapCost.getResultCost(distance, col);
-
-					map[col][row] = result;
-					map[row][col] = result;
+				} else {
+					result = mapCost.getResultDist(distance, col);
 				}
-			}
-		} else {
-			for (row = 0; row < size - 1; row++) {
-				map[row][row] = 0;
 
-				for (col = row + 1; col < size; col++) {
-					locationDistance.setDistance(unsortList.get(row).getBranchLat(), unsortList.get(row).getBranchLng(),
-							unsortList.get(col).getBranchLat(), unsortList.get(col).getBranchLng());
-					distance = locationDistance.getDistance();
-
-					map[col][row] = distance;
-					map[row][col] = distance;
-				}
+				map[col][row] = result;
+				map[row][col] = result;
 			}
 		}
+
 	}
 
 	private RouteSortResponse response(Marker marker, Double cost) {

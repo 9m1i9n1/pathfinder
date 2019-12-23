@@ -71,7 +71,7 @@ public class HistoryService {
 
 		switch (id) {
 		case "will":
-			pageable = PageRequest.of(page, 10, Sort.by("dlvrdate").ascending());
+			pageable = PageRequest.of(page, 10, Sort.by("regdate").descending());
 			if (keyword == null) {
 				historys = (myhistory) ? historyRepository.findAllByWillAndUsername(pageable, currentDate, userName)
 						: historyRepository.findAllByWill(pageable, currentDate);
@@ -83,7 +83,7 @@ public class HistoryService {
 
 			break;
 		case "ing":
-			pageable = PageRequest.of(page, 10, Sort.by("arrivedate").ascending());
+			pageable = PageRequest.of(page, 10, Sort.by("regdate").descending());
 			if (keyword == null) {
 				historys = (myhistory) ? historyRepository.findAllByIngAndUsername(pageable, currentDate, userName)
 						: historyRepository.findAllByIng(pageable, currentDate);
@@ -94,7 +94,7 @@ public class HistoryService {
 
 			break;
 		case "pp":
-			pageable = PageRequest.of(page, 10, Sort.by("arrivedate").descending());
+			pageable = PageRequest.of(page, 10, Sort.by("regdate").descending());
 			if (keyword == null) {
 				historys = (myhistory) ? historyRepository.findAllByPpAndUsername(pageable, currentDate, userName)
 						: historyRepository.findAllByPp(pageable, currentDate);
@@ -178,13 +178,14 @@ public class HistoryService {
 	private HistoryResponse historyResponse(HistoryTb history) {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		
 		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
 
 		HistoryResponse response = HistoryResponse.builder().id(history.getId())
 				.regdate(history.getRegdate().format(formatter)).username(history.getUsername()).carname(carNumber)
 				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(history.getDlvrdate().format(formatter))
-				.imgSrc(history.getImgSrc())
+				.imgSrc(history.getImgSrc()).time(history.getTime())
 				.arrivedate(history.getArrivedate().format(formatter)).routes(history.getRoutes().toString()).build();
 
 		return response;

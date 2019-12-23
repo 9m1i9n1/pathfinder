@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class AdminCarRequest {
 
 	private Long carArea;
-	private Integer carName;
+	private Double carName;
 	private Double carFuel;
 	private String carNumber;
 	

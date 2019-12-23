@@ -19,5 +19,7 @@
 		</div>
 	</div>
 </body>
-
+<script type="text/javascript">
+	$('.scrollbar-outer').scrollbar();
+</script>
 </html>

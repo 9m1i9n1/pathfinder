@@ -57,9 +57,6 @@ public class MaprouteController {
 		List<Marker> markerList = sortRequest.getMarkerList();
 		Long carIndex = sortRequest.getCarIndex();
 
-		System.out.println(markerList);
-		System.out.println(carIndex);
-
 		return MaprouteService.markerSort(markerList, carIndex);
 	}
 
@@ -72,8 +69,9 @@ public class MaprouteController {
 	@GetMapping("/carLoading")
 	public Header<List<AdminCarResponse>> carLoading(
 			@RequestParam(required = false, defaultValue = "branch") String searchType, @RequestParam String areaIndex) {
+		String selectedArea = "company:1";
 
-		return adminCarService.search(null, searchType, areaIndex);
+		return adminCarService.search(null, searchType, areaIndex, selectedArea);
 	}
 
 	@GetMapping("/getReserve.do")
@@ -91,7 +89,6 @@ public class MaprouteController {
 	@PostMapping("/upload")
 	public String upload(@RequestBody MultipartFile data) throws IOException {
 
-		System.out.println("hello");
 		return s3Uploader.upload(data, "static");
 	}
 }

@@ -173,7 +173,6 @@ public class AdminBranchService {
 			}
 		}
 		else {
-			List<BranchTb> branchs1 = branchRepository.findByArea(areaRepository.getOne(nodeIndex));
 			
 			switch (searchType) {
 			case "area":

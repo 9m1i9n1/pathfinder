@@ -77,12 +77,13 @@ public class AdminUserService {
   }
 
   // 유저 리스트
-  public Header<List<AdminUserResponse>> list(String id, Pageable pageable) {
-    String treeId[] = id.split(":");
+  public Header<List<AdminUserResponse>> list(String id, Pageable pageable, String searchType, String keyword) {
+	
+	String treeId[] = id.split(":");
     String nodeType = treeId[0];
     Long nodeIndex = Long.parseLong(treeId[1]);
 
-    Page<UserTb> users = mappingUser(nodeType, nodeIndex, "", "", pageable);
+    Page<UserTb> users = mappingUser(nodeType, nodeIndex, searchType, keyword, pageable);
     List<AdminUserResponse> userResponseList = users.stream().map(user -> response(user)).collect(Collectors.toList());
     if (users.getTotalElements() == 0) {
 		return Header.ERROR("조회 결과가 없습니다.");

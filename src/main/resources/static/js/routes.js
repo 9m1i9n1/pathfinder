@@ -1,17 +1,18 @@
 $(document).ready(() => {
   $(".scrollbar-outer").scrollbar();
   branchlist(depBranchlist);
-
-  $("#ajaxLoadingImage").hide(); //첫 시작시 로딩바를 숨겨준다.
 });
 
-$(document).ajaxStart(function() {
-  $("#ajaxLoadingImage").show(); //ajax실행시 로딩바를 보여준다.
-});
+//   $("#ajaxLoadingImage").hide(); //첫 시작시 로딩바를 숨겨준다.
+// });
 
-$(document).ajaxStop(function() {
-  $("#ajaxLoadingImage").hide(); //ajax종료시 로딩바를 숨겨준다.
-});
+// $(document).ajaxStart(function() {
+//   $("#ajaxLoadingImage").show(); //ajax실행시 로딩바를 보여준다.
+// });
+
+// $(document).ajaxStop(function() {
+//   $("#ajaxLoadingImage").hide(); //ajax종료시 로딩바를 숨겨준다.
+// });
 
 // $("#testButton").on("click", e => {
 //   $("#depSelect")
@@ -34,16 +35,18 @@ $(document).ajaxStop(function() {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map").setView([36.1358642, 128.0785804], 7)
-.on('easyPrint-finished', e => {
-	console.log(e.event);
-});
+let map = L.map("map", { minZoom: 7 })
+  .setView([36.1358642, 128.0785804], 7)
+  .on("easyPrint-finished", e => {
+    insertImage(e.event)
+      .then(imgSrc => insertPlan(routeList, imgSrc))
+      .catch(error => console.log(error));
+  });
 
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-})
-.addTo(map);
+}).addTo(map);
 
 var LeafIcon = L.Icon.extend({
   options: {
@@ -54,10 +57,10 @@ var LeafIcon = L.Icon.extend({
 });
 
 let printPlugin = L.easyPrint({
-	title: 'Chapture Map',
-	outputMode: 'download',
-	hidden: true,
-	sizeModes: ['A4Portrait']
+  title: "Chapture Map",
+  outputMode: "event",
+  hidden: true,
+  sizeModes: ["Current"]
 }).addTo(map);
 
 var routeControl = L.Routing.control({
@@ -91,22 +94,42 @@ var routeControl = L.Routing.control({
 })
   .on("routesfound", e => {
     let routes = e.routes[0];
-
     carculateData(routes)
       .then(result => drawTimeline(result))
       .catch(error => {
         alert(error);
       });
+
+    hideSpinner($("#col-selectBranch"));
+    hideSpinner($("#col-selectRoad"));
+    $("#col-selectRoad").collapse("show");
   })
-  // .on("routingstart", showSpinner)
+  // .on("routingstart", showSpinner($("#col-selectRoad")))
   // .on("routesfound routingerror", hideSpinner)
   .addTo(map);
 
 // ! 변수구간 ==========================
 let sortDistList;
 let sortCostList;
-let routeDistList;
-let routeCostList;
+let routeList;
+
+// ! 로딩 함수 구간 =====================
+const showSpinner = (element, text) => {
+  element.loading({
+    stoppable: true,
+    theme: "light",
+    message: text,
+    zIndex: 1e9
+  });
+};
+
+const hideSpinner = element => {
+  element.loading("stop");
+};
+
+const resizeSpinner = element => {
+  element.loading("resize");
+};
 
 // ! 화면 Draw 구간 ====================
 const loadCalendar = res => {
@@ -160,6 +183,7 @@ const depBranchlist = res => {
     width: "100%",
     placeholder: "출발지 선택",
     data: branchData,
+    theme: "bootstrap4",
     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
   });
 };
@@ -191,6 +215,7 @@ const depCarlist = res => {
   let carData = $.map(res, obj => {
     obj.id = obj.id || obj.carIndex;
     obj.text = obj.text || `${obj.carName}톤트럭 (${obj.carNumber})`;
+    obj.ton = `${obj.carName}`;
 
     return obj;
   });
@@ -202,7 +227,11 @@ const depCarlist = res => {
     width: "100%",
     placeholder: "차량 선택",
     data: carData,
-    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)) // 앞에 숫자로 정렬되게 해야함.
+    theme: "bootstrap4",
+    sorter: data =>
+      data.sort((a, b) =>
+        a.ton.localeCompare(b.ton, undefined, { numeric: true })
+      ) // 앞에 숫자로 정렬되게 해야함.
   });
 };
 
@@ -226,7 +255,8 @@ const selectBranchlist = res => {
     width: "100%",
     placeholder: "경유지 선택",
     data: branchData,
-    maximumSelectionLength: 19,
+    maximumSelectionLength: 20,
+    theme: "bootstrap4",
     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
   });
 };
@@ -313,6 +343,16 @@ $("#branchSelect").on("select2:unselect", e => {
   markerRemove(selectData);
 });
 
+$("#showSortDist").change(function() {
+  showSpinner($("#col-selectRoad"), "로딩중...");
+
+  if ($("#showSortDist").is(":checked")) {
+    drawRoute(sortDistList);
+  } else {
+    drawRoute(sortCostList);
+  }
+});
+
 // ! 마커 부분 ======================
 let markerGroup = L.layerGroup().addTo(map);
 
@@ -333,8 +373,6 @@ const markerAdd = (selectData, icon) => {
 
 // 경로 그리기
 const drawRoute = sortList => {
-  console.log("#sortList", sortList);
-
   let wayPoints = sortList.map((branch, index) => {
     return L.Routing.waypoint(
       L.latLng(branch.branchLat, branch.branchLng),
@@ -377,12 +415,16 @@ $(".next").click(function(e) {
 });
 
 $("#resultPrev").click(e => {
-  e.preventDefault();
-
+  $("#showSortDist").prop("checked", false);
   routeControl.getPlan().setWaypoints([]);
 });
 
-$("#resultButton").click(e => {
+$("#resultButton").click(function(e) {
+  showSpinner($("#col-selectBranch"), "로딩중...");
+
+  $(".tmline").html("");
+  $("#tmlineResult").html("");
+
   mapSort();
 });
 
@@ -417,8 +459,6 @@ const requestSort = markerList => {
     data: JSON.stringify(sortRequest)
   })
     .then(res => {
-      console.log(res.data);
-
       sortCostList = $.extend(true, [], res.data.sortCostMarkerList);
       sortDistList = $.extend(true, [], res.data.sortDistMarkerList);
 
@@ -436,6 +476,8 @@ const requestSort = markerList => {
 // 현재 쓰레기 코드임. 시간 남으면 리팩토링 필수.
 const carculateData = lrmData => {
   return new Promise((resolve, reject) => {
+    let switchState = $("#showSortDist").is(":checked");
+
     let routeInfo = {};
     let fee = 0;
 
@@ -456,12 +498,21 @@ const carculateData = lrmData => {
         routes.push({
           rdist: rdist.toFixed(3),
           rtime: rtime,
-          rdep: sortCostList[index - 1].branchName,
-          rarvl: sortCostList[index].branchName,
-          rfee: sortCostList[index - 1].routeCost
+          rdep: switchState
+            ? sortDistList[index - 1].branchName
+            : sortCostList[index - 1].branchName,
+          rarvl: switchState
+            ? sortDistList[index].branchName
+            : sortCostList[index].branchName,
+          rfee: switchState
+            ? sortDistList[index - 1].routeCost
+            : sortCostList[index - 1].routeCost
         });
 
-        fee += sortCostList[index - 1].routeCost;
+        fee += switchState
+          ? sortDistList[index - 1].routeCost
+          : sortCostList[index - 1].routeCost;
+
         rdist = 0;
         rtime = 0;
         index++;
@@ -481,13 +532,13 @@ const carculateData = lrmData => {
     routeInfo.dlvrdate = dlvrdate;
     routeInfo.arrivedate = arrivedate;
     routeInfo.dist = (lrmData.summary.totalDistance / 1000.0).toFixed(3);
-    routeInfo.time = lrmData.summary.totalTime.toFixed(0);
+    routeInfo.time = lrmData.summary.totalTime.toHHMMSS();
     routeInfo.fee = fee;
     routeInfo.dep = routes[0].rdep;
     routeInfo.arvl = routes[routes.length - 1].rarvl;
     routeInfo.routes = $.extend(true, [], routes);
 
-    routeCostList = $.extend(true, {}, routeInfo);
+    routeList = $.extend(true, {}, routeInfo);
 
     resolve(routeInfo);
   });
@@ -547,113 +598,51 @@ $("#routeForm").validate({
 
   // valid 성공시
   submitHandler: form => {
-    insertPlan(routeCostList);
+    showSpinner($("body"), "등록중..");
+    printPlugin.printMap("CurrentSize");
   }
 });
 
-// ! 데이터 가공 부분 ===============
-// 회원 생성
-const insertPlan = req => {
-	printPlugin.printMap('CurrentSize', 'MyManualPrint');
-	
-  //TODO leaflet 라이브러리 사용
-//  leafletImage(map, upload);
-  //TODO html2canvas 사용
-//   upload();
+// 이미지를 S3에 업로드
+const insertImage = blob => {
+  return new Promise((resolve, reject) => {
+    let formData = new FormData();
+    let fileName = ramdomName();
 
+    formData.append("data", blob, fileName);
+
+    $.ajax({
+      type: "post",
+      url: "/maproute/upload",
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+      .done(function(imgSrc) {
+        resolve(imgSrc);
+      })
+      .fail(function(error) {
+        reject(error);
+      });
+  });
+};
+
+// 업로드 된 이미지랑 같이 History 정보 저장.
+const insertPlan = (req, imgSrc) => {
+  let plan = $.extend(true, {}, req);
+
+  plan.imgSrc = imgSrc;
   //! 데이터 등록하는 부분. 현재 편의상 주석처리
   $.ajax({
     url: "/maproute/insertPlan.do",
     type: "post",
     contentType: "application/json",
-    data: JSON.stringify(req)
+    data: JSON.stringify(plan)
   }).then(res => {
-    let text = res.data;
-
-    alert(text);
+    alert(res.data);
     location.reload();
   });
 };
-
-//TODO html2canvas 사용
-// const upload = () => {
-//   html2canvas(document.getElementById("map")).then(function(canvas) {
-//     let imgDataUrl = canvas.toDataURL("image/jpeg");
-
-//     let aTag = document.createElement("a");
-//     aTag.download = "from_canvas.jpeg";
-//     aTag.href = imgDataUrl;
-//     aTag.click();
-
-//       // let formData = new FormData();
-//       // formData.append("data", dataURItoBlob(imgDataUrl));
-
-//       // $.ajax({
-//       //   type: "post",
-//       //   url: "/maproute/upload",
-//       //   data: formData,
-//       //   // data 파라미터 강제 string 변환 방지
-//       //   processData: false,
-//       //   // application/x-www-form-urlencoded; 방지
-//       //   contentType: false
-//       // })
-//       //   .done(function(data) {
-//       //     console.log(data);
-//       //   })
-//       //   .fail(function(error) {
-//       //     console.log(error);
-//       //   });
-//   });
-// };
-
-//TODO leaflet 라이브러리 사용
-const upload = (err, canvas) => {
-  let imgDataUrl = canvas.toDataURL("image/jpeg");
-  
-  let aTag = document.createElement("a");
-  aTag.download = "from_canvas.jpeg";
-  aTag.href = imgDataUrl;
-  aTag.click();
-
-  // let formData = new FormData();
-  // formData.append("data", dataURItoBlob(imgDataUrl));
-
-  // $.ajax({
-  //   type: "post",
-  //   url: "/maproute/upload",
-  //   data: formData,
-  //   // data 파라미터 강제 string 변환 방지
-  //   processData: false,
-  //   // application/x-www-form-urlencoded; 방지
-  //   contentType: false
-  // })
-  //   .done(function(data) {
-  //     console.log(data);
-  //   })
-  //   .fail(function(error) {
-  //     console.log(error);
-  //   });
-};
-
-function uploadImage() {
-  let file = $("#img")[0].files[0];
-  let formData = new FormData();
-  formData.append("data", file);
-
-  $.ajax({
-    type: "post",
-    url: "/maproute/upload",
-    data: formData,
-    processData: false,
-    contentType: false
-  })
-    .done(function(data) {
-      console.log(data);
-    })
-    .fail(function(error) {
-      console.log(error);
-    });
-}
 
 //! 유틸 부분 =====================
 Number.prototype.toHHMMSS = function() {
@@ -674,11 +663,20 @@ Number.prototype.toHHMMSS = function() {
   return hours + ":" + minutes + ":" + seconds;
 };
 
-function dataURItoBlob(dataURI) {
-  var binary = atob(dataURI.split(",")[1]);
-  var array = [];
-  for (var i = 0; i < binary.length; i++) {
-    array.push(binary.charCodeAt(i));
+const ramdomName = function() {
+  var name1 = "";
+  var name2 = "";
+  var resultName = "";
+
+  var alphabet = "abcdefghijklmnopqrstuvwxyz";
+  var num = "0123456789";
+
+  for (var i = 0; i < 15; i++) {
+    name1 += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    name2 += num.charAt(Math.floor(Math.random() * num.length));
   }
-  return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
-}
+
+  resultName = name1 + name2 + ".jpeg";
+
+  return resultName;
+};

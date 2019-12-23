@@ -181,7 +181,7 @@ L.Control.EasyPrint = L.Control.extend({
     if (this.originalState.widthWasAuto && sizemode === 'CurrentSize' || this.originalState.widthWasPercentage && sizemode === 'CurrentSize') {
       widthForExport = this.originalState.mapWidth
     }
-    domtoimage.toPng(plugin.mapContainer, {
+    domtoimage.toJpeg(plugin.mapContainer, {
         width: parseInt(widthForExport),
         height: parseInt(plugin.mapContainer.style.height.replace('px'))
       })
