@@ -38,7 +38,6 @@ public class MapCost {
     resultCost = (distance * (payroll + mileageCost));
     System.out.println("cost : " + index + " - " + resultCost);
     resultCost += (costList.get(index) * tonRatio); 
-//    resultCost = resultCost*0.0002; 
     System.out.println(index + " : " + costList.get(index) * tonRatio);
     System.out.println("#resultCost" + resultCost);
  

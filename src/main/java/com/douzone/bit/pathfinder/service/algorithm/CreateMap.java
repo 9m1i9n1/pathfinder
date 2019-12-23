@@ -49,23 +49,16 @@ public class CreateMap {
 			ar.add(item);
 		}
 		
-//		for (Entry<Integer, Double> item : ar) {
-//			ar.get(i);
-//			i++;
-//		}
-//		System.out.println("ar - " + ar);
 		sortList = new ArrayList<RouteSortResponse>();
 		
 		for (Entry<Integer, Double> item : ar) {
-			// item.getValue()에 지점비용 더하면 끝 carName /6 *
-			
 			if (count < ar.size() - 1) {
 				others = unsortList.get(ar.get(count + 1).getKey()).getBranchValue() * (carName / 6);
 				count++;
 			}
 
 			if (item.getValue() != null) {
-				sortList.add(response(unsortList.get(item.getKey()), (item.getValue().doubleValue() * (others*0.0002))));
+				sortList.add(response(unsortList.get(item.getKey()), (item.getValue().doubleValue() + others)));
 
 			} else {
 				sortList.add(response(unsortList.get(item.getKey()), item.getValue()));
@@ -74,31 +67,6 @@ public class CreateMap {
 			
 		}
 		
-//		for (Entry<Integer, Double> item : sortIndexList.entrySet()) {
-//			// item.getValue()에 지점비용 더하면 끝 carName /6 *
-//			
-//			//현재 지점의 값을 * (carName / 6)하는 코드
-//			others = unsortList.get(item.getKey()).getBranchValue() * (carName / 6);
-//			// 현재 지점의 값  * (carName / 6) 이게 아니라
-//			// 다음지점의 값  * (carName / 6)
-//			// for문으로해야댐 배열에 넣어서 해당 배열의 아이의 다음애를 들고와서 
-//			System.out.println("ohters - " + others);
-//
-//			if (item.getValue() != null) {
-//				System.out.println("널아님");
-//				System.out.println("item.getValue() - " + item.getValue());
-//				System.out.println("item.getValue() - " + (item.getValue().doubleValue() + others));
-//				sortList.add(response(unsortList.get(item.getKey()), (item.getValue().doubleValue() + others)));
-//
-//			} else {
-//
-//				System.out.println("널임");
-//				System.out.println("item.getValue() - " + item.getValue());
-//				sortList.add(response(unsortList.get(item.getKey()), item.getValue()));
-//
-//			}
-//		}
-
 		return sortList;
 	}
 
