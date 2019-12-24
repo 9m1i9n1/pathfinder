@@ -168,6 +168,10 @@ function userDelete(userIndex) {
       data: { userIndex: userIndex },
       success: function() {
         userLoading();
+        
+        $('#updateTitle').text("삭제 성공");
+        $('#updateMessage').text("해당 회원을 삭제하였습니다.");
+        $('#updateAlertModal').modal('show');
       },
       error: function(request, status, error) {
 		  $('#errorMessage').text(
@@ -183,10 +187,6 @@ function userDelete(userIndex) {
 	      $('#failModal').modal('show');
       }
     });
-
-    $('#updateTitle').text("삭제 성공");
-    $('#updateMessage').text("해당 회원을 삭제하였습니다.");
-    $('#updateAlertModal').modal('show');
 }
 
 // 회원 수정

@@ -193,6 +193,10 @@ function carinsert(insertData, carea) {
         } else {
           carlist();
         }
+        
+        $('#updateTitle').text("등록 성공");
+        $('#updateMessage').text("해당 차량을 추가하였습니다.");
+        $('#updateAlertModal').modal('show');
       },
       error: function(request, status, error) {
 		  $('#errorMessage').text(
@@ -208,10 +212,6 @@ function carinsert(insertData, carea) {
 		  $('#failModal').modal('show');
       }
     });
-    
-    $('#updateTitle').text("등록 성공");
-    $('#updateMessage').text("해당 차량을 추가하였습니다.");
-    $('#updateAlertModal').modal('show');
 }
 
 function deleteCheckModal(idx, carname, carea) {
@@ -232,12 +232,9 @@ function cardelete(idx, carname, carea) {
       data: {},
       success: function() {
         var treeId = sessionStorage.getItem("treeId");
-        console.log(11);
         if (treeId !== "company:1") {
-          console.log(22);
           console.log(carea);
           let Cname = areaNameTrans(carea);
-          console.log(33);
           var url = "";
           url =
             url +
@@ -245,20 +242,16 @@ function cardelete(idx, carname, carea) {
             Cname +
             "&selectedArea=" +
             treeId;
-          console.log(44);
           carsearch(url);
-          console.log(55);
         } else {
-          console.log(66);
           carlist();
-          console.log(77);
         }
+        
+        $('#updateTitle').text("삭제 성공");
+        $('#updateMessage').text("해당 차량을 삭제하였습니다.");
+        $('#updateAlertModal').modal('show');
       }
     });
-    
-    $('#updateTitle').text("삭제 성공");
-    $('#updateMessage').text("해당 차량을 삭제하였습니다.");
-    $('#updateAlertModal').modal('show');
 }
 
 // 첫페이지
