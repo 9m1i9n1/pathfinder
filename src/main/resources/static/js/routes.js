@@ -278,8 +278,14 @@ const drawTimeline = routeInfo => {
 
   let result = "<div class='text-left'>";
   result += `<small class='badge badge-warning'>${routeInfo.sortType} 우선</small>`;
-  result += `<small class='text-success float-right'><i class='fas fa-arrow-up'></i>10%</small>`;
-  result += "</div>";
+
+  result +=
+    routeInfo.percent !== 0
+      ? routeInfo.percent > 0
+        ? "<small class='text-success float-right'><i class='fas fa-arrow-up'></i>"
+        : "<small class='text-danger float-right'><i class='fas fa-arrow-down'></i>"
+      : "<small class='text-warning float-right'><i class='fas fa-minus'></i>";
+  result += `　${Math.abs(routeInfo.percent).toFixed(0)}%</small></div>`;
 
   result += "<div class='text-center'>";
   result += `<div class='float-left'><i class="fas fa-clock"></i><span class="result"><b>${sumTime.toHHMMSS()}</b></span></div>`;
@@ -453,9 +459,6 @@ const requestSort = markerList => {
       sortCostList = $.extend(true, [], res.data.sortCostMarkerList);
       sortDistList = $.extend(true, [], res.data.sortDistMarkerList);
 
-      console.log("#sortCostList", sortCostList);
-      console.log("#sortDistList", sortDistList);
-
       return drawRoute(sortCostList);
     })
     .catch(error => {
@@ -463,11 +466,21 @@ const requestSort = markerList => {
     });
 };
 
+const compareTotalFee = sortList => {
+  return sortList.reduce(function(acc, cur) {
+    return acc + cur.routeCost;
+  }, 0);
+};
+
 // reduce로 변경 요망
 // 현재 쓰레기 코드임. 시간 남으면 리팩토링 필수.
 const carculateData = lrmData => {
   return new Promise((resolve, reject) => {
     let switchState = $("#showSortDist").is(":checked");
+
+    let compareFee = switchState
+      ? compareTotalFee(sortCostList)
+      : compareTotalFee(sortDistList);
 
     let routeInfo = {};
     let fee = 0;
@@ -528,7 +541,9 @@ const carculateData = lrmData => {
     routeInfo.dep = routes[0].rdep;
     routeInfo.arvl = routes[routes.length - 1].rarvl;
     routeInfo.routes = $.extend(true, [], routes);
+
     routeInfo.sortType = switchState ? "거리" : "비용";
+    routeInfo.percent = (compareFee / fee) * 100 - 100;
 
     routeList = $.extend(true, {}, routeInfo);
 
