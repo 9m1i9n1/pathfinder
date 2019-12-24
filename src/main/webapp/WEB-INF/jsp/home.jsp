@@ -164,7 +164,7 @@
 						<!-- /.col -->
 					</div>
 					<!-- /.row -->
-					<div class="card">
+					<div class="card bg-info">
 						<div class="card-header">
 							<h3 class="card-title">지역별 지점비</h3>
 

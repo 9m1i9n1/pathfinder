@@ -93,6 +93,7 @@
 	</section>
 </body>
 
+<%@include file="/WEB-INF/jsp/alert.jsp" %>
 <%@include file="branchManageModal.jsp"%>
 
 <script src="/static/js/adminBranchManage.js"></script>

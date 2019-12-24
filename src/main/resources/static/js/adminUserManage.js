@@ -75,7 +75,7 @@ function userLoading() {
 
           str += "<td><div class='table-data-feature'>";
           str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
-          str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='userDelete(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
+          str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='deleteCheckModal(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
           str += "</div></td>";
           str += "</tr>";
 
@@ -97,16 +97,17 @@ function userLoading() {
 //      $("#headerol").html(count);
     },
     error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
+    	$('#errorMessage').text(
+	        "code:" +
+	          request.status +
+	          "\n" +
+	          "message:" +
+	          request.responseText +
+	          "\n" +
+	          "error:" +
+	          error
+    	);
+    	$('#failModal').modal('show');
     }
   });
 }
@@ -128,29 +129,39 @@ function userCreate(req) {
         }
       } else {
         userLoading();
-        alert("새로운 유저를 등록하였습니다.");
+        $('#updateTitle').text("등록 성공");
+        $('#updateMessage').text("해당 회원을 추가하였습니다.");
+        $('#updateAlertModal').modal('show');
       }
     },
     error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
+    	$('#errorMessage').text(
+    	        "code:" +
+    	          request.status +
+    	          "\n" +
+    	          "message:" +
+    	          request.responseText +
+    	          "\n" +
+    	          "error:" +
+    	          error
+        	);
+        $('#failModal').modal('show');
     }
   });
 }
 
-// 회원 삭제
-function userDelete(userIndex) {
-  let result = confirm("회원 정보를 삭제하시겠습니까?");
+function deleteCheckModal(userIndex) {
+    $('#checkOk').on("click", function () {
+    	userDelete(userIndex);
+    })
+	
+    $('#checkTitle').text("확인");
+    $('#checkMessage').text("회원 정보를 삭제하시겠습니까?");
+    $('#checkModal').modal('show');
+}
 
-  if (result) {
+// 회원 삭제
+function userDelete(userIndex) {	
     $.ajax({
       url: "/admin/usermanage",
       type: "delete",
@@ -159,21 +170,23 @@ function userDelete(userIndex) {
         userLoading();
       },
       error: function(request, status, error) {
-        alert(
-          "code:" +
-            request.status +
-            "\n" +
-            "message:" +
-            request.responseText +
-            "\n" +
-            "error:" +
-            error
-        );
+		  $('#errorMessage').text(
+	  	        "code:" +
+	  	          request.status +
+	  	          "\n" +
+	  	          "message:" +
+	  	          request.responseText +
+	  	          "\n" +
+	  	          "error:" +
+	  	          error
+	      	);
+	      $('#failModal').modal('show');
       }
     });
 
-    alert("해당 회원을 삭제하였습니다.");
-  }
+    $('#updateTitle').text("삭제 성공");
+    $('#updateMessage').text("해당 회원을 삭제하였습니다.");
+    $('#updateAlertModal').modal('show');
 }
 
 // 회원 수정
@@ -192,47 +205,53 @@ function userUpdate(req) {
         }
       } else {
         userLoading();
-        alert("해당 유저 정보를 수정하였습니다.");
+        
+        $('#updateTitle').text("업데이트 성공");
+        $('#updateMessage').text("해당 유저 정보를 수정하였습니다.");
+        $('#updateAlertModal').modal('show');
       }
     },
     error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
-    }
-  });
+		  $('#errorMessage').text(
+		  	        "code:" +
+		  	          request.status +
+		  	          "\n" +
+		  	          "message:" +
+		  	          request.responseText +
+		  	          "\n" +
+		  	          "error:" +
+		  	          error
+		      	);
+		  $('#failModal').modal('show');
+    	}
+  	});
 }
 
 // 비밀번호 초기화
 function userPwReset(userIndex) {
-  console.log(userIndex);
-
   $.ajax({
     url: "/admin/usermanage",
     type: "patch",
     data: { userIndex: userIndex },
     success: function(res) {
-      alert("해당 회원의 패스워드를 초기화하였습니다.");
       userLoading();
+      
+      $('#updateTitle').text("업데이트 성공");
+      $('#updateMessage').text("해당 회원의 패스워드를 초기화하였습니다.");
+      $('#updateAlertModal').modal('show');
     },
     error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
+    	$('#errorMessage').text(
+	  	        "code:" +
+	  	          request.status +
+	  	          "\n" +
+	  	          "message:" +
+	  	          request.responseText +
+	  	          "\n" +
+	  	          "error:" +
+	  	          error
+	      	);
+    	$('#failModal').modal('show');
     }
   });
 }
@@ -280,6 +299,10 @@ insertModal.on("hidden.bs.modal", function() {
 // modifyModal 열릴 시
 modifyModal.on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
+  
+  // 2개의 모달창이 존재해도 백그라운드 모달의 스크롤이 사라지지 않음
+  // 참조 : https://stackoverflow.com/questions/37467690/modal-with-another-modal-causes-scroll-on-body
+  $(this).css("overflow-y", "auto");
 });
 
 // modifyModal 닫힐 시
@@ -334,16 +357,17 @@ function areaLoading(modal) {
       selectInit(modal);
     },
     error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
+    	 $('#errorMessage').text(
+		  	        "code:" +
+		  	          request.status +
+		  	          "\n" +
+		  	          "message:" +
+		  	          request.responseText +
+		  	          "\n" +
+		  	          "error:" +
+		  	          error
+		      	);
+		  $('#failModal').modal('show');
     }
   });
 }
@@ -368,16 +392,17 @@ function branchLoading(modal, selected) {
       });
     },
     error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
+    	 $('#errorMessage').text(
+		  	        "code:" +
+		  	          request.status +
+		  	          "\n" +
+		  	          "message:" +
+		  	          request.responseText +
+		  	          "\n" +
+		  	          "error:" +
+		  	          error
+		      	);
+		  $('#failModal').modal('show');
     }
   });
 }
@@ -385,11 +410,14 @@ function branchLoading(modal, selected) {
 // 모달 내 패스워드 초기화 버튼 클릭
 modifyModal.find("#userPw").click(function() {
   let userIndex = $("#userModifyForm #userIndex").val();
-  let result = confirm("해당 회원의 비밀번호를 초기화하시겠습니까?");
-
-  if (result) {
-    userPwReset(userIndex);
-  }
+  
+  $('#checkOk').on("click", function () {
+	  userPwReset(userIndex);
+  })
+	
+  $('#checkTitle').text("확인");
+  $('#checkMessage').text("해당 회원의 비밀번호를 초기화 하시겠습니까?");
+  $('#checkModal').modal('show');
 });
 
 // 수정 폼 모달 데이터 로딩
@@ -422,16 +450,17 @@ function modalUserLoading(userIndex) {
       modifyModal.find("#userPosition").trigger("change");
     },
     error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
+    	 $('#errorMessage').text(
+		  	        "code:" +
+		  	          request.status +
+		  	          "\n" +
+		  	          "message:" +
+		  	          request.responseText +
+		  	          "\n" +
+		  	          "error:" +
+		  	          error
+		      	);
+		  $('#failModal').modal('show');
     }
   });
 }
@@ -486,16 +515,17 @@ function treeLoading() {
         result = res.data;
       },
       error: function(request, status, error) {
-        alert(
-          "code:" +
-            request.status +
-            "\n" +
-            "message:" +
-            request.responseText +
-            "\n" +
-            "error:" +
-            error
-        );
+    	  $('#errorMessage').text(
+		  	        "code:" +
+		  	          request.status +
+		  	          "\n" +
+		  	          "message:" +
+		  	          request.responseText +
+		  	          "\n" +
+		  	          "error:" +
+		  	          error
+		      	);
+		  $('#failModal').modal('show');
       }
     });
 
@@ -626,8 +656,7 @@ $("form").each(function() {
       var errors = validator.numberOfInvalids();
 
       if (errors) {
-        alert(validator.errorList[0].message);
-        validator.errorList[0].element.focus();
+		  validator.errorList[0].element.focus();
       }
     },
 
@@ -647,7 +676,8 @@ $("form").each(function() {
           modifyModal.modal("hide");
           break;
         default:
-          alert("valid 에러");
+      	  $('#errorMessage').text("valid 에러");
+		  $('#failModal').modal('show');
           break;
       }
 

@@ -103,8 +103,7 @@
 	</div>
 
 	<%@include file="userManageModal.jsp"%>
-
+	<%@include file="/WEB-INF/jsp/alert.jsp"%>
 	<script src="/static/js/adminUserManage.js"></script>
-
 </body>
 </html>

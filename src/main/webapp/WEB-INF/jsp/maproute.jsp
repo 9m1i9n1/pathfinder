@@ -20,25 +20,9 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <script src="/static/route/js/calendar.js"></script>
 
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
-    
-   	<!-- Alert -->
-   	<link href="/static/css/alert.css" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body>
-    <%-- <div
-      id="ajaxLoadingImage"
-      style="position: absolute; background: #000000; opacity: 0.3; top: 0px; left: 0px; width: 100vw; height: 100vh; z-index: 9998;"
-    >
-      <img
-        src="/static/img/viewLoading.gif"
-        style="position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; z-index: 9999; filter: alpha(opacity = 50); margin: auto; padding: 0;"
-      />
-    </div> --%>
-
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
