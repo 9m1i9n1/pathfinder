@@ -172,13 +172,13 @@ sup {
 }
 
 a {
-  color: #007bff;
+  color: #30805c;
   text-decoration: none;
   background-color: transparent;
 }
 
 a:hover {
-  color: #0056b3;
+  color: #173d2c;
   text-decoration: none;
 }
 
@@ -6580,6 +6580,30 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 
 .align-text-top {
   vertical-align: text-top !important;
+}
+
+.bg-cnavy {
+  background-color: #2b4e72 !important;
+}
+
+.bg-cblue {
+  background-color: #2790B0 !important;
+}
+
+.bg-cgreen {
+  background-color: #94ba65 !important;
+}
+
+.bg-cyellow {
+  background-color: #EBBB54 !important;
+}
+
+.bg-cred {
+  background-color: #CF4444 !important;
+}
+
+.bg-cblack {
+  background-color: #4e4d4a !important;
 }
 
 .bg-primary {

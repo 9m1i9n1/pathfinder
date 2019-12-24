@@ -1,7 +1,7 @@
 function loadingMap() {
   var R = Raphael("south", 320, 400);
   var attr = {
-    fill: "rgb(52, 52, 52)",
+    fill: "#fff",
     stroke: "#5d5d5d",
     "stroke-width": 0.1,
     "stroke-linejoin": "round"
@@ -250,7 +250,9 @@ function showBranchsFeeChart(
       datasets: [
         {
           label: "지점비",
-          backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+          backgroundColor: color(window.chartColors.red)
+            .alpha(0.5)
+            .rgbString(),
           borderColor: window.chartColors.red,
           borderWidth: 1,
           data: branchValueArr

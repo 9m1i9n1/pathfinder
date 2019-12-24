@@ -272,7 +272,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                           id="showSortDist"
                         />
                         <label class="custom-control-label" for="showSortDist"
-                          >거리 순서로</label
+                          >거리 우선</label
                         >
                       </div>
                     </div>
