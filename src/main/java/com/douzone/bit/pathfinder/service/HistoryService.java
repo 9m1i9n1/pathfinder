@@ -61,7 +61,7 @@ public class HistoryService {
 				LocalDate localDate = LocalDate.parse(keyword, formatter);
 
 				date = localDate.atTime(0, 0);
-				endDate = localDate.atTime(23, 59);	
+				endDate = localDate.atTime(23, 59);					
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
