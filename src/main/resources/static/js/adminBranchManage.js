@@ -200,11 +200,12 @@ function branchinsert(insertData, barea) {
 				}else{
 				 branchlist();
 				}
+			
+		    $('#updateTitle').text("등록 성공");
+		    $('#updateMessage').text("해당 지점을 추가하였습니다.");
+		    $('#updateAlertModal').modal('show');
 		}
 	});
-    $('#updateTitle').text("등록 성공");
-    $('#updateMessage').text("해당 지점을 추가하였습니다.");
-    $('#updateAlertModal').modal('show');
 }
 
 // 수정 초기값
@@ -246,12 +247,11 @@ function branchupdate(updateData, barea) {
 				 branchlist();
 				}
 			
+		    $('#updateTitle').text("업데이트 성공");
+		    $('#updateMessage').text("해당 지점을 수정하였습니다.");
+		    $('#updateAlertModal').modal('show');
 		}
 	});
-	
-    $('#updateTitle').text("업데이트 성공");
-    $('#updateMessage').text("해당 지점을 수정하였습니다.");
-    $('#updateAlertModal').modal('show');
 }
 
 function deleteCheckModal(idx, bname, barea) {
@@ -289,12 +289,12 @@ function branchdelete(idx, bname, barea) {
 			}else{
 			 branchlist();
 			}
+			
+		    $('#updateTitle').text("삭제 성공");
+		    $('#updateMessage').text("해당 지점을 삭제하였습니다.");
+		    $('#updateAlertModal').modal('show');
 		}
 	});
-	
-    $('#updateTitle').text("삭제 성공");
-    $('#updateMessage').text("해당 지점을 삭제하였습니다.");
-    $('#updateAlertModal').modal('show');
 }
 
 // 첫페이지

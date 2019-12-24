@@ -103,6 +103,7 @@
 	</div>
 </body>
 <%@include file="historyModal.jsp"%>
+<%@include file="alert.jsp" %>
 
 <script src="/static/js/history.js"></script>
 <script type="text/javascript">
