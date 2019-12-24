@@ -173,9 +173,6 @@ function carsearch(searchUrl, searchpage = 0) {
 
 // 추가
 function carinsert(insertData, carea) {
-  let carNumber = $("[name=carNumber]").val();
-  var result = confirm(carNumber + " 차량을 추가하시겠습니까?");
-  if (result) {
     $.ajax({
       type: "POST",
       url: "/admin/carmanage",
@@ -198,26 +195,37 @@ function carinsert(insertData, carea) {
         }
       },
       error: function(request, status, error) {
-        alert(
-          "code:" +
-            request.status +
-            "\n" +
-            "message:" +
-            request.responseText +
-            "\n" +
-            "error:" +
-            error
-        );
+		  $('#errorMessage').text(
+		  	        "code:" +
+		  	          request.status +
+		  	          "\n" +
+		  	          "message:" +
+		  	          request.responseText +
+		  	          "\n" +
+		  	          "error:" +
+		  	          error
+		      	);
+		  $('#failModal').modal('show');
       }
     });
-    alert("해당 차량 정보를 추가하였습니다.");
-  }
+    
+    $('#updateTitle').text("등록 성공");
+    $('#updateMessage').text("해당 차량을 추가하였습니다.");
+    $('#updateAlertModal').modal('show');
+}
+
+function deleteCheckModal(idx, carname, carea) {
+    $('#checkOk').on("click", function () {
+    	cardelete(idx, carname, carea);
+    })
+	
+    $('#checkTitle').text("확인");
+    $('#checkMessage').text("해당 차량를 삭제하시겠습니까?");
+    $('#checkModal').modal('show');
 }
 
 // 삭제
 function cardelete(idx, carname, carea) {
-  var result = confirm(carname + " 차량이 맞습니까?");
-  if (result) {
     $.ajax({
       type: "DELETE",
       url: "/admin/carmanage/delete/" + idx,
@@ -247,8 +255,10 @@ function cardelete(idx, carname, carea) {
         }
       }
     });
-    alert("해당 차량 정보를 삭제하였습니다.");
-  }
+    
+    $('#updateTitle').text("삭제 성공");
+    $('#updateMessage').text("해당 차량을 삭제하였습니다.");
+    $('#updateAlertModal').modal('show');
 }
 
 // 첫페이지
@@ -274,7 +284,7 @@ function carlist(selectPage) {
           "</td>";
         str += "<td><div class='table-data-feature'>";
         str +=
-          `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(` +
+          `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(` +
           value.carIndex +
           `, '` +
           value.carName +
@@ -452,16 +462,17 @@ function areaLoading(modal) {
       selectInit(modal);
     },
     error: function(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error
-      );
+		$('#errorMessage').text(
+		  	        "code:" +
+		  	          request.status +
+		  	          "\n" +
+		  	          "message:" +
+		  	          request.responseText +
+		  	          "\n" +
+		  	          "error:" +
+		  	          error
+		      	);
+		$('#failModal').modal('show');
     }
   });
 }
@@ -550,7 +561,6 @@ var carInsertValid = $("#carCreateForm").validate({
     var errors = validator.numberOfInvalids();
 
     if (errors) {
-      alert(validator.errorList[0].message);
       validator.errorList[0].element.focus();
     }
   },

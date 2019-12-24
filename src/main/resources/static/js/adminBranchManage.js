@@ -141,7 +141,7 @@ function branchsearch(searchUrl, searchpage=0) {
 					str += '<td>' + (value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 원" +'</td>';
 					str += "<td><div class='table-data-feature'>"
 					str	+= `<button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
-					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
+					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
 					str += `</td>'+ '</tr>`;
 					});
 				pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
@@ -183,9 +183,6 @@ function geocoding(addr) {
 }
 // 추가
 function branchinsert(insertData, barea) {
-	let branchName = $('[name=branchName]').val()
-	var result = confirm(branchName +" 지점을 저장하겠습니까?");
-	if(result){
 	$.ajax({
 		type : "POST",
 		url : "/admin/branchmanage",
@@ -205,8 +202,9 @@ function branchinsert(insertData, barea) {
 				}
 		}
 	});
-	alert("해당 지점 정보를 추가하였습니다.");
-	}
+    $('#updateTitle').text("등록 성공");
+    $('#updateMessage').text("해당 지점을 추가하였습니다.");
+    $('#updateAlertModal').modal('show');
 }
 
 // 수정 초기값
@@ -221,8 +219,6 @@ function branchgetvalue(data){
 }
 // 수정
 function branchupdate(updateData, barea) {
-	var result = confirm("지점을 수정 하시겠습니까?");
-	if(result){
 	$.ajax({
 		type : "PUT",
 		url : "/admin/branchmanage/update",
@@ -238,7 +234,6 @@ function branchupdate(updateData, barea) {
 			}
 			
 			var treeId = sessionStorage.getItem("treeId");
-			console.log("@@@@ " , treeId )
 			
 			if(treeId !=="company:1"){
 				let Bname =areaNameTrans(barea);
@@ -253,13 +248,24 @@ function branchupdate(updateData, barea) {
 			
 		}
 	});
-	alert("해당 지점 정보를 수정하였습니다.");
-	}
+	
+    $('#updateTitle').text("업데이트 성공");
+    $('#updateMessage').text("해당 지점을 수정하였습니다.");
+    $('#updateAlertModal').modal('show');
 }
+
+function deleteCheckModal(idx, bname, barea) {
+    $('#checkOk').on("click", function () {
+    	branchdelete(idx, bname, barea);
+    })
+	
+    $('#checkTitle').text("확인");
+    $('#checkMessage').text(bname +" 지점을 삭제하시겠습니까?");
+    $('#checkModal').modal('show');
+}
+
 // 삭제
 function branchdelete(idx, bname, barea) {
-	var result = confirm(bname +" 지점을 삭제하시겠습니까?");
-	if(result){
 	$.ajax({
 		type : "DELETE",
 		url : "/admin/branchmanage/delete/" + idx,
@@ -285,8 +291,10 @@ function branchdelete(idx, bname, barea) {
 			}
 		}
 	});
-	alert("해당 지점 정보를 삭제하였습니다.");
-	}
+	
+    $('#updateTitle').text("삭제 성공");
+    $('#updateMessage').text("해당 지점을 삭제하였습니다.");
+    $('#updateAlertModal').modal('show');
 }
 
 // 첫페이지
@@ -306,7 +314,7 @@ function branchlist(selectPage) {
 				str += '<td>'+(value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ " 원"+'</td>';
 				str += "<td><div class='table-data-feature'>";
 				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-target='#updateModal' data-placement="top" title="Edit" value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
-				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="branchdelete(`+ value.branchIndex +`, '`+ value.branchName + `')"><i class="fas fa-trash-alt"></i></button></div></td>'+ '</tr>`;
+				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '`+ value.branchName + `')"><i class="fas fa-trash-alt"></i></button></div></td>'+ '</tr>`;
 			});
 			$("#tableListBody").html(str);
 			pageButton(res.pagination.totalPages, res.pagination.currentPage);
@@ -466,7 +474,6 @@ var branchInsertValid = $('#branchInsertform').validate({
 	     console.log("invaild 접속");
 	     var errors = validator.numberOfInvalids();
 	     if (errors) {
-	       alert(validator.errorList[0].message);
 	       validator.errorList[0].element.focus();
 	     }
 	},
@@ -546,7 +553,6 @@ var branchUpdateValid = $('#branchUpdateForm').validate({
 	     console.log("invaild 접속");
 	     var errors = validator.numberOfInvalids();
 	     if (errors) {
-	       alert(validator.errorList[0].message);
 	       validator.errorList[0].element.focus();
 	     }
 	},

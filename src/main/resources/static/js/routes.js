@@ -645,7 +645,7 @@ const insertPlan = (req, imgSrc) => {
     data: JSON.stringify(plan)
   }).then(res => {
 	hideSpinner($("body"));
-	$('#alertModal').modal('show');
+	$('#successModal').modal({backdrop : 'static', keyboard : false});
 //    alert(res.data);
 //    location.reload();
   });
