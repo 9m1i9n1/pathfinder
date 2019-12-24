@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div class="modal fade tableScroll" id="detailsModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade tableScroll" id="detailsModal" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-centered"
 		role="document">
 		<div class="modal-content" id="modal-content">
@@ -51,8 +51,7 @@
 						</div>
 
 						<div class="col-md-7">
-							<img id="mapImg"
-								width="100%" height="100%" class="pb-4">
+							<img id="mapImg" width="100%" height="100%" class="pb-4">
 						</div>
 					</div>
 
@@ -72,14 +71,46 @@
 						<tbody id="routesListBody"></tbody>
 					</table>
 
-					<div class="container text-right">
-						<div id="dist"></div>
-						<div id="totalTime"></div>
-						<div id="fee"></div>
+					<div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="small-box bg-teal">
+									<div class="inner">
+										<h5>총거리</h5>
+										<p id="dist"></p>
+										<div class="icon">
+											<i class="fas fa-truck fa-lg"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="small-box bg-primary">
+									<div class="inner">
+										<h5>소요 시간</h5>
+										<p id="totalTime"></p>
+										<div class="icon">
+											<i class="far fa-clock fa-lg"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="small-box bg-olive">
+									<div class="inner">
+										<h5>비용</h5>
+										<p id="fee"></p>
+										<div class="icon">
+											<i class="fas fa-coins  fa-lg"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" id='printBtn'>인쇄</button>
 				<button class="btn btn-secondary" type="button" id="deleteBtn">삭제</button>
