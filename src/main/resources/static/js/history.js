@@ -161,9 +161,6 @@ function getRoutes(routes) {
         str += "<td>" + value.rtime + "</td>";
         str += "<td>" + value.rfee + "</td>";
         str += "</tr>";
-
-      
-        
       });
 
       if (userAuth === "[ROLE_ADMIN]" || userName === routes.username) {
@@ -182,11 +179,7 @@ function getRoutes(routes) {
 
       detailsModal.find("#mapImg").attr("src", routes.imgSrc);
 
-      detailsModal.find("#index").text("총 소요시간 " + routes.index);
-
-      detailsModal
-        .find("#totalTime")
-        .text("총 소요시간 : " + routes.time);
+      detailsModal.find("#totalTime").text(routes.time);
 
       detailsModal.find("#regdate").text(routes.regdate);
 
@@ -198,10 +191,15 @@ function getRoutes(routes) {
 
       detailsModal.find("#arvl").text(routes.arvl);
 
+      detailsModal
+        .find("#dist")
+        .text(
+          routes.dist.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Km"
+        );
+
       detailsModal.find("#dist").text("총 거리 : " + routes.dist + " Km");
 
       detailsModal.find("#fee").text("전체 비용 : " + routes.fee + " 원");
-      console.log("총 소요시간@@" , routes.time)
     }
   });
 }

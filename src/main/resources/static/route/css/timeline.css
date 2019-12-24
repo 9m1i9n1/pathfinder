@@ -15,7 +15,7 @@
   width: 1px;
   height: 100%;
   position: absolute;
-  border-left: 2px dashed #ccd5db;
+  border-left: 1px dashed #ccd5db;
 }
 
 .tmline ul li {
@@ -29,7 +29,7 @@
 }
 
 .tmline ul li:not(:first-child) {
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .tmline ul li > span {
@@ -95,11 +95,11 @@
 }
 
 .tmline span.number span:first-child {
-  top: -5%;
+  top: -10%;
 }
 
 .tmline span.number span:last-child {
-  top: 100%;
+  top: 105%;
 }
 
 /* Custom Css */

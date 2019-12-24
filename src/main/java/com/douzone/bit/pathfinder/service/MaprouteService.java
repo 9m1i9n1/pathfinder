@@ -111,8 +111,11 @@ public class MaprouteService {
 		LocalDateTime startDate = LocalDate.now().atTime(0, 0);
 		LocalDateTime endDate = startDate.plusMonths(3);
 
+		System.out.println(startDate);
+		System.out.println(endDate);
+		
 		List<HistoryTb> historyList = historyRepository.findAllByCarnameAndDate(carIndex, startDate, endDate);
-
+		
 		List<String> disableDates = new ArrayList<>();
 
 		for (HistoryTb history : historyList) {
