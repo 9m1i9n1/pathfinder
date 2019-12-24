@@ -11,7 +11,7 @@
 				<p class="text-center"><h4 class="modal-title">등록완료!</h4></p>
 			</div>
 			<div class="modal-body">
-				<p class="text-center">경로가 성공적으로 등록되었습니다.</p>
+				<p class="text-center">정보가 성공적으로 등록되었습니다.</p>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-success btn-block" data-dismiss="modal"
