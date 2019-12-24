@@ -238,7 +238,8 @@ function loadingMap() {
 
 function showBranchsFeeChart(
   branchNameArr,
-  branchValueArr,
+  arrivalBranchValueArr,
+  departureBranchValueArr,
   selectedArea = "서울"
 ) {
   var color = Chart.helpers.color;
@@ -249,14 +250,22 @@ function showBranchsFeeChart(
       labels: branchNameArr,
       datasets: [
         {
-          label: "지점비",
+          label: "상차비",
           backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
           borderColor: window.chartColors.red,
           borderWidth: 1,
-          data: branchValueArr
-        }
+          data: departureBranchValueArr
+        },
+        {
+            label: "하차비",
+            backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.blue,
+            borderWidth: 1,
+            data: arrivalBranchValueArr
+          }
       ]
     },
+    
     options: {
       tooltips: {
         callbacks: {
@@ -268,17 +277,8 @@ function showBranchsFeeChart(
               "1톤 : " +
                 (Number(tooltipItem[0].yLabel) * (1 / 6)).toFixed(0) +
                 "원",
-              "2톤 : " +
-                (Number(tooltipItem[0].yLabel) * (2 / 6)).toFixed(0) +
-                "원",
-              "2.5톤 : " +
-                (Number(tooltipItem[0].yLabel) * (2.5 / 6)).toFixed(0) +
-                "원",
               "5톤 : " +
                 (Number(tooltipItem[0].yLabel) * (5 / 6)).toFixed(0) +
-                "원",
-              "10톤 : " +
-                (Number(tooltipItem[0].yLabel) * (10 / 6)).toFixed(0) +
                 "원",
               "20톤 : " +
                 (Number(tooltipItem[0].yLabel) * (20 / 6)).toFixed(0) +
@@ -289,11 +289,11 @@ function showBranchsFeeChart(
       },
       title: {
         display: true,
-        text: selectedArea + " 지역 지점비",
+        text: selectedArea + " 지역",
         position: "top"
       },
       legend: {
-        position: "bottom"
+        position: "top"
       },
       scales: {
         yAxes: [
@@ -302,7 +302,20 @@ function showBranchsFeeChart(
               beginAtZero: true
             }
           }
-        ]
+        ],
+        xAxes: [{
+			display: true,
+			scaleLabel: {
+				display: true,
+				labelString: '비용 산정 공식 = (비용 * 톤수(T) / 6)'
+			},
+			ticks: {
+				major: {
+					fontStyle: 'bold',
+					fontColor: '#FF0000'
+				}
+			}
+		}]
       }
     }
   });
@@ -320,13 +333,15 @@ function sendBranchsKeyword(keyword, selectedArea) {
     contentType: "application/json; charset=utf-8",
     success: function(res) {
       var branchNameArr = [];
-      var branchValueArr = [];
+      var departureBranchValueArr = [];
+      var arrivalBranchValueArr = [];
       $.each(res.data, function(key, value) {
         branchNameArr.push(value.branchName);
-        branchValueArr.push(value.branchValue);
+        arrivalBranchValueArr.push(value.branchValue);
+        departureBranchValueArr.push((value.branchValue)*0.4);
       });
 
-      showBranchsFeeChart(branchNameArr, branchValueArr, selectedArea);
+      showBranchsFeeChart(branchNameArr, arrivalBranchValueArr,departureBranchValueArr, selectedArea);
     }
   });
 }

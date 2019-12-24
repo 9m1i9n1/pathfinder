@@ -204,10 +204,10 @@
 									</div>
 								</div>
 								<div class="col-md-7 justify-content-center align-items-center"
-									id="branchFeeChartP">
+									id="branchFeeChartP" >
 									<!-- 여기가 옆쪽 -->
 									<canvas id="branchFeeChart"
-										class="chartjs-render-monitor col-md-8 "></canvas>
+										class="chartjs-render-monitor col-md-8"></canvas>
 								</div>
 							</div>
 							<!-- /.d-md-flex -->
