@@ -1,7 +1,7 @@
 function loadingMap() {
   var R = Raphael("south", 320, 400);
   var attr = {
-    fill: "rgb(52, 52, 52)",
+    fill: "#fff",
     stroke: "#5d5d5d",
     "stroke-width": 0.1,
     "stroke-linejoin": "round"
@@ -84,20 +84,17 @@ function loadingMap() {
   var current = null;
   var keyword = null;
   var selected = 0;
+
   for (var state in aus) {
     aus[state].color = Raphael.getColor();
     (function(st, state) {
+      // onover
       st[0].onmouseover = function() {
-        // onover
-
         if (st.id === selected)
           current &&
-            aus[current].animate(
-              { fill: "rgb(52, 52, 52)", stroke: "#5d5d5d" },
-              500
-            ) &&
+            aus[current].animate({ fill: "#fff", stroke: "#5d5d5d" }, 500) &&
             (document.getElementById(current).style.display = "");
-        st.animate({ fill: st.color, stroke: "#5d5d5d" }, 500);
+        st.animate({ fill: "#c9dfaf", stroke: "#5d5d5d" }, 500);
         // st.toFront();
         R.safari();
         document.getElementById(state).style.display = "block";
@@ -106,7 +103,7 @@ function loadingMap() {
 
       st[0].onmouseout = function() {
         if (st.id !== selected)
-          st.animate({ fill: "rgb(52, 52, 52)", stroke: "#5d5d5d" }, 500);
+          st.animate({ fill: "#fff", stroke: "#5d5d5d" }, 500);
         // st.toFront();
         R.safari();
       };
@@ -136,7 +133,7 @@ function loadingMap() {
       st[0].onclick = function() {
         for (var t in aus) {
           if (aus[t].id !== st.id)
-            aus[t].animate({ fill: "rgb(52, 52, 52)", stroke: "#5d5d5d" }, 500);
+            aus[t].animate({ fill: "#fff", stroke: "#5d5d5d" }, 500);
         }
 
         switch (state) {
@@ -250,7 +247,9 @@ function showBranchsFeeChart(
       datasets: [
         {
           label: "지점비",
-          backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+          backgroundColor: color(window.chartColors.red)
+            .alpha(0.5)
+            .rgbString(),
           borderColor: window.chartColors.red,
           borderWidth: 1,
           data: branchValueArr
