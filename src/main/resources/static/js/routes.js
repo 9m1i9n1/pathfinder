@@ -3,17 +3,6 @@ $(document).ready(() => {
   branchlist(depBranchlist);
 });
 
-//   $("#ajaxLoadingImage").hide(); //첫 시작시 로딩바를 숨겨준다.
-// });
-
-// $(document).ajaxStart(function() {
-//   $("#ajaxLoadingImage").show(); //ajax실행시 로딩바를 보여준다.
-// });
-
-// $(document).ajaxStop(function() {
-//   $("#ajaxLoadingImage").hide(); //ajax종료시 로딩바를 숨겨준다.
-// });
-
 // $("#testButton").on("click", e => {
 //   $("#depSelect")
 //     .val("652")
@@ -104,8 +93,6 @@ var routeControl = L.Routing.control({
     hideSpinner($("#col-selectRoad"));
     $("#col-selectRoad").collapse("show");
   })
-  // .on("routingstart", showSpinner($("#col-selectRoad")))
-  // .on("routesfound routingerror", hideSpinner)
   .addTo(map);
 
 // ! 변수구간 ==========================
@@ -639,8 +626,10 @@ const insertPlan = (req, imgSrc) => {
     contentType: "application/json",
     data: JSON.stringify(plan)
   }).then(res => {
-    alert(res.data);
-    location.reload();
+    hideSpinner($("body"));
+    $("#alertModal").modal("show");
+    //    alert(res.data);
+    //    location.reload();
   });
 };
 
