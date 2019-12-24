@@ -99,6 +99,7 @@
 	</div>
 </body>
 
+<%@include file="/WEB-INF/jsp/alert.jsp" %>
 <%@include file="carManageModal.jsp"%>
 
 <script src="/static/js/adminCarManage.js"></script>

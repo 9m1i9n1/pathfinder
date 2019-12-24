@@ -20,12 +20,6 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
     <script src="/static/route/js/calendar.js"></script>
 
     <link href="/static/route/css/timeline.css" rel="stylesheet" />
-    
-   	<!-- Alert -->
-   	<link href="/static/css/alert.css" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body>

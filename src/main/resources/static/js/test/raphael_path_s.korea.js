@@ -84,20 +84,17 @@ function loadingMap() {
   var current = null;
   var keyword = null;
   var selected = 0;
+
   for (var state in aus) {
     aus[state].color = Raphael.getColor();
     (function(st, state) {
+      // onover
       st[0].onmouseover = function() {
-        // onover
-
         if (st.id === selected)
           current &&
-            aus[current].animate(
-              { fill: "rgb(52, 52, 52)", stroke: "#5d5d5d" },
-              500
-            ) &&
+            aus[current].animate({ fill: "#fff", stroke: "#5d5d5d" }, 500) &&
             (document.getElementById(current).style.display = "");
-        st.animate({ fill: st.color, stroke: "#5d5d5d" }, 500);
+        st.animate({ fill: "#c9dfaf", stroke: "#5d5d5d" }, 500);
         // st.toFront();
         R.safari();
         document.getElementById(state).style.display = "block";
@@ -106,7 +103,7 @@ function loadingMap() {
 
       st[0].onmouseout = function() {
         if (st.id !== selected)
-          st.animate({ fill: "rgb(52, 52, 52)", stroke: "#5d5d5d" }, 500);
+          st.animate({ fill: "#fff", stroke: "#5d5d5d" }, 500);
         // st.toFront();
         R.safari();
       };
@@ -136,7 +133,7 @@ function loadingMap() {
       st[0].onclick = function() {
         for (var t in aus) {
           if (aus[t].id !== st.id)
-            aus[t].animate({ fill: "rgb(52, 52, 52)", stroke: "#5d5d5d" }, 500);
+            aus[t].animate({ fill: "#fff", stroke: "#5d5d5d" }, 500);
         }
 
         switch (state) {
@@ -238,7 +235,8 @@ function loadingMap() {
 
 function showBranchsFeeChart(
   branchNameArr,
-  branchValueArr,
+  arrivalBranchValueArr,
+  departureBranchValueArr,
   selectedArea = "서울"
 ) {
   var color = Chart.helpers.color;
@@ -249,16 +247,22 @@ function showBranchsFeeChart(
       labels: branchNameArr,
       datasets: [
         {
-          label: "지점비",
-          backgroundColor: color(window.chartColors.red)
-            .alpha(0.5)
-            .rgbString(),
+          label: "상차비",
+          backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
           borderColor: window.chartColors.red,
           borderWidth: 1,
-          data: branchValueArr
-        }
+          data: departureBranchValueArr
+        },
+        {
+            label: "하차비",
+            backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.blue,
+            borderWidth: 1,
+            data: arrivalBranchValueArr
+          }
       ]
     },
+    
     options: {
       tooltips: {
         callbacks: {
@@ -270,17 +274,8 @@ function showBranchsFeeChart(
               "1톤 : " +
                 (Number(tooltipItem[0].yLabel) * (1 / 6)).toFixed(0) +
                 "원",
-              "2톤 : " +
-                (Number(tooltipItem[0].yLabel) * (2 / 6)).toFixed(0) +
-                "원",
-              "2.5톤 : " +
-                (Number(tooltipItem[0].yLabel) * (2.5 / 6)).toFixed(0) +
-                "원",
               "5톤 : " +
                 (Number(tooltipItem[0].yLabel) * (5 / 6)).toFixed(0) +
-                "원",
-              "10톤 : " +
-                (Number(tooltipItem[0].yLabel) * (10 / 6)).toFixed(0) +
                 "원",
               "20톤 : " +
                 (Number(tooltipItem[0].yLabel) * (20 / 6)).toFixed(0) +
@@ -291,11 +286,11 @@ function showBranchsFeeChart(
       },
       title: {
         display: true,
-        text: selectedArea + " 지역 지점비",
+        text: selectedArea + " 지역",
         position: "top"
       },
       legend: {
-        position: "bottom"
+        position: "top"
       },
       scales: {
         yAxes: [
@@ -304,7 +299,20 @@ function showBranchsFeeChart(
               beginAtZero: true
             }
           }
-        ]
+        ],
+        xAxes: [{
+			display: true,
+			scaleLabel: {
+				display: true,
+				labelString: '비용 산정 공식 = (비용 * 톤수(T) / 6)'
+			},
+			ticks: {
+				major: {
+					fontStyle: 'bold',
+					fontColor: '#FF0000'
+				}
+			}
+		}]
       }
     }
   });
@@ -322,13 +330,15 @@ function sendBranchsKeyword(keyword, selectedArea) {
     contentType: "application/json; charset=utf-8",
     success: function(res) {
       var branchNameArr = [];
-      var branchValueArr = [];
+      var departureBranchValueArr = [];
+      var arrivalBranchValueArr = [];
       $.each(res.data, function(key, value) {
         branchNameArr.push(value.branchName);
-        branchValueArr.push(value.branchValue);
+        arrivalBranchValueArr.push(value.branchValue);
+        departureBranchValueArr.push((value.branchValue)*0.4);
       });
 
-      showBranchsFeeChart(branchNameArr, branchValueArr, selectedArea);
+      showBranchsFeeChart(branchNameArr, arrivalBranchValueArr,departureBranchValueArr, selectedArea);
     }
   });
 }

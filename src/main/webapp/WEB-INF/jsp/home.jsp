@@ -15,22 +15,6 @@
 <body>
 	<!-- Content Header (Page header) -->
 	<div class="content-header">
-		<%-- <div class="container-fluid">
-			<div class="row mb-2">
-				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Dashboard v2</h1>
-				</div>
-				<!-- /.col -->
-				<div class="col-sm-6">
-					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Dashboard v2</li>
-					</ol>
-				</div>
-				<!-- /.col -->
-			</div>
-			<!-- /.row -->
-		</div> --%>
 		<!-- /.container-fluid -->
 	</div>
 	<!-- /.content-header -->
@@ -115,7 +99,7 @@
 							<!-- USERS LIST -->
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">Schedule</h3>
+									<h3 class="card-title"><i class="far fa-calendar-alt mr-1"></i>오늘의 스케쥴</h3>
 
 									<div class="card-tools">
 										<a href="/history" class="btn btn-sm btn-secondary">전체보기</a>
@@ -204,10 +188,10 @@
 									</div>
 								</div>
 								<div class="col-md-7 justify-content-center align-items-center"
-									id="branchFeeChartP">
+									id="branchFeeChartP" >
 									<!-- 여기가 옆쪽 -->
 									<canvas id="branchFeeChart"
-										class="chartjs-render-monitor col-md-8 "></canvas>
+										class="chartjs-render-monitor col-md-8"></canvas>
 								</div>
 							</div>
 							<!-- /.d-md-flex -->
@@ -223,7 +207,7 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<h5 class="card-title">최근 배송 현황(1 Month)</h5>
+									<h5 class="card-title"><i class="fas fa-truck mr-1"></i>배송 현황(최근 한달)</h5>
 
 									<div class="card-tools">
 										<input id="myDelivery" type="checkbox" data-toggle="toggle"
