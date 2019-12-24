@@ -138,6 +138,7 @@ const loadCalendar = res => {
 
   let calendarSize = $("#headingDate").width();
   let disableList = res.data;
+  console.log(res);
 
   $("#calendar").calendar({
     width: calendarSize,
@@ -271,13 +272,16 @@ const drawTimeline = routeInfo => {
   $.each(routeInfo.routes, function(index, value) {
     str += "<li>";
     str += "<div>";
-    str += `<div class="title">${value.rdep} → ${value.rarvl}</div>`;
+    str += `<div class="title"><h6>${value.rdep}</h6>`;
+    str += "<hr class='divider'>";
+    str += `<i class="fas fa-arrow-circle-right"></i> ${value.rarvl}</div>`;
     str += `<div class="info">${value.rdist}km</div>`;
     str += `<div class="type">${value.rfee}원</div>`;
     str += "</div>";
 
     str += "<span class='number'>";
-    str += `<span>${sumTime.toHHMMSS()}</span>`;
+
+    str += index ? `<span></span>` : `<span>${sumTime.toHHMMSS()}</span>`;
 
     sumTime += value.rtime;
     str += `<span>${sumTime.toHHMMSS()}</span></span>`;
@@ -286,7 +290,7 @@ const drawTimeline = routeInfo => {
   str += "</ul>";
 
   let result = "<div class='text-left'>";
-  result += `<small class='badge badge-warning'>정보</small>`;
+  result += `<small class='badge badge-warning'>${routeInfo.sortType} 우선</small>`;
   result += `<small class='text-success float-right'><i class='fas fa-arrow-up'></i>10%</small>`;
   result += "</div>";
 
@@ -537,6 +541,7 @@ const carculateData = lrmData => {
     routeInfo.dep = routes[0].rdep;
     routeInfo.arvl = routes[routes.length - 1].rarvl;
     routeInfo.routes = $.extend(true, [], routes);
+    routeInfo.sortType = switchState ? "거리" : "비용";
 
     routeList = $.extend(true, {}, routeInfo);
 
@@ -639,8 +644,10 @@ const insertPlan = (req, imgSrc) => {
     contentType: "application/json",
     data: JSON.stringify(plan)
   }).then(res => {
-    alert(res.data);
-    location.reload();
+	hideSpinner($("body"));
+	$('#alertModal').modal('show');
+//    alert(res.data);
+//    location.reload();
   });
 };
 

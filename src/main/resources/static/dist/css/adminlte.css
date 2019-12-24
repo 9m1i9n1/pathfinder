@@ -76,7 +76,7 @@ body {
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.5;
-  color: #212529;
+  color: #404040;
   text-align: left;
   background-color: #ffffff;
 }
@@ -441,8 +441,10 @@ h6, .h6 {
 }
 
 hr {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  /* margin-top: 1rem; */
+  /* margin-bottom: 1rem; */
+  margin-top: 3px;
+  margin-bottom: 4px;
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
