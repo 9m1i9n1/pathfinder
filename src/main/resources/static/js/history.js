@@ -197,9 +197,9 @@ function getRoutes(routes) {
           routes.dist.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Km"
         );
 
-      detailsModal.find("#dist").text("총 거리 : " + routes.dist + " Km");
+      detailsModal.find("#dist").text((routes.dist).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Km");
 
-      detailsModal.find("#fee").text("전체 비용 : " + routes.fee + " 원");
+      detailsModal.find("#fee").text((routes.fee).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원");
     }
   });
 }
