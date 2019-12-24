@@ -145,7 +145,7 @@ function removeRoutes(history) {
           $('#updateMessage').text("해당 기록을 삭제하였습니다.");
           $('#updateAlertModal').modal('show');
           
-          $("#detailsModal").modal("hide");
+          $("#detailsModal").modal("toggle");
 
         let tabId = sessionStorage.getItem("tabId");
         getHistory(0, tabId);
