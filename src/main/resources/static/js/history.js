@@ -15,6 +15,7 @@ function pageButton(totalPages, currentPage, id) {
   });
 }
 
+
 function datePicker() {
   $("#calendar").calendar({
     width: 280,
@@ -39,7 +40,7 @@ function datePicker() {
       "12월"
     ],
     onClose: function(view, date, data) {
-      $("#keyword").val(moment(date).format("YYYY-MM-DD"));
+		$("#keyword").val(moment(date).format("YYYY-MM-DD"));
     }
   });
 }
@@ -55,9 +56,7 @@ function checkEvent(selectPage, id) {
 
 function getHistory(selectPage, id) {
   let tabId = sessionStorage.setItem("tabId", id);
-
-  $("#keyword").val("");
-
+  
   printHistory(selectPage, id);
 }
 
