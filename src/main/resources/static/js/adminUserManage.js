@@ -80,7 +80,7 @@ function userLoading() {
           str +=
             "<td>" +
             (value.userAuth
-              ? '<h6><span class="badge badge-primary">관리자</span></h6>'
+              ? '<h6><span class="badge badge-danger">관리자</span></h6>'
               : '<h6><span class="badge badge-danger:focus">사용자</span></h6>') +
             "</td>";
 

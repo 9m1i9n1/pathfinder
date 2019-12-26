@@ -87,7 +87,7 @@ function printHistory(selectPage, id, keyword) {
           str += "<td>" + value.arrivedate + "</td>";
           str += "<td>" + value.carname + "</td>";
           str +=
-            "<td><button class='btn btn-primary btn-sm'" +
+            "<td><button class='btn btn-sm bg-olive'" +
             "data-toggle='modal' data-target='#detailsModal'" +
             "onclick='getRoutes(" +
             JSON.stringify(value) +
