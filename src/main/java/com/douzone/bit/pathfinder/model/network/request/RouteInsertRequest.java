@@ -35,6 +35,8 @@ public class RouteInsertRequest {
   private String time;
 
   private Double dist;
+  
+  private String sortType;
 
   private List<MongoRoutesDTO> routes;
 }

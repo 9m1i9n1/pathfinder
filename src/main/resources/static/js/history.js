@@ -202,6 +202,8 @@ function getRoutes(routes) {
       detailsModal.find("#dep").text(routes.dep);
 
       detailsModal.find("#arvl").text(routes.arvl);
+      
+      detailsModal.find("#sortType").text(routes.sortType+"순");
 
       detailsModal
         .find("#dist")

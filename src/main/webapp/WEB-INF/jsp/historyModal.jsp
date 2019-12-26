@@ -9,8 +9,7 @@
 			<div id="printThis">
 				<div class="modal-header bg-olive">
 					<h4 class="modal-title" id="myModalLabel">
-						<i class="material-icons">history</i>
-						상세정보
+						<i class="material-icons">history</i> 상세정보
 					</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
@@ -19,7 +18,8 @@
 						<div class="col-md-5">
 							<div class="form-group row">
 								<label for="branchName" class="col-sm-4 col-form-label-sm">
-									<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp 예약일자 </label>
+									<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp 예약일자
+								</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="regdate"></h2>
 								</div>
@@ -27,21 +27,25 @@
 
 							<div class="form-group row">
 								<label for="branchOwner" class="col-sm-4 col-form-label-sm">
-									<i class="fa fa-user" aria-hidden="true"></i>&nbsp 사용자</label>
+									<i class="fa fa-user" aria-hidden="true"></i>&nbsp 사용자
+								</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="username"></h2>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="branchArea" class="col-sm-4 col-form-label-sm center">
-								<i class="fa fa-car" aria-hidden="true"></i>&nbsp 차량번호 </label>
+								<label for="branchArea"
+									class="col-sm-4 col-form-label-sm center"> <i
+									class="fa fa-car" aria-hidden="true"></i>&nbsp 차량번호
+								</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="carname"></h2>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="branchValue" class="col-sm-4 col-form-label-sm">
-								<i class="fa fa-truck" aria-hidden="true"></i>&nbsp 출발지</label>
+									<i class="fa fa-truck" aria-hidden="true"></i>&nbsp 출발지
+								</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="dep"></h2>
 								</div>
@@ -49,13 +53,21 @@
 
 							<div class="form-group row">
 								<label for="branchPhone" class="col-sm-4 col-form-label-sm">
-								<i class="fa fa-flag" aria-hidden="true"></i>&nbsp 도착지</label>
+									<i class="fa fa-flag" aria-hidden="true"></i>&nbsp 도착지
+								</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="arvl"></h2>
 								</div>
 							</div>
+							<div class="form-group row">
+								<label for="branchPhone" class="col-sm-4 col-form-label-sm">
+									<i class="fa fa-map-o" aria-hidden="true"></i>&nbsp 탐색방식
+								</label>
+								<div class="col-sm-8">
+									<h2 class="form-control" id="sortType"></h2>
+								</div>
+							</div>
 						</div>
-
 						<div class="col-md-7">
 							<img id="mapImg" width="100%" height="100%" class="pb-4">
 						</div>
@@ -120,7 +132,8 @@
 			<div class="modal-footer main-modal-footer">
 				<button class="btn btn-success" type="button" id='printBtn'>인쇄</button>
 				<button class="btn btn-danger" type="button" id="deleteBtn">삭제</button>
-				<button class="btn btn-outline-success" type="button" data-dismiss="modal">닫기</button>
+				<button class="btn btn-outline-success" type="button"
+					data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
