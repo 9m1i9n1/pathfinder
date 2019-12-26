@@ -14,6 +14,11 @@
  body::-webkit-scrollbar { 
     display: none; 
 }
+
+th, td {
+	border : 1px solid #e8e8e8;
+}
+
 :root {
   --blue: #0073a9;
   --indigo: #605ca8;
@@ -1553,7 +1558,7 @@ pre code {
   padding: 0.75rem;
   vertical-align: center;
   border-top: 1px solid #dee2e6;
-  /* text-align: center; */
+  text-align: center;
 }
 
 .table thead th {

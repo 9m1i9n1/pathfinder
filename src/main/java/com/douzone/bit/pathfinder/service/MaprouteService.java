@@ -80,6 +80,7 @@ public class MaprouteService {
 
 	// route정보 Insert
 	public Header<String> insertPlan(RouteInsertRequest routeList) {
+		System.out.println("1" + routeList.getSortType());
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -93,6 +94,7 @@ public class MaprouteService {
 						.carIndex(routeList.getCarIndex()).dep(routeList.getDep()).arvl(routeList.getArvl())
 						.dist(routeList.getDist()).fee(routeList.getFee()).time(routeList.getTime()).imgSrc(routeList.getImgSrc())
 						.dlvrdate(LocalDateTime.parse(routeList.getDlvrdate(), formatter))
+						.sortType(routeList.getSortType())
 						.arrivedate(LocalDateTime.parse(routeList.getArrivedate(), formatter)).routes(routesTb.getId()).build();
 
 				historyRepository.save(history);
