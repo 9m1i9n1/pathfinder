@@ -96,8 +96,9 @@
 					<!-- MAP & BOX PANE -->
 					<div class="row">
 						<div class="col-md-12">
+
 							<!-- USERS LIST -->
-							<div class="card">
+							<div class="card card-success card-outline card-outline-tabs">
 								<div class="card-header">
 									<h3 class="card-title"><i class="far fa-calendar-alt mr-1"></i>오늘의 스케쥴</h3>
 
@@ -110,8 +111,8 @@
 									</div>
 								</div>
 								<!-- /.card-header -->
-								<div class="card-body p-0">
-									<ul class="nav nav-pills">
+								<div class="card-header p-0 pt-1 border-bottom-0">
+									<ul class="nav nav-tabs">
 										<li class="nav-item"><a class="nav-link active"
 											href="#todayHistory" data-toggle="tab"
 											onclick="todayHistory()">진행중인 배송</a></li>
@@ -119,6 +120,9 @@
 											href="#recentlyHistory" data-toggle="tab"
 											onclick="recentlyHistory()">나의 히스토리</a></li>
 									</ul>
+
+									</div>
+
 									<div class="table-responsive">
 										<table class="table m-0">
 
@@ -139,18 +143,16 @@
 									</div>
 									<!-- /.table-responsive -->
 									<!-- /.users-list -->
-								</div>
-								<!-- /.card-body -->
-								<!-- /.card-footer -->
 							</div>
 							<!--/.card -->
 						</div>
 						<!-- /.col -->
 					</div>
+					
 					<!-- /.row -->
-					<div class="card bg-info">
+					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">지역별 지점비</h3>
+							<h3 class="card-title"><i class="fas fa-won-sign mr-1"></i>지역별 지점비</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
@@ -162,10 +164,9 @@
 						<!-- /.card-header -->
 						<div class="card-body p-0">
 							<div
-								class="row text-center justify-content-center align-items-center pr-5">
-								<div class="col-md-5 ">
-									<div>
-										<div id="canvas" class="col-md-4">
+								class="d-md-flex">
+									<div class = "p-1">
+										<div id="canvas">
 											<div id="south"></div>
 											<div id="seoul"></div>
 											<div id="gygg"></div>
@@ -186,18 +187,17 @@
 											<div id="jeju"></div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-7 justify-content-center align-items-center"
+								<div class="flex-fill card-pane-right bg-lightgray pt-2 pb-2 pl-4 pr-4"
 									id="branchFeeChartP" >
 									<!-- 여기가 옆쪽 -->
 									<canvas id="branchFeeChart"
 										class="chartjs-render-monitor col-md-8"></canvas>
 								</div>
-							</div>
 							<!-- /.d-md-flex -->
 						</div>
 						<!-- /.card-body -->
 					</div>
+													</div>
 					<!-- /.card -->
 				</div>
 				<!-- /.col -->
