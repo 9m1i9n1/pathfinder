@@ -52,7 +52,7 @@
 								</select> <input class="col-sm-7 form-control form-control-navbar"
 									type="search" placeholder="Search" id="searchInput" />
 								<div class="input-group-append">
-									<button class="btn btn-primary btn-sm" name="btnSearch"
+									<button class="btn btn-sm bg-olive" name="btnSearch"
 										type="button" id="searchButton" onclick="getSearch()">
 										<i class="fas fa-search"></i>
 									</button>

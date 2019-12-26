@@ -46,7 +46,7 @@
 					<div class="card height100 ">
 						<div class="card-header">
 
-							<button class=" btn btn-primary btn-sm bg-gradient-primary "
+							<button class=" btn btn-sm bg-olive"
 								data-toggle="modal" data-target="#insertModal">지점 추가</button>
 
 							<div class="card-tools ">
@@ -58,7 +58,7 @@
 										type="search" placeholder="Search" name="keyword" id="keyword"
 										onkeypress="searchEnter()" />
 									<div class="input-group-append">
-										<button onclick="searchClick()" class="btn btn-primary btn-sm"
+										<button onclick="searchClick()" class="btn btn-sm bg-olive"
 											name="btnSearch" id="btnSearch">
 											<i class="fas fa-search"></i>
 										</button>

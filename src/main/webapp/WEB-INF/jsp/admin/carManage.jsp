@@ -63,7 +63,7 @@
 									type="search" placeholder="Search" name="keyword" id="keyword"
 									onkeypress="searchEnter()" />
 								<div class="input-group-append">
-									<button onclick="searchClick()" class="btn btn-primary"
+									<button onclick="searchClick()" class="btn bg-olive"
 										name="btnSearch" id="btnSearch">
 										<i class="fas fa-search"></i>
 									</button>

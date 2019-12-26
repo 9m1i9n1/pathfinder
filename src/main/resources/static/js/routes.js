@@ -3,11 +3,11 @@ $(document).ready(() => {
   branchlist(depBranchlist);
 });
 
-// $("#testButton").on("click", e => {
-//   $("#depSelect")
-//     .val("652")
-//     .trigger("change");
-// });
+$("#testButton").on("click", e => {
+  $("#depSelect")
+    .val("652")
+    .trigger("change");
+});
 
 // 다음 지도 사용
 // var map = new L.Map("map", {

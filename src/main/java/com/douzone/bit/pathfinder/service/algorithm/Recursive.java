@@ -79,7 +79,6 @@ public class Recursive {
 			index = nextIndex;
 		}
 		ranSolver = true;
-
 	}
 
 	private double tsp(int i, int state, Double[][] memo, Integer[][] prev) {
