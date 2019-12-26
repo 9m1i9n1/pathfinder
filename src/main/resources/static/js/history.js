@@ -87,7 +87,7 @@ function printHistory(selectPage, id, keyword) {
           str += "<td>" + value.arrivedate + "</td>";
           str += "<td>" + value.carname + "</td>";
           str +=
-            "<td><button class='btn btn-sm bg-olive'" +
+            "<td><button class='btn btn-primary btn-sm'" +
             "data-toggle='modal' data-target='#detailsModal'" +
             "onclick='getRoutes(" +
             JSON.stringify(value) +
@@ -121,36 +121,36 @@ function getSearch() {
 var detailsModal = $("#detailsModal");
 
 detailsModal.on("shown.bs.modal", function() {
-	$(this).css("overflow-y", "auto");
-})
+  $(this).css("overflow-y", "auto");
+});
 
 function deleteCheckModal(history) {
-    $('#checkOk').on("click", function () {
-    	removeRoutes(history);
-    })
-	
-    $('#checkTitle').text("확인");
-    $('#checkMessage').text("해당 기록를 삭제하시겠습니까?");
-    $('#checkModal').modal('show');
+  $("#checkOk").on("click", function() {
+    removeRoutes(history);
+  });
+
+  $("#checkTitle").text("확인");
+  $("#checkMessage").text("해당 기록를 삭제하시겠습니까?");
+  $("#checkModal").modal("show");
 }
 
 function removeRoutes(history) {
-    $.ajax({
-      url: "/history/removeroutes.do",
-      type: "delete",
-      data: JSON.stringify(history.id),
-      contentType: "application/json; charset=UTF-8",
-      success: function(res) {
-          $('#updateTitle').text("삭제 성공");
-          $('#updateMessage').text("해당 기록을 삭제하였습니다.");
-          $('#updateAlertModal').modal('show');
-          
-          $("#detailsModal").modal("toggle");
+  $.ajax({
+    url: "/history/removeroutes.do",
+    type: "delete",
+    data: JSON.stringify(history.id),
+    contentType: "application/json; charset=UTF-8",
+    success: function(res) {
+      $("#updateTitle").text("삭제 성공");
+      $("#updateMessage").text("해당 기록을 삭제하였습니다.");
+      $("#updateAlertModal").modal("show");
 
-        let tabId = sessionStorage.getItem("tabId");
-        getHistory(0, tabId);
-      }
-    });
+      $("#detailsModal").modal("toggle");
+
+      let tabId = sessionStorage.getItem("tabId");
+      getHistory(0, tabId);
+    }
+  });
 }
 
 function getRoutes(routes) {
