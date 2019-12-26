@@ -285,7 +285,7 @@ const drawTimeline = routeInfo => {
         ? "<small class='text-success float-right'><i class='fas fa-arrow-up mr-1'></i>"
         : "<small class='text-danger float-right'><i class='fas fa-arrow-down mr-1'></i>"
       : "<small class='text-warning float-right'><i class='fas fa-minus mr-1'></i>";
-  result += `${Math.abs(routeInfo.percent).toFixed(0)}%</small></div>`;
+  result += `${Math.abs(routeInfo.percent).toFixed(1)}%</small></div>`;
 
   result += "<div class='text-center'>";
   result += `<div class='float-left'><i class="fas fa-clock mr-1"></i><span class="result"><b>${sumTime.toHHMMSS()}</b></span></div>`;
