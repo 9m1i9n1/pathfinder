@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,8 @@ public class HierarchyController {
 	@GetMapping(value = "/userlist.do", params = {"id"})
 	public Header<List<AdminUserResponse>> userList(
 			@RequestParam("id") String id,
-			@PageableDefault(size = 10) Pageable pageable) {
+			@PageableDefault(sort = { "userIndex" },
+			direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
 
 		return adminUserService.list(id, pageable, "", "");
 	}
@@ -54,8 +56,9 @@ public class HierarchyController {
 			@RequestParam("id") String id,
 			@RequestParam("searchType") String searchType,
 			@RequestParam("searchValue") String searchValue,
-			@PageableDefault(size = 10) Pageable pageable) {
-		System.out.println(id+" " + searchType +" "+ searchValue);
+			@PageableDefault(sort = { "userIndex" },
+			direction = Sort.Direction.DESC, size = 10) Pageable pageable) {
+		
 		return adminUserService.search(id, searchType, searchValue, pageable);
 	}
 }

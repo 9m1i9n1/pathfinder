@@ -103,10 +103,11 @@
 	</div>
 </body>
 <%@include file="historyModal.jsp"%>
+<%@include file="alert.jsp" %>
 
-<script src="/static/js/history.js"></script>
-<script type="text/javascript">
-	let userName = '${authUsername}';
-	let userAuth = '${userAuth}';
-</script>
+  <script src="/static/js/history.js"></script>
+  <script type="text/javascript">
+    let userName = "${authUsername}";
+    let userAuth = "${userAuth}";
+  </script>
 </html>

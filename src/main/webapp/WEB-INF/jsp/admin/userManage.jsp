@@ -76,14 +76,14 @@
 							<thead>
 								<tr>
 									<!-- <th style="display: none;">번호</th> -->
-									<th style="width: 8%">이름</th>
-									<th style="width: 8%">지점</th>
-									<th style="width: 8%">직책</th>
-									<th style="width: 8%">아이디</th>
-									<th style="width: 8%">이메일</th>
-									<th style="width: 8%">전화번호</th>
-									<th style="width: 8%">권한</th>
-									<th style="width: 8%">수정/삭제</th>
+									<th style="width: 12%">이름</th>
+									<th style="width: 12%">지점</th>
+									<th style="width: 10%">직책</th>
+									<th style="width: 13%">아이디</th>
+									<th style="width: 18%">이메일</th>
+									<th style="width: 15%">전화번호</th>
+									<th style="width: 10%">권한</th>
+									<th style="width: 10%">수정/삭제</th>
 								</tr>
 							</thead>
 							<tbody id="body" class="small"></tbody>

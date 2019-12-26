@@ -126,7 +126,7 @@ detailsModal.on("shown.bs.modal", function() {
 function deleteCheckModal(history) {
     $('#checkOk').on("click", function () {
     	removeRoutes(history);
-    })
+    });
 	
     $('#checkTitle').text("확인");
     $('#checkMessage').text("해당 기록를 삭제하시겠습니까?");
