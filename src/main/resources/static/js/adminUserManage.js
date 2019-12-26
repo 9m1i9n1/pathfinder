@@ -57,7 +57,6 @@ function userLoading() {
         $.each(res.data, function(key, value) {
           str += "<tr class='tr-shadow'>";
 
-          str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
           str += "<td style='display:none;'>" + value.userIndex + "</td>";
           str += "<td>" + value.userName + "</td>";
           str += "<td>" + value.branchName + "</td>";

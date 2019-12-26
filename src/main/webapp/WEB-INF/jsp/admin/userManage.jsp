@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>회원 관리 페이지</title>
+
 </head>
 
 <body>
@@ -73,12 +74,10 @@
 					</div>
 
 					<div class="card-body table-responsive p-0 ">
-						<table id="table" class="table table-hover">
+						<table id="table" class="table table-hover  col-md-12 col-sm-12">
 							<thead>
 								<tr>
-									<th><label class="au-checkbox"> <input
-											type="checkbox" /> <span class="au-checkmark"></span>
-									</label></th>
+									
 									<th style="display: none;">번호</th>
 									<th>이름</th>
 									<th>지점</th>
