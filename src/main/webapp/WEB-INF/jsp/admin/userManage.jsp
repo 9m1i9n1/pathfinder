@@ -27,7 +27,7 @@
 		</div>
 		<!-- /.container-fluid -->
 	</section>
-
+<section class="content">
 	<div class="container-fluid">
 		<div class="row vh-80">
 			<div class="col-md-2">
@@ -46,7 +46,7 @@
 				<div class="card height100">
 					<div class="card-header">
 						<h3 class="card-title">
-							<button class="btn bg-gradient-primary btn-sm"
+							<button class="btn bg-olive btn-sm"
 								data-toggle="modal" data-target="#insertModal">
 								<i class="zmdi zmdi-plus"></i>사용자 추가
 							</button>
@@ -60,19 +60,19 @@
 									<option value="position" class="small">직책</option>
 								</select> <input type="search" name="keyword" id="keyword"
 									onkeypress="searchEnter()"
-									class="col-sm-7 form-control form-control-navbar"
+									class="col-md-7 form-control form-control-navbar"
 									placeholder="Search" />
 								<div class="input-group-append">
 									<button onclick="searchClick()" type="submit"
-										class="btn btn-primary btn-sm" id="btnSearch" name="btnSearch">
+										class="btn btn-sm bg-olive" id="btnSearch" name="btnSearch">
 										<i class="fas fa-search"></i>
 									</button>
 								</div>
 							</div>
 						</div>
-
 					</div>
 
+<<<<<<< HEAD
 					<div class="card-body table-responsive p-0 ">
 						<table id="table" class="table table-hover  col-md-12 col-sm-12">
 							<thead>
@@ -87,22 +87,34 @@
 									<th>전화번호</th>
 									<th>권한</th>
 									<th>수정/삭제</th>
+=======
+					<div class="card-body box-profile table-responsive p-0">
+						<table id="table" class="table table-hover">
+							<thead>
+								<tr>
+									<!-- <th style="display: none;">번호</th> -->
+									<th style="width: 8%">이름</th>
+									<th style="width: 8%">지점</th>
+									<th style="width: 8%">직책</th>
+									<th style="width: 8%">아이디</th>
+									<th style="width: 8%">이메일</th>
+									<th style="width: 8%">전화번호</th>
+									<th style="width: 8%">권한</th>
+									<th style="width: 8%">수정/삭제</th>
+>>>>>>> origin/master
 								</tr>
 							</thead>
-
 							<tbody id="body" class="small"></tbody>
 						</table>
-
-
 					</div>
 				</div>
 			</div>
 		</div>
 		<div id="page"></div>
 	</div>
-
+</section>
+</body>
 	<%@include file="userManageModal.jsp"%>
 	<%@include file="/WEB-INF/jsp/alert.jsp"%>
 	<script src="/static/js/adminUserManage.js"></script>
-</body>
 </html>

@@ -19,7 +19,6 @@
 						<label for="b1" class="col-sm-3 col-form-label-sm">지점명 </label>
 						<div class="col-sm-8 ">
 							<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-building"></i></span></div>
 							<input type="text" class="form-control" name="branchName"
 								id="branchName" >
 							</div>
@@ -30,7 +29,6 @@
 						<label for="b2" class="col-sm-3 col-form-label-sm">지점장 </label>
 						<div class="col-sm-8">
 						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user-tie"></i></span></div>
 							<input type="text" class="form-control" name="branchOwner"
 								id="branchOwner" >
 								</div>
@@ -80,7 +78,6 @@
 						<label for="b6" class="col-sm-3 col-form-label-sm"> 전화번호</label>
 						<div class="col-sm-8">
 						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone-alt"></i></span></div>
 							<input type="text" class="form-control" name="branchPhone"
 								id="branchPhone" placeholder="ex) 02-123-5676" >
 						</div>
@@ -150,7 +147,7 @@
 					<div class="form-group row">
 						<label for="branchValue" class="col-sm-3 col-form-label-sm">운반비</label>
 						<div class="col-sm-8">
-							<input type="number" step="1000" class="form-control"
+							<input type="number" step="100" class="form-control"
 								id="branchValue1" name="branchValue">
 						</div>
 					</div>

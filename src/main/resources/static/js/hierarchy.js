@@ -9,17 +9,16 @@ function pageButton(nodeType, nodeIndex, totalPages, currentPage, type) {
     buttonNum: 12,
     callback: function(currentPage) {
       if (type === "list") getUser(`${nodeType}:${nodeIndex}`, currentPage - 1);
-      else getSearch(`${nodeType}:${nodeIndex}`, currentPage - 1);
+      else getSearch(currentPage - 1);
     }
   });
 }
 
-function getSearch() {
+function getSearch(selectPage) {
   let type = $("select#searchType").val();
   let value = $("#searchInput").val();
 
   let treeId = sessionStorage.getItem("treeId");
-  let selectPage = sessionStorage.getItem("pageNum");
 
   $.ajax({
     url: "/hierarchy/userlist.do",

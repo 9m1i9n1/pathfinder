@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+pageEncoding="UTF-8"%> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -28,48 +27,70 @@
 		</div>
 		<!-- /.container-fluid -->
 	</section>
+	
+    <section class="content">
+      <div class="container-fluid ">
+        <div class="row vh-80">
+          <div class="col-md-2">
+            <div class="card height100">
+              <div class="card-header">
+                <h3 class="card-title" style="height: 30px">조직도</h3>
+              </div>
 
-	<section class="content">
-		<div class="container-fluid ">
-			<div class="row vh-80">
-				<div class="col-md-2">
-					<div class="card height100">
-						<div class="card-header">
-							<h3 class="card-title" style="height: 30px">조직도</h3>
-						</div>
+              <div class="card-body small height675px">
+                <div
+                  id="jstree"
+                  class="myScrollableBlock scrollbar-outer"
+                ></div>
+              </div>
+            </div>
+          </div>
 
-						<div class="card-body small height675px">
-							<div id="jstree" class="myScrollableBlock scrollbar-outer"></div>
-						</div>
-					</div>
-				</div>
+          <div class="col-md-10">
+            <div class="card height100 ">
+              <div class="card-header">
+                <button
+                  class=" btn btn-sm bg-olive"
+                  data-toggle="modal"
+                  data-target="#insertModal"
+                >
+                  지점 추가
+                </button>
 
-				<div class="col-md-10">
-					<div class="card height100 ">
-						<div class="card-header">
+                <div class="card-tools">
+                  <div class="input-group input-group-sm">
+                    <select
+                      class="col-4 small"
+                      name="searchType"
+                      id="searchType"
+                    >
+                      <option value="branchName" class="small">지점명</option>
+                      <option value="branchAddr" class="small">주소</option>
+										</select>
+										
+                    <input
+                      class="col-sm-7 form-control form-control-navbar"
+                      type="search"
+                      placeholder="Search"
+                      name="keyword"
+                      id="keyword"
+                      onkeypress="searchEnter()"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        onclick="searchClick()"
+                        class="btn btn-sm bg-olive"
+                        name="btnSearch"
+                        id="btnSearch"
+                      >
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-							<button class=" btn btn-primary btn-sm bg-gradient-primary "
-								data-toggle="modal" data-target="#insertModal">지점 추가</button>
-
-							<div class="card-tools ">
-								<div class="input-group input-group-sm">
-									<select class=" col-4 small " name="searchType" id="searchType">
-										<option value="branchName" class="small">지점명</option>
-										<option value="branchAddr" class="small">주소</option>
-									</select> <input class="col-sm-7 form-control form-control-navbar"
-										type="search" placeholder="Search" name="keyword" id="keyword"
-										onkeypress="searchEnter()" />
-									<div class="input-group-append">
-										<button onclick="searchClick()" class="btn btn-primary btn-sm"
-											name="btnSearch" id="btnSearch">
-											<i class="fas fa-search"></i>
-										</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
-
+<<<<<<< HEAD
 						<div
 							class="card-body box-profile table-responsive p-0">
 							<table class="table table-hover" id="tableTest">
@@ -134,8 +155,9 @@
 
 </body>
 
-<%@include file="/WEB-INF/jsp/alert.jsp" %>
-<%@include file="branchManageModal.jsp"%>
 
-<script src="/static/js/adminBranchManage.js"></script>
+  <%@include file="/WEB-INF/jsp/alert.jsp" %> <%@include
+  file="branchManageModal.jsp"%>
+
+  <script src="/static/js/adminBranchManage.js"></script>
 </html>

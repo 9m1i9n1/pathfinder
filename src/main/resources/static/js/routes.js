@@ -3,11 +3,11 @@ $(document).ready(() => {
   branchlist(depBranchlist);
 });
 
-// $("#testButton").on("click", e => {
-//   $("#depSelect")
-//     .val("652")
-//     .trigger("change");
-// });
+$("#testButton").on("click", e => {
+  $("#depSelect")
+    .val("652")
+    .trigger("change");
+});
 
 // 다음 지도 사용
 // var map = new L.Map("map", {
@@ -261,7 +261,7 @@ const drawTimeline = routeInfo => {
     str += "<div>";
     str += `<div class="title"><h6>${value.rdep}</h6>`;
     str += "<hr class='divider'>";
-    str += `<i class="fas fa-arrow-circle-right"></i> ${value.rarvl}</div>`;
+    str += `<i class="fas fa-arrow-circle-right mr-1"></i>${value.rarvl}</div>`;
     str += `<div class="info">${value.rdist}km</div>`;
     str += `<div class="type">${value.rfee}원</div>`;
     str += "</div>";
@@ -282,15 +282,15 @@ const drawTimeline = routeInfo => {
   result +=
     routeInfo.percent !== 0
       ? routeInfo.percent > 0
-        ? "<small class='text-success float-right'><i class='fas fa-arrow-up'></i>"
-        : "<small class='text-danger float-right'><i class='fas fa-arrow-down'></i>"
-      : "<small class='text-warning float-right'><i class='fas fa-minus'></i>";
-  result += `　${Math.abs(routeInfo.percent).toFixed(0)}%</small></div>`;
+        ? "<small class='text-success float-right'><i class='fas fa-arrow-up mr-1'></i>"
+        : "<small class='text-danger float-right'><i class='fas fa-arrow-down mr-1'></i>"
+      : "<small class='text-warning float-right'><i class='fas fa-minus mr-1'></i>";
+  result += `${Math.abs(routeInfo.percent).toFixed(0)}%</small></div>`;
 
   result += "<div class='text-center'>";
-  result += `<div class='float-left'><i class="fas fa-clock"></i><span class="result"><b>${sumTime.toHHMMSS()}</b></span></div>`;
-  result += `<div class='float-right'><i class="fas fa-coins"></i><span class="result"><b>${routeInfo.fee}</b></span>원</div>`;
-  result += `<div><i class="fas fa-road"></i><span class="result"><b>${routeInfo.dist}</b></span>km</div>`;
+  result += `<div class='float-left'><i class="fas fa-clock mr-1"></i><span class="result"><b>${sumTime.toHHMMSS()}</b></span></div>`;
+  result += `<div class='float-right'><i class="fas fa-coins mr-1"></i><span class="result"><b>${routeInfo.fee}</b></span>원</div>`;
+  result += `<div><i class="fas fa-road mr-1"></i><span class="result"><b>${routeInfo.dist}</b></span>km</div>`;
   result += "</div>";
 
   $(".tmline").html(str);
@@ -646,10 +646,10 @@ const insertPlan = (req, imgSrc) => {
     contentType: "application/json",
     data: JSON.stringify(plan)
   }).then(res => {
-	hideSpinner($("body"));
-	$('#successModal').modal({backdrop : 'static', keyboard : false});
-//    alert(res.data);
-//    location.reload();
+    hideSpinner($("body"));
+    $("#successModal").modal({ backdrop: "static", keyboard: false });
+    //    alert(res.data);
+    //    location.reload();
   });
 };
 

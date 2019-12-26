@@ -6,6 +6,7 @@ $(document).ready(function() {
 $("#insertModal").on("hidden.bs.modal", function() {
   $("#carCreateForm")[0].reset();
   // carCreateValid.resetForm();
+  resetvalid("#carCreateForm");
 });
 
 function searchEnter() {
@@ -14,7 +15,7 @@ function searchEnter() {
   }
 }
 
-//검색버튼
+// 검색버튼
 function searchClick() {
   var treeId = sessionStorage.getItem("treeId");
   var url = "";
@@ -25,16 +26,26 @@ function searchClick() {
   carsearch(url);
 }
 
-/*// 검색버튼
-$('#btnSearch').click(function(e){
-	e.preventDefault();
-	var treeId = sessionStorage.getItem("treeId");
-	var url = "";    
-	url = url + "?searchType=" + $('#searchType').val();
-	url = url + "&keyword=" + $('#keyword').val();
-	url = url + "&selectedArea="+treeId;
-	carsearch(url);
-});*/
+function resetvalid(formName){
+	  $(formName)[0].reset();
+	  var length = $(formName)[0].length;
+	  var sclass = null;
+	  for(var i = 0; i < length; i++){
+		  sclass = $(formName)[0][i].getAttribute('id');
+		  sclass = "#"+sclass;
+		  console.log();
+		  $(sclass).removeClass("is-invalid");
+		  $(sclass).removeClass("is-valid");
+	  }
+}
+
+
+/*
+ * // 검색버튼 $('#btnSearch').click(function(e){ e.preventDefault(); var treeId =
+ * sessionStorage.getItem("treeId"); var url = ""; url = url + "?searchType=" +
+ * $('#searchType').val(); url = url + "&keyword=" + $('#keyword').val(); url =
+ * url + "&selectedArea="+treeId; carsearch(url); });
+ */
 
 // 지역이름 숫자변환
 function areaNameTrans(carArea) {
@@ -98,7 +109,7 @@ function pageButton1(totalPages, currentPage, url) {
   });
 }
 
-//폼 내용 Json으로 변경
+// 폼 내용 Json으로 변경
 $.fn.serializeObject = function() {
   var result = {};
   var extend = function(i, element) {
@@ -376,12 +387,12 @@ insertModal.on("hidden.bs.modal", function() {
   let str = "<option value='' disabled selected>선택</option>";
 
   insertModal.find("#carArea").html(str);
-  //.selectpicker("refresh");
+  // .selectpicker("refresh");
 
-  //  insertModal.find("#carNumber").selectpicker("refresh");
-  //  insertModal.find("#carName").selectpicker("refresh");
-  //  insertModal.find("#carFuel").selectpicker("refresh");
-  //  insertModal.find("#carBuy").selectpicker("refresh");
+  // insertModal.find("#carNumber").selectpicker("refresh");
+  // insertModal.find("#carName").selectpicker("refresh");
+  // insertModal.find("#carFuel").selectpicker("refresh");
+  // insertModal.find("#carBuy").selectpicker("refresh");
   $("#carCreateForm")
     .validate()
     .resetForm();
@@ -494,6 +505,8 @@ $(".selectpicker").on("change", function() {
 var carInsertValid = $("#carCreateForm").validate({
   onkeyup: false,
   ignore: ":hidden, [readonly]",
+  errorClass: "is-invalid",
+  validClass:"is-valid",
   rules: {
     carArea: {
       required: true
@@ -569,5 +582,11 @@ var carInsertValid = $("#carCreateForm").validate({
     $("#insertModal").modal("hide");
     carInsertValid.resetForm();
     return false;
-  }
+  },
+  highlight: function(element, errorClass, validClass) {
+	    $(element).addClass(errorClass).removeClass(validClass);
+	  },
+unhighlight: function(element, errorClass, validClass) {
+  $(element).removeClass(errorClass).addClass(validClass);
+}
 });

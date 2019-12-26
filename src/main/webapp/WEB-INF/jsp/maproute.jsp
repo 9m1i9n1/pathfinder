@@ -1,39 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
+	pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CSS</title>
+<head>
+<title>CSS</title>
 
-    <!-- 지도 캡쳐 -->
-    <script src="/static/route/js/print.js"></script>
-    <script src="/static/route/js/domtoimage.js"></script>
+<!-- 지도 캡쳐 -->
+<script src="/static/route/js/print.js"></script>
+<script src="/static/route/js/domtoimage.js"></script>
 
-    <!-- 한국 지도 표시 -->
-    <script src="/static/route/js/proj4.js"></script>
-    <script src="/static/route/js/proj4leaflet.js"></script>
-    <script src="/static/route/js/Leaflet.KoreanTmsProviders.js"></script>
+<!-- 한국 지도 표시 -->
+<script src="/static/route/js/proj4.js"></script>
+<script src="/static/route/js/proj4leaflet.js"></script>
+<script src="/static/route/js/Leaflet.KoreanTmsProviders.js"></script>
 
-    <!-- 캘린더 표시 -->
-    <link rel="stylesheet" href="/static/route/css/calendar.css" />
-    <script src="/static/route/js/calendar.js"></script>
+<!-- 캘린더 표시 -->
+<link rel="stylesheet" href="/static/route/css/calendar.css" />
+<script src="/static/route/js/calendar.js"></script>
 
-    <link href="/static/route/css/timeline.css" rel="stylesheet" />
-  </head>
+<link href="/static/route/css/timeline.css" rel="stylesheet" />
+</head>
 
-  <body>
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-md-2 col-md-6">
-            <h1>운송 등록</h1>
-          </div>
-          <div class="col-md-6">
-            <ol class="breadcrumb float-sm-right" id="headInfo">
-              <li class="breadcrumb-item"><a href="/home">홈</a></li>
-              <li class="breadcrumb-item active">운송 등록</li>
-              <%--
+<body>
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-md-2 col-md-6">
+					<h1>운송 등록</h1>
+				</div>
+				<div class="col-md-6">
+					<ol class="breadcrumb float-sm-right" id="headInfo">
+						<li class="breadcrumb-item"><a href="/home">홈</a></li>
+						<li class="breadcrumb-item active">운송 등록</li>
+						<%--
               <li><button id="testButton">테스트</button></li>
               --%>
             </ol>
@@ -266,7 +267,7 @@ pageEncoding="UTF-8"%> <%@page import="java.util.List"%>
                           id="showSortDist"
                         />
                         <label class="custom-control-label" for="showSortDist"
-                          >거리 순서로</label
+                          >거리 우선</label
                         >
                       </div>
                     </div>

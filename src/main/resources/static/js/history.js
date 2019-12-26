@@ -87,7 +87,7 @@ function printHistory(selectPage, id, keyword) {
           str += "<td>" + value.arrivedate + "</td>";
           str += "<td>" + value.carname + "</td>";
           str +=
-            "<td><button class='btn btn-primary btn-sm bg-gradient-primary'" +
+            "<td><button class='btn btn-sm bg-olive'" +
             "data-toggle='modal' data-target='#detailsModal'" +
             "onclick='getRoutes(" +
             JSON.stringify(value) +
@@ -145,7 +145,7 @@ function removeRoutes(history) {
           $('#updateMessage').text("해당 기록을 삭제하였습니다.");
           $('#updateAlertModal').modal('show');
           
-          $("#detailsModal").modal("hide");
+          $("#detailsModal").modal("toggle");
 
         let tabId = sessionStorage.getItem("tabId");
         getHistory(0, tabId);
@@ -210,9 +210,17 @@ function getRoutes(routes) {
           routes.dist.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Km"
         );
 
-      detailsModal.find("#dist").text((routes.dist).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Km");
+      detailsModal
+        .find("#dist")
+        .text(
+          routes.dist.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Km"
+        );
 
-      detailsModal.find("#fee").text((routes.fee).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원");
+      detailsModal
+        .find("#fee")
+        .text(
+          routes.fee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"
+        );
     }
   });
 }
