@@ -51,4 +51,6 @@ public class HistoryTb {
 	private ObjectId routes;
 
 	private int stat;
+	
+	private String sortType;
 }

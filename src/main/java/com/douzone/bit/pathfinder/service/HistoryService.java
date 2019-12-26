@@ -190,6 +190,7 @@ public class HistoryService {
 				.dep(history.getDep()).arvl(history.getArvl()).dist(history.getDist()).fee(history.getFee())
 				.dlvrdate(history.getDlvrdate().format(formatter))
 				.imgSrc(history.getImgSrc()).time(history.getTime())
+				.sortType(history.getSortType())
 				.arrivedate(history.getArrivedate().format(formatter)).routes(history.getRoutes().toString()).build();
 
 		return response;
