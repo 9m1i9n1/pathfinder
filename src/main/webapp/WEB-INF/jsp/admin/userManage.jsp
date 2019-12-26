@@ -26,7 +26,7 @@
 		</div>
 		<!-- /.container-fluid -->
 	</section>
-
+<section class="content">
 	<div class="container-fluid">
 		<div class="row vh-80">
 			<div class="col-md-2">
@@ -59,7 +59,7 @@
 									<option value="position" class="small">직책</option>
 								</select> <input type="search" name="keyword" id="keyword"
 									onkeypress="searchEnter()"
-									class="col-sm-7 form-control form-control-navbar"
+									class="col-md-7 form-control form-control-navbar"
 									placeholder="Search" />
 								<div class="input-group-append">
 									<button onclick="searchClick()" type="submit"
@@ -69,41 +69,34 @@
 								</div>
 							</div>
 						</div>
-
 					</div>
 
-					<div class="card-body table-responsive p-0 ">
+					<div class="card-body box-profile table-responsive p-0">
 						<table id="table" class="table table-hover">
 							<thead>
 								<tr>
-									<th><label class="au-checkbox"> <input
-											type="checkbox" /> <span class="au-checkmark"></span>
-									</label></th>
-									<th style="display: none;">번호</th>
-									<th>이름</th>
-									<th>지점</th>
-									<th>직책</th>
-									<th>아이디</th>
-									<th>이메일</th>
-									<th>전화번호</th>
-									<th>권한</th>
-									<th>수정/삭제</th>
+									<!-- <th style="display: none;">번호</th> -->
+									<th style="width: 8%">이름</th>
+									<th style="width: 8%">지점</th>
+									<th style="width: 8%">직책</th>
+									<th style="width: 8%">아이디</th>
+									<th style="width: 8%">이메일</th>
+									<th style="width: 8%">전화번호</th>
+									<th style="width: 8%">권한</th>
+									<th style="width: 8%">수정/삭제</th>
 								</tr>
 							</thead>
-
 							<tbody id="body" class="small"></tbody>
 						</table>
-
-
 					</div>
 				</div>
 			</div>
 		</div>
 		<div id="page"></div>
 	</div>
-
+</section>
+</body>
 	<%@include file="userManageModal.jsp"%>
 	<%@include file="/WEB-INF/jsp/alert.jsp"%>
 	<script src="/static/js/adminUserManage.js"></script>
-</body>
 </html>

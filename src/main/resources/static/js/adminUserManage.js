@@ -28,6 +28,18 @@ function pageButton(totalPages, currentPage) {
     }
   });
 }
+function resetvalid(formName){
+	  $(formName)[0].reset();
+	  var length = $(formName)[0].length;
+	  var sclass = null;
+	  for(var i = 0; i < length; i++){
+		  sclass = $(formName)[0][i].getAttribute('id');
+		  sclass = "#"+sclass;
+		  console.log();
+		  $(sclass).removeClass("is-invalid");
+		  $(sclass).removeClass("is-valid");
+	  }
+}
 
 // 유저 로딩
 function userLoading() {
@@ -50,21 +62,20 @@ function userLoading() {
       let str = "";
       let count = "";
 
-//      count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
+// count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
       if (res.resultCode !== "ERROR") {
-//        count += `<li class="breadcrumb-item active">${res.pagination.totalElements}명</li>`;
+// count += `<li class="breadcrumb-item
+// active">${res.pagination.totalElements}명</li>`;
 
         $.each(res.data, function(key, value) {
-          str += "<tr class='tr-shadow'>";
-
-          str += `<td><label class='au-checkbox'><input type='checkbox' name='userCheck' value=${value.userIndex} /><span class='au-checkmark'></span></label></td>`;
-          str += "<td style='display:none;'>" + value.userIndex + "</td>";
+          str += `<tr class="tr-shadow">`
+          /* str += "<td style='display:none;'>" + value.userIndex + "</td>"; */
           str += "<td>" + value.userName + "</td>";
           str += "<td>" + value.branchName + "</td>";
           str += "<td>" + value.userPosition + "</td>";
-          str += "<td class='desc'>" + value.userId + "</td>";
+          str += "<td>" + value.userId + "</td>";
           str +=
-            "<td><span class='block-email'>" + value.userEmail + "</span></td>";
+            "<td>" + value.userEmail + "</td>";
           str += "<td>" + value.userPhone + "</td>";
           str +=
             "<td>" +
@@ -78,23 +89,19 @@ function userLoading() {
           str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='deleteCheckModal(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
           str += "</div></td>";
           str += "</tr>";
-
-          str += "<tr class='spacer'></tr>";
         });
         pageButton(res.pagination.totalPages, res.pagination.currentPage);
       } else {
-		  count += `<li class="breadcrumb-item active">0명</li>`;
-			
+		  count += `<li class="breadcrumb-item active">0명</li>`;		
 			str += `<tr class="tr-shadow">`;
 			str += `<td colspan="9">`;
 			str += `${res.description}`;
 			str += `</td>`;
 			str += `</tr>`;
-			
 		}
       $("#table #body").html(str);
 
-//      $("#headerol").html(count);
+// $("#headerol").html(count);
     },
     error: function(request, status, error) {
     	$('#errorMessage').text(
@@ -294,6 +301,7 @@ insertModal.on("hidden.bs.modal", function() {
   $("#userCreateForm")
     .validate()
     .resetForm();
+  resetvalid("#userCreateForm");
 });
 
 // modifyModal 열릴 시
@@ -301,7 +309,8 @@ modifyModal.on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
   
   // 2개의 모달창이 존재해도 백그라운드 모달의 스크롤이 사라지지 않음
-  // 참조 : https://stackoverflow.com/questions/37467690/modal-with-another-modal-causes-scroll-on-body
+  // 참조 :
+	// https://stackoverflow.com/questions/37467690/modal-with-another-modal-causes-scroll-on-body
   $(this).css("overflow-y", "auto");
 });
 
@@ -313,6 +322,7 @@ modifyModal.on("hidden.bs.modal", function() {
   $("#userModifyForm")
     .validate()
     .resetForm();
+  resetvalid("#userModifyForm");
 });
 
 insertModal.find("#areaIndex").on("select2:select", function(e) {
@@ -573,6 +583,8 @@ $(".selectpicker").on("change", function() {
 $("form").each(function() {
   $(this).validate({
     onkeyup: false,
+	errorClass: "is-invalid",
+	validClass:"is-valid",
     ignore: ":hidden, [readonly]",
     // errorClass: "is-invalid",
     rules: {
@@ -682,6 +694,13 @@ $("form").each(function() {
       }
 
       return false;
-    }
+    },
+   highlight: function(element, errorClass, validClass) {
+	    $(element).addClass(errorClass).removeClass(validClass);
+	  },
+  unhighlight: function(element, errorClass, validClass) {
+	  console.log(1);
+    $(element).removeClass(errorClass).addClass(validClass);
+	 }
   });
 });

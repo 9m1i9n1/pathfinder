@@ -147,7 +147,7 @@
 					<div class="form-group row">
 						<label for="branchValue" class="col-sm-3 col-form-label-sm">운반비</label>
 						<div class="col-sm-8">
-							<input type="number" step="1000" class="form-control"
+							<input type="number" step="100" class="form-control"
 								id="branchValue1" name="branchValue">
 						</div>
 					</div>
