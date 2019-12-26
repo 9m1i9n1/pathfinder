@@ -53,7 +53,7 @@
 								<input class="form-control form-control-navbar"
 								type="search" placeholder="출발날짜 선택" id="keyword" autocomplete="off" readonly />
 								<div class="input-group-append">
-									<button class="btn btn-primary btn-sm" name="btnSearch"
+									<button class="btn btn-sm bg-olive" name="btnSearch"
 										id="btnSearch" onclick="getSearch()">
 										<i class="fas fa-search"></i>
 									</button>

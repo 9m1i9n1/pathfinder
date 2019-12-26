@@ -15,10 +15,6 @@
     display: none; 
 }
 
-th, td {
-	border : 1px solid #e8e8e8;
-}
-
 :root {
   --blue: #0073a9;
   --indigo: #605ca8;
@@ -4192,7 +4188,7 @@ input[type="button"].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #ffffff;
-  background-color: #0073a9;
+  background-color: #3d9970;
 }
 
 .nav-fill .nav-item {
@@ -13163,7 +13159,7 @@ body.text-sm .control-sidebar {
 }
 
 .nav-pills .nav-link:not(.active):hover {
-  color: #0073a9;
+  color: #3d9970;
 }
 
 .nav-pills .nav-item.dropdown.show .nav-link:hover {
