@@ -42,7 +42,7 @@
 			<div class="col-md-10">
 				<div class="card height100">
 					<div class="card-header">
-						사용자 리스트
+						<h3 class="card-title">사원 목록</h3>
 
 						<div class="card-tools ">
 							<div class="input-group input-group-sm">
