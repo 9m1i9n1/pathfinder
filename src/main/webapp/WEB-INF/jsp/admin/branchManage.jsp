@@ -67,8 +67,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     >
                       <option value="branchName" class="small">지점명</option>
                       <option value="branchAddr" class="small">주소</option>
-										</select>
-										
+                    </select>
+
                     <input
                       class="col-sm-7 form-control form-control-navbar"
                       type="search"
@@ -91,30 +91,30 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 </div>
               </div>
 
-						<div
-							class="card-body box-profile table-responsive p-0 " data-role="table" data-mode="reflow">
-							<table data-role="table" class="table table-hover branchCss"  id="tableTest">
-								<thead class="theadblock">
-									<tr>
-										<th style="width: 8%">지역</th>
-										<th style="width: 12%">지점명</th>
-										<th style="width: 7%">지점장</th>
-										<th style="width: 28%">주소</th>
-										<th style="width: 15%">전화번호</th>
-										<th style="width: 15%">운반비</th>
-										<th style="width: 10%">수정/삭제</th>
-									</tr>
-								</thead>
-								<tbody id="tableListBody" class="small"></tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="page"></div>
-		</div>
-	</section>
-</body>
+
+              <div class="card-body box-profile table-responsive p-0">
+                <table class="table table-hover" id="tableTest">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%">지역</th>
+                      <th style="width: 12%">지점명</th>
+                      <th style="width: 12%">지점장</th>
+                      <th style="width: 30%">주소</th>
+                      <th style="width: 15%">전화번호</th>
+                      <th style="width: 11%">운반비</th>
+                      <th style="width: 10%">수정/삭제</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableListBody" class="small"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="page"></div>
+      </div>
+    </section>
+  </body>
 
 
   <%@include file="/WEB-INF/jsp/alert.jsp" %> <%@include

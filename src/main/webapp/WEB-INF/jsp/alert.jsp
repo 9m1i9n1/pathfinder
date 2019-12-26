@@ -15,7 +15,7 @@
 				<p class="text-center">정보가 성공적으로 등록되었습니다.</p>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-success btn-block" data-dismiss="modal"
+				<button type="button" class="btn btn-success btn-block" data-dismiss="modal"
 				onClick="location.reload()">확인</button>
 			</div>
 		</div>
@@ -36,7 +36,7 @@
 				<p class="text-center" id="errorMessage"></p>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-danger btn-block" data-dismiss="modal">확인</button>
+				<button type="button" class="btn btn-danger btn-block" data-dismiss="modal">확인</button>
 			</div>
 		</div>
 	</div>
@@ -56,7 +56,7 @@
 				<p class="text-center" id="updateMessage"></p>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-danger btn-block" data-dismiss="modal">확인</button>
+				<button type="button" class="btn btn-danger btn-block" data-dismiss="modal">확인</button>
 			</div>
 		</div>
 	</div>
@@ -77,10 +77,10 @@
 			</div>
 			<div class="modal-footer">
 				<div class="col">
-					<button class="btn btn-danger btn-block" id="checkOk" data-dismiss="modal">확인</button>
+					<button type="button" class="btn btn-danger btn-block" id="checkOk" data-dismiss="modal">확인</button>
 				</div>
 				<div class="col">
-					<button class="btn btn-info btn-block" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-info btn-block" data-dismiss="modal">취소</button>
 				</div>
 			</div>
 		</div>

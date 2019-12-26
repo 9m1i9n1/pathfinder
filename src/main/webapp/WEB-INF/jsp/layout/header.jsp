@@ -69,7 +69,7 @@ pageEncoding="UTF-8"%>
 
 <!-- JsTree -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/jstree.min.js"></script>
-<link rel="stylesheet" href="/static/css/jstree/style.min.css" />
+<link rel="stylesheet" href="/static/css/jstree/style.css" />
 
 <%-- daum map --%>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

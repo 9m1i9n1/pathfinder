@@ -263,7 +263,7 @@ const drawTimeline = routeInfo => {
     str += "<hr class='divider'>";
     str += `<i class="fas fa-arrow-circle-right mr-1"></i>${value.rarvl}</div>`;
     str += `<div class="info">${value.rdist}km</div>`;
-    str += `<div class="type">${value.rfee}원</div>`;
+    str += `<div class="type">${value.rfee.addComma()}원</div>`;
     str += "</div>";
 
     str += "<span class='number'>";
@@ -282,14 +282,14 @@ const drawTimeline = routeInfo => {
   result +=
     routeInfo.percent !== 0
       ? routeInfo.percent > 0
-        ? "<small class='text-success float-right'><i class='fas fa-arrow-up mr-1'></i>"
-        : "<small class='text-danger float-right'><i class='fas fa-arrow-down mr-1'></i>"
+        ? "<small class='text-success float-right'><i class='fas fa-arrow-down mr-1'></i>"
+        : "<small class='text-danger float-right'><i class='fas fa-arrow-up mr-1'></i>"
       : "<small class='text-warning float-right'><i class='fas fa-minus mr-1'></i>";
-  result += `${Math.abs(routeInfo.percent).toFixed(0)}%</small></div>`;
+  result += `${Math.abs(routeInfo.percent).toFixed(2)}%</small></div>`;
 
   result += "<div class='text-center'>";
   result += `<div class='float-left'><i class="fas fa-clock mr-1"></i><span class="result"><b>${sumTime.toHHMMSS()}</b></span></div>`;
-  result += `<div class='float-right'><i class="fas fa-coins mr-1"></i><span class="result"><b>${routeInfo.fee}</b></span>원</div>`;
+  result += `<div class='float-right'><i class="fas fa-coins mr-1"></i><span class="result"><b>${routeInfo.fee.addComma()}</b></span>원</div>`;
   result += `<div><i class="fas fa-road mr-1"></i><span class="result"><b>${routeInfo.dist}</b></span>km</div>`;
   result += "</div>";
 
@@ -543,8 +543,9 @@ const carculateData = lrmData => {
     routeInfo.routes = $.extend(true, [], routes);
 
     routeInfo.sortType = switchState ? "거리" : "비용";
+    console.log(compareFee);
     routeInfo.percent = (compareFee / fee) * 100 - 100;
-
+//    738308 a +  a2.2 = 754579 - 2.2 = 
     routeList = $.extend(true, {}, routeInfo);
 
     resolve(routeInfo);
@@ -654,6 +655,11 @@ const insertPlan = (req, imgSrc) => {
 };
 
 //! 유틸 부분 =====================
+Number.prototype.addComma = function() {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return this.toString().replace(regexp, ",");
+};
+
 Number.prototype.toHHMMSS = function() {
   var sec_num = Math.floor(this / 1);
   var hours = Math.floor(sec_num / 3600);
