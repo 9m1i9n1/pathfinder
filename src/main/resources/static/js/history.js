@@ -166,7 +166,7 @@ function getRoutes(routes) {
       let str = "";
       let count = 0;
       $.each(res.data, function(key, value) {
-        str += `<tr class="tr-shadow" id="ModalTr">`;
+        str += `<tr id="ModalTr">`;
         str += "<td>" + ++count + "</td>";
         str += "<td>" + value.rdep + "</td>";
         str += "<td>" + value.rarvl + "</td>";
