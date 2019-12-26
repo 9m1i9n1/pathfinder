@@ -28,17 +28,17 @@ function pageButton(totalPages, currentPage) {
     }
   });
 }
-function resetvalid(formName){
-	  $(formName)[0].reset();
-	  var length = $(formName)[0].length;
-	  var sclass = null;
-	  for(var i = 0; i < length; i++){
-		  sclass = $(formName)[0][i].getAttribute('id');
-		  sclass = "#"+sclass;
-		  console.log();
-		  $(sclass).removeClass("is-invalid");
-		  $(sclass).removeClass("is-valid");
-	  }
+function resetvalid(formName) {
+  $(formName)[0].reset();
+  var length = $(formName)[0].length;
+  var sclass = null;
+  for (var i = 0; i < length; i++) {
+    sclass = $(formName)[0][i].getAttribute("id");
+    sclass = "#" + sclass;
+    console.log();
+    $(sclass).removeClass("is-invalid");
+    $(sclass).removeClass("is-valid");
+  }
 }
 
 // 유저 로딩
@@ -62,20 +62,15 @@ function userLoading() {
       let str = "";
       let count = "";
 
-// count += `<li class="breadcrumb-item">사용자 관리</a></li>`;
       if (res.resultCode !== "ERROR") {
-// count += `<li class="breadcrumb-item
-// active">${res.pagination.totalElements}명</li>`;
-
         $.each(res.data, function(key, value) {
-          str += `<tr class="tr-shadow">`
-          /* str += "<td style='display:none;'>" + value.userIndex + "</td>"; */
+          str += `<tr class="tr-shadow">`;
+          str += "<td>" + value.userIndex + "</td>";
           str += "<td>" + value.userName + "</td>";
           str += "<td>" + value.branchName + "</td>";
           str += "<td>" + value.userPosition + "</td>";
           str += "<td>" + value.userId + "</td>";
-          str +=
-            "<td>" + value.userEmail + "</td>";
+          str += "<td>" + value.userEmail + "</td>";
           str += "<td>" + value.userPhone + "</td>";
           str +=
             "<td>" +
@@ -92,29 +87,29 @@ function userLoading() {
         });
         pageButton(res.pagination.totalPages, res.pagination.currentPage);
       } else {
-		  count += `<li class="breadcrumb-item active">0명</li>`;		
-			str += `<tr class="tr-shadow">`;
-			str += `<td colspan="9">`;
-			str += `${res.description}`;
-			str += `</td>`;
-			str += `</tr>`;
-		}
+        count += `<li class="breadcrumb-item active">0명</li>`;
+        str += `<tr class="tr-shadow">`;
+        str += `<td colspan="9">`;
+        str += `${res.description}`;
+        str += `</td>`;
+        str += `</tr>`;
+      }
       $("#table #body").html(str);
 
-// $("#headerol").html(count);
+      // $("#headerol").html(count);
     },
     error: function(request, status, error) {
-    	$('#errorMessage').text(
-	        "code:" +
-	          request.status +
-	          "\n" +
-	          "message:" +
-	          request.responseText +
-	          "\n" +
-	          "error:" +
-	          error
-    	);
-    	$('#failModal').modal('show');
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
     }
   });
 }
@@ -136,64 +131,64 @@ function userCreate(req) {
         }
       } else {
         userLoading();
-        $('#updateTitle').text("등록 성공");
-        $('#updateMessage').text("해당 회원을 추가하였습니다.");
-        $('#updateAlertModal').modal('show');
+        $("#updateTitle").text("등록 성공");
+        $("#updateMessage").text("해당 회원을 추가하였습니다.");
+        $("#updateAlertModal").modal("show");
       }
     },
     error: function(request, status, error) {
-    	$('#errorMessage').text(
-    	        "code:" +
-    	          request.status +
-    	          "\n" +
-    	          "message:" +
-    	          request.responseText +
-    	          "\n" +
-    	          "error:" +
-    	          error
-        	);
-        $('#failModal').modal('show');
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
     }
   });
 }
 
 function deleteCheckModal(userIndex) {
-    $('#checkOk').on("click", function () {
-    	userDelete(userIndex);
-    })
-	
-    $('#checkTitle').text("확인");
-    $('#checkMessage').text("회원 정보를 삭제하시겠습니까?");
-    $('#checkModal').modal('show');
+  $("#checkOk").on("click", function() {
+    userDelete(userIndex);
+  });
+
+  $("#checkTitle").text("확인");
+  $("#checkMessage").text("회원 정보를 삭제하시겠습니까?");
+  $("#checkModal").modal("show");
 }
 
 // 회원 삭제
-function userDelete(userIndex) {	
-    $.ajax({
-      url: "/admin/usermanage",
-      type: "delete",
-      data: { userIndex: userIndex },
-      success: function() {
-        userLoading();
-        
-        $('#updateTitle').text("삭제 성공");
-        $('#updateMessage').text("해당 회원을 삭제하였습니다.");
-        $('#updateAlertModal').modal('show');
-      },
-      error: function(request, status, error) {
-		  $('#errorMessage').text(
-	  	        "code:" +
-	  	          request.status +
-	  	          "\n" +
-	  	          "message:" +
-	  	          request.responseText +
-	  	          "\n" +
-	  	          "error:" +
-	  	          error
-	      	);
-	      $('#failModal').modal('show');
-      }
-    });
+function userDelete(userIndex) {
+  $.ajax({
+    url: "/admin/usermanage",
+    type: "delete",
+    data: { userIndex: userIndex },
+    success: function() {
+      userLoading();
+
+      $("#updateTitle").text("삭제 성공");
+      $("#updateMessage").text("해당 회원을 삭제하였습니다.");
+      $("#updateAlertModal").modal("show");
+    },
+    error: function(request, status, error) {
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
+    }
+  });
 }
 
 // 회원 수정
@@ -212,26 +207,26 @@ function userUpdate(req) {
         }
       } else {
         userLoading();
-        
-        $('#updateTitle').text("업데이트 성공");
-        $('#updateMessage').text("해당 유저 정보를 수정하였습니다.");
-        $('#updateAlertModal').modal('show');
+
+        $("#updateTitle").text("업데이트 성공");
+        $("#updateMessage").text("해당 유저 정보를 수정하였습니다.");
+        $("#updateAlertModal").modal("show");
       }
     },
     error: function(request, status, error) {
-		  $('#errorMessage').text(
-		  	        "code:" +
-		  	          request.status +
-		  	          "\n" +
-		  	          "message:" +
-		  	          request.responseText +
-		  	          "\n" +
-		  	          "error:" +
-		  	          error
-		      	);
-		  $('#failModal').modal('show');
-    	}
-  	});
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
+    }
+  });
 }
 
 // 비밀번호 초기화
@@ -242,23 +237,23 @@ function userPwReset(userIndex) {
     data: { userIndex: userIndex },
     success: function(res) {
       userLoading();
-      
-      $('#updateTitle').text("업데이트 성공");
-      $('#updateMessage').text("해당 회원의 패스워드를 초기화하였습니다.");
-      $('#updateAlertModal').modal('show');
+
+      $("#updateTitle").text("업데이트 성공");
+      $("#updateMessage").text("해당 회원의 패스워드를 초기화하였습니다.");
+      $("#updateAlertModal").modal("show");
     },
     error: function(request, status, error) {
-    	$('#errorMessage').text(
-	  	        "code:" +
-	  	          request.status +
-	  	          "\n" +
-	  	          "message:" +
-	  	          request.responseText +
-	  	          "\n" +
-	  	          "error:" +
-	  	          error
-	      	);
-    	$('#failModal').modal('show');
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
     }
   });
 }
@@ -307,10 +302,10 @@ insertModal.on("hidden.bs.modal", function() {
 // modifyModal 열릴 시
 modifyModal.on("shown.bs.modal", function() {
   $("#myInput").trigger("focus");
-  
+
   // 2개의 모달창이 존재해도 백그라운드 모달의 스크롤이 사라지지 않음
   // 참조 :
-	// https://stackoverflow.com/questions/37467690/modal-with-another-modal-causes-scroll-on-body
+  // https://stackoverflow.com/questions/37467690/modal-with-another-modal-causes-scroll-on-body
   $(this).css("overflow-y", "auto");
 });
 
@@ -367,17 +362,17 @@ function areaLoading(modal) {
       selectInit(modal);
     },
     error: function(request, status, error) {
-    	 $('#errorMessage').text(
-		  	        "code:" +
-		  	          request.status +
-		  	          "\n" +
-		  	          "message:" +
-		  	          request.responseText +
-		  	          "\n" +
-		  	          "error:" +
-		  	          error
-		      	);
-		  $('#failModal').modal('show');
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
     }
   });
 }
@@ -402,17 +397,17 @@ function branchLoading(modal, selected) {
       });
     },
     error: function(request, status, error) {
-    	 $('#errorMessage').text(
-		  	        "code:" +
-		  	          request.status +
-		  	          "\n" +
-		  	          "message:" +
-		  	          request.responseText +
-		  	          "\n" +
-		  	          "error:" +
-		  	          error
-		      	);
-		  $('#failModal').modal('show');
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
     }
   });
 }
@@ -420,14 +415,14 @@ function branchLoading(modal, selected) {
 // 모달 내 패스워드 초기화 버튼 클릭
 modifyModal.find("#userPw").click(function() {
   let userIndex = $("#userModifyForm #userIndex").val();
-  
-  $('#checkOk').on("click", function () {
-	  userPwReset(userIndex);
-  })
-	
-  $('#checkTitle').text("확인");
-  $('#checkMessage').text("해당 회원의 비밀번호를 초기화 하시겠습니까?");
-  $('#checkModal').modal('show');
+
+  $("#checkOk").on("click", function() {
+    userPwReset(userIndex);
+  });
+
+  $("#checkTitle").text("확인");
+  $("#checkMessage").text("해당 회원의 비밀번호를 초기화 하시겠습니까?");
+  $("#checkModal").modal("show");
 });
 
 // 수정 폼 모달 데이터 로딩
@@ -460,17 +455,17 @@ function modalUserLoading(userIndex) {
       modifyModal.find("#userPosition").trigger("change");
     },
     error: function(request, status, error) {
-    	 $('#errorMessage').text(
-		  	        "code:" +
-		  	          request.status +
-		  	          "\n" +
-		  	          "message:" +
-		  	          request.responseText +
-		  	          "\n" +
-		  	          "error:" +
-		  	          error
-		      	);
-		  $('#failModal').modal('show');
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
     }
   });
 }
@@ -525,17 +520,17 @@ function treeLoading() {
         result = res.data;
       },
       error: function(request, status, error) {
-    	  $('#errorMessage').text(
-		  	        "code:" +
-		  	          request.status +
-		  	          "\n" +
-		  	          "message:" +
-		  	          request.responseText +
-		  	          "\n" +
-		  	          "error:" +
-		  	          error
-		      	);
-		  $('#failModal').modal('show');
+        $("#errorMessage").text(
+          "code:" +
+            request.status +
+            "\n" +
+            "message:" +
+            request.responseText +
+            "\n" +
+            "error:" +
+            error
+        );
+        $("#failModal").modal("show");
       }
     });
 
@@ -583,8 +578,8 @@ $(".selectpicker").on("change", function() {
 $("form").each(function() {
   $(this).validate({
     onkeyup: false,
-	errorClass: "is-invalid",
-	validClass:"is-valid",
+    errorClass: "is-invalid",
+    validClass: "is-valid",
     ignore: ":hidden, [readonly]",
     // errorClass: "is-invalid",
     rules: {
@@ -668,7 +663,7 @@ $("form").each(function() {
       var errors = validator.numberOfInvalids();
 
       if (errors) {
-		  validator.errorList[0].element.focus();
+        validator.errorList[0].element.focus();
       }
     },
 
@@ -688,19 +683,23 @@ $("form").each(function() {
           modifyModal.modal("hide");
           break;
         default:
-      	  $('#errorMessage').text("valid 에러");
-		  $('#failModal').modal('show');
+          $("#errorMessage").text("valid 에러");
+          $("#failModal").modal("show");
           break;
       }
 
       return false;
     },
-   highlight: function(element, errorClass, validClass) {
-	    $(element).addClass(errorClass).removeClass(validClass);
-	  },
-  unhighlight: function(element, errorClass, validClass) {
-	  console.log(1);
-    $(element).removeClass(errorClass).addClass(validClass);
-	 }
+    highlight: function(element, errorClass, validClass) {
+      $(element)
+        .addClass(errorClass)
+        .removeClass(validClass);
+    },
+    unhighlight: function(element, errorClass, validClass) {
+      console.log(1);
+      $(element)
+        .removeClass(errorClass)
+        .addClass(validClass);
+    }
   });
 });
