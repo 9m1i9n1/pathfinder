@@ -28618,11 +28618,120 @@ a.text-muted:hover {
   overflow: auto;
 }
 
-<<<<<<< HEAD
 
-=======
 .bg-lightgray {
   background-color: #2b4e72;
   /* background-color: rgba(220,220,220,0.1); */
 }
->>>>>>> origin/master
+
+
+/*  @media screen and (max-width: 500px) {
+
+.theadblock { background-color: #327a81; color: white; font-size: 1em; padding: 0 0 5px 70px; text-align: left; text-transform: uppercase;}
+
+.table, tr, td { display: block; }
+
+.table td:first-child { position: absolute; top: 50%; -webkit-transform: translateY(-50%); border-top: 0px; margin: 0px 5px 0px 0px; padding: 0px 10px 4px 0px;  transform: translateY(-50%); }
+
+.table td:not(:first-child) { clear: both; margin-left: 80px; padding: 5px 0px 4px 60px;  position: relative; text-align: center;  width:300px; }
+
+.table td:not(:first-child):before { color: #91ced4; content: ''; display: block; left: 0; position: absolute; text-align: left; }
+
+.table td:last-child { text-align: left;}
+
+.branchCss td:nth-child(2):before { content: '지점명'; }
+
+.branchCss td:nth-child(3):before { content: '지점장'; }
+
+.branchCss td:nth-child(4):before { content: '주소'; }
+
+.branchCss td:nth-child(5):before { content: '전화번호'; }
+
+.branchCss td:nth-child(6):before { content: '운반비'; }
+
+.branchCss td:nth-child(7):before { content: '수정/삭제'; }
+
+
+
+.userCss td:nth-child(2):before { content: '지점'; }
+
+.userCss td:nth-child(3):before { content: '직책'; }
+
+.userCss td:nth-child(4):before { content: '아이디'; }
+
+.userCss td:nth-child(5):before { content: '이메일'; }
+
+.userCss td:nth-child(6):before { content: '전화번호'; }
+
+.userCss td:nth-child(7):before { content: '권한'; }
+
+.userCss td:nth-child(8):before { content: '수정/삭제'; }
+
+
+.carCss td:nth-child(2):before { content: '차량번호'; }
+
+.carCss td:nth-child(3):before { content: '차종'; }
+
+.carCss td:nth-child(4):before { content: '연비(km)'; }
+
+.carCss td:nth-child(5):before { content: '구입날짜'; }
+
+.carCss td:nth-child(6):before { content: '삭제'; }
+
+ 
+
+.table tr { padding: 10px 0; position: relative;  }
+
+.table tr:first-child { display: none;  }
+}  */
+
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	.table table, 
+	.table thead, 
+	.table tbody, 
+	.table th, 
+	.table td, 
+	.table tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	.table tr { border: 1px solid #ccc; }
+ 
+	.table td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	.table td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+		font-size: 13px;
+	}
+ 
+	/*
+	Label the data
+	*/
+	.table td:before { content: attr(data-title); }
+}

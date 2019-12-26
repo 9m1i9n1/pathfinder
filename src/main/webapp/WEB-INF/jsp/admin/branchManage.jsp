@@ -6,6 +6,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 
   <head>
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.css"/>
+  <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <title>지점 관리 페이지</title>
   </head>
   <body>
@@ -89,10 +91,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 </div>
               </div>
 
-
 						<div
-							class="card-body box-profile table-responsive p-0">
-							<table class="table table-hover" id="tableTest">
+							class="card-body box-profile table-responsive p-0 " data-role="table" data-mode="reflow">
+							<table data-role="table" class="table table-hover branchCss"  id="tableTest">
 								<thead class="theadblock">
 									<tr>
 										<th style="width: 8%">지역</th>
@@ -113,45 +114,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 			<div id="page"></div>
 		</div>
 	</section>
-	
-	<style rel="stylesheet" type="text/css">
-
-
-
-
-
-@media screen and (max-width: 500px) {
-
-.theadblock { background-color: #327a81; color: white; font-size: 1em; padding: 0 0 5px 70px; text-align: left; text-transform: uppercase;}
-
-.table, tr, td { display: block; }
-
-.table td:first-child { position: absolute; top: 50%; -webkit-transform: translateY(-50%);   transform: translateY(-50%); }
-
-.table td:not(:first-child) { clear: both; margin-left: 100px; padding: 4px 20px 4px 90px; position: relative; text-align: center; }
-
-.table td:not(:first-child):before { color: #91ced4; content: ''; display: block; left: 0; position: absolute; text-align: left; }
-
-.table td:last-child { text-align: left; width:320px;}
-
-.table td:nth-child(2):before { content: '지점명'; }
-
-.table td:nth-child(3):before { content: '지점장'; }
-
-.table td:nth-child(4):before { content: '주소'; }
-
-.table td:nth-child(5):before { content: '전화번호'; }
-
-.table td:nth-child(6):before { content: '운반비'; }
-
-.table td:nth-child(7):before { content: '수정/삭제'; }
-
-.table tr { padding: 10px 0; position: relative;  overflow: auto;}
-
-.table tr:first-child { display: none;  }}
-
-</style>
-
 </body>
 
 

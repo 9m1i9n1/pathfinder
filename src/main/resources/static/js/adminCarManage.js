@@ -139,18 +139,18 @@ function carsearch(searchUrl, searchpage = 0) {
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
           str += `<tr class="tr-shadow"><td>` + value.carArea + "</td>";
-          str += "<td>" + value.carNumber + "</td>";
-          str += "<td>" + value.carName + "톤 카고</td>";
-          str += "<td>" + value.carFuel + "</td>";
+          str += "<td data-title='차량번호'>" + value.carNumber + "</td>";
+          str += "<td data-title='차종'>" + value.carName + "톤 카고</td>";
+          str += "<td data-title='연비(km)'>" + value.carFuel + "</td>";
           str +=
-            "<td>" +
+            "<td data-title='구입날짜'>" +
             value.carBuy.year +
             "." +
             value.carBuy.month +
             "." +
             value.carBuy.day +
             "</td>";
-          str += "<td><div class='table-data-feature'>";
+          str += "<td data-title='삭제'><div class='table-data-feature'>";
           str +=
             `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="cardelete(` +
             value.carIndex +
@@ -275,18 +275,18 @@ function carlist(selectPage) {
       var str = "";
       $.each(res.data, function(key, value) {
         str += `<tr class="tr-shadow"><td>` + value.carArea + "</td>";
-        str += "<td>" + value.carNumber + "</td>";
-        str += "<td>" + value.carName + "톤 카고</td>";
-        str += "<td>" + value.carFuel + " km </td>";
+        str += "<td data-title='차량번호'>" + value.carNumber + "</td>";
+        str += "<td data-title='차종'>" + value.carName + "톤 카고</td>";
+        str += "<td data-title='연비(km)'>" + value.carFuel + " km </td>";
         str +=
-          "<td>" +
+          "<td data-title='구입날짜'>" +
           value.carBuy.year +
           "." +
           value.carBuy.month +
           "." +
           value.carBuy.day +
           "</td>";
-        str += "<td><div class='table-data-feature'>";
+        str += "<td data-title='삭제'><div class='table-data-feature'>";
         str +=
           `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(` +
           value.carIndex +

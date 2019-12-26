@@ -39,10 +39,10 @@ function getSearch(selectPage) {
       $.each(res.data, function(key, value) {
         str += `<tr class="tr-shadow">`;
         str += "<td>" + value.userName + "</td>";
-        str += "<td>" + value.userEmail + "</td>";
-        str += "<td>" + value.userPhone + "</td>";
-        str += "<td>" + value.branchName + "</td>";
-        str += "<td>" + value.userPosition + "</td>";
+        str += "<td data-title='이메일'>" + value.userEmail + "</td>";
+        str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
+        str += "<td data-title='지점명'>" + value.branchName + "</td>";
+        str += "<td data-title='직책'>" + value.userPosition + "</td>";
         str += "</tr>";
       });
       pageButton(
@@ -84,10 +84,10 @@ function getUser(treeId, selectPage) {
       $.each(res.data, function(key, value) {
         str += `<tr class="tr-shadow">`;
         str += "<td>" + value.userName + "</td>";
-        str += "<td>" + value.userEmail + "</td>";
-        str += "<td>" + value.userPhone + "</td>";
-        str += "<td>" + value.branchName + "</td>";
-        str += "<td>" + value.userPosition + "</td>";
+        str += "<td data-title='이메일'>" + value.userEmail + "</td>";
+        str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
+        str += "<td data-title='지점명'>" + value.branchName + "</td>";
+        str += "<td data-title='직책'>" + value.userPosition + "</td>";
         str += "</tr>";
       });
       pageButton(

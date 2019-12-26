@@ -74,7 +74,7 @@
 
 
 					<div class="card-body box-profile table-responsive p-0">
-						<table id="table" class="table table-hover">
+						<table id="table" class="table table-hover userCss">
 							<thead>
 								<tr>
 									<!-- <th style="display: none;">번호</th> -->

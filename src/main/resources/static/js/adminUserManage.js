@@ -72,21 +72,21 @@ function userLoading() {
           str += `<tr class="tr-shadow">`
           /* str += "<td style='display:none;'>" + value.userIndex + "</td>"; */
 
-          str += "<td>" + value.userName + "</td>";
-          str += "<td>" + value.branchName + "</td>";
-          str += "<td>" + value.userPosition + "</td>";
-          str += "<td>" + value.userId + "</td>";
+          str += "<td >" + value.userName + "</td>";
+          str += "<td data-title='지점'>" + value.branchName + "</td>";
+          str += "<td data-title='직책'>" + value.userPosition + "</td>";
+          str += "<td data-title='아이디'>" + value.userId + "</td>";
           str +=
-            "<td>" + value.userEmail + "</td>";
-          str += "<td>" + value.userPhone + "</td>";
+            "<td data-title='이메일'>" + value.userEmail + "</td>";
+          str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
           str +=
-            "<td>" +
+            "<td data-title='권한'>" +
             (value.userAuth
               ? '<h6><span class="badge badge-primary">관리자</span></h6>'
               : '<h6><span class="badge badge-danger:focus">사용자</span></h6>') +
             "</td>";
 
-          str += "<td><div class='table-data-feature'>";
+          str += "<td data-title='수정/삭제'><div class='table-data-feature'>";
           str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="modal" data-target='#modifyModal' data-placement="top" title="Edit" onclick='modalUserLoading(${value.userIndex})' value='수정'><i class="fas fa-user-edit"></i></button>`;
           str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick='deleteCheckModal(${value.userIndex})' value='삭제'><i class="fas fa-user-minus"></i></button>`;
           str += "</div></td>";

@@ -145,15 +145,15 @@ function branchsearch(searchUrl, searchpage=0) {
 			if (res.resultCode !== "ERROR") {
 				$.each(res.data,function(key, value) {
 					str += `<tr class="tr-shadow"><td>` + value.area +'</td>';
-					str += '<td>' + value.branchName +'</td>';
-					str += '<td>' + value.branchOwner +'</td>';
-					str += '<td>' + value.branchAddr +'</td>';
-					str	+= '<td>' + value.branchPhone + '</td>';
-					str += '<td>' + (value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 원" +'</td>';
-					str += "<td><div class='table-data-feature'>"
+					str += '<td data-title="지점명">' + value.branchName +'</td>';
+					str += '<td data-title="지점장">' + value.branchOwner +'</td>';
+					str += '<td data-title="주소">' + value.branchAddr +'</td>';
+					str	+= '<td data-title="전화번호">' + value.branchPhone + '</td>';
+					str += '<td data-title="운반비">' + (value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 원" +'</td>';
+					str += "<td data-title='수정/삭제'><div class='table-data-feature'>"
 
-					str	+= `<center><button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
-					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button></center>`;
+					str	+= `<button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
+					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
 					str += `</td>'+ '</tr>`;
 
 
@@ -321,14 +321,14 @@ function branchlist(selectPage) {
 				var str = "";
 			$.each(res.data, function(key, value) {
 				str += `<tr class="tr-shadow"><td>`+ value.area+ '</td>';
-				str += '<td>'+ value.branchName+ '</td>';
-				str += '<td>'+ value.branchOwner+ '</td>';
-				str += '<td>'+ value.branchAddr+ '</td>';
-				str += '<td>'+ value.branchPhone+ '</td>';
-				str += '<td>'+(value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ " 원"+'</td>';
-				str += "<td><div class='table-data-feature'>";
-				str += `<center><button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-target='#updateModal' data-placement="top" title="Edit" value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
-				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '`+ value.branchName + `')"><i class="fas fa-trash-alt"></i></button></div></td>'+ '</center></tr>`;
+				str += '<td data-title="지점명">'+ value.branchName+ '</td>';
+				str += '<td data-title="지점장">'+ value.branchOwner+ '</td>';
+				str += '<td data-title="주소">'+ value.branchAddr+ '</td>';
+				str += '<td data-title="전화번호">'+ value.branchPhone+ '</td>';
+				str += '<td data-title="운반비">'+(value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ " 원"+'</td>';
+				str += "<td data-title='수정/삭제'><div class='table-data-feature'>";
+				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-target='#updateModal' data-placement="top" title="Edit" value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
+				str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '`+ value.branchName + `')"><i class="fas fa-trash-alt"></i></button></div></td>'+ '</tr>`;
 			});
 			$("#tableListBody").html(str);
 			pageButton(res.pagination.totalPages, res.pagination.currentPage);
