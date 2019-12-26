@@ -72,22 +72,7 @@
 						</div>
 					</div>
 
-<<<<<<< HEAD
-					<div class="card-body table-responsive p-0 ">
-						<table id="table" class="table table-hover  col-md-12 col-sm-12">
-							<thead>
-								<tr>
-									
-									<th style="display: none;">번호</th>
-									<th>이름</th>
-									<th>지점</th>
-									<th>직책</th>
-									<th>아이디</th>
-									<th>이메일</th>
-									<th>전화번호</th>
-									<th>권한</th>
-									<th>수정/삭제</th>
-=======
+
 					<div class="card-body box-profile table-responsive p-0">
 						<table id="table" class="table table-hover">
 							<thead>
@@ -101,7 +86,7 @@
 									<th style="width: 8%">전화번호</th>
 									<th style="width: 8%">권한</th>
 									<th style="width: 8%">수정/삭제</th>
->>>>>>> origin/master
+
 								</tr>
 							</thead>
 							<tbody id="body" class="small"></tbody>

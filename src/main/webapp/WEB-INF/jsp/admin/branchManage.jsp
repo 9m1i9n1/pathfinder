@@ -4,30 +4,29 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
-<head>
-<script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <head>
+    <title>지점 관리 페이지</title>
+  </head>
+  <body>
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-md-2 col-md-6">
+            <h1>지점 관리</h1>
+          </div>
+          <div class="col-md-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item">관리자 메뉴</li>
+              <li class="breadcrumb-item active">지점 관리</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
 
 
-<title>지점 관리 페이지</title>
-</head>
-<body>
-	<section class="content-header">
-		<div class="container-fluid">
-			<div class="row mb-2">
-				<div class="col-md-6">
-					<h1>지점 관리</h1>
-				</div>
-				<div class="col-md-6">
-					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item">관리자 메뉴</a></li>
-						<li class="breadcrumb-item active">지점 관리</li>
-					</ol>
-				</div>
-			</div>
-		</div>
-		<!-- /.container-fluid -->
-	</section>
-	
     <section class="content">
       <div class="container-fluid ">
         <div class="row vh-80">
@@ -90,7 +89,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 </div>
               </div>
 
-<<<<<<< HEAD
+
 						<div
 							class="card-body box-profile table-responsive p-0">
 							<table class="table table-hover" id="tableTest">

@@ -151,15 +151,12 @@ function branchsearch(searchUrl, searchpage=0) {
 					str	+= '<td>' + value.branchPhone + '</td>';
 					str += '<td>' + (value.branchValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 원" +'</td>';
 					str += "<td><div class='table-data-feature'>"
-<<<<<<< HEAD
+
 					str	+= `<center><button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
 					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button></center>`;
 					str += `</td>'+ '</tr>`;
-=======
-					str	+= `<button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
-					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
-					str += `</div> </td>'+ '</tr>`;
->>>>>>> origin/master
+
+
 					});
 				pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
 			} else {	
