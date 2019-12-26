@@ -129,10 +129,10 @@
 				</div>
 			</div>
 
-			<div class="modal-footer main-modal-footer">
-				<button class="btn btn-success" type="button" id='printBtn'>인쇄</button>
-				<button class="btn btn-danger" type="button" id="deleteBtn">삭제</button>
-				<button class="btn btn-outline-success" type="button"
+			<div class="card-footer text-right">
+				<button class="btn btn-danger float-left" type="button" id="deleteBtn">삭제</button>
+				<button class="btn btn-outline-success" type="button" id='printBtn'>인쇄</button>
+				<button class="btn btn-secondary" type="button"
 					data-dismiss="modal">닫기</button>
 			</div>
 		</div>
