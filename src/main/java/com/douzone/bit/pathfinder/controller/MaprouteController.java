@@ -82,7 +82,6 @@ public class MaprouteController {
 
 	@PostMapping("/insertPlan.do")
 	public Header<String> insertPlan(@RequestBody RouteInsertRequest request) {
-
 		return MaprouteService.insertPlan(request);
 	}
 

@@ -29,4 +29,5 @@ public class HistoryResponse {
 	private String routes;
 	private String time;
 	private int stat;
+	private String sortType;
 }
