@@ -3,27 +3,29 @@ $(document).ready(function() {
 	treeLoading();
 	 sessionStorage.setItem("treeId", "company:1");
 });
-
 // insertModal 닫힐 시
 $("#insertModal").on("hidden.bs.modal", function() { 
-  $("#branchInsertform")[0].reset();
+
   branchInsertValid.resetForm();
+ 
+  resetvalid("#branchInsertform");
 });
 
 // updateModal 닫힐 시
 $("#updateModal").on("hidden.bs.modal", function() {
   branchUpdateValid.resetForm();
+  resetvalid("#branchUpdateForm");
 });
 
 
-//검색 enter press
+// 검색 enter press
 function searchEnter(){
     if (window.event.keyCode == 13) {
     	searchClick();
    }
 }
 
-//검색버튼
+// 검색버튼
 function searchClick(){
 	
 	var treeId = sessionStorage.getItem("treeId");
@@ -36,19 +38,28 @@ function searchClick(){
 	branchsearch(url);
 }
 
-/*// 검색버튼
-$('#btnSearch').click(function(e){
-	e.preventDefault();
-	var treeId = sessionStorage.getItem("treeId");
-	
-	var url = "";    
-	url = url + "?searchType=" + $('#searchType').val();
-	url = url + "&keyword=" + $('#keyword').val();
-	url = url + "&selectedArea="+treeId;
-	console.log(url)
-	branchsearch(url);
-});
-*/
+function resetvalid(formName){
+	  $(formName)[0].reset();
+	  var length = $(formName)[0].length;
+	  var sclass = null;
+	  for(var i = 0; i < length; i++){
+		  sclass = $(formName)[0][i].getAttribute('id');
+		  sclass = "#"+sclass;
+		  console.log();
+		  $(sclass).removeClass("is-invalid");
+		  $(sclass).removeClass("is-valid");
+	  }
+}
+
+
+/*
+ * // 검색버튼 $('#btnSearch').click(function(e){ e.preventDefault(); var treeId =
+ * sessionStorage.getItem("treeId");
+ * 
+ * var url = ""; url = url + "?searchType=" + $('#searchType').val(); url = url +
+ * "&keyword=" + $('#keyword').val(); url = url + "&selectedArea="+treeId;
+ * console.log(url) branchsearch(url); });
+ */
 
 // 지역이름 숫자변환
 function areaNameTrans(areaIndex){
@@ -142,7 +153,7 @@ function branchsearch(searchUrl, searchpage=0) {
 					str += "<td><div class='table-data-feature'>"
 					str	+= `<button class="item btn btn-primary-outline btn-sm" data-toggle='modal' data-placement="top" title="Edit" data-target='#updateModal' value='수정' onclick='branchgetvalue(${JSON.stringify(value)})' ><i class="fas fa-edit"></i></button>`;
 					str += `<button class="item btn btn-primary-outline btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCheckModal(`+ value.branchIndex +`, '` + value.branchName + `', '` + value.area + `')"><i class="fas fa-trash-alt"></i></button>`;
-					str += `</td>'+ '</tr>`;
+					str += `</div> </td>'+ '</tr>`;
 					});
 				pageButton1(res.pagination.totalPages, res.pagination.currentPage, searchUrl);
 			} else {	
@@ -395,9 +406,11 @@ $("#branch_Addr").on("propertychange change keyup paste input", function() {
 
 
 // 추가 유효성검사
-//TODO JavaScript 다시 선언시 Const 중복 에러발생 
+// TODO JavaScript 다시 선언시 Const 중복 에러발생
 var branchInsertValid = $('#branchInsertform').validate({
 	onkeyup:false,
+	validClass:"is-valid",
+	errorClass: "is-invalid",
 	rules : {
 		branchName: {
 			required: true,
@@ -491,14 +504,25 @@ var branchInsertValid = $('#branchInsertform').validate({
 	 	 $('#insertModal').modal("hide");
 	 	 branchInsertValid.resetForm();
 	     return false;
-	   }
+	   },
+	   // 무조건 들어갈 때 실행됨 빠질 때 실행 되도록 해야함.
+	   highlight: function(element, errorClass, validClass) {
+			  console.log("2",$(element)[0]);
+		   $(element).addClass(errorClass).removeClass(validClass);
+		  },
+	  unhighlight: function(element, errorClass, validClass) {
+		  console.log("1",$(element)[0]);
+		  $(element).removeClass(errorClass).addClass(validClass);
+	  }
 })
 
 // 수정 유효성검사
-//TODO JavaScript 다시 선언시 Const 중복 에러발생 
+// TODO JavaScript 다시 선언시 Const 중복 에러발생
 var branchUpdateValid = $('#branchUpdateForm').validate({
 	onkeyup:false,
 	ignore: ':hidden, [readonly=readonly]',
+	errorClass: "is-invalid",
+	validClass:"is-valid",
 	rules : { 
 		branchName: {
 			required: true,
@@ -567,5 +591,11 @@ var branchUpdateValid = $('#branchUpdateForm').validate({
 	 	 $('#updateModal').modal("hide");
 	 	 branchUpdateValid.resetForm();
 	     return false;
-	   }
+	   },
+	   highlight: function(element, errorClass, validClass) {
+		    $(element).addClass(errorClass).removeClass(validClass);
+		  },
+	  unhighlight: function(element, errorClass, validClass) {
+	    $(element).removeClass(errorClass).addClass(validClass);
+	  }
 })

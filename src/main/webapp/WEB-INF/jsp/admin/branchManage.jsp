@@ -68,8 +68,7 @@
 							</div>
 						</div>
 
-						<div
-							class="card-body box-profile table-responsive p-0">
+						<div class="card-body box-profile table-responsive p-0">
 							<table class="table table-hover" id="tableTest">
 								<thead>
 									<tr>
@@ -93,7 +92,7 @@
 	</section>
 </body>
 
-<%@include file="/WEB-INF/jsp/alert.jsp" %>
+<%@include file="/WEB-INF/jsp/alert.jsp"%>
 <%@include file="branchManageModal.jsp"%>
 
 <script src="/static/js/adminBranchManage.js"></script>
