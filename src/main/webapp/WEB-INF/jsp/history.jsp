@@ -12,8 +12,11 @@
 <head>
 <title>Document</title>
 <!-- Toggle checkbox -->
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<link
+	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+	rel="stylesheet">
+<script
+	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- 캘린더 표시 -->
 <link rel="stylesheet" href="/static/route/css/calendar.css" />
@@ -46,12 +49,12 @@
 					<div class="row">
 						<div class="col">
 							<input id="myhistory" type="checkbox" data-toggle="toggle"
-							 data-size="small" data-on="내 예약약" data-off="전체"/>
+								data-size="small" data-on="내 예약약" data-off="전체" />
 						</div>
 						<div class="col-sm-7">
 							<div class=" input-group input-group-sm">
-								<input class="form-control form-control-navbar"
-								type="search" placeholder="출발날짜 선택" id="keyword" autocomplete="off" readonly />
+								<input class="form-control form-control-navbar" type="search"
+									placeholder="출발날짜 선택" id="keyword" autocomplete="off" readonly />
 								<div class="input-group-append">
 									<button class="btn btn-sm bg-olive" name="btnSearch"
 										id="btnSearch" onclick="getSearch()">
@@ -63,7 +66,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<ul class="nav nav-pills">
 					<li class="nav-item"><a class="nav-link" href="#todayList"
 						id="will" onclick="getHistory(0, this.id)" data-toggle="tab">배송예정</a></li>
@@ -76,37 +79,37 @@
 			</div>
 
 			<div class="card-body box-profile table-responsive p-0 height100">
-						<div class="tab-content">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th style="width: 10%">예약일자</th>
-										<th style="width: 10%">사용자</th>
-										<th style="width: 10%">출발지</th>
-										<th style="width: 10%">도착지</th>
-										<th style="width: 10%">출발일자</th>
-										<th style="width: 10%">도착일자</th>
-										<th style="width: 10%">차량번호</th>
-										<th style="width: 10%">상세보기</th>
-									</tr>
-								</thead>
-								<tbody id="tableListBody" class="small">
-								</tbody>
-							</table>
-						</div>
-						<!-- /.tab-content -->
-					<!-- /.card-body -->
+				<div class="tab-content">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th style="width: 10%">예약일자</th>
+								<th style="width: 10%">사용자</th>
+								<th style="width: 10%">출발지</th>
+								<th style="width: 10%">도착지</th>
+								<th style="width: 10%">출발일자</th>
+								<th style="width: 10%">도착일자</th>
+								<th style="width: 10%">차량번호</th>
+								<th style="width: 10%">상세보기</th>
+							</tr>
+						</thead>
+						<tbody id="tableListBody" class="small">
+						</tbody>
+					</table>
+				</div>
+				<!-- /.tab-content -->
+				<!-- /.card-body -->
 				<!-- /.nav-tabs-custom -->
 			</div>
 		</div>
-			<div id="page"></div>
+		<div id="page"></div>
 	</div>
 </body>
 <%@include file="historyModal.jsp"%>
-<%@include file="alert.jsp" %>
+<%@include file="alert.jsp"%>
 
-  <script src="/static/js/history.js"></script>
-  <script type="text/javascript">
+<script src="/static/js/history.js"></script>
+<script type="text/javascript">
     let userName = "${authUsername}";
     let userAuth = "${userAuth}";
   </script>

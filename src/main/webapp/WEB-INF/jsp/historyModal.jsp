@@ -74,7 +74,7 @@
 					</div>
 
 
-					<table class=" table table-hover " id="tableTest">
+					<table class="table table-hover" id="tableTest">
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -86,7 +86,7 @@
 							</tr>
 						</thead>
 
-						<tbody id="routesListBody"></tbody>
+						<tbody class="myScrollableBlockModal scrollbar-outer" id="routesListBody"></tbody>
 					</table>
 
 					<div>

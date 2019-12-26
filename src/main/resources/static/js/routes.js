@@ -282,10 +282,10 @@ const drawTimeline = routeInfo => {
   result +=
     routeInfo.percent !== 0
       ? routeInfo.percent > 0
-        ? "<small class='text-success float-right'><i class='fas fa-arrow-up mr-1'></i>"
-        : "<small class='text-danger float-right'><i class='fas fa-arrow-down mr-1'></i>"
+        ? "<small class='text-success float-right'><i class='fas fa-arrow-down mr-1'></i>"
+        : "<small class='text-danger float-right'><i class='fas fa-arrow-up mr-1'></i>"
       : "<small class='text-warning float-right'><i class='fas fa-minus mr-1'></i>";
-  result += `${Math.abs(routeInfo.percent).toFixed(0)}%</small></div>`;
+  result += `${Math.abs(routeInfo.percent).toFixed(2)}%</small></div>`;
 
   result += "<div class='text-center'>";
   result += `<div class='float-left'><i class="fas fa-clock mr-1"></i><span class="result"><b>${sumTime.toHHMMSS()}</b></span></div>`;
@@ -543,8 +543,9 @@ const carculateData = lrmData => {
     routeInfo.routes = $.extend(true, [], routes);
 
     routeInfo.sortType = switchState ? "거리" : "비용";
+    console.log(compareFee);
     routeInfo.percent = (compareFee / fee) * 100 - 100;
-
+//    738308 a +  a2.2 = 754579 - 2.2 = 
     routeList = $.extend(true, {}, routeInfo);
 
     resolve(routeInfo);
