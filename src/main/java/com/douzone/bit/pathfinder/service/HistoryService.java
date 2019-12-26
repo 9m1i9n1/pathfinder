@@ -53,6 +53,10 @@ public class HistoryService {
 		if (myhistory) {
 			userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		}
+		
+		if (keyword != null && keyword == "") {
+			keyword = null;
+		}
 
 		try {
 			if (keyword != null) {

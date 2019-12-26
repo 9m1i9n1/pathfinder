@@ -45,7 +45,7 @@
 				<div class="card height100">
 					<div class="card-header">
 						<h3 class="card-title">
-							<button class="btn bg-gradient-primary btn-sm"
+							<button class="btn bg-olive btn-sm"
 								data-toggle="modal" data-target="#insertModal">
 								<i class="zmdi zmdi-plus"></i>사용자 추가
 							</button>
@@ -63,7 +63,7 @@
 									placeholder="Search" />
 								<div class="input-group-append">
 									<button onclick="searchClick()" type="submit"
-										class="btn btn-primary btn-sm" id="btnSearch" name="btnSearch">
+										class="btn btn-sm bg-olive" id="btnSearch" name="btnSearch">
 										<i class="fas fa-search"></i>
 									</button>
 								</div>

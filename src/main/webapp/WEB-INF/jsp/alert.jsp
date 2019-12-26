@@ -3,7 +3,7 @@
 
 <!-- Success -->
 <div id="successModal" class="modal fade">
-	<div class="modal-dialog modal-confirm">
+	<div class="modal-dialog modal-confirm modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="icon-box">
@@ -24,7 +24,7 @@
 
 <!-- Fail -->
 <div id="failModal" class="modal fade">
-	<div class="modal-dialog modal-error">
+	<div class="modal-dialog modal-error modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="icon-box">
@@ -44,7 +44,7 @@
 
 <!-- Update -->
 <div id="updateAlertModal" class="modal fade">
-	<div class="modal-dialog modal-confirm">
+	<div class="modal-dialog modal-confirm modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="icon-box">
@@ -64,7 +64,7 @@
 
 <!-- Check -->
 <div id="checkModal" class="modal fade">
-	<div class="modal-dialog modal-error">
+	<div class="modal-dialog modal-error modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="icon-box">
