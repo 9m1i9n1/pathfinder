@@ -170,7 +170,7 @@ function getRoutes(routes) {
         str += "<td>" + value.rarvl + "</td>";
         str += "<td>" + value.rdist + "Km" + "</td>";
         str += "<td>" + value.rtime + "</td>";
-        str += "<td>" + value.rfee + "</td>";
+        str += "<td>" + value.rfee.addComma() + "원</td>";
         str += "</tr>";
       });
 
@@ -204,23 +204,11 @@ function getRoutes(routes) {
 
       detailsModal.find("#sortType").text(routes.sortType + "순");
 
-      detailsModal
-        .find("#dist")
-        .text(
-          routes.dist.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Km"
-        );
+      detailsModal.find("#dist").text(routes.dist.addComma() + " Km");
 
-      detailsModal
-        .find("#dist")
-        .text(
-          routes.dist.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Km"
-        );
+      detailsModal.find("#dist").text(routes.dist.addComma() + " Km");
 
-      detailsModal
-        .find("#fee")
-        .text(
-          routes.fee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"
-        );
+      detailsModal.find("#fee").text(routes.fee.addComma() + " 원");
     }
   });
 }
@@ -240,3 +228,9 @@ $("#printBtn").on("click", function() {
 
   window.print();
 });
+
+//! 유틸부분 =======================
+Number.prototype.addComma = function() {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return this.toString().replace(regexp, ",");
+};

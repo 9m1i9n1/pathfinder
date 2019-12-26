@@ -263,7 +263,7 @@ const drawTimeline = routeInfo => {
     str += "<hr class='divider'>";
     str += `<i class="fas fa-arrow-circle-right mr-1"></i>${value.rarvl}</div>`;
     str += `<div class="info">${value.rdist}km</div>`;
-    str += `<div class="type">${value.rfee}원</div>`;
+    str += `<div class="type">${value.rfee.addComma()}원</div>`;
     str += "</div>";
 
     str += "<span class='number'>";
@@ -289,7 +289,7 @@ const drawTimeline = routeInfo => {
 
   result += "<div class='text-center'>";
   result += `<div class='float-left'><i class="fas fa-clock mr-1"></i><span class="result"><b>${sumTime.toHHMMSS()}</b></span></div>`;
-  result += `<div class='float-right'><i class="fas fa-coins mr-1"></i><span class="result"><b>${routeInfo.fee}</b></span>원</div>`;
+  result += `<div class='float-right'><i class="fas fa-coins mr-1"></i><span class="result"><b>${routeInfo.fee.addComma()}</b></span>원</div>`;
   result += `<div><i class="fas fa-road mr-1"></i><span class="result"><b>${routeInfo.dist}</b></span>km</div>`;
   result += "</div>";
 
@@ -654,6 +654,11 @@ const insertPlan = (req, imgSrc) => {
 };
 
 //! 유틸 부분 =====================
+Number.prototype.addComma = function() {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return this.toString().replace(regexp, ",");
+};
+
 Number.prototype.toHHMMSS = function() {
   var sec_num = Math.floor(this / 1);
   var hours = Math.floor(sec_num / 3600);
