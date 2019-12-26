@@ -7,43 +7,49 @@
 		role="document">
 		<div class="modal-content" id="modal-content">
 			<div id="printThis">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">상세정보</h4>
+				<div class="modal-header bg-olive">
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="material-icons">history</i>
+						상세정보
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-5">
 							<div class="form-group row">
-								<label for="branchName" class="col-sm-3 col-form-label-sm">
-									예약일자 </label>
+								<label for="branchName" class="col-sm-4 col-form-label-sm">
+									<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp 예약일자 </label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="regdate"></h2>
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label for="branchOwner" class="col-sm-3 col-form-label-sm">
-									사용자</label>
+								<label for="branchOwner" class="col-sm-4 col-form-label-sm">
+									<i class="fa fa-user" aria-hidden="true"></i>&nbsp 사용자</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="username"></h2>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="branchArea"
-									class="col-sm-3 col-form-label-sm center">차량번호 </label>
+								<label for="branchArea" class="col-sm-4 col-form-label-sm center">
+								<i class="fa fa-car" aria-hidden="true"></i>&nbsp 차량번호 </label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="carname"></h2>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="branchValue" class="col-sm-3 col-form-label-sm">출발지</label>
+								<label for="branchValue" class="col-sm-4 col-form-label-sm">
+								<i class="fa fa-truck" aria-hidden="true"></i>&nbsp 출발지</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="dep"></h2>
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label for="branchPhone" class="col-sm-3 col-form-label-sm">도착지</label>
+								<label for="branchPhone" class="col-sm-4 col-form-label-sm">
+								<i class="fa fa-flag" aria-hidden="true"></i>&nbsp 도착지</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="arvl"></h2>
 								</div>
@@ -74,7 +80,7 @@
 					<div>
 						<div class="row">
 							<div class="col-md-4">
-								<div class="small-box bg-teal">
+								<div class="small-box bg-olive">
 									<div class="inner">
 										<h5>총거리</h5>
 										<p id="dist"></p>
@@ -85,7 +91,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="small-box bg-primary">
+								<div class="small-box bg-warning">
 									<div class="inner">
 										<h5>소요 시간</h5>
 										<p id="totalTime"></p>
@@ -96,7 +102,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="small-box bg-olive">
+								<div class="small-box bg-danger">
 									<div class="inner">
 										<h5>비용</h5>
 										<p id="fee"></p>
@@ -111,10 +117,10 @@
 				</div>
 			</div>
 
-			<div class="modal-footer">
-				<button class="btn btn-secondary" type="button" id='printBtn'>인쇄</button>
-				<button class="btn btn-secondary" type="button" id="deleteBtn">삭제</button>
-				<button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
+			<div class="modal-footer main-modal-footer">
+				<button class="btn btn-success" type="button" id='printBtn'>인쇄</button>
+				<button class="btn btn-danger" type="button" id="deleteBtn">삭제</button>
+				<button class="btn btn-outline-success" type="button" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>

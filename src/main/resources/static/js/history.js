@@ -120,24 +120,37 @@ function getSearch() {
 // Modal
 var detailsModal = $("#detailsModal");
 
-function removeRoutes(history) {
-  let alertBox = confirm("해당 기록을 삭제하시겠습니까?");
+detailsModal.on("shown.bs.modal", function() {
+	$(this).css("overflow-y", "auto");
+})
 
-  if (alertBox) {
+function deleteCheckModal(history) {
+    $('#checkOk').on("click", function () {
+    	removeRoutes(history);
+    })
+	
+    $('#checkTitle').text("확인");
+    $('#checkMessage').text("해당 기록를 삭제하시겠습니까?");
+    $('#checkModal').modal('show');
+}
+
+function removeRoutes(history) {
     $.ajax({
       url: "/history/removeroutes.do",
       type: "delete",
       data: JSON.stringify(history.id),
       contentType: "application/json; charset=UTF-8",
       success: function(res) {
-        alert("삭제 되었습니다.");
-        $("#detailsModal").modal("hide");
+          $('#updateTitle').text("삭제 성공");
+          $('#updateMessage').text("해당 기록을 삭제하였습니다.");
+          $('#updateAlertModal').modal('show');
+          
+          $("#detailsModal").modal("toggle");
 
         let tabId = sessionStorage.getItem("tabId");
         getHistory(0, tabId);
       }
     });
-  }
 }
 
 function getRoutes(routes) {
@@ -172,7 +185,7 @@ function getRoutes(routes) {
       $("#deleteBtn")
         .off()
         .on("click", function() {
-          removeRoutes(routes);
+          deleteCheckModal(routes);
         });
 
       $("#routesListBody").html(str);
