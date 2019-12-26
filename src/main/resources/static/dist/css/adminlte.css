@@ -1553,7 +1553,7 @@ pre code {
   padding: 0.75rem;
   vertical-align: center;
   border-top: 1px solid #dee2e6;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .table thead th {
