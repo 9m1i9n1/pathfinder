@@ -467,8 +467,13 @@ $("#branch_Addr").on("propertychange change keyup paste input", function() {
   $el.focus();
 });
 
+//! Validation
+// select 포커스 문제 해결
+$("select").on("select2:close", function() {
+  $(this).blur();
+});
+
 // 추가 유효성검사
-// TODO JavaScript 다시 선언시 Const 중복 에러발생
 var branchInsertValid = $("#branchInsertform").validate({
   onkeyup: false,
   validClass: "is-valid",
@@ -548,7 +553,6 @@ var branchInsertValid = $("#branchInsertform").validate({
 });
 
 // 수정 유효성검사
-// TODO JavaScript 다시 선언시 Const 중복 에러발생
 var branchUpdateValid = $("#branchUpdateForm").validate({
   onkeyup: false,
   validClass: "is-valid",
