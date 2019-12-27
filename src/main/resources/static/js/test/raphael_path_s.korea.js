@@ -325,14 +325,14 @@ function showBranchsFeeChart(
       datasets: [
         {
           label: "상차비",
-          backgroundColor: "#ad3e45",
-          borderColor: "#ad3e45",
+          backgroundColor: "rgba(245, 210, 65, 0.5)",
+          borderColor: "rgba(245, 210, 65, 1)",
           data: departureBranchValueArr
         },
         {
           label: "하차비",
-          backgroundColor: "#f5bb00",
-          borderColor: "#f5bb00",
+          backgroundColor: "rgba(66, 170, 245, 0.5)",
+          borderColor: "rgba(245, 210, 65, 1)",
           data: arrivalBranchValueArr
         }
       ]
