@@ -30,8 +30,8 @@ function pageButton(totalPages, currentPage) {
 }
 
 function resetvalid(formName) {
-	var length = $(formName)[0].length;
-	var sclass = null;
+  var length = $(formName)[0].length;
+  var sclass = null;
   for (var i = 0; i < length; i++) {
     sclass = $(formName)[0][i].getAttribute("id");
     sclass = "#" + sclass;
@@ -290,7 +290,7 @@ insertModal.on("hidden.bs.modal", function() {
 
 // modifyModal 열릴 시
 modifyModal.on("shown.bs.modal", function() {
-	resetvalid("#userModifyForm");
+  resetvalid("#userModifyForm");
   $("#myInput").trigger("focus");
 
   // 2개의 모달창이 존재해도 백그라운드 모달의 스크롤이 사라지지 않음
@@ -651,6 +651,8 @@ $("form").each(function() {
 
     highlight: function(element, errorClass, validClass) {
       if (element.type !== "radio") {
+        console.log("#high", element);
+
         $(element)
           .addClass(errorClass)
           .removeClass(validClass);
@@ -664,6 +666,8 @@ $("form").each(function() {
     },
     unhighlight: function(element, errorClass, validClass) {
       if (element.type !== "radio") {
+        console.log("#unhigh", element);
+
         $(element)
           .removeClass(errorClass)
           .addClass(validClass);

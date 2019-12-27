@@ -25,7 +25,7 @@
 .xl-nextPage,
 .xl-prevPage {
   width: 60px;
-  color: #0073a9;
+  color: #3d9970;
   height: 28px;
 }
 /* 선택 되지 않은 버튼 */
@@ -35,7 +35,7 @@
 }
 /* 선택된 버튼 */
 #page li.xl-active {
-  background-color: #0073a9;
-  border-color: #0073a9;
+  background-color: #3d9970;
+  border-color: #3d9970;
   color: #fff;
 }
