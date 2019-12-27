@@ -29,13 +29,11 @@ function pageButton(totalPages, currentPage) {
   });
 }
 function resetvalid(formName) {
-  $(formName)[0].reset();
-  var length = $(formName)[0].length;
-  var sclass = null;
+	var length = $(formName)[0].length;
+	var sclass = null;
   for (var i = 0; i < length; i++) {
     sclass = $(formName)[0][i].getAttribute("id");
     sclass = "#" + sclass;
-    console.log();
     $(sclass).removeClass("is-invalid");
     $(sclass).removeClass("is-valid");
   }
@@ -306,6 +304,7 @@ insertModal.on("hidden.bs.modal", function() {
 
 // modifyModal 열릴 시
 modifyModal.on("shown.bs.modal", function() {
+	resetvalid("#userModifyForm");
   $("#myInput").trigger("focus");
 
   // 2개의 모달창이 존재해도 백그라운드 모달의 스크롤이 사라지지 않음
@@ -316,13 +315,11 @@ modifyModal.on("shown.bs.modal", function() {
 
 // modifyModal 닫힐 시
 modifyModal.on("hidden.bs.modal", function() {
-  $("#userCreateForm")[0].reset();
   modifyModal.find(".formCheck").html("");
-
+  resetvalid("#userModifyForm");
   $("#userModifyForm")
     .validate()
     .resetForm();
-  resetvalid("#userModifyForm");
 });
 
 insertModal.find("#areaIndex").on("select2:select", function(e) {
