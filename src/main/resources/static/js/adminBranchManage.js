@@ -159,6 +159,7 @@ $.fn.serializeObject = function() {
 };
 
 // 검색뷰
+
 function branchsearch(searchUrl, searchpage = 0) {
   console.log("여기");
   console.log(searchUrl);
@@ -171,7 +172,7 @@ function branchsearch(searchUrl, searchpage = 0) {
 
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
-          str += `<tr class="tr-shadow"><td>` + value.area + "</td>";
+          str += `<tr class="tr-shadow"><td data-title='지역'>` + value.area + "</td>";
           str += '<td data-title="지점명">' + value.branchName + "</td>";
           str += '<td data-title="지점장">' + value.branchOwner + "</td>";
           str += '<td data-title="주소">' + value.branchAddr + "</td>";
@@ -217,6 +218,7 @@ function branchsearch(searchUrl, searchpage = 0) {
       $("#seachAll").html(buttonAll);
     }
   });
+
 }
 // geoCoding
 function geocoding(addr) {
@@ -357,6 +359,7 @@ function branchdelete(idx, bname, barea) {
 
 // 첫페이지
 function branchlist(selectPage) {
+
   $.ajax({
     url: "/admin/branchmanage/branchlist.do?page=" + selectPage,
     type: "get",
@@ -364,7 +367,7 @@ function branchlist(selectPage) {
     success: function(res) {
       var str = "";
       $.each(res.data, function(key, value) {
-        str += `<tr class="tr-shadow"><td>` + value.area + "</td>";
+        str += `<tr class="tr-shadow"><td data-title='지역'>` + value.area + "</td>";
         str += '<td data-title="지점명">' + value.branchName + "</td>";
         str += '<td data-title="지점장">' + value.branchOwner + "</td>";
         str += '<td data-title="주소">' + value.branchAddr + "</td>";
@@ -389,6 +392,7 @@ function branchlist(selectPage) {
       pageButton(res.pagination.totalPages, res.pagination.currentPage);
     }
   });
+
 }
 // jstree 로딩
 function treeLoading() {

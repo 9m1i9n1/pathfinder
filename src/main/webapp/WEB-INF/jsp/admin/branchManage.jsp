@@ -6,8 +6,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 
   <head>
-  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.css"/>
-  <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <title>지점 관리 페이지</title>
   </head>
   <body>
@@ -92,7 +90,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
               </div>
 
 
-              <div class="card-body box-profile table-responsive p-0">
+              <div class="card-body box-profile table-responsive">
                 <table class="table table-hover" id="tableTest">
                   <thead>
                     <tr>
