@@ -572,7 +572,7 @@ $("form").each(function() {
     ignore: ":hidden, [readonly]",
     rules: {
       userId: {
-        required: true,
+        required: true, 
         rangelength: [3, 15],
         remote: "/admin/usermanage/idcheck.do"
       },
@@ -603,17 +603,21 @@ $("form").each(function() {
     },
     messages: {
       userId: {
-        remote: "이미 존재하는 아이디입니다."
+    	  required: "입력하쇼",
+    	  remote: "이미 존재하는 아이디입니다.",
+    	  rangelength: "길이 맞춰라 3-15"
       }
     },
-
     // 에러 위치 조정
     errorPlacement: function(error, element) {
-      // if (element.is(":radio") || element.is("select")) {
-      //   error.appendTo(element.parents(".col-sm-8"));
-      // } else {
-      //   error.insertAfter(element);
-      // }
+    	console.log("얘가먼저");
+    	var pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    	var pattern_eng = /^[a-zA-Z0-9]*$/;
+    	if(element[0].getAttribute("id") === "userIdAdd" && pattern_kor.test(error[0].textContent)){
+    		error.insertAfter(element);
+    	}else if(element[0].getAttribute("id") === "userIdAdd" && pattern_eng.test(error[0].textContent)){
+    		console.log(2);
+    	}
     },
 
     // valid 실패시
@@ -650,6 +654,7 @@ $("form").each(function() {
     },
 
     highlight: function(element, errorClass, validClass) {
+    	console.log("장난치냐");
       if (element.type !== "radio") {
         $(element)
           .addClass(errorClass)
@@ -663,6 +668,7 @@ $("form").each(function() {
       }
     },
     unhighlight: function(element, errorClass, validClass) {
+    	console.log("내가먼저");
       if (element.type !== "radio") {
         $(element)
           .removeClass(errorClass)
