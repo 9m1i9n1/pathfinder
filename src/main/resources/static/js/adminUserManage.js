@@ -28,6 +28,7 @@ function pageButton(totalPages, currentPage) {
     }
   });
 }
+
 function resetvalid(formName) {
   $(formName)[0].reset();
   var length = $(formName)[0].length;
@@ -164,6 +165,11 @@ function deleteCheckModal(userIndex) {
   $("#checkModal").modal("show");
 }
 
+const showConfirmModal = (text) => {
+  $("#updateTitle").text(`${text} 성공`);
+  $("#updateMessage").text("해당 회원을 삭제하였습니다.");
+  $("#updateAlertModal").modal("show");
+};
 // 회원 삭제
 function userDelete(userIndex) {
   console.log("#userIndex", userIndex);
@@ -175,9 +181,7 @@ function userDelete(userIndex) {
     success: function() {
       userLoading();
 
-      $("#updateTitle").text("삭제 성공");
-      $("#updateMessage").text("해당 회원을 삭제하였습니다.");
-      $("#updateAlertModal").modal("show");
+
     },
     error: function(request, status, error) {
       $("#errorMessage").text(
@@ -697,37 +701,37 @@ $("form").each(function() {
     },
 
     highlight: function(element, errorClass, validClass) {
-      if (element.type == "radio") {
-        $(element.form)
-          .find('[name="' + element.name + '"')
-          .each(function() {
-            var $this = $(this);
+      $(element)
+        .addClass(errorClass)
+        .removeClass(validClass);
 
-            $this
-              .closest('label[for="' + $this.attr("id") + '"')
-              .addClass(errorClass);
-          });
-      } else {
-        $(element)
-          .addClass(errorClass)
-          .removeClass(validClass);
-      }
+      // if (element.type == "radio") {
+      //   $(element.form)
+      //     .find('[name="' + element.name + '"')
+      //     .each(function() {
+      //       var $this = $(this);
+
+      //       $this
+      //         .closest('label[for="' + $this.attr("id") + '"')
+      //         .addClass(errorClass);
+      //     });
+      // }
     },
     unhighlight: function(element, errorClass, validClass) {
       $(element)
         .removeClass(errorClass)
         .addClass(validClass);
 
-      if (element.type == "radio") {
-        $(element.form)
-          .find('[name="' + element.name + '"')
-          .each(function() {
-            var $this = $(this);
-            $this
-              .closest('label[for="' + $this.attr("id") + '"')
-              .removeClass(errorClass);
-          });
-      }
+      // if (element.type == "radio") {
+      //   $(element.form)
+      //     .find('[name="' + element.name + '"')
+      //     .each(function() {
+      //       var $this = $(this);
+      //       $this
+      //         .closest('label[for="' + $this.attr("id") + '"')
+      //         .removeClass(errorClass);
+      //     });
+      // }
     }
   });
 });
