@@ -31,6 +31,7 @@ function pageButton(totalPages, currentPage) {
 function resetvalid(formName) {
   $(formName)[0].reset();
   var length = $(formName)[0].length;
+  console.log(length);
   var sclass = null;
   for (var i = 0; i < length; i++) {
     sclass = $(formName)[0][i].getAttribute("id");
@@ -701,7 +702,6 @@ $("form").each(function() {
         .removeClass(validClass);
     },
     unhighlight: function(element, errorClass, validClass) {
-      console.log(1);
       $(element)
         .removeClass(errorClass)
         .addClass(validClass);
