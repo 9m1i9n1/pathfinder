@@ -10,6 +10,7 @@
   }
   #printSection, #printSection * {
     visibility:visible;
+    height: auto !important
   }
   #printSection {
     position: absolute;

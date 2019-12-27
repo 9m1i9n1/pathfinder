@@ -226,6 +226,11 @@ $("#printBtn").on("click", function() {
   $("#printSection").html("");
   $("#printSection").append(domClone);
 
+  let tbody = $("#printSection").find('tbody').html();
+  
+  $("#printSection").find("thead").after(tbody);
+  $("#printSection").find('.scrollbar-outer').remove();
+  
   window.print();
 });
 

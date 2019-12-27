@@ -28621,9 +28621,10 @@ a.text-muted:hover {
 
 
 .myScrollableBlockModal {
-  display: block;
-  height: 150px;
-  overflow: auto;
+	height: 150px;
+	width : 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 
