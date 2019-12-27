@@ -169,12 +169,7 @@
 								</tbody>
 							</table>
 						</div>
-						<!-- /.table-responsive -->
-						<!-- /.users-list -->
 					</div>
-
-
-					<!-- /.card -->
 				</div>
 				<!-- /.col -->
 
@@ -194,63 +189,49 @@
 										</button>
 									</div>
 								</div>
-								<!-- /.card-header -->
 								<div class="card-body p-0">
-
 									<div class="row">
 										<div class="col-md-12">
-											<div class="p-1">
-												<div id="canvas">
-													<div id="south"></div>
-													<div id="seoul"></div>
-													<div id="gygg"></div>
-													<div id="incheon"></div>
-													<div id="gangwon"></div>
-													<div id="chungbuk"></div>
-													<div id="chungnam"></div>
-													<div id="daejeon"></div>
-													<div id="sejong"></div>
-													<div id="gwangju"></div>
-													<div id="jeonbuk"></div>
-													<div id="jeonnam"></div>
-													<div id="gyeongbuk"></div>
-													<div id="gyeongnam"></div>
-													<div id="daegu"></div>
-													<div id="busan"></div>
-													<div id="ulsan"></div>
-													<div id="jeju"></div>
-												</div>
+											<div id="canvas">
+												<div id="south"></div>
+												<div id="seoul"></div>
+												<div id="gygg"></div>
+												<div id="incheon"></div>
+												<div id="gangwon"></div>
+												<div id="chungbuk"></div>
+												<div id="chungnam"></div>
+												<div id="daejeon"></div>
+												<div id="sejong"></div>
+												<div id="gwangju"></div>
+												<div id="jeonbuk"></div>
+												<div id="jeonnam"></div>
+												<div id="gyeongbuk"></div>
+												<div id="gyeongnam"></div>
+												<div id="daegu"></div>
+												<div id="busan"></div>
+												<div id="ulsan"></div>
+												<div id="jeju"></div>
 											</div>
 											<div
-												class="flex-fill card-pane-right bg-lightgray pt-2 pb-2 pl-4 pr-4"
+												class="flex-fill card-pane-right elevation-1 p-2"
 												id="branchFeeChartP">
 												<!-- 여기가 옆쪽 -->
-												<canvas id="branchFeeChart"
-													class="chartjs-render-monitor col-md-8"></canvas>
+												<canvas id="branchFeeChart" class="chartjs-render-monitor col-md-8"></canvas>
 											</div>
-											<!-- /.d-md-flex -->
 										</div>
-										<!-- /.card-body -->
 									</div>
 								</div>
-								<!-- /.card -->
 							</div>
-							<!-- /.col -->
 						</div>
-						<!-- /.row -->
 					</div>
-					<!-- /.col -->
 				</div>
-				<!-- /.row -->
 			</div>
-			<!--/. container-fluid -->
+		</div>
 	</section>
-	<!-- /.content -->
 
 	<!--  한국지도 -->
 	<script type="text/javascript" src="/static/js/test/raphael_min.js"></script>
-	<script type="text/javascript"
-		src="/static/js/test/raphael_path_s.korea.js"></script>
+	<script type="text/javascript" src="/static/js/test/raphael_path_s.korea.js"></script>
 </body>
 <script src="/static/js/home.js"></script>
 </html>
