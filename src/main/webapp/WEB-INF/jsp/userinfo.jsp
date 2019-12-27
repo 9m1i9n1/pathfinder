@@ -236,4 +236,6 @@ uri="http://www.springframework.org/security/tags"%>
     </section>
     <script src="/static/js/userInfo.js"></script>
   </body>
+
+  <%@include file="alert.jsp"%>
 </html>

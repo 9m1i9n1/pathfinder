@@ -56,7 +56,7 @@
 				<p class="text-center" id="updateMessage"></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger btn-block" data-dismiss="modal">확인</button>
+				<button type="button" id="updateAlertModalOk" class="btn btn-danger btn-block" data-dismiss="modal">확인</button>
 			</div>
 		</div>
 	</div>

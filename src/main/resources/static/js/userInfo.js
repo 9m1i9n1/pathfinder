@@ -24,8 +24,13 @@ function userUpdate(req) {
     contentType: "application/json",
     data: req,
     success: function(res) {
-      alert("해당 유저 정보를 수정하였습니다.");
-      window.location.href = "/userinfo";
+      $("#updateTitle").text("수정 성공");
+      $("#updateMessage").text("유저정보를 수정하였습니다.");
+      $("#updateAlertModal").modal("show");
+
+      $("#updateAlertModalOk").on("click", function() {
+        window.location.href = "/userinfo";
+      });
     },
     error: function(request, status, error) {
       alert(
@@ -106,34 +111,15 @@ $("form").each(function() {
     },
 
     highlight: function(element, errorClass, validClass) {
-      console.log("장난치냐");
-      if (element.type !== "radio") {
-        console.log("#high", element);
-
-        $(element)
-          .addClass(errorClass)
-          .removeClass(validClass);
-      } else {
-        $(element.form)
-          .find('[name="' + element.name + '"')
-          .each(function() {
-            $(this).addClass(errorClass);
-          });
-      }
+      $(element)
+        .addClass(errorClass)
+        .removeClass(validClass);
     },
 
     unhighlight: function(element, errorClass, validClass) {
-      if (element.type !== "radio") {
-        $(element)
-          .removeClass(errorClass)
-          .addClass(validClass);
-      } else {
-        $(element.form)
-          .find('[name="' + element.name + '"')
-          .each(function() {
-            $(this).removeClass(errorClass);
-          });
-      }
+      $(element)
+        .removeClass(errorClass)
+        .addClass(validClass);
     }
   });
 });
