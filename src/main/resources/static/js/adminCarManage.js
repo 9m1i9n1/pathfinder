@@ -26,19 +26,18 @@ function searchClick() {
   carsearch(url);
 }
 
-function resetvalid(formName){
-	  $(formName)[0].reset();
-	  var length = $(formName)[0].length;
-	  var sclass = null;
-	  for(var i = 0; i < length; i++){
-		  sclass = $(formName)[0][i].getAttribute('id');
-		  sclass = "#"+sclass;
-		  console.log();
-		  $(sclass).removeClass("is-invalid");
-		  $(sclass).removeClass("is-valid");
-	  }
+function resetvalid(formName) {
+  $(formName)[0].reset();
+  var length = $(formName)[0].length;
+  var sclass = null;
+  for (var i = 0; i < length; i++) {
+    sclass = $(formName)[0][i].getAttribute("id");
+    sclass = "#" + sclass;
+    console.log();
+    $(sclass).removeClass("is-invalid");
+    $(sclass).removeClass("is-valid");
+  }
 }
-
 
 /*
  * // 검색버튼 $('#btnSearch').click(function(e){ e.preventDefault(); var treeId =
@@ -184,85 +183,77 @@ function carsearch(searchUrl, searchpage = 0) {
 
 // 추가
 function carinsert(insertData, carea) {
-    $.ajax({
-      type: "POST",
-      url: "/admin/carmanage",
-      data: insertData,
-      contentType: "application/json",
-      success: function(data) {
-        var treeId = sessionStorage.getItem("treeId");
-        console.log(55555);
-        if (treeId !== "company:1") {
-          var url = "";
-          url =
-            url +
-            "?searchType=area&keyword=" +
-            carea +
-            "&selectedArea=" +
-            treeId;
-          carsearch(url);
-        } else {
-          carlist();
-        }
-        
-        $('#updateTitle').text("등록 성공");
-        $('#updateMessage').text("해당 차량을 추가하였습니다.");
-        $('#updateAlertModal').modal('show');
-      },
-      error: function(request, status, error) {
-		  $('#errorMessage').text(
-		  	        "code:" +
-		  	          request.status +
-		  	          "\n" +
-		  	          "message:" +
-		  	          request.responseText +
-		  	          "\n" +
-		  	          "error:" +
-		  	          error
-		      	);
-		  $('#failModal').modal('show');
+  $.ajax({
+    type: "POST",
+    url: "/admin/carmanage",
+    data: insertData,
+    contentType: "application/json",
+    success: function(data) {
+      var treeId = sessionStorage.getItem("treeId");
+      console.log(55555);
+      if (treeId !== "company:1") {
+        var url = "";
+        url =
+          url + "?searchType=area&keyword=" + carea + "&selectedArea=" + treeId;
+        carsearch(url);
+      } else {
+        carlist();
       }
-    });
+
+      $("#updateTitle").text("등록 성공");
+      $("#updateMessage").text("해당 차량을 추가하였습니다.");
+      $("#updateAlertModal").modal("show");
+    },
+    error: function(request, status, error) {
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
+    }
+  });
 }
 
 function deleteCheckModal(idx, carname, carea) {
-    $('#checkOk').on("click", function () {
-    	cardelete(idx, carname, carea);
-    })
-	
-    $('#checkTitle').text("확인");
-    $('#checkMessage').text("해당 차량를 삭제하시겠습니까?");
-    $('#checkModal').modal('show');
+  $("#checkOk").on("click", function() {
+    cardelete(idx, carname, carea);
+  });
+
+  $("#checkTitle").text("확인");
+  $("#checkMessage").text("해당 차량를 삭제하시겠습니까?");
+  $("#checkModal").modal("show");
 }
 
 // 삭제
 function cardelete(idx, carname, carea) {
-    $.ajax({
-      type: "DELETE",
-      url: "/admin/carmanage/delete/" + idx,
-      data: {},
-      success: function() {
-        var treeId = sessionStorage.getItem("treeId");
-        if (treeId !== "company:1") {
-          console.log(carea);
-          let Cname = areaNameTrans(carea);
-          var url = "";
-          url =
-            url +
-            "?searchType=area&keyword=" +
-            Cname +
-            "&selectedArea=" +
-            treeId;
-          carsearch(url);
-        } else {
-          carlist();
-        }
-        
-        $('#updateTitle').text("삭제 성공");
-        $('#updateMessage').text("해당 차량을 삭제하였습니다.");
-        $('#updateAlertModal').modal('show');
+  $.ajax({
+    type: "DELETE",
+    url: "/admin/carmanage/delete/" + idx,
+    data: {},
+    success: function() {
+      var treeId = sessionStorage.getItem("treeId");
+      if (treeId !== "company:1") {
+        console.log(carea);
+        let Cname = areaNameTrans(carea);
+        var url = "";
+        url =
+          url + "?searchType=area&keyword=" + Cname + "&selectedArea=" + treeId;
+        carsearch(url);
+      } else {
+        carlist();
       }
-    });
+
+      $("#updateTitle").text("삭제 성공");
+      $("#updateMessage").text("해당 차량을 삭제하였습니다.");
+      $("#updateAlertModal").modal("show");
+    }
+  });
 }
 
 // 첫페이지
@@ -466,17 +457,17 @@ function areaLoading(modal) {
       selectInit(modal);
     },
     error: function(request, status, error) {
-		$('#errorMessage').text(
-		  	        "code:" +
-		  	          request.status +
-		  	          "\n" +
-		  	          "message:" +
-		  	          request.responseText +
-		  	          "\n" +
-		  	          "error:" +
-		  	          error
-		      	);
-		$('#failModal').modal('show');
+      $("#errorMessage").text(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error
+      );
+      $("#failModal").modal("show");
     }
   });
 }
@@ -504,9 +495,9 @@ $(".selectpicker").on("change", function() {
 
 var carInsertValid = $("#carCreateForm").validate({
   onkeyup: false,
-  ignore: ":hidden, [readonly]",
+  ignore: ":hidden",
   errorClass: "is-invalid",
-  validClass:"is-valid",
+  validClass: "is-valid",
   rules: {
     carArea: {
       required: true
@@ -531,36 +522,13 @@ var carInsertValid = $("#carCreateForm").validate({
     }
   },
   messages: {
-    carArea: {
-      required: "지역을 선택하세요."
-    },
-
-    carName: {
-      required: "차종을 입력하세요."
-    },
     carNumber: {
-      required: "차량번호를 입력하세요.",
-      rangelength: "7 ~ 9자",
-      pattern: "형식이 올바르지 않습니다. ex)00가0000 or 서울 00가0000",
       remote: "등록된 차량번호입니다."
-    },
-    carFuel: {
-      required: "연비를 입력하세요."
-    },
-    carBuy: {
-      required: "구매 날짜를 입력하세요.",
-      pattern: "형식이 올바르지 않습니다. ex)yyyy-mm-dd"
     }
   },
 
   // 에러 위치 조정
-  errorPlacement: function(error, element) {
-    if (element.is(":radio") || element.is("select")) {
-      error.appendTo(element.parents(".col-sm-8"));
-    } else {
-      error.insertAfter(element);
-    }
-  },
+  errorPlacement: function(error, element) {},
 
   // valid 실패시
   invalidHandler: function(form, validator) {
@@ -584,9 +552,13 @@ var carInsertValid = $("#carCreateForm").validate({
     return false;
   },
   highlight: function(element, errorClass, validClass) {
-	    $(element).addClass(errorClass).removeClass(validClass);
-	  },
-unhighlight: function(element, errorClass, validClass) {
-  $(element).removeClass(errorClass).addClass(validClass);
-}
+    $(element)
+      .addClass(errorClass)
+      .removeClass(validClass);
+  },
+  unhighlight: function(element, errorClass, validClass) {
+    $(element)
+      .removeClass(errorClass)
+      .addClass(validClass);
+  }
 });

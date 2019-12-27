@@ -19,21 +19,21 @@
 						<label for="b1" class="col-sm-3 col-form-label-sm">지점명 </label>
 						<div class="col-sm-8 ">	
 							<input type="text" class="form-control" name="branchName"
-								id="branchName" >
+								id="branchName" placeholder="3글자 ~ 15글자" >
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="b2" class="col-sm-3 col-form-label-sm">지점장 </label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" name="branchOwner"
-								id="branchOwner" >
+								id="branchOwner" placeholder="2글자 ~ 10글자">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="b3" class="col-sm-3 col-form-label-sm">운반비</label>
 						<div class="col-sm-8">
 							<input type="number" class="form-control" name="branchValue"
-								id="branchValue" step="100" >
+								id="branchValue" step="100" placeholder="5천원 ~ 10만원">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -60,11 +60,11 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="b6" class="col-sm-3 col-form-label-sm"> 전화번호</label>
+						<label for="b6" class="col-sm-3 col-form-label-sm"> 전화 번호</label>
 						<div class="col-sm-8">
 						
 							<input type="text" class="form-control" name="branchPhone"
-								id="branchPhone" placeholder="ex) 02-123-5676" >
+								id="branchPhone" placeholder="02-123-5676" >
 						
 						</div>
 					</div>
@@ -115,7 +115,7 @@
 							지점명 </label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="branchName1"
-								name="branchName" readonly>
+								name="branchName" placeholder="3글자 ~ 15글자" readonly>
 						</div>
 					</div>
 
@@ -124,7 +124,7 @@
 							지점장</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="branchOwner1"
-								name="branchOwner">
+								name="branchOwner" placeholder="2글자 ~ 10글자">
 						</div>
 					</div>
 
@@ -132,15 +132,15 @@
 						<label for="branchValue" class="col-sm-3 col-form-label-sm">운반비</label>
 						<div class="col-sm-8">
 							<input type="number" step="100" class="form-control"
-								id="branchValue1" name="branchValue">
+								id="branchValue1" name="branchValue" placeholder="5천원 ~ 10만원">
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label for="branchPhone" class="col-sm-3 col-form-label-sm">전화번호</label>
+						<label for="branchPhone" class="col-sm-3 col-form-label-sm">전화 번호</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="branchPhone1"
-								name="branchPhone" placeholder="ex) 02-123-5676">
+								name="branchPhone" placeholder="02-123-5676">
 						</div>
 					</div>
 				</div>
