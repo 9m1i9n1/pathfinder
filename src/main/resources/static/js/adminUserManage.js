@@ -64,17 +64,14 @@ function userLoading() {
 
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
-
-
-          str += `<tr class="tr-shadow">`
+          str += `<tr class="tr-shadow">`;
           /* str += "<td style='display:none;'>" + value.userIndex + "</td>"; */
 
           str += "<td >" + value.userName + "</td>";
           str += "<td data-title='지점'>" + value.branchName + "</td>";
           str += "<td data-title='직책'>" + value.userPosition + "</td>";
           str += "<td data-title='아이디'>" + value.userId + "</td>";
-          str +=
-            "<td data-title='이메일'>" + value.userEmail + "</td>";
+          str += "<td data-title='이메일'>" + value.userEmail + "</td>";
           str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
 
           str +=
@@ -169,6 +166,8 @@ function deleteCheckModal(userIndex) {
 
 // 회원 삭제
 function userDelete(userIndex) {
+  console.log("#userIndex", userIndex);
+
   $.ajax({
     url: "/admin/usermanage",
     type: "delete",
@@ -239,7 +238,7 @@ function userPwReset(userIndex) {
   $.ajax({
     url: "/admin/usermanage",
     type: "patch",
-    data: { userIndex: userIndex },
+    data: userIndex,
     success: function(res) {
       userLoading();
 
@@ -270,13 +269,13 @@ var modifyModal = $("#modifyModal");
 
 const selectInit = modal => {
   // init
-  modal.find("#branchIndex").select2({
+  modal.find("[name=branchIndex]").select2({
     width: "100%",
     placeholder: "지점 선택",
     theme: "bootstrap4"
   });
 
-  modal.find("#userPosition").select2({
+  modal.find("[name=userPosition]").select2({
     width: "100%",
     placeholder: "직책 선택",
     theme: "bootstrap4"
@@ -294,9 +293,9 @@ insertModal.on("hidden.bs.modal", function() {
   $("#userCreateForm")[0].reset();
   insertModal.find(".formCheck").html("");
 
-  insertModal.find("#areaIndex").empty();
-  insertModal.find("#branchIndex").empty();
-  insertModal.find("#userPosition").trigger("change");
+  $("#areaIndexAdd").empty();
+  $("#branchIndexAdd").empty();
+  $("#userPositionAdd").trigger("change");
 
   $("#userCreateForm")
     .validate()
@@ -325,12 +324,12 @@ modifyModal.on("hidden.bs.modal", function() {
   resetvalid("#userModifyForm");
 });
 
-insertModal.find("#areaIndex").on("select2:select", function(e) {
+$("#areaIndexAdd").on("select2:select", function(e) {
   let selectData = e.params.data;
   branchLoading(insertModal, selectData.id);
 });
 
-modifyModal.find("#areaIndex").on("select2:select", function(e) {
+$("#areaIndexModify").on("select2:select", function(e) {
   let selectData = e.params.data;
   branchLoading(modifyModal, selectData.id);
 });
@@ -356,8 +355,8 @@ function areaLoading(modal) {
     success: function(res) {
       let areaData = arrayToObject(res.data);
 
-      modal.find("#areaIndex").html("<option></option>");
-      modal.find("#areaIndex").select2({
+      modal.find("[name=areaIndex]").html("<option></option>");
+      modal.find("[name=areaIndex]").select2({
         width: "100%",
         placeholder: "지역 선택",
         theme: "bootstrap4",
@@ -392,9 +391,9 @@ function branchLoading(modal, selected) {
     success: function(res) {
       let branchData = arrayToObject(res.data);
 
-      modal.find("#branchIndex").empty();
-      modal.find("#branchIndex").html("<option></option>");
-      modal.find("#branchIndex").select2({
+      modal.find("[name=branchIndex]").empty();
+      modal.find("[name=branchIndex]").html("<option></option>");
+      modal.find("[name=branchIndex]").select2({
         width: "100%",
         placeholder: "지점 선택",
         theme: "bootstrap4",
@@ -419,7 +418,7 @@ function branchLoading(modal, selected) {
 
 // 모달 내 패스워드 초기화 버튼 클릭
 modifyModal.find("#userPw").click(function() {
-  let userIndex = $("#userModifyForm #userIndex").val();
+  let userIndex = $("#userModifyForm #userIndexModify").val();
 
   $("#checkOk").on("click", function() {
     userPwReset(userIndex);
@@ -432,6 +431,8 @@ modifyModal.find("#userPw").click(function() {
 
 // 수정 폼 모달 데이터 로딩
 function modalUserLoading(userIndex) {
+  console.log(userIndex);
+
   $.ajax({
     url: "/admin/usermanage/userread.do",
     data: { userIndex: userIndex },
@@ -439,25 +440,25 @@ function modalUserLoading(userIndex) {
     success: function(res) {
       res = res.data;
 
-      modifyModal.find("#userIndex").val(res.userIndex);
-      modifyModal.find("#userId").val(res.userId);
-      modifyModal.find("#userName").val(res.userName);
-      modifyModal.find("#userEmail").val(res.userEmail);
-      modifyModal.find("#userPhone").val(res.userPhone);
+      $("#userIndexModify").val(res.userIndex);
+      $("#userIdModify").val(res.userId);
+      $("#userNameModify").val(res.userName);
+      $("#userEmailModify").val(res.userEmail);
+      $("#userPhoneModify").val(res.userPhone);
       modifyModal
         .find("[name=userAuth][value=" + res.userAuth + "]")
         .prop("checked", true);
 
       areaLoading(modifyModal);
-      modifyModal.find("#areaIndex").val(res.areaIndex);
-      modifyModal.find("#areaIndex").trigger("change");
+      $("#areaIndexModify").val(res.areaIndex);
+      $("#areaIndexModify").trigger("change");
 
       branchLoading(modifyModal, res.areaIndex);
-      modifyModal.find("#branchIndex").val(res.branchIndex);
-      modifyModal.find("#branchIndex").trigger("change");
+      $("#branchIndexModify").val(res.branchIndex);
+      $("#branchIndexModify").trigger("change");
 
-      modifyModal.find("#userPosition").val(res.userPosition);
-      modifyModal.find("#userPosition").trigger("change");
+      $("#userPositionModify").val(res.userPosition);
+      $("#userPositionModify").trigger("change");
     },
     error: function(request, status, error) {
       $("#errorMessage").text(
@@ -586,7 +587,6 @@ $("form").each(function() {
     errorClass: "is-invalid",
     validClass: "is-valid",
     ignore: ":hidden, [readonly]",
-    // errorClass: "is-invalid",
     rules: {
       userId: {
         required: true,
@@ -695,16 +695,39 @@ $("form").each(function() {
 
       return false;
     },
+
     highlight: function(element, errorClass, validClass) {
-      $(element)
-        .addClass(errorClass)
-        .removeClass(validClass);
+      if (element.type == "radio") {
+        $(element.form)
+          .find('[name="' + element.name + '"')
+          .each(function() {
+            var $this = $(this);
+
+            $this
+              .closest('label[for="' + $this.attr("id") + '"')
+              .addClass(errorClass);
+          });
+      } else {
+        $(element)
+          .addClass(errorClass)
+          .removeClass(validClass);
+      }
     },
     unhighlight: function(element, errorClass, validClass) {
-      console.log(1);
       $(element)
         .removeClass(errorClass)
         .addClass(validClass);
+
+      if (element.type == "radio") {
+        $(element.form)
+          .find('[name="' + element.name + '"')
+          .each(function() {
+            var $this = $(this);
+            $this
+              .closest('label[for="' + $this.attr("id") + '"')
+              .removeClass(errorClass);
+          });
+      }
     }
   });
 });
