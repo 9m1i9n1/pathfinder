@@ -489,7 +489,7 @@ const selectInit = modal => {
 
 // ! validation ====================
 // select 포커스 문제 해결
-$(".selectpicker").on("change", function() {
+$("select").on("select2:close", function() {
   $(this).blur();
 });
 
