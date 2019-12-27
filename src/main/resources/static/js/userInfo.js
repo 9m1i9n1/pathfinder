@@ -24,8 +24,8 @@ function userUpdate(req) {
     contentType: "application/json",
     data: req,
     success: function(res) {
-        alert("해당 유저 정보를 수정하였습니다.");
-        window.location.href="/userinfo";
+      alert("해당 유저 정보를 수정하였습니다.");
+      window.location.href = "/userinfo";
     },
     error: function(request, status, error) {
       alert(
@@ -43,68 +43,97 @@ function userUpdate(req) {
 }
 
 $("form").each(function() {
-	  $(this).validate({
-	    onkeyup: false,
-	    ignore: ":hidden, [readonly]",
-	    rules: {
-	      userIndex: {
-	    	  required: true
-	      },
-	      userPw: {
-	    	  required: true,
-	    	  pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
-	      },
-	      userPwCheck: {
-	    	  required: true,
-	    	  equalTo : "#userPw"
-	      },
-	      userEmail: {
-	        required: true,
-	        email: true
-	      },
-	      userPhone: {
-	        required: true,
-	        pattern: /^\d{3}-\d{4}-\d{4}$/
-	      }
-	    },
-	    messages: {
-	      userIndex:{
-	    	  required:"index 오류"
-	      },
-	      userPw:{
-	    	  required:"비밀번호를 입력하세요.",
-	    	  pattern: "문자,숫자,특수문자(!@#$%^&*?) 혼합 8자 이상"
-	      },
-	      userPwCheck: {
-	    	  required: "비밀번호 확인을 입력해주세요",
-	    	  equalTo : " 비밀번호가 다릅니다."
-	      },
-	      userEmail: {
-	        required: "이메일을 입력하세요.",
-	        email: "이메일 형식이 맞지 않습니다."
-	      },
-	      userPhone: {
-	        required: "연락처를 입력하세요.",
-	        pattern: "연락처 형식이 맞지 않습니다."
-	      }
-	    },
+  $(this).validate({
+    onkeyup: false,
+    ignore: ":hidden, [readonly]",
+    errorClass: "is-invalid",
+    validClass: "is-valid",
+    rules: {
+      userIndex: {
+        required: true
+      },
+      userPw: {
+        required: true,
+        pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+      },
+      userPwCheck: {
+        required: true,
+        equalTo: "#userPw"
+      },
+      userEmail: {
+        required: true,
+        email: true
+      },
+      userPhone: {
+        required: true,
+        pattern: /^\d{3}-\d{4}-\d{4}$/
+      }
+    },
+    messages: {
+      userPw: {
+        required: "비밀번호를 입력하세요.",
+        pattern: "문자,숫자,특수문자(!@#$%^&*?) 혼합 8자 이상"
+      },
+      userPwCheck: {
+        required: "비밀번호 확인을 입력해주세요",
+        equalTo: " 비밀번호가 다릅니다."
+      },
+      userEmail: {
+        required: "이메일을 입력하세요.",
+        email: "이메일 형식이 맞지 않습니다."
+      },
+      userPhone: {
+        required: "연락처를 입력하세요.",
+        pattern: "연락처 형식이 맞지 않습니다."
+      }
+    },
 
-	    // valid 실패시
-	    invalidHandler: function(form, validator) {
-	      var errors = validator.numberOfInvalids();
+    // valid 실패시
+    invalidHandler: function(form, validator) {
+      var errors = validator.numberOfInvalids();
 
-	      if (errors) {
-	        alert(validator.errorList[0].message);
-	        validator.errorList[0].element.focus();
-	      }
-	      console.log(errors)
-	    },
+      if (errors) {
+        validator.errorList[0].element.focus();
+      }
+      console.log(errors);
+    },
 
-	    // valid 성공시
-	    submitHandler: function(form) {
-	     const formId = $(form).attr("id");
-	     var req = $(form).serializeObject();
-	     userUpdate(req);
-	      }
-	  });
-	});
+    // valid 성공시
+    submitHandler: function(form) {
+      const formId = $(form).attr("id");
+      var req = $(form).serializeObject();
+      userUpdate(req);
+    },
+
+    highlight: function(element, errorClass, validClass) {
+      console.log("장난치냐");
+      if (element.type !== "radio") {
+        console.log("#high", element);
+
+        $(element)
+          .addClass(errorClass)
+          .removeClass(validClass);
+      } else {
+        $(element.form)
+          .find('[name="' + element.name + '"')
+          .each(function() {
+            $(this).addClass(errorClass);
+          });
+      }
+    },
+
+    unhighlight: function(element, errorClass, validClass) {
+      if (element.type !== "radio") {
+        $(element)
+          .removeClass(errorClass)
+          .addClass(validClass);
+      } else {
+        $(element.form)
+          .find('[name="' + element.name + '"')
+          .each(function() {
+            $(this).removeClass(errorClass);
+          });
+      }
+    }
+  });
+});

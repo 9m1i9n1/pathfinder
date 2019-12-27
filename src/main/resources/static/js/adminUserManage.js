@@ -168,8 +168,8 @@ function userDelete(userIndex) {
     success: function() {
       $("#updateTitle").text("삭제 성공");
       $("#updateMessage").text("해당 유저를 삭제하였습니다.");
-      $("#updateAlertModal").modal("show");	
-	
+      $("#updateAlertModal").modal("show");
+
       userLoading();
     },
     error: function(request, status, error) {
@@ -323,8 +323,8 @@ $("#areaIndexModify").on("select2:select", function(e) {
 });
 
 $("select").on("select2:open", function() {
-	  $(".select2-results__options").addClass("scrollbar-outer");
-	  $('.select2-results__options').scrollbar();
+  $(".select2-results__options").addClass("scrollbar-outer");
+  $(".select2-results__options").scrollbar();
 });
 
 function arrayToObject(array) {
@@ -581,7 +581,7 @@ $("form").each(function() {
     ignore: ":hidden, [readonly]",
     rules: {
       userId: {
-        required: true, 
+        required: true,
         rangelength: [3, 15],
         remote: "/admin/usermanage/idcheck.do"
       },
@@ -612,22 +612,12 @@ $("form").each(function() {
     },
     messages: {
       userId: {
-    	  required: "입력하쇼",
-    	  remote: "이미 존재하는 아이디입니다.",
-    	  rangelength: "길이 맞춰라 3-15"
+        remote: "이미 존재하는 아이디입니다."
       }
     },
+    //TODO 하자 하자.
     // 에러 위치 조정
-    errorPlacement: function(error, element) {
-    	console.log("얘가먼저");
-    	var pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-    	var pattern_eng = /^[a-zA-Z0-9]*$/;
-    	if(element[0].getAttribute("id") === "userIdAdd" && pattern_kor.test(error[0].textContent)){
-    		error.insertAfter(element);
-    	}else if(element[0].getAttribute("id") === "userIdAdd" && pattern_eng.test(error[0].textContent)){
-    		console.log(2);
-    	}
-    },
+    errorPlacement: function(error, element) {},
 
     // valid 실패시
     invalidHandler: function(form, validator) {
@@ -663,10 +653,7 @@ $("form").each(function() {
     },
 
     highlight: function(element, errorClass, validClass) {
-    	console.log("장난치냐");
       if (element.type !== "radio") {
-        console.log("#high", element);
-
         $(element)
           .addClass(errorClass)
           .removeClass(validClass);
@@ -679,10 +666,7 @@ $("form").each(function() {
       }
     },
     unhighlight: function(element, errorClass, validClass) {
-    	console.log("내가먼저");
       if (element.type !== "radio") {
-        console.log("#unhigh", element);
-
         $(element)
           .removeClass(errorClass)
           .addClass(validClass);

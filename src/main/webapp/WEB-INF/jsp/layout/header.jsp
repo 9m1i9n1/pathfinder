@@ -46,17 +46,9 @@ pageEncoding="UTF-8"%>
 <script src="/static/dist/js/adminlte.js"></script>
 <link rel="stylesheet" href="/static/dist/css/adminlte.css" />
 
-<!-- PAGE PLUGINS -->
-<!-- jQuery Mapael -->
-<script src="/static/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-<script src="/static/plugins/raphael/raphael.min.js"></script>
-<script src="/static/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-<script src="/static/plugins/jquery-mapael/maps/usa_states.min.js"></script>
-
 <!-- ChartJS -->
 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-
 
 <%-- bootstrap-select --%>
 <link rel="stylesheet" href="/static/css/select2-bootstrap4.css">
@@ -91,9 +83,8 @@ pageEncoding="UTF-8"%>
 
 <!-- Alert -->
 <link href="/static/css/alert.css" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<%-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --%>
 
 <script type="text/javascript">
   window.getCookie = function(name) {

@@ -49,7 +49,7 @@
 					<div class="row">
 						<div class="col">
 							<input id="myhistory" type="checkbox" data-toggle="toggle"
-								data-size="small" data-on="내 예약약" data-off="전체" />
+								data-size="small" data-on="내 예약약" data-off="전체" data-onstyle="info"/>
 						</div>
 						<div class="col-sm-7">
 							<div class=" input-group input-group-sm">

@@ -46,7 +46,6 @@ function datePicker() {
 
 function checkEvent(selectPage, id) {
   $("#myhistory").change(function() {
-    let checked = $(this).prop("checked");
     let tabId = sessionStorage.getItem("tabId");
 
     getHistory(0, tabId);
@@ -54,8 +53,6 @@ function checkEvent(selectPage, id) {
 }
 
 function getHistory(selectPage, id) {
-  let tabId = sessionStorage.setItem("tabId", id);
-
   printHistory(selectPage, id);
 }
 
@@ -152,8 +149,6 @@ function removeRoutes(history) {
 }
 
 function getRoutes(routes) {
-  let imgSrc = routes.imgSrc;
-
   $.ajax({
     url: "/history/getroutes.do",
     type: "get",
@@ -189,25 +184,15 @@ function getRoutes(routes) {
       $("#routesListBody").html(str);
 
       detailsModal.find("#mapImg").attr("src", routes.imgSrc);
-
       detailsModal.find("#totalTime").text(routes.time);
-
       detailsModal.find("#regdate").text(routes.regdate);
-
       detailsModal.find("#username").text(routes.username);
-
       detailsModal.find("#carname").text(routes.carname);
-
       detailsModal.find("#dep").text(routes.dep);
-
       detailsModal.find("#arvl").text(routes.arvl);
-
       detailsModal.find("#sortType").text(routes.sortType + "순");
-
       detailsModal.find("#dist").text(routes.dist.addComma() + " Km");
-
       detailsModal.find("#dist").text(routes.dist.addComma() + " Km");
-
       detailsModal.find("#fee").text(routes.fee.addComma() + " 원");
     }
   });
@@ -226,11 +211,17 @@ $("#printBtn").on("click", function() {
   $("#printSection").html("");
   $("#printSection").append(domClone);
 
-  let tbody = $("#printSection").find('tbody').html();
-  
-  $("#printSection").find("thead").after(tbody);
-  $("#printSection").find('.scrollbar-outer').remove();
-  
+  let tbody = $("#printSection")
+    .find("tbody")
+    .html();
+
+  $("#printSection")
+    .find("thead")
+    .after(tbody);
+  $("#printSection")
+    .find(".scrollbar-outer")
+    .remove();
+
   window.print();
 });
 

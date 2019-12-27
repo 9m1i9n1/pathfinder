@@ -77,7 +77,7 @@
 
 									<div class="card-tools">
 										<input id="myDelivery" type="checkbox" data-toggle="toggle"
-											data-size="small" data-on="내 배송송" data-off="전체" />
+											data-size="small" data-on="내 배송송" data-off="전체" data-onstyle="info"/>
 										<button type="button" class="btn btn-tool"
 											data-card-widget="collapse">
 											<i class="fas fa-minus"></i>
