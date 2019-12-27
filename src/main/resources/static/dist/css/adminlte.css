@@ -27814,7 +27814,7 @@ input.btn:-moz-focusring {
 }
 
 .bg-gradient-orange {
-  background: #fd7e14 linear-gradient(180deg, #fd9137, #fd7e14) repeat-x !important;
+  background: #fd7e14 linear-gradient(180deg, #faa95d, #fd7e14) repeat-x !important;
 }
 
 .bg-gradient-orange.btn.disabled, .bg-gradient-orange.btn:disabled, .bg-gradient-orange.btn:not(:disabled):not(.disabled):active, .bg-gradient-orange.btn:not(:disabled):not(.disabled).active,
@@ -28625,9 +28625,10 @@ a.text-muted:hover {
 
 
 .myScrollableBlockModal {
-  display: block;
-  height: 150px;
-  overflow: auto;
+	height: 150px;
+	width : 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 

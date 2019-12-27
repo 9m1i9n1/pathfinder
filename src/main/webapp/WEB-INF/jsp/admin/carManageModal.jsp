@@ -25,7 +25,7 @@
 						<label for="carNumber" class="col-sm-3 col-form-label-sm">차량번호</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="carNumber"
-								name="carNumber" />
+								name="carNumber" placeholder="00가0000"/>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -46,14 +46,14 @@
 						<label for="carFuel" class="col-sm-3 col-form-label-sm">연비</label>
 						<div class="col-sm-8">
 							<input type="Number" class="form-control" id="carFuel"
-								name="carFuel" placeholder="km" />
+								name="carFuel" placeholder="km 단위로 입력" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="carBuy" class="col-sm-3 col-form-label-sm">구입날짜</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="carBuy" name="carBuy"
-								placeholder="날짜넣기" readonly />
+								placeholder="날짜 선택" readonly />
 							<div id="calendar"></div>
 						</div>
 					</div>
