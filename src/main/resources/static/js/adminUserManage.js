@@ -32,12 +32,10 @@ function pageButton(totalPages, currentPage) {
 function resetvalid(formName) {
   $(formName)[0].reset();
   var length = $(formName)[0].length;
-  console.log(length);
   var sclass = null;
   for (var i = 0; i < length; i++) {
     sclass = $(formName)[0][i].getAttribute("id");
     sclass = "#" + sclass;
-    console.log();
     $(sclass).removeClass("is-invalid");
     $(sclass).removeClass("is-valid");
   }
@@ -129,10 +127,6 @@ function userCreate(req) {
     success: function(res) {
       if (res.resultCode === "ERROR") {
         insertModal.find("#serverFormCheck").html("잘못된 값 요청");
-
-        for (var key in res.errorList) {
-          console.log(key + " : " + res.errorList[key]);
-        }
       } else {
         userLoading();
         $("#updateTitle").text("등록 성공");
@@ -166,23 +160,14 @@ function deleteCheckModal(userIndex) {
   $("#checkModal").modal("show");
 }
 
-const showConfirmModal = (text) => {
-  $("#updateTitle").text(`${text} 성공`);
-  $("#updateMessage").text("해당 회원을 삭제하였습니다.");
-  $("#updateAlertModal").modal("show");
-};
 // 회원 삭제
 function userDelete(userIndex) {
-  console.log("#userIndex", userIndex);
-
   $.ajax({
     url: "/admin/usermanage",
     type: "delete",
     data: { userIndex: userIndex },
     success: function() {
       userLoading();
-
-
     },
     error: function(request, status, error) {
       $("#errorMessage").text(
@@ -210,10 +195,6 @@ function userUpdate(req) {
     success: function(res) {
       if (res.resultCode === "ERROR") {
         modifyModal.find(".formError").html("잘못된 값을 요청하였습니다.");
-
-        for (var key in res.description) {
-          console.log(key + " : " + res.description[key]);
-        }
       } else {
         userLoading();
 
@@ -436,8 +417,6 @@ modifyModal.find("#userPw").click(function() {
 
 // 수정 폼 모달 데이터 로딩
 function modalUserLoading(userIndex) {
-  console.log(userIndex);
-
   $.ajax({
     url: "/admin/usermanage/userread.do",
     data: { userIndex: userIndex },
@@ -450,6 +429,7 @@ function modalUserLoading(userIndex) {
       $("#userNameModify").val(res.userName);
       $("#userEmailModify").val(res.userEmail);
       $("#userPhoneModify").val(res.userPhone);
+
       modifyModal
         .find("[name=userAuth][value=" + res.userAuth + "]")
         .prop("checked", true);
@@ -625,47 +605,17 @@ $("form").each(function() {
     },
     messages: {
       userId: {
-        required: "아이디를 입력하세요.",
-        rangelength: jQuery.validator.format(
-          "아이디는 {0}자 이상 {1}자 이하로 입력해주세요."
-        ),
         remote: "이미 존재하는 아이디입니다."
-      },
-      userName: {
-        required: "이름을 입력하세요.",
-        rangelength: jQuery.validator.format(
-          "이름은 {0}자 이상 {1}자 이하로 입력해주세요."
-        )
-      },
-      userEmail: {
-        required: "이메일을 입력하세요.",
-        email: "이메일 형식이 맞지 않습니다."
-      },
-      userPhone: {
-        required: "연락처를 입력하세요.",
-        pattern: "연락처 형식이 맞지 않습니다."
-      },
-      areaIndex: {
-        required: "지역을 선택하세요."
-      },
-      branchIndex: {
-        required: "지점을 선택하세요."
-      },
-      userPosition: {
-        required: "직책을 선택하세요."
-      },
-      userAuth: {
-        required: "권한을 선택하세요."
       }
     },
 
     // 에러 위치 조정
     errorPlacement: function(error, element) {
-      if (element.is(":radio") || element.is("select")) {
-        error.appendTo(element.parents(".col-sm-8"));
-      } else {
-        error.insertAfter(element);
-      }
+      // if (element.is(":radio") || element.is("select")) {
+      //   error.appendTo(element.parents(".col-sm-8"));
+      // } else {
+      //   error.insertAfter(element);
+      // }
     },
 
     // valid 실패시
@@ -702,37 +652,30 @@ $("form").each(function() {
     },
 
     highlight: function(element, errorClass, validClass) {
-      $(element)
-        .addClass(errorClass)
-        .removeClass(validClass);
-
-      // if (element.type == "radio") {
-      //   $(element.form)
-      //     .find('[name="' + element.name + '"')
-      //     .each(function() {
-      //       var $this = $(this);
-
-      //       $this
-      //         .closest('label[for="' + $this.attr("id") + '"')
-      //         .addClass(errorClass);
-      //     });
-      // }
+      if (element.type !== "radio") {
+        $(element)
+          .addClass(errorClass)
+          .removeClass(validClass);
+      } else {
+        $(element.form)
+          .find('[name="' + element.name + '"')
+          .each(function() {
+            $(this).addClass(errorClass);
+          });
+      }
     },
     unhighlight: function(element, errorClass, validClass) {
-      $(element)
-        .removeClass(errorClass)
-        .addClass(validClass);
-
-      // if (element.type == "radio") {
-      //   $(element.form)
-      //     .find('[name="' + element.name + '"')
-      //     .each(function() {
-      //       var $this = $(this);
-      //       $this
-      //         .closest('label[for="' + $this.attr("id") + '"')
-      //         .removeClass(errorClass);
-      //     });
-      // }
+      if (element.type !== "radio") {
+        $(element)
+          .removeClass(errorClass)
+          .addClass(validClass);
+      } else {
+        $(element.form)
+          .find('[name="' + element.name + '"')
+          .each(function() {
+            $(this).removeClass(errorClass);
+          });
+      }
     }
   });
 });

@@ -30,6 +30,7 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
                 class="form-control"
                 id="userIdAdd"
                 name="userId"
+                placeholder="3글자 ~ 15글자"
               />
             </div>
           </div>
@@ -44,6 +45,7 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
                 class="form-control"
                 id="userNameAdd"
                 name="userName"
+                placeholder="2글자 ~ 10글자"
               />
             </div>
           </div>
@@ -64,7 +66,7 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
 
           <div class="form-group row">
             <label for="userPhoneAdd" class="col-sm-3 col-form-label-sm"
-              >전화번호</label
+              >이동전화 번호</label
             >
             <div class="col-sm-8">
               <input
@@ -72,7 +74,7 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
                 class="form-control"
                 id="userPhoneAdd"
                 name="userPhone"
-                placeholder="(예)010-1234-5678"
+                placeholder="010-1234-5678"
               />
             </div>
           </div>
@@ -209,6 +211,7 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
                 class="form-control"
                 id="userIdModify"
                 name="userId"
+                placeholder="3글자 ~ 15글자"
                 readonly
               />
             </div>
@@ -239,6 +242,7 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
                 class="form-control"
                 id="userNameModify"
                 name="userName"
+                placeholder="2글자 ~ 10글자"
               />
             </div>
           </div>
@@ -259,7 +263,7 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
 
           <div class="form-group row">
             <label for="userPhoneModify" class="col-sm-3 col-form-label-sm"
-              >전화번호</label
+              >이동전화 번호</label
             >
             <div class="col-sm-8">
               <input
@@ -267,7 +271,7 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
                 class="form-control"
                 id="userPhoneModify"
                 name="userPhone"
-                placeholder="(예)010-1234-5678"
+                placeholder="010-1234-5678"
               />
             </div>
           </div>

@@ -27814,7 +27814,7 @@ input.btn:-moz-focusring {
 }
 
 .bg-gradient-orange {
-  background: #fd7e14 linear-gradient(180deg, #fd9137, #fd7e14) repeat-x !important;
+  background: #fd7e14 linear-gradient(180deg, #faa95d, #fd7e14) repeat-x !important;
 }
 
 .bg-gradient-orange.btn.disabled, .bg-gradient-orange.btn:disabled, .bg-gradient-orange.btn:not(:disabled):not(.disabled):active, .bg-gradient-orange.btn:not(:disabled):not(.disabled).active,
