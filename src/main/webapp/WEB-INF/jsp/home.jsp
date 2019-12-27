@@ -5,7 +5,6 @@
 <head>
 <title>Document</title>
 
-<!-- Toggle checkbox -->
 <link
 	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
 	rel="stylesheet">
@@ -13,16 +12,9 @@
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </head>
 <body>
-	<!-- Content Header (Page header) -->
-	<div class="content-header">
-		<!-- /.container-fluid -->
-	</div>
-	<!-- /.content-header -->
-
-	<!-- Main content -->
+	<div class="content-header"></div>
 	<section class="content">
 		<div class="container-fluid">
-			<!-- Info boxes -->
 			<div class="row">
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box">
@@ -33,11 +25,8 @@
 							<span class="info-box-text">오늘의 배송 현황</span> <span
 								class="info-box-number" id="todayPercent"> </span>
 						</div>
-						<!-- /.info-box-content -->
 					</div>
-					<!-- /.info-box -->
 				</div>
-				<!-- /.col -->
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
 						<span class="info-box-icon bg-danger elevation-1"><i
@@ -47,167 +36,44 @@
 							<span class="info-box-text">전체 사용자</span> <span
 								class="info-box-number" id="userCount"></span>
 						</div>
-						<!-- /.info-box-content -->
 					</div>
-					<!-- /.info-box -->
 				</div>
-				<!-- /.col -->
-
-				<!-- fix for small devices only -->
 				<div class="clearfix hidden-md-up"></div>
 
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
 						<span class="info-box-icon bg-green elevation-1"> <i
-							class="far fa-building"></i></span>
+							class="far fa-building"></i>
+						</span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">지점</span> <span
-								class="info-box-number" id="branchCount"></span>
+							<span class="info-box-text">지점</span>
+							<span class="info-box-number" id="branchCount"></span>
 						</div>
-						<!-- /.info-box-content -->
 					</div>
-					<!-- /.info-box -->
 				</div>
-				<!-- /.col -->
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
-						<span class="info-box-icon bg-warning elevation-1"> <i
-							class="fas fa-history"></i></span>
+						<span class="info-box-icon bg-warning elevation-1"> 
+						<i class="fas fa-history"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">기록</span> <span
-								class="info-box-number" id="totalHistoryCount"></span>
+							<span class="info-box-text">기록</span> 
+							<span class="info-box-number" id="totalHistoryCount"></span>
 						</div>
-						<!-- /.info-box-content -->
 					</div>
-					<!-- /.info-box -->
 				</div>
-				<!-- /.col -->
 			</div>
-			<!-- /.row -->
 
-
-
-			<!-- Main row -->
 			<div class="row">
-				<!-- Left col -->
 				<div class="col-md-8">
-					<!-- MAP & BOX PANE -->
 					<div class="row">
-						<div class="col-md-12">
-
-							<!-- USERS LIST -->
-							<div class="card card-success card-outline card-outline-tabs">
-								<div class="card-header">
-									<h3 class="card-title"><i class="far fa-calendar-alt mr-1"></i>오늘의 스케쥴</h3>
-
-									<div class="card-tools">
-										<a href="/history" class="btn btn-sm btn-secondary">전체보기</a>
-										<button type="button" class="btn btn-tool"
-											data-card-widget="collapse">
-											<i class="fas fa-minus"></i>
-										</button>
-									</div>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-header p-0 pt-1 border-bottom-0">
-									<ul class="nav nav-tabs">
-										<li class="nav-item"><a class="nav-link active"
-											href="#todayHistory" data-toggle="tab"
-											onclick="todayHistory()">진행중인 배송</a></li>
-										<li class="nav-item"><a class="nav-link"
-											href="#recentlyHistory" data-toggle="tab"
-											onclick="recentlyHistory()">나의 히스토리</a></li>
-									</ul>
-
-									</div>
-
-									<div class="table-responsive">
-										<table class="table m-0">
-
-											<thead>
-												<tr>
-													<th></th>
-													<th>출발일자</th>
-													<th>도착일자</th>
-													<th>사용자</th>
-													<th>출발지</th>
-													<th>도착지</th>
-													<th>차량번호</th>
-												</tr>
-											</thead>
-											<tbody id="schedule">
-											</tbody>
-										</table>
-									</div>
-									<!-- /.table-responsive -->
-									<!-- /.users-list -->
-							</div>
-							<!--/.card -->
-						</div>
-						<!-- /.col -->
-					</div>
-					
-					<!-- /.row -->
-					<div class="card">
-						<div class="card-header">
-							<h3 class="card-title"><i class="fas fa-won-sign mr-1"></i>지역별 지점비</h3>
-
-							<div class="card-tools">
-								<button type="button" class="btn btn-tool"
-									data-card-widget="collapse">
-									<i class="fas fa-minus"></i>
-								</button>
-							</div>
-						</div>
-						<!-- /.card-header -->
-						<div class="card-body p-0">
-							<div
-								class="d-md-flex">
-									<div class = "p-1">
-										<div id="canvas">
-											<div id="south"></div>
-											<div id="seoul"></div>
-											<div id="gygg"></div>
-											<div id="incheon"></div>
-											<div id="gangwon"></div>
-											<div id="chungbuk"></div>
-											<div id="chungnam"></div>
-											<div id="daejeon"></div>
-											<div id="sejong"></div>
-											<div id="gwangju"></div>
-											<div id="jeonbuk"></div>
-											<div id="jeonnam"></div>
-											<div id="gyeongbuk"></div>
-											<div id="gyeongnam"></div>
-											<div id="daegu"></div>
-											<div id="busan"></div>
-											<div id="ulsan"></div>
-											<div id="jeju"></div>
-										</div>
-									</div>
-								<div class="flex-fill card-pane-right bg-lightgray pt-2 pb-2 pl-4 pr-4"
-									id="branchFeeChartP" >
-									<!-- 여기가 옆쪽 -->
-									<canvas id="branchFeeChart"
-										class="chartjs-render-monitor col-md-8"></canvas>
-								</div>
-							<!-- /.d-md-flex -->
-						</div>
-						<!-- /.card-body -->
-					</div>
-													</div>
-					<!-- /.card -->
-				</div>
-				<!-- /.col -->
-
-				<div class="col-md-4">
-					<div class="row ">
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<h5 class="card-title"><i class="fas fa-truck mr-1"></i>배송 현황(최근 한달)</h5>
+									<h5 class="card-title">
+										<i class="fas fa-truck mr-1"></i>배송 현황(최근 한달)
+									</h5>
 
 									<div class="card-tools">
 										<input id="myDelivery" type="checkbox" data-toggle="toggle"
@@ -218,20 +84,14 @@
 										</button>
 									</div>
 								</div>
-								<!-- /.card-header -->
 								<div class="card-body">
 									<div class="row">
-										<div class="col-md-12">
+										<div class="col-md-7">
 											<div id="doughnutDiv" class="canvas">
-												<!-- Sales Chart Canvas -->
 												<canvas id="chart-area" class="chart-js-render-monitor"></canvas>
 											</div>
-											<!-- /.chart-responsive -->
 										</div>
-									</div>
-									<!-- /.col -->
-									<div class="row">
-										<div class="col-md-12">
+										<div class="col-md-5">
 											<p class="text-center">
 												<strong>진행현황</strong>
 											</p>
@@ -242,7 +102,6 @@
 													<div id="willDiv" class="progress-bar bg-danger"></div>
 												</div>
 											</div>
-											<!-- /.progress-group -->
 
 											<div class="progress-group">
 												배송중 <span id="ingProgress" class="float-right"></span>
@@ -251,7 +110,6 @@
 												</div>
 											</div>
 
-											<!-- /.progress-group -->
 											<div class="progress-group">
 												<span class="progress-text">배송완료</span> <span
 													id="ppProgress" class="float-right"></span>
@@ -259,86 +117,133 @@
 													<div id="ppDiv" class="progress-bar bg-success"></div>
 												</div>
 											</div>
-											<!-- /.progress-group -->
 										</div>
-										<!-- /.col -->
-
 									</div>
-									<!-- /.row -->
 								</div>
 							</div>
-							<!-- /.card -->
 						</div>
-						<!-- /.col -->
 					</div>
-					<!-- /.row -->
+					<div class="card card-success card-outline card-outline-tabs">
+						<div class="card-header">
+							<h3 class="card-title">
+								<i class="far fa-calendar-alt mr-1"></i>오늘의 스케쥴
+							</h3>
 
-					<!-- 슬라이드 -->
+							<div class="card-tools">
+								<a href="/history" class="btn btn-sm btn-secondary">전체보기</a>
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse">
+									<i class="fas fa-minus"></i>
+								</button>
+							</div>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-header p-0 pt-1 border-bottom-0">
+							<ul class="nav nav-tabs">
+								<li class="nav-item">
+								<a class="nav-link active" href="#todayHistory" 
+								data-toggle="tab" onclick="todayHistory()">진행중인 배송</a>
+								</li>
+								<li class="nav-item"><a class="nav-link"
+									href="#recentlyHistory" data-toggle="tab"
+									onclick="recentlyHistory()">나의 히스토리</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table m-0">
+
+								<thead>
+									<tr>
+										<th></th>
+										<th>출발일자</th>
+										<th>도착일자</th>
+										<th>사용자</th>
+										<th>출발지</th>
+										<th>도착지</th>
+										<th>차량번호</th>
+									</tr>
+								</thead>
+								<tbody id="schedule">
+								</tbody>
+							</table>
+						</div>
+						<!-- /.table-responsive -->
+						<!-- /.users-list -->
+					</div>
+
+
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+
+				<div class="col-md-4">
 					<div class="row ">
 						<div class="col-md-12">
 							<div class="card">
-								<!-- div class="card-header">
-									<h3 class="card-title">Carousel</h3>
-								</div> -->
-								<!-- /.card-header -->
-								<div class="card-body">
-									<div id="carouselExampleIndicators" class="carousel slide"
-										data-ride="carousel">
-										<ol class="carousel-indicators">
-											<li data-target="#carouselExampleIndicators"
-												data-slide-to="0" class=""></li>
-											<li data-target="#carouselExampleIndicators"
-												data-slide-to="1" class="active"></li>
-											<li data-target="#carouselExampleIndicators"
-												data-slide-to="2" class=""></li>
-										</ol>
-										<div class="carousel-inner">
-											<div class="carousel-item">
-												<a href="http://www.bitacademy.com/">
-												<img class="d-block w-100"
-													src="/static/img/imgs/bitLogo.jpg"
-													alt="Third slide">
-												</a>
-											</div>
-											<div class="carousel-item active">
-												<a href="http://www.douzone.com/"> <img
-													class="d-block w-100"
-													src="/static/img/imgs/douzoneLogo.jpg" alt="Second slide">
-												</a>
-											</div>
-											<div class="carousel-item">
+								<div class="card-header">
+									<h3 class="card-title">
+										<i class="fas fa-won-sign mr-1"></i>지역별 지점비
+									</h3>
 
-												<img class="d-block w-100"
-													src="https://placehold.it/900x470/f39c12/ffffff&amp;text=PathFinder"
-													alt="Third slide">
-											</div>
-										</div>
-										<a class="carousel-control-prev"
-											href="#carouselExampleIndicators" role="button"
-											data-slide="prev"> <span
-											class="carousel-control-prev-icon" aria-hidden="true"></span>
-											<span class="sr-only">Previous</span>
-										</a> <a class="carousel-control-next"
-											href="#carouselExampleIndicators" role="button"
-											data-slide="next"> <span
-											class="carousel-control-next-icon" aria-hidden="true"></span>
-											<span class="sr-only">Next</span>
-										</a>
+									<div class="card-tools">
+										<button type="button" class="btn btn-tool"
+											data-card-widget="collapse">
+											<i class="fas fa-minus"></i>
+										</button>
 									</div>
 								</div>
-								<!-- /.card-body -->
+								<!-- /.card-header -->
+								<div class="card-body p-0">
+
+									<div class="row">
+										<div class="col-md-12">
+											<div class="p-1">
+												<div id="canvas">
+													<div id="south"></div>
+													<div id="seoul"></div>
+													<div id="gygg"></div>
+													<div id="incheon"></div>
+													<div id="gangwon"></div>
+													<div id="chungbuk"></div>
+													<div id="chungnam"></div>
+													<div id="daejeon"></div>
+													<div id="sejong"></div>
+													<div id="gwangju"></div>
+													<div id="jeonbuk"></div>
+													<div id="jeonnam"></div>
+													<div id="gyeongbuk"></div>
+													<div id="gyeongnam"></div>
+													<div id="daegu"></div>
+													<div id="busan"></div>
+													<div id="ulsan"></div>
+													<div id="jeju"></div>
+												</div>
+											</div>
+											<div
+												class="flex-fill card-pane-right bg-lightgray pt-2 pb-2 pl-4 pr-4"
+												id="branchFeeChartP">
+												<!-- 여기가 옆쪽 -->
+												<canvas id="branchFeeChart"
+													class="chartjs-render-monitor col-md-8"></canvas>
+											</div>
+											<!-- /.d-md-flex -->
+										</div>
+										<!-- /.card-body -->
+									</div>
+								</div>
+								<!-- /.card -->
 							</div>
+							<!-- /.col -->
 						</div>
+						<!-- /.row -->
 					</div>
-					<!-- 슬라이드끝1 -->
-
-
+					<!-- /.col -->
 				</div>
-				<!-- /.col -->
+				<!-- /.row -->
 			</div>
-			<!-- /.row -->
-		</div>
-		<!--/. container-fluid -->
+			<!--/. container-fluid -->
 	</section>
 	<!-- /.content -->
 
