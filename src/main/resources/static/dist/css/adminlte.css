@@ -28631,8 +28631,9 @@ a.text-muted:hover {
 }
 
 .bg-lightgray {
-  background-color: #2b4e72;
-  /* background-color: rgba(220,220,220,0.1); */
+  /* background-color: #2b4e72; */
+  
+  background-color: rgba(220,220,220,0.2);
 }
 
 svg {

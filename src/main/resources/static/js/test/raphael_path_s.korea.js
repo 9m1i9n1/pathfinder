@@ -94,7 +94,7 @@ function loadingMap() {
           current &&
             aus[current].animate({ fill: "#aeaeae", stroke: "#5d5d5d" }, 500) &&
             (document.getElementById(current).style.display = "");
-        st.animate({ fill: "#94ba65", stroke: "#5d5d5d" }, 500);
+        st.animate({ fill: "#325e13", stroke: "#5d5d5d" }, 500);
         // st.toFront();
         R.safari();
         document.getElementById(state).style.display = "block";
@@ -319,14 +319,14 @@ function showBranchsFeeChart(
       datasets: [
         {
           label: "상차비",
-          backgroundColor: "rgba(245, 210, 65, 0.5)",
-          borderColor: "rgba(245, 210, 65, 1)",
+          backgroundColor: "#1183ad",
+          borderColor: "#1183ad",
           data: departureBranchValueArr
         },
         {
           label: "하차비",
-          backgroundColor: "rgba(66, 170, 245, 0.5)",
-          borderColor: "rgba(245, 210, 65, 1)",
+          backgroundColor: "#39b2ac",
+          borderColor: "#39b2ac",
           data: arrivalBranchValueArr
         }
       ]
