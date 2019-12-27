@@ -37,12 +37,12 @@ function getSearch(selectPage) {
 		if (res.resultCode !== "ERROR") {
 //			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
       $.each(res.data, function(key, value) {
-        str += `<tr class="tr-shadow">`;
-        str += "<td >" + value.userName + "</td>";
-        str += "<td data-title='이메일'>" + value.userEmail + "</td>";
-        str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
-        str += "<td data-title='지점명'>" + value.branchName + "</td>";
-        str += "<td data-title='직책'>" + value.userPosition + "</td>";
+        str += `<tr >`;
+        str += "<td class='pt-3 pb-3'>" + value.userName + "</td>";
+        str += "<td class='pt-3 pb-3' data-title='이메일'>" + value.userEmail + "</td>";
+        str += "<td class='pt-3 pb-3' data-title='전화번호'>" + value.userPhone + "</td>";
+        str += "<td class='pt-3 pb-3' data-title='지점명'>" + value.branchName + "</td>";
+        str += "<td class='pt-3 pb-3' data-title='직책'>" + value.userPosition + "</td>";
         str += "</tr>";
       });
       pageButton(
@@ -54,7 +54,7 @@ function getSearch(selectPage) {
       );
 	}  else {
 		count += `<li class="breadcrumb-list">0명</li>`;
-		str += `<tr class="tr-shadow">`;
+		str += `<tr >`;
 		str += `<td colspan="8">`;
 		str += `${res.description}`;
 		str += `</td>`;
@@ -82,12 +82,12 @@ function getUser(treeId, selectPage) {
 //      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
       $.each(res.data, function(key, value) {
-        str += `<tr class="tr-shadow">`;
-        str += "<td >" + value.userName + "</td>";
-        str += "<td data-title='이메일'>" + value.userEmail + "</td>";
-        str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
-        str += "<td data-title='지점명'>" + value.branchName + "</td>";
-        str += "<td data-title='직책'>" + value.userPosition + "</td>";
+        str += `<tr >`;	
+        str += "<td class='pt-3 pb-3'>" + value.userName + "</td>";
+        str += "<td class='pt-3 pb-3' data-title='이메일'>" + value.userEmail + "</td>";
+        str += "<td class='pt-3 pb-3' data-title='전화번호'>" + value.userPhone + "</td>";
+        str += "<td class='pt-3 pb-3' data-title='지점명'>" + value.branchName + "</td>";
+        str += "<td class='pt-3 pb-3' data-title='직책'>" + value.userPosition + "</td>";
         str += "</tr>";
       });
       pageButton(
@@ -100,7 +100,7 @@ function getUser(treeId, selectPage) {
 	} else {
 		count += `<li class="breadcrumb-list">0명</li>`;
 
-		str += `<tr class="tr-shadow">`;
+		str += `<tr >`;
 		str += `<td colspan="8">`;
 		str += `${res.description}`;
 		str += `</td>`;
