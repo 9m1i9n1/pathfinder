@@ -166,6 +166,10 @@ function userDelete(userIndex) {
     type: "delete",
     data: { userIndex: userIndex },
     success: function() {
+      $("#updateTitle").text("삭제 성공");
+      $("#updateMessage").text("해당 유저를 삭제하였습니다.");
+      $("#updateAlertModal").modal("show");	
+	
       userLoading();
     },
     error: function(request, status, error) {
@@ -316,6 +320,11 @@ $("#areaIndexAdd").on("select2:select", function(e) {
 $("#areaIndexModify").on("select2:select", function(e) {
   let selectData = e.params.data;
   branchLoading(modifyModal, selectData.id);
+});
+
+$("select").on("select2:open", function() {
+	  $(".select2-results__options").addClass("scrollbar-outer");
+	  $('.select2-results__options').scrollbar();
 });
 
 function arrayToObject(array) {

@@ -437,6 +437,11 @@ function arrayToObject(array) {
   }, []);
 }
 
+$("select").on("select2:open", function() {
+	  $(".select2-results__options").addClass("scrollbar-outer");
+	  $('.select2-results__options').scrollbar();
+});
+
 function areaLoading(modal) {
   $.ajax({
     url: "/admin/usermanage/arealist.do",
