@@ -28744,3 +28744,12 @@ a.text-muted:hover {
 	*/
 	.table td:before { content: attr(data-title); }
 }
+
+.card-rmwl.card-outline-tabs a:hover {
+  border-top: 3px solid #dee2e6;
+}
+
+.card-rmwl.card-outline-tabs a.active {
+  border-top: 3px solid #94ba65;
+}
+

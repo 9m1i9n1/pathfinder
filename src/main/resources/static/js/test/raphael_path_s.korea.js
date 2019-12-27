@@ -245,7 +245,7 @@ function showBranchsFeeChart(
   departureBranchValueArr,
   selectedArea = "서울"
 ) {
-  // Chart.defaults.global.defaultFontColor = "white";
+//   Chart.defaults.global.defaultFontColor = "black";
 
   var barChartOptions = {
     responsive: true,
@@ -254,25 +254,25 @@ function showBranchsFeeChart(
       display: true,
       text: selectedArea + " 지역",
       position: "top",
-      fontColor: "white"
+      fontColor: "#000000" //타이틀
     },
     legend: {
       display: true,
       position: "bottom",
-      fontColor: "white"
+      fontColor: "red"
     },
     scales: {
       xAxes: [
         {
           gridLines: {
-            display: false
+            display: true
           },
           // scaleLabel: {
           //   display: true,
           //   labelString: "비용 산정 공식 = (비용 * 톤수(T) / 6)"
           // },
           ticks: {
-            fontColor: "white"
+            fontColor: "black" //아래 글 색
             //   major: {
             //     fontStyle: "bold",
             //     fontColor: "#FF0000"
@@ -283,11 +283,11 @@ function showBranchsFeeChart(
       yAxes: [
         {
           gridLines: {
-            display: false,
+            display: true,
             lineWidth: "10px"
           },
           ticks: {
-            fontColor: "white",
+            fontColor: "black", //바 옆에
             beginAtZero: true
           }
         }
@@ -319,20 +319,20 @@ function showBranchsFeeChart(
 
   var myBarChart = new Chart($("#branchFeeChart"), {
     type: "bar",
-    // scaleFontColor: "white",
+     scaleFontColor: "black",
     data: {
       labels: branchNameArr,
       datasets: [
         {
           label: "상차비",
-          backgroundColor: "#ffffff",
-          borderColor: "#ffffff",
+          backgroundColor: "#ad3e45",
+          borderColor: "#ad3e45",
           data: departureBranchValueArr
         },
         {
           label: "하차비",
-          backgroundColor: "#ffffff",
-          borderColor: "#ffffff",
+          backgroundColor: "#f5bb00",
+          borderColor: "#f5bb00",
           data: arrivalBranchValueArr
         }
       ]

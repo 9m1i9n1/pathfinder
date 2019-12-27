@@ -47,19 +47,19 @@
 						</span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">지점</span>
-							<span class="info-box-number" id="branchCount"></span>
+							<span class="info-box-text">지점</span> <span
+								class="info-box-number" id="branchCount"></span>
 						</div>
 					</div>
 				</div>
 				<div class="col-12 col-sm-6 col-md-3">
 					<div class="info-box mb-3">
-						<span class="info-box-icon bg-warning elevation-1"> 
-						<i class="fas fa-history"></i></span>
+						<span class="info-box-icon bg-warning elevation-1"> <i
+							class="fas fa-history"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">기록</span> 
-							<span class="info-box-number" id="totalHistoryCount"></span>
+							<span class="info-box-text">기록</span> <span
+								class="info-box-number" id="totalHistoryCount"></span>
 						</div>
 					</div>
 				</div>
@@ -123,12 +123,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="card card-success card-outline card-outline-tabs">
+					<div class="card card-rmwl card-outline card-outline-tabs">
 						<div class="card-header">
-							<h3 class="card-title">
+							<div class="card-title">
 								<i class="far fa-calendar-alt mr-1"></i>오늘의 스케쥴
-							</h3>
-
+							</div>
 							<div class="card-tools">
 								<a href="/history" class="btn btn-sm btn-secondary">전체보기</a>
 								<button type="button" class="btn btn-tool"
@@ -138,18 +137,22 @@
 							</div>
 						</div>
 						<!-- /.card-header -->
-						<div class="card-header p-0 pt-1 border-bottom-0">
-							<ul class="nav nav-tabs">
-								<li class="nav-item">
-								<a class="nav-link active" href="#todayHistory" 
-								data-toggle="tab" onclick="todayHistory()">진행중인 배송</a>
+						<div class="card-body p-0 ">
+							<ul class="nav nav-tabs p-0 pt-1 border-bottom-0 ">
+								<li class="nav-item ">
+									<a class="nav-link active " href="#todayHistory"
+									data-toggle="tab" onclick="todayHistory()">
+										진행중인 배송
+									</a>
 								</li>
-								<li class="nav-item"><a class="nav-link"
+								<li class="nav-item">
+									<a class="nav-link"
 									href="#recentlyHistory" data-toggle="tab"
-									onclick="recentlyHistory()">나의 히스토리</a>
+									onclick="recentlyHistory()">
+										나의 히스토리
+									</a>
 								</li>
 							</ul>
-						</div>
 
 						<div class="table-responsive">
 							<table class="table m-0">
@@ -169,12 +172,8 @@
 								</tbody>
 							</table>
 						</div>
-						<!-- /.table-responsive -->
-						<!-- /.users-list -->
+						</div>
 					</div>
-
-
-					<!-- /.card -->
 				</div>
 				<!-- /.col -->
 
@@ -194,58 +193,45 @@
 										</button>
 									</div>
 								</div>
-								<!-- /.card-header -->
 								<div class="card-body p-0">
-
 									<div class="row">
 										<div class="col-md-12">
-											<div class="p-1">
-												<div id="canvas">
-													<div id="south"></div>
-													<div id="seoul"></div>
-													<div id="gygg"></div>
-													<div id="incheon"></div>
-													<div id="gangwon"></div>
-													<div id="chungbuk"></div>
-													<div id="chungnam"></div>
-													<div id="daejeon"></div>
-													<div id="sejong"></div>
-													<div id="gwangju"></div>
-													<div id="jeonbuk"></div>
-													<div id="jeonnam"></div>
-													<div id="gyeongbuk"></div>
-													<div id="gyeongnam"></div>
-													<div id="daegu"></div>
-													<div id="busan"></div>
-													<div id="ulsan"></div>
-													<div id="jeju"></div>
-												</div>
+											<div id="canvas">
+												<div id="south"></div>
+												<div id="seoul"></div>
+												<div id="gygg"></div>
+												<div id="incheon"></div>
+												<div id="gangwon"></div>
+												<div id="chungbuk"></div>
+												<div id="chungnam"></div>
+												<div id="daejeon"></div>
+												<div id="sejong"></div>
+												<div id="gwangju"></div>
+												<div id="jeonbuk"></div>
+												<div id="jeonnam"></div>
+												<div id="gyeongbuk"></div>
+												<div id="gyeongnam"></div>
+												<div id="daegu"></div>
+												<div id="busan"></div>
+												<div id="ulsan"></div>
+												<div id="jeju"></div>
 											</div>
-											<div
-												class="flex-fill card-pane-right bg-lightgray pt-2 pb-2 pl-4 pr-4"
+											<div class="flex-fill card-pane-right elevation-1 p-2"
 												id="branchFeeChartP">
 												<!-- 여기가 옆쪽 -->
 												<canvas id="branchFeeChart"
 													class="chartjs-render-monitor col-md-8"></canvas>
 											</div>
-											<!-- /.d-md-flex -->
 										</div>
-										<!-- /.card-body -->
 									</div>
 								</div>
-								<!-- /.card -->
 							</div>
-							<!-- /.col -->
 						</div>
-						<!-- /.row -->
 					</div>
-					<!-- /.col -->
 				</div>
-				<!-- /.row -->
 			</div>
-			<!--/. container-fluid -->
+		</div>
 	</section>
-	<!-- /.content -->
 
 	<!--  한국지도 -->
 	<script type="text/javascript" src="/static/js/test/raphael_min.js"></script>
