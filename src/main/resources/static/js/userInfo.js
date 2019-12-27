@@ -24,8 +24,13 @@ function userUpdate(req) {
     contentType: "application/json",
     data: req,
     success: function(res) {
-        alert("해당 유저 정보를 수정하였습니다.");
-        window.location.href="/userinfo";
+        $("#updateTitle").text("수정 성공");
+        $("#updateMessage").text("유저정보를 수정하였습니다.");
+        $("#updateAlertModal").modal("show");
+        
+        $("#updateAlertModalOk").on("click", function() {
+            window.location.href="/userinfo";
+        })
     },
     error: function(request, status, error) {
       alert(
@@ -94,10 +99,8 @@ $("form").each(function() {
 	      var errors = validator.numberOfInvalids();
 
 	      if (errors) {
-	        alert(validator.errorList[0].message);
 	        validator.errorList[0].element.focus();
 	      }
-	      console.log(errors)
 	    },
 
 	    // valid 성공시

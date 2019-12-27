@@ -142,7 +142,7 @@
 									</div>
 									<div class="form-group row">
 										<div class="offset-sm-2 col-sm-10">
-											<button type="submit" class="btn btn-danger float-right">수정</button>
+											<button type="submit" class="btn btn-success float-right">수정</button>
 										</div>
 									</div>
 								</form>
@@ -167,4 +167,6 @@
 	</section>
 	 <script src="/static/js/userInfo.js"></script>
 </body>
+
+<%@include file="alert.jsp"%>
 </html>
