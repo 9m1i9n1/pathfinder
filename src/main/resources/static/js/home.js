@@ -153,12 +153,12 @@ function recentlyHistory() {
             str += '<td><span class="badge badge-success">발송중</span></td>';
           else if (value.stat === 1)
             str += '<td><span class="badge badge-warning">발송예정</span></td>';
-          str += "<td>" + value.dlvrdate + "</td>";
-          str += "<td>" + value.arrivedate + "</td>";
-          str += "<td>" + value.username + "</td>";
-          str += "<td>" + value.dep + "</td>";
-          str += "<td>" + value.arvl + "</td>";
-          str += "<td>" + value.carname + "</td>";
+          str += "<td data-title='출발일자'>" + value.dlvrdate + "</td>";
+          str += "<td data-title='도착일자'>" + value.arrivedate + "</td>";
+          str += "<td data-title='사용자'>" + value.username + "</td>";
+          str += "<td data-title='출발지'>" + value.dep + "</td>";
+          str += "<td data-title='도착지'>" + value.arvl + "</td>";
+          str += "<td data-title='차량번호'>" + value.carname + "</td>";
           str += "</tr>";
         });
       } else {
@@ -193,12 +193,12 @@ function todayHistory() {
             str += '<td><span class="badge badge-success">발송중</span></td>';
           else if (value.stat === 1)
             str += '<td><span class="badge badge-warning">발송예정</span></td>';
-          str += "<td>" + value.dlvrdate + "</td>";
-          str += "<td>" + value.arrivedate + "</td>";
-          str += "<td>" + value.username + "</td>";
-          str += "<td>" + value.dep + "</td>";
-          str += "<td>" + value.arvl + "</td>";
-          str += "<td>" + value.carname + "</td>";
+          str += "<td data-title='출발일자'>" + value.dlvrdate + "</td>";
+          str += "<td data-title='도착일자'>" + value.arrivedate + "</td>";
+          str += "<td data-title='사용자'>" + value.username + "</td>";
+          str += "<td data-title='출발지'>" + value.dep + "</td>";
+          str += "<td data-title='도착지'>" + value.arvl + "</td>";
+          str += "<td data-title='차량번호'>" + value.carname + "</td>";
           str += "</tr>";
         });
       } else {

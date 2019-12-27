@@ -73,22 +73,22 @@
 						</div>
 					</div>
 
-
-					<table class="table table-hover" id="tableTest">
+					<div class ="col-md-12 table-responsive box-profile">
+					<table class="table table-hover " id="tableTest">
 						<thead>
 							<tr>
-								<th>번호</th>
-								<th>출발지</th>
-								<th>도착지</th>
-								<th>거리</th>
-								<th>시간</th>
-								<th>비용</th>
+								<th >번호</th>
+								<th >출발지</th>
+								<th >도착지</th>
+								<th >거리</th>
+								<th >시간</th>
+								<th >비용</th>
 							</tr>
 						</thead>
 
 						<tbody class="myScrollableBlockModal scrollbar-outer" id="routesListBody"></tbody>
 					</table>
-
+					</div>
 					<div>
 						<div class="row">
 							<div class="col-md-4">

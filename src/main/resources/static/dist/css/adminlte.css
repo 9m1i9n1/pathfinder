@@ -28586,8 +28586,12 @@ a.text-muted:hover {
 	overflow-x: hidden;
 }
 
-.tableScroll tbody tr, .tableScroll thead th {
-	width: 150px;
+.tableScroll tbody tr {
+	width: 100%;
+}
+
+ .tableScroll thead th {
+	width: 16%;
 }
 
 .tableScroll td {

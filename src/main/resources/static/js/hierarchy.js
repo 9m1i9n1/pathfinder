@@ -38,7 +38,7 @@ function getSearch(selectPage) {
 //			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
       $.each(res.data, function(key, value) {
         str += `<tr class="tr-shadow">`;
-        str += "<td>" + value.userName + "</td>";
+        str += "<td >" + value.userName + "</td>";
         str += "<td data-title='이메일'>" + value.userEmail + "</td>";
         str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
         str += "<td data-title='지점명'>" + value.branchName + "</td>";
@@ -83,7 +83,7 @@ function getUser(treeId, selectPage) {
 
       $.each(res.data, function(key, value) {
         str += `<tr class="tr-shadow">`;
-        str += "<td>" + value.userName + "</td>";
+        str += "<td >" + value.userName + "</td>";
         str += "<td data-title='이메일'>" + value.userEmail + "</td>";
         str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
         str += "<td data-title='지점명'>" + value.branchName + "</td>";
