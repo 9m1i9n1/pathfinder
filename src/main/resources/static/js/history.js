@@ -77,7 +77,7 @@ function printHistory(selectPage, id, keyword) {
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
           str += `<tr class="tr-shadow">`;
-          str += "<td data-title='번호'>" + value.regdate + "</td>";
+          str += "<td >" + value.regdate + "</td>";
           str += "<td data-title='사용자'>" + value.username + "</td>";
           str += "<td data-title='출발지'>" + value.dep + "</td>";
           str += "<td data-title='도착지'>" + value.arvl + "</td>";
