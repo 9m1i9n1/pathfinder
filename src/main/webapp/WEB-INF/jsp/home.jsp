@@ -77,7 +77,7 @@
 
 									<div class="card-tools">
 										<input id="myDelivery" type="checkbox" data-toggle="toggle"
-											data-size="small" data-on="내 배송송" data-off="전체" />
+											data-size="small" data-on="내 배송송" data-off="전체" data-onstyle="info"/>
 										<button type="button" class="btn btn-tool"
 											data-card-widget="collapse">
 											<i class="fas fa-minus"></i>
@@ -183,7 +183,7 @@
 							<div class="card">
 								<div class="card-header">
 									<h3 class="card-title">
-										<i class="fas fa-won-sign mr-1"></i>지역별 지점비
+										<i class="fas fa-money-bill-wave mr-1"></i>지역별 지점비
 									</h3>
 
 									<div class="card-tools">
@@ -216,7 +216,9 @@
 												<div id="ulsan"></div>
 												<div id="jeju"></div>
 											</div>
-											<div class="flex-fill card-pane-right elevation-1 p-2"
+											
+											<div
+												class="flex-fill card-pane-right elevation-1 pl-3 pr-3"
 												id="branchFeeChartP">
 												<!-- 여기가 옆쪽 -->
 												<canvas id="branchFeeChart"
