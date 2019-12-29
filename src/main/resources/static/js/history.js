@@ -46,7 +46,7 @@ function datePicker() {
 
 function checkEvent(selectPage, id) {
   $("#myhistory").change(function() {
-    let checked = $(this).prop("checked");
+    $(this).prop("checked");
     let tabId = sessionStorage.getItem("tabId");
 
     getHistory(0, tabId);
