@@ -32,38 +32,48 @@ function getSearch(selectPage) {
     success: function(res) {
       let str = "";
       let count = "";
-//      count += `<li class="breadcrumb-item">조직도 /&nbsp</a></li>`;
+      //      count += `<li class="breadcrumb-item">조직도 /&nbsp</a></li>`;
 
-		if (res.resultCode !== "ERROR") {
-//			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
-      $.each(res.data, function(key, value) {
-        str += `<tr class="tr-shadow">`;
-        str += "<td>" + value.userName + "</td>";
-        str += "<td data-title='이메일'>" + value.userEmail + "</td>";
-        str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
-        str += "<td data-title='지점명'>" + value.branchName + "</td>";
-        str += "<td data-title='직책'>" + value.userPosition + "</td>";
-        str += "</tr>";
-      });
-      pageButton(
-    		  res.pagination.nodeType,
-    		  res.pagination.nodeIndex,
-    		  res.pagination.totalPages,
-    		  res.pagination.currentPage,
-    		  "search"
-      );
-	}  else {
-		count += `<li class="breadcrumb-list">0명</li>`;
-		str += `<tr class="tr-shadow">`;
-		str += `<td colspan="8">`;
-		str += `${res.description}`;
-		str += `</td>`;
-		str += `</tr>`;
-		
-	}
+      if (res.resultCode !== "ERROR") {
+        //			count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
+        $.each(res.data, function(key, value) {
+          str += `<tr >`;
+          str += "<td class='pt-3 pb-3'>" + value.userName + "</td>";
+          str +=
+            "<td class='pt-3 pb-3' data-title='이메일'>" +
+            value.userEmail +
+            "</td>";
+          str +=
+            "<td class='pt-3 pb-3' data-title='전화번호'>" +
+            value.userPhone +
+            "</td>";
+          str +=
+            "<td class='pt-3 pb-3' data-title='지점명'>" +
+            value.branchName +
+            "</td>";
+          str +=
+            "<td class='pt-3 pb-3' data-title='직책'>" +
+            value.userPosition +
+            "</td>";
+          str += "</tr>";
+        });
+        pageButton(
+          res.pagination.nodeType,
+          res.pagination.nodeIndex,
+          res.pagination.totalPages,
+          res.pagination.currentPage,
+          "search"
+        );
+      } else {
+        count += `<li class="breadcrumb-list">0명</li>`;
+        str += `<tr >`;
+        str += `<td colspan="8">`;
+        str += `${res.description}`;
+        str += `</td>`;
+        str += `</tr>`;
+      }
       $("#userTable").html(str);
-//      $("#headInfo").html(count);
-      
+      //      $("#headInfo").html(count);
     }
   });
 }
@@ -77,40 +87,50 @@ function getUser(treeId, selectPage) {
       let str = "";
       let count = "";
 
-//      count += `<li class="breadcrumb-item"><a href="/home">홈</a> / 조직도 /&nbsp</a></li>`;
-	if (res.resultCode !== "ERROR") {
-//      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
+      //      count += `<li class="breadcrumb-item"><a href="/home">홈</a> / 조직도 /&nbsp</a></li>`;
+      if (res.resultCode !== "ERROR") {
+        //      count += `<li class="breadcrumb-list">${res.pagination.totalElements}명</li>`;
 
-      $.each(res.data, function(key, value) {
-        str += `<tr class="tr-shadow">`;
-        str += "<td>" + value.userName + "</td>";
-        str += "<td data-title='이메일'>" + value.userEmail + "</td>";
-        str += "<td data-title='전화번호'>" + value.userPhone + "</td>";
-        str += "<td data-title='지점명'>" + value.branchName + "</td>";
-        str += "<td data-title='직책'>" + value.userPosition + "</td>";
-        str += "</tr>";
-      });
-      pageButton(
-    		  res.pagination.nodeType,
-    		  res.pagination.nodeIndex,
-    		  res.pagination.totalPages,
-    		  res.pagination.currentPage,
-    		  "list"
-      );
-	} else {
-		count += `<li class="breadcrumb-list">0명</li>`;
+        $.each(res.data, function(key, value) {
+          str += `<tr >`;
+          str += "<td class='pt-3 pb-3'>" + value.userName + "</td>";
+          str +=
+            "<td class='pt-3 pb-3' data-title='이메일'>" +
+            value.userEmail +
+            "</td>";
+          str +=
+            "<td class='pt-3 pb-3' data-title='전화번호'>" +
+            value.userPhone +
+            "</td>";
+          str +=
+            "<td class='pt-3 pb-3' data-title='지점명'>" +
+            value.branchName +
+            "</td>";
+          str +=
+            "<td class='pt-3 pb-3' data-title='직책'>" +
+            value.userPosition +
+            "</td>";
+          str += "</tr>";
+        });
+        pageButton(
+          res.pagination.nodeType,
+          res.pagination.nodeIndex,
+          res.pagination.totalPages,
+          res.pagination.currentPage,
+          "list"
+        );
+      } else {
+        count += `<li class="breadcrumb-list">0명</li>`;
 
-		str += `<tr class="tr-shadow">`;
-		str += `<td colspan="8">`;
-		str += `${res.description}`;
-		str += `</td>`;
-		str += `</tr>`;
-		
-	}
+        str += `<tr >`;
+        str += `<td colspan="8">`;
+        str += `${res.description}`;
+        str += `</td>`;
+        str += `</tr>`;
+      }
       $("#userTable").html(str);
 
-//      $("#headInfo").html(count);
-
+      //      $("#headInfo").html(count);
     }
   });
 }

@@ -159,6 +159,7 @@ $.fn.serializeObject = function() {
 };
 
 // 검색뷰
+
 function branchsearch(searchUrl, searchpage = 0) {
   console.log("여기");
   console.log(searchUrl);
@@ -171,7 +172,10 @@ function branchsearch(searchUrl, searchpage = 0) {
 
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
-          str += `<tr class="tr-shadow"><td>` + value.area + "</td>";
+          str +=
+            `<tr class="tr-shadow"><td data-title='지역'>` +
+            value.area +
+            "</td>";
           str += '<td data-title="지점명">' + value.branchName + "</td>";
           str += '<td data-title="지점장">' + value.branchOwner + "</td>";
           str += '<td data-title="주소">' + value.branchAddr + "</td>";
@@ -364,7 +368,8 @@ function branchlist(selectPage) {
     success: function(res) {
       var str = "";
       $.each(res.data, function(key, value) {
-        str += `<tr class="tr-shadow"><td>` + value.area + "</td>";
+        str +=
+          `<tr class="tr-shadow"><td data-title='지역'>` + value.area + "</td>";
         str += '<td data-title="지점명">' + value.branchName + "</td>";
         str += '<td data-title="지점장">' + value.branchOwner + "</td>";
         str += '<td data-title="주소">' + value.branchAddr + "</td>";
@@ -463,8 +468,13 @@ $("#branch_Addr").on("propertychange change keyup paste input", function() {
   $el.focus();
 });
 
+//! Validation
+// select 포커스 문제 해결
+$("select").on("select2:close", function() {
+  $(this).blur();
+});
+
 // 추가 유효성검사
-// TODO JavaScript 다시 선언시 Const 중복 에러발생
 var branchInsertValid = $("#branchInsertform").validate({
   onkeyup: false,
   validClass: "is-valid",
@@ -544,7 +554,6 @@ var branchInsertValid = $("#branchInsertform").validate({
 });
 
 // 수정 유효성검사
-// TODO JavaScript 다시 선언시 Const 중복 에러발생
 var branchUpdateValid = $("#branchUpdateForm").validate({
   onkeyup: false,
   validClass: "is-valid",

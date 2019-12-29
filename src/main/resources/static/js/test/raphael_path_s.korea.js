@@ -1,7 +1,7 @@
 function loadingMap() {
   var R = Raphael("south", 320, 400);
   var attr = {
-    fill: "rgb(52, 52, 52, 0.8)",
+    fill: "#aeaeae",
     stroke: "#5d5d5d",
     "stroke-width": 0.1,
     "stroke-linejoin": "round"
@@ -92,12 +92,9 @@ function loadingMap() {
       st[0].onmouseover = function() {
         if (st.id === selected)
           current &&
-            aus[current].animate(
-              { fill: "rgb(52, 52, 52, 0.6)", stroke: "#5d5d5d" },
-              500
-            ) &&
+            aus[current].animate({ fill: "#aeaeae", stroke: "#5d5d5d" }, 500) &&
             (document.getElementById(current).style.display = "");
-        st.animate({ fill: "#e97f02", stroke: "#5d5d5d" }, 500);
+        st.animate({ fill: "#325e13", stroke: "#5d5d5d" }, 500);
         // st.toFront();
         R.safari();
         document.getElementById(state).style.display = "block";
@@ -106,7 +103,7 @@ function loadingMap() {
 
       st[0].onmouseout = function() {
         if (st.id !== selected)
-          st.animate({ fill: "rgb(52, 52, 52, 0.6)", stroke: "#5d5d5d" }, 500);
+          st.animate({ fill: "#aeaeae", stroke: "#5d5d5d" }, 500);
         // st.toFront();
         R.safari();
       };
@@ -136,10 +133,7 @@ function loadingMap() {
       st[0].onclick = function() {
         for (var t in aus) {
           if (aus[t].id !== st.id)
-            aus[t].animate(
-              { fill: "rgb(52, 52, 52, 0.6)", stroke: "#5d5d5d" },
-              500
-            );
+            aus[t].animate({ fill: "#aeaeae", stroke: "#5d5d5d" }, 500);
         }
 
         switch (state) {
@@ -245,7 +239,7 @@ function showBranchsFeeChart(
   departureBranchValueArr,
   selectedArea = "서울"
 ) {
-//   Chart.defaults.global.defaultFontColor = "black";
+  //   Chart.defaults.global.defaultFontColor = "black";
 
   var barChartOptions = {
     responsive: true,
@@ -319,20 +313,20 @@ function showBranchsFeeChart(
 
   var myBarChart = new Chart($("#branchFeeChart"), {
     type: "bar",
-     scaleFontColor: "black",
+    scaleFontColor: "black",
     data: {
       labels: branchNameArr,
       datasets: [
         {
           label: "상차비",
-          backgroundColor: "rgba(245, 210, 65, 0.5)",
-          borderColor: "rgba(245, 210, 65, 1)",
+          backgroundColor: "#1183ad",
+          borderColor: "#1183ad",
           data: departureBranchValueArr
         },
         {
           label: "하차비",
-          backgroundColor: "rgba(66, 170, 245, 0.5)",
-          borderColor: "rgba(245, 210, 65, 1)",
+          backgroundColor: "#39b2ac",
+          borderColor: "#39b2ac",
           data: arrivalBranchValueArr
         }
       ]

@@ -57,19 +57,16 @@ public class HomeService {
 
 	public Long userCount() {
 		Long userTotalCount = userRepository.findAllUserCount();
-		System.out.println("총원 : " + userTotalCount);
 		return userTotalCount;
 	}
 
 	public Long branchCount() {
 		Long branchTotalCount = branchRepository.findAllBranchCount();
-		System.out.println("지점수 : " + branchTotalCount);
 		return branchTotalCount;
 	}
 
 	public Long historyAll() {
 		Long historyTotalCount = historyRepository.findAllCount();
-		System.out.println("히스토리 수 : " + historyTotalCount);
 		return historyTotalCount;
 	}
 
