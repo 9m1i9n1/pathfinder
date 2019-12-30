@@ -219,7 +219,7 @@
 											</div>
 											
 											<div
-												class="flex-fill card-pane-right pt-2 pb-2 pl-4 pr-4 bg-lightgray"
+												class="flex-fill card-pane-right pt-2 pb-2 pl-4 pr-4 homeGraph"
 												id="branchFeeChartP">
 												<!-- 여기가 옆쪽 -->
 												<canvas id="branchFeeChart"
