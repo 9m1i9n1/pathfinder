@@ -239,8 +239,6 @@ function showBranchsFeeChart(
   departureBranchValueArr,
   selectedArea = "서울"
 ) {
-  //   Chart.defaults.global.defaultFontColor = "black";
-
   var barChartOptions = {
     responsive: true,
     datasetFill: false,
@@ -248,41 +246,33 @@ function showBranchsFeeChart(
       display: true,
       text: selectedArea + " 지역",
       position: "top",
-      fontColor: "#000000" //타이틀
+      fontSize: "18",
+      fontStyle: "bold"
     },
     legend: {
       display: true,
-      position: "bottom",
-      fontColor: "red"
+      position: "bottom"
     },
     scales: {
       xAxes: [
         {
+          barPercentage: 1,
+          categoryPercentage: 0.6,
           gridLines: {
-            display: true
-          },
-          // scaleLabel: {
-          //   display: true,
-          //   labelString: "비용 산정 공식 = (비용 * 톤수(T) / 6)"
-          // },
-          ticks: {
-            fontColor: "black" //아래 글 색
-            //   major: {
-            //     fontStyle: "bold",
-            //     fontColor: "#FF0000"
-            //   }
+            display: false
           }
         }
       ],
       yAxes: [
         {
           gridLines: {
-            display: true,
-            lineWidth: "10px"
+            display: true
           },
           ticks: {
-            fontColor: "black", //바 옆에
-            beginAtZero: true
+            beginAtZero: true,
+            stepSize: 20000,
+            min: 0,
+            max: 100000
           }
         }
       ]
@@ -294,39 +284,23 @@ function showBranchsFeeChart(
         label: function(tooltipItem) {
           return Number(tooltipItem.yLabel) + " 원";
         }
-        //   footer: function(tooltipItem) {
-        //     return [
-        //       "1톤 : " +
-        //         (Number(tooltipItem[0].yLabel) * (1 / 6)).toFixed(0) +
-        //         "원",
-        //       "5톤 : " +
-        //         (Number(tooltipItem[0].yLabel) * (5 / 6)).toFixed(0) +
-        //         "원",
-        //       "20톤 : " +
-        //         (Number(tooltipItem[0].yLabel) * (20 / 6)).toFixed(0) +
-        //         "원"
-        //     ];
-        //   }
       }
     }
   };
 
   var myBarChart = new Chart($("#branchFeeChart"), {
     type: "bar",
-    scaleFontColor: "black",
     data: {
       labels: branchNameArr,
       datasets: [
         {
           label: "상차비",
-          backgroundColor: "#1183ad",
-          borderColor: "#1183ad",
+          backgroundColor: "rgba(0, 99, 132, 0.6)",
           data: departureBranchValueArr
         },
         {
           label: "하차비",
-          backgroundColor: "#39b2ac",
-          borderColor: "#39b2ac",
+          backgroundColor: "rgba(99, 132, 0, 0.6)",
           data: arrivalBranchValueArr
         }
       ]

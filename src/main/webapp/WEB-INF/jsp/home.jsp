@@ -22,7 +22,7 @@
 							class="fas fa-shipping-fast"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">오늘의 배송 현황</span> <span
+							<span class="info-box-text">오늘의 운송현황</span> <span
 								class="info-box-number" id="todayPercent"> </span>
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 							<div class="card">
 								<div class="card-header">
 									<h5 class="card-title">
-										<i class="fas fa-truck mr-1"></i>배송 현황(최근 한달)
+										<i class="fas fa-truck mr-1"></i>운송 현황(최근 한달)
 									</h5>
 
 									<div class="card-tools">
@@ -142,7 +142,7 @@
 								<li class="nav-item ">
 									<a class="nav-link active " href="#todayHistory"
 									data-toggle="tab" onclick="todayHistory()">
-										진행중인 배송
+										진행중인 운송
 									</a>
 								</li>
 								<li class="nav-item">
@@ -193,6 +193,7 @@
 										</button>
 									</div>
 								</div>
+								
 								<div class="card-body p-0">
 									<div class="row">
 										<div class="col-md-12">
@@ -218,13 +219,13 @@
 											</div>
 											
 											<div
-												class="flex-fill card-pane-right elevation-1 pl-3 pr-3"
+												class="flex-fill card-pane-right pt-2 pb-2 pl-4 pr-4 bg-lightgray"
 												id="branchFeeChartP">
 												<!-- 여기가 옆쪽 -->
 												<canvas id="branchFeeChart"
 													class="chartjs-render-monitor col-md-8"></canvas>
 											</div>
-										</div>
+						 				</div>
 									</div>
 								</div>
 							</div>
