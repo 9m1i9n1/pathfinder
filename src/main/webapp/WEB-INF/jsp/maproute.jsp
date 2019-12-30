@@ -31,11 +31,10 @@
 				</div>
 				<div class="col-md-6">
 					<ol class="breadcrumb float-sm-right" id="headInfo">
+						<li class="pr-3"><button class="float-sm-right btn bg-olive"
+								id="testButton">테스트</button></li>
 						<li class="breadcrumb-item"><a href="/home">홈</a></li>
 						<li class="breadcrumb-item active">운송 등록</li>
-						<%--
-              <li><button id="testButton">테스트</button></li>
-              --%>
 					</ol>
 				</div>
 			</div>
@@ -66,7 +65,7 @@
 								</div>
 
 								<div class="card-footer text-center">
-									<button class="btn bg-olive float-right next" type="button">
+									<button id="btn1" class="btn bg-olive float-right next" type="button">
 										다음</button>
 								</div>
 							</div>
@@ -91,7 +90,7 @@
 										data-toggle="collapse" data-target="#col-selectDep"
 										aria-expanded="false" aria-controls="col-selectDep">
 										이전</button>
-									<button class="btn bg-olive next" type="button">다음</button>
+									<button id="btn2" class="btn bg-olive next" type="button">다음</button>
 								</div>
 							</div>
 						</div>
@@ -123,9 +122,8 @@
 										data-toggle="collapse" data-target="#col-selectCar"
 										aria-expanded="false" aria-controls="col-selectCar">
 										이전</button>
-									<button class="btn bg-olive next" type="button"
-										onclick="branchlist(selectBranchlist)">
-										다음</button>
+									<button id="btn3" class="btn bg-olive next" type="button"
+										onclick="branchlist(selectBranchlist)">다음</button>
 								</div>
 							</div>
 						</div>
@@ -149,7 +147,7 @@
 										data-toggle="collapse" data-target="#col-selectDate"
 										aria-expanded="false" aria-controls="col-selectDate">
 										이전</button>
-									<button class="btn bg-olive" id="resultButton" type="button">
+									<button id="btn4" class="btn bg-olive" id="resultButton" type="button">
 										다음</button>
 								</div>
 							</div>
@@ -174,17 +172,15 @@
 									<button class="btn btn-outline-success" id="resultPrev"
 										type="button" data-toggle="collapse"
 										data-target="#col-selectBranch" aria-expanded="false"
-										aria-controls="col-selectBranch">
-										이전</button>
+										aria-controls="col-selectBranch">이전</button>
 									<button class="btn bg-olive btn-success" type="submit">
 										등록</button>
 
 									<div class="float-left distSwitch">
 										<div class="custom-control custom-switch">
 											<input type="checkbox" class="custom-control-input"
-												id="showSortDist" /> <label
-												class="custom-control-label" for="showSortDist">거리
-												우선</label>
+												id="showSortDist" /> <label class="custom-control-label"
+												for="showSortDist">거리 우선</label>
 										</div>
 									</div>
 								</div>

@@ -3,12 +3,49 @@ $(document).ready(() => {
   branchlist(depBranchlist);
 });
 
-$("#testButton").on("click", e => {
-  $("#depSelect")
-    .val("652")
-    .trigger("change");
+$("#testButton").on("click", async (e) => {
+	testFunc();
 });
 
+function testFunc() {
+	let selectedArray = [];
+	let totalAreaLength = $("#depSelect")[0].length - 1;
+	let start = Math.floor(Math.random() * totalAreaLength)+1;
+	 
+	 $("#depSelect").val(start).trigger("change.select2");
+
+	 let selectData =$("#depSelect").select2("data")[0];
+	 let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
+	 console.log("selectData", selectData);
+	 markerGroup.clearLayers();
+	 markerAdd(selectData, icon);
+
+	 carlist(depCarlist, selectData.areaIndex)
+	 selectedArray.push(start);
+	 
+	 setTimeout(function() {
+			testFunc2();
+		 }, 1000);
+}
+
+function testFunc2() {
+	$('#btn1').trigger("click");
+	 let totalCarLength = $("#carSelect")[0].length -1;
+	let selectedCar = Math.floor(Math.random() * totalCarLength) + 1; 
+	 let carValue = $("#carSelect")[0][selectedCar].value;
+	 $("#carSelect").val(carValue).trigger("change.select2");
+	console.log("asd", $("#carSelect").select2("data")[0]);
+	 let car = $("#carSelect").select2("data")[0];			 
+	 selectCar(car);
+	 
+	setTimeout(function() {
+		testFunc3();
+	},1000);
+}
+
+function testFunc3(){
+	$('#btn2').trigger("click");
+}
 // 다음 지도 사용
 // var map = new L.Map("map", {
 // center: new L.LatLng(36.1358642, 128.0785804), //중심점 : 김천 위경도 좌표
@@ -125,7 +162,7 @@ const loadCalendar = res => {
 
   let calendarSize = $("#headingDate").width();
   let disableList = res.data;
-  console.log(res);
+  console.log("disableList - ", disableList);
 
   $("#calendar").calendar({
     width: calendarSize,
@@ -164,14 +201,12 @@ $("select").on("select2:open", function() {
 // 출발지 선택 Draw
 const depBranchlist = res => {
   res = res.data;
-
   let branchData = $.map(res, obj => {
     obj.id = obj.id || obj.branchIndex;
     obj.text = obj.text || obj.branchName;
-
     return obj;
   });
-
+  
   $("#depSelect").select2({
     width: "100%",
     placeholder: "출발지 선택",
@@ -256,7 +291,6 @@ const selectBranchlist = res => {
 
 // 타임라인 그리기
 const drawTimeline = routeInfo => {
-  console.log("#routeInfo", routeInfo);
 
   let sumTime = 0;
 
@@ -305,28 +339,30 @@ const drawTimeline = routeInfo => {
 // ! 선택 Event 구간 ===================
 // 출발지 선택시 Event
 $("#depSelect").on("select2:select", e => {
+	console.log("test", e);
   let selectData = e.params.data;
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
-
   markerGroup.clearLayers();
   markerAdd(selectData, icon);
-
+  
   carlist(depCarlist, selectData.areaIndex);
 
   $("#branchSelect").empty();
 });
-
+const selectCar = (selectData) => {
+	  $.ajax({
+		    url: "/maproute/getReserve.do",
+		    data: { carIndex: selectData.carIndex },
+		    type: "get"
+		  }).then(res => {
+		    loadCalendar(res);
+		  });
+}
 // 차량 선택시 Event
 $("#carSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
-  $.ajax({
-    url: "/maproute/getReserve.do",
-    data: { carIndex: selectData.carIndex },
-    type: "get"
-  }).then(res => {
-    loadCalendar(res);
-  });
+  selectCar(selectData);
 });
 
 // 경유지 선택시 Event
@@ -548,9 +584,8 @@ const carculateData = lrmData => {
     routeInfo.routes = $.extend(true, [], routes);
 
     routeInfo.sortType = switchState ? "거리" : "비용";
-    console.log(compareFee);
     routeInfo.percent = (compareFee / fee) * 100 - 100;
-//    738308 a +  a2.2 = 754579 - 2.2 = 
+// 738308 a + a2.2 = 754579 - 2.2 =
     routeList = $.extend(true, {}, routeInfo);
 
     resolve(routeInfo);
@@ -645,7 +680,7 @@ const insertPlan = (req, imgSrc) => {
   let plan = $.extend(true, {}, req);
 
   plan.imgSrc = imgSrc;
-  //! 데이터 등록하는 부분. 현재 편의상 주석처리
+  // ! 데이터 등록하는 부분. 현재 편의상 주석처리
   $.ajax({
     url: "/maproute/insertPlan.do",
     type: "post",
@@ -654,12 +689,12 @@ const insertPlan = (req, imgSrc) => {
   }).then(res => {
     hideSpinner($("body"));
     $("#successModal").modal({ backdrop: "static", keyboard: false });
-    //    alert(res.data);
-    //    location.reload();
+    // alert(res.data);
+    // location.reload();
   });
 };
 
-//! 유틸 부분 =====================
+// ! 유틸 부분 =====================
 Number.prototype.addComma = function() {
   var regexp = /\B(?=(\d{3})+(?!\d))/g;
   return this.toString().replace(regexp, ",");
