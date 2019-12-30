@@ -61,7 +61,7 @@
 							</div>
 							<div class="form-group row">
 								<label for="branchPhone" class="col-sm-4 col-form-label-sm">
-									<i class="fa fa-map-o" aria-hidden="true"></i>&nbsp 탐색방식
+									<i class="fa fa-map" aria-hidden="true"></i>&nbsp 탐색방식
 								</label>
 								<div class="col-sm-8">
 									<h2 class="form-control" id="sortType"></h2>
@@ -69,7 +69,7 @@
 							</div>
 						</div>
 						<div class="col-md-7">
-							<img id="mapImg" width="100%" height="100%" class="pb-4">
+							<img id="mapImg" width="100%" height="372px" class="pb-4">
 						</div>
 					</div>
 
