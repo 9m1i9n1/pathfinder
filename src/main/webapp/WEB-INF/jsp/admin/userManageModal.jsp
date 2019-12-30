@@ -153,6 +153,9 @@ pageEncoding="UTF-8"%> <%-- Insert Modal --%>
           <div class="formCheck" id="serverFormCheck"></div>
         </div>
         <div class="card-footer text-right">
+          <button type="button" class="btn btn-success" id="InsertTest">
+	   테스트
+          </button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             취소
           </button>
