@@ -30,7 +30,11 @@ import com.douzone.bit.pathfinder.model.network.response.HistoryRoutesResponse;
 import com.douzone.bit.pathfinder.repository.CarRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.HistoryRepository;
 import com.douzone.bit.pathfinder.repository.mongodb.RoutesRepository;
+import com.douzone.bit.pathfinder.util.S3Uploader;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class HistoryService {
@@ -42,6 +46,8 @@ public class HistoryService {
 
 	@Autowired
 	private CarRepository carRepository;
+	
+	private final S3Uploader s3Uploader;
 
 	public Header<List<HistoryResponse>> readHistory(int page, String id, boolean myhistory, String keyword) {
 		Pageable pageable;
@@ -175,7 +181,11 @@ public class HistoryService {
 		HistoryTb history = historyRepository.findById(id);
 		historyRepository.deleteById(id.toString());
 		routesRepository.deleteById(history.getRoutes().toString());
-
+		
+		String[] s3Key = history.getImgSrc().split("https://bit-pathfinder.s3.ap-northeast-2.amazonaws.com/");
+		
+		s3Uploader.deleteFileFromS3Bucket(s3Key[1]);
+		
 		return Header.OK();
 	}
 

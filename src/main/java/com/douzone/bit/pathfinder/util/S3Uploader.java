@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 @Service
@@ -63,6 +65,15 @@ public class S3Uploader {
 			System.out.println("File is deleted.");
 		} else {
 			System.out.println("File is not deleted.");
+		}
+	}
+	
+	public void deleteFileFromS3Bucket(String fileName) {
+		try {
+			amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, fileName));
+		} catch (AmazonServiceException e) {
+			System.out.println("error [" + e.getMessage() + "] occurred while removing ["
+					+ fileName + "]");
 		}
 	}
 	

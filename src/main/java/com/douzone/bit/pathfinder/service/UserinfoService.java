@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +24,13 @@ public class UserinfoService {
 
 	// 유저 수정
 	public Header<AdminUserResponse> update(AdminUserRequest request) {
+		BCryptPasswordEncoder brc = new BCryptPasswordEncoder();
+		String brcPassword = brc.encode(request.getUserPw());
+		
 		Optional<UserTb> optional = userRepository.findById(request.getUserIndex());
 		return optional.map(user -> {
 
-			user.setUserEmail(request.getUserEmail()).setUserPhone(request.getUserPhone()).setUserPw(request.getUserPw());
+			user.setUserEmail(request.getUserEmail()).setUserPhone(request.getUserPhone()).setUserPw(brcPassword);
 
 			return user;
 		}).map(user -> userRepository.save(user)).map(user -> response(user)).map(Header::OK)

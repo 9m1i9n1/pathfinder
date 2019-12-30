@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +44,10 @@ public class AdminUserService {
   // 유저 등록 서비스
   public Header<AdminUserResponse> create(AdminUserRequest request) {
 
-    UserTb user = UserTb.builder().userId(request.getUserId()).userPw("12345").userName(request.getUserName())
+	BCryptPasswordEncoder brc = new BCryptPasswordEncoder();
+	String brcPassword = brc.encode("12345");
+	
+    UserTb user = UserTb.builder().userId(request.getUserId()).userPw(brcPassword).userName(request.getUserName())
         .userEmail(request.getUserEmail()).userPhone(request.getUserPhone()).userCreated(LocalDateTime.now())
         .userAuth(request.getUserAuth()).userPosition(request.getUserPosition())
         .branch(branchRepository.getOne(request.getBranchIndex())).build();
@@ -134,10 +138,13 @@ public class AdminUserService {
   // 유저 비밀번호 초기화
   public Header<AdminUserResponse> updatePw(Long id) {
 
+	BCryptPasswordEncoder brc = new BCryptPasswordEncoder();
+	String brcPassword = brc.encode("12345");
+	  
     Optional<UserTb> optional = userRepository.findById(id);
 
     return optional.map(user -> {
-      user.setUserPw("12345");
+      user.setUserPw(brcPassword);
       return user;
     }).map(updatedUser -> userRepository.save(updatedUser)).map(updatedUser -> response(updatedUser)).map(Header::OK)
         .orElseGet(() -> Header.ERROR("데이터 없음"));
