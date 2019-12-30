@@ -156,6 +156,11 @@ const loadCalendar = res => {
   });
 };
 
+$("select").on("select2:open", function() {
+	  $(".select2-results__options").addClass("scrollbar-outer");
+	  $('.select2-results__options').scrollbar();
+});
+
 // 출발지 선택 Draw
 const depBranchlist = res => {
   res = res.data;

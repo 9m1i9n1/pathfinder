@@ -33,13 +33,13 @@
 						<label for="b3" class="col-sm-3 col-form-label-sm">운반비</label>
 						<div class="col-sm-8">
 							<input type="number" class="form-control" name="branchValue"
-								id="branchValue" step="100" placeholder="5천원 ~ 10만원">
+								id="branchValue" placeholder="5천원 ~ 10만원">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="b4" class="col-sm-3 col-form-label-sm">주소</label>
 						<div class="col-sm-8">
-							<input class ="btn btn-outline-secondary btn-sm" type="button" onclick="addressFind()" value="주소 검색" />
+							<input class ="btn btn-secondary btn-sm" type="button" onclick="addressFind()" value="주소 검색" />
 							 <input
 								type="text" class="form-control" id="branch_Addr"
 								name="branchAddr" placeholder="주소" readonly  />
@@ -131,7 +131,7 @@
 					<div class="form-group row">
 						<label for="branchValue" class="col-sm-3 col-form-label-sm">운반비</label>
 						<div class="col-sm-8">
-							<input type="number" step="100" class="form-control"
+							<input type="number" class="form-control"
 								id="branchValue1" name="branchValue" placeholder="5천원 ~ 10만원">
 						</div>
 					</div>

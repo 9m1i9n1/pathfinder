@@ -30,7 +30,6 @@ function pageButton(totalPages, currentPage) {
 }
 
 function resetvalid(formName) {
-  $(formName)[0].reset();
   var length = $(formName)[0].length;
   var sclass = null;
   for (var i = 0; i < length; i++) {
@@ -167,6 +166,10 @@ function userDelete(userIndex) {
     type: "delete",
     data: { userIndex: userIndex },
     success: function() {
+      $("#updateTitle").text("삭제 성공");
+      $("#updateMessage").text("해당 유저를 삭제하였습니다.");
+      $("#updateAlertModal").modal("show");
+
       userLoading();
     },
     error: function(request, status, error) {
@@ -291,6 +294,7 @@ insertModal.on("hidden.bs.modal", function() {
 
 // modifyModal 열릴 시
 modifyModal.on("shown.bs.modal", function() {
+  resetvalid("#userModifyForm");
   $("#myInput").trigger("focus");
 
   // 2개의 모달창이 존재해도 백그라운드 모달의 스크롤이 사라지지 않음
@@ -301,13 +305,11 @@ modifyModal.on("shown.bs.modal", function() {
 
 // modifyModal 닫힐 시
 modifyModal.on("hidden.bs.modal", function() {
-  $("#userCreateForm")[0].reset();
   modifyModal.find(".formCheck").html("");
-
+  resetvalid("#userModifyForm");
   $("#userModifyForm")
     .validate()
     .resetForm();
-  resetvalid("#userModifyForm");
 });
 
 $("#areaIndexAdd").on("select2:select", function(e) {
@@ -318,6 +320,11 @@ $("#areaIndexAdd").on("select2:select", function(e) {
 $("#areaIndexModify").on("select2:select", function(e) {
   let selectData = e.params.data;
   branchLoading(modifyModal, selectData.id);
+});
+
+$("select").on("select2:open", function() {
+  $(".select2-results__options").addClass("scrollbar-outer");
+  $(".select2-results__options").scrollbar();
 });
 
 function arrayToObject(array) {
@@ -561,7 +568,7 @@ function treeLoading() {
 
 // ! validation ====================
 // select 포커스 문제 해결
-$(".selectpicker").on("change", function() {
+$("select").on("select2:close", function() {
   $(this).blur();
 });
 
@@ -608,15 +615,9 @@ $("form").each(function() {
         remote: "이미 존재하는 아이디입니다."
       }
     },
-
+    //TODO 하자 하자.
     // 에러 위치 조정
-    errorPlacement: function(error, element) {
-      // if (element.is(":radio") || element.is("select")) {
-      //   error.appendTo(element.parents(".col-sm-8"));
-      // } else {
-      //   error.insertAfter(element);
-      // }
-    },
+    errorPlacement: function(error, element) {},
 
     // valid 실패시
     invalidHandler: function(form, validator) {

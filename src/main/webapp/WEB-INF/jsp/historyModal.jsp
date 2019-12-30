@@ -92,7 +92,7 @@
 					<div>
 						<div class="row">
 							<div class="col-md-4">
-								<div class="small-box bg-olive">
+								<div class="small-box bg-info">
 									<div class="inner">
 										<h5>총거리</h5>
 										<p id="dist"></p>

@@ -46,7 +46,7 @@ function datePicker() {
 
 function checkEvent(selectPage, id) {
   $("#myhistory").change(function() {
-    let checked = $(this).prop("checked");
+    $(this).prop("checked");
     let tabId = sessionStorage.getItem("tabId");
 
     getHistory(0, tabId);
@@ -54,7 +54,7 @@ function checkEvent(selectPage, id) {
 }
 
 function getHistory(selectPage, id) {
-  let tabId = sessionStorage.setItem("tabId", id);
+  sessionStorage.setItem("tabId", id);
 
   printHistory(selectPage, id);
 }
@@ -77,15 +77,15 @@ function printHistory(selectPage, id, keyword) {
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
           str += `<tr class="tr-shadow">`;
-          str += "<td >" + value.regdate + "</td>";
-          str += "<td data-title='사용자'>" + value.username + "</td>";
-          str += "<td data-title='출발지'>" + value.dep + "</td>";
-          str += "<td data-title='도착지'>" + value.arvl + "</td>";
-          str += "<td data-title='출발일자'>" + value.dlvrdate + "</td>";
-          str += "<td data-title='도착일자'>" + value.arrivedate + "</td>";
-          str += "<td data-title='차량번호'>" + value.carname + "</td>";
+          str += "<td>" + value.regdate + "</td>";
+          str += "<td>" + value.username + "</td>";
+          str += "<td>" + value.dep + "</td>";
+          str += "<td>" + value.arvl + "</td>";
+          str += "<td>" + value.dlvrdate + "</td>";
+          str += "<td>" + value.arrivedate + "</td>";
+          str += "<td>" + value.carname + "</td>";
           str +=
-            "<td data-title='상세보기'><button class='btn btn-sm btn-outline-success'" +
+            "<td><button class='btn btn-sm btn-outline-success'" +
             "data-toggle='modal' data-target='#detailsModal'" +
             "onclick='getRoutes(" +
             JSON.stringify(value) +
@@ -165,12 +165,12 @@ function getRoutes(routes) {
       let count = 0;
       $.each(res.data, function(key, value) {
         str += `<tr id="ModalTr">`;
-        str += "<td >" + ++count + "</td>";
-        str += "<td data-title='출발지'>" + value.rdep + "</td>";
-        str += "<td data-title='도착지'>" + value.rarvl + "</td>";
-        str += "<td data-title='거리'>" + value.rdist + "Km" + "</td>";
-        str += "<td data-title='시간'>" + value.rtime + "</td>";
-        str += "<td data-title='비용'>" + value.rfee.addComma() + "원</td>";
+        str += "<td>" + ++count + "</td>";
+        str += "<td>" + value.rdep + "</td>";
+        str += "<td>" + value.rarvl + "</td>";
+        str += "<td>" + value.rdist + "Km" + "</td>";
+        str += "<td>" + value.rtime + "</td>";
+        str += "<td>" + value.rfee.addComma() + "원</td>";
         str += "</tr>";
       });
 
