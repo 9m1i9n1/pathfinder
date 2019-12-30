@@ -146,9 +146,8 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link"
-									href="#recentlyHistory" data-toggle="tab"
-									onclick="recentlyHistory()">
+									<a class="nav-link" href="#recentlyHistory" 
+									data-toggle="tab" onclick="recentlyHistory()">
 										나의 히스토리
 									</a>
 								</li>
@@ -158,14 +157,14 @@
 							<table class="table m-0">
 
 								<thead>
-									<tr>
-										<th></th>
-										<th>출발일자</th>
-										<th>도착일자</th>
-										<th>사용자</th>
-										<th>출발지</th>
-										<th>도착지</th>
-										<th>차량번호</th>
+									<tr> 
+										<th style="width:10%"></th>
+										<th style="width:19%">출발일자</th>
+										<th style="width:19%">도착일자</th>
+										<th style="width:12%">사용자</th>
+										<th style="width:13%">출발지</th>
+										<th style="width:13%">도착지</th>
+										<th style="width:15%">차량번호</th>
 									</tr>
 								</thead>
 								<tbody id="schedule">
