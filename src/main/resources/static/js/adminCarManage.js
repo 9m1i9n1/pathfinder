@@ -140,7 +140,7 @@ function carsearch(searchUrl, searchpage = 0) {
           str += `<tr class="tr-shadow"><td>` + value.carArea + "</td>";
           str += "<td data-title='차량번호'>" + value.carNumber + "</td>";
           str += "<td data-title='차종'>" + value.carName + "톤 카고</td>";
-          str += "<td data-title='연비(km)'>" + value.carFuel + "</td>";
+          str += "<td data-title='연비(km)'>" + value.carFuel + " km </td>";
           str +=
             "<td data-title='구입날짜'>" +
             value.carBuy.year +
