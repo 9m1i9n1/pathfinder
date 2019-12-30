@@ -140,7 +140,7 @@ public class HistoryService {
 		String username = securityContext.getAuthentication().getName();
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
-		List<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
+		List<HistoryTb> historys = historyRepository.findByUsername(username, pageable);
 		
 		if (historys.isEmpty()) {
 			return Header.ERROR("조회 결과가 없습니다.");

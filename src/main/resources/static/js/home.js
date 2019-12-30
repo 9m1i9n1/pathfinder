@@ -138,7 +138,6 @@ function recentlyHistory() {
       var str = "";
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
-          console.log(value);
 
           str += `<tr class="tr-shadow">`;
 
@@ -182,6 +181,7 @@ function todayHistory() {
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
           str += `<tr class="tr-shadow">`;
+          
           if (value.stat === -1)
             str +=
               '<td><span class="badge badge-secondary">발송완료</span></td>';
