@@ -3,12 +3,24 @@ $(document).ready(function() {
   treeLoading();
 });
 
+$(document).on("show.bs.modal", ".modal", function(event) {
+  var zIndex = 1040 + 10 * $(".modal:visible").length;
+  $(this).css("z-index", zIndex);
+  setTimeout(function() {
+    $(".modal-backdrop")
+      .not(".modal-stack")
+      .css("z-index", zIndex - 1)
+      .addClass("modal-stack");
+  }, 0);
+});
+
 // 검색 enter press
 function searchEnter() {
   if (window.event.keyCode == 13) {
     searchClick();
   }
 }
+
 // 검색버튼
 function searchClick() {
   userLoading();
@@ -227,7 +239,7 @@ function userPwReset(userIndex) {
   $.ajax({
     url: "/admin/usermanage",
     type: "patch",
-    data: userIndex,
+    data: { userIndex: userIndex },
     success: function(res) {
       userLoading();
 
@@ -410,8 +422,8 @@ function branchLoading(modal, selected) {
 }
 
 // 모달 내 패스워드 초기화 버튼 클릭
-modifyModal.find("#userPw").click(function() {
-  let userIndex = $("#userModifyForm #userIndexModify").val();
+$("#userPwModify").click(function() {
+  let userIndex = $("#userIndexModify").val();
 
   $("#checkOk").on("click", function() {
     userPwReset(userIndex);

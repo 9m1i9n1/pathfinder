@@ -69,12 +69,12 @@
 
 				<ul class="nav nav-pills">
 					<li class="nav-item"><a class="nav-link" href="#todayList"
-						id="will" onclick="getHistory(0, this.id)" data-toggle="tab">배송예정</a></li>
+						id="will" onclick="getHistory(0, this.id)" data-toggle="tab">운송예정</a></li>
 					<li class="nav-item"><a class="nav-link active" id="ing"
 						onclick="getHistory(0, this.id)" href="#afterList"
-						data-toggle="tab">배송중</a></li>
+						data-toggle="tab">운송중</a></li>
 					<li class="nav-item"><a class="nav-link" href="#beforeList"
-						id="pp" onclick="getHistory(0, this.id)" data-toggle="tab">배송완료</a></li>
+						id="pp" onclick="getHistory(0, this.id)" data-toggle="tab">운송완료</a></li>
 				</ul>
 			</div>
 

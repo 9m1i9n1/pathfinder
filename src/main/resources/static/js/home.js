@@ -19,14 +19,10 @@ function initDoughnut(res) {
       datasets: [
         {
           data: [],
-          backgroundColor: [
-            "rgb(255, 0, 0)",
-            "rgb(255, 165, 0)",
-            "rgb(0, 128, 0)"
-          ]
+          backgroundColor: ["#CF4444", "#EBBB54", "#94ba65"]
         }
       ],
-      labels: ["배송예정", "배송중", "배송완료"]
+      labels: ["운송예정", "운송중", "운송완료"]
     };
   } else {
     data = {
@@ -217,18 +213,17 @@ function todayHistory() {
 }
 
 function todayHistoryPercent() {
-	$.ajax({
-		url : "/home/todayHistoryPercent",
-		type : "get",
-		success : function(res) {
-			if (res !== -1) {
-				$("#todayPercent").html(res + '<small>%</small>');
-			} else {
-				$("#todayPercent").html(' -');
-			}
-			
-		}
-	});
+  $.ajax({
+    url: "/home/todayHistoryPercent",
+    type: "get",
+    success: function(res) {
+      if (res !== -1) {
+        $("#todayPercent").html(res + "<small>%</small>");
+      } else {
+        $("#todayPercent").html(" -");
+      }
+    }
+  });
 }
 
 function branchCount() {
