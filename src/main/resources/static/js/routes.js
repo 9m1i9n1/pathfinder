@@ -51,7 +51,7 @@ let printPlugin = L.easyPrint({
 }).addTo(map);
 
 var routeControl = L.Routing.control({
-  serviceUrl: "http://218.39.221.89:5000/route/v1",
+  serviceUrl: "http://13.209.199.103:5000/route/v1",
   routeWhileDragging: false,
   draggableWaypoints: false,
   lineOptions: {
@@ -770,8 +770,9 @@ const testFunc4 = async () => {
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
 
   await shuffle(selectedArray);
+
   let ran = random(15) + 5;
-  for (let i = 0; i < ran ; i++) {
+  for (let i = 0; i < ran; i++) {
     selectedArrayValue[i] = selectedArray[i].value;
   }
 
