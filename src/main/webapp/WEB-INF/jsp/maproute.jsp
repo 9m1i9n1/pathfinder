@@ -8,18 +8,15 @@
 <title>CSS</title>
 
 <!-- 지도 캡쳐 -->
-<script src="/static/route/js/print.js"></script>
-<script src="/static/route/js/domtoimage.js"></script>
+<script src="/static/js/route/print.js"></script>
+<script src="/static/js/route/domtoimage.js"></script>
+
 <!-- 한국 지도 표시 -->
-<script src="/static/route/js/proj4.js"></script>
-<script src="/static/route/js/proj4leaflet.js"></script>
-<script src="/static/route/js/Leaflet.KoreanTmsProviders.js"></script>
+<%-- <script src="/static/js/route/koreaMap/proj4.js"></script>
+<script src="/static/js/route/koreaMap/proj4leaflet.js"></script>
+<script src="/static/js/route/koreaMap/Leaflet.KoreanTmsProviders.js"></script> --%>
 
-<!-- 캘린더 표시 -->
-<link rel="stylesheet" href="/static/route/css/calendar.css" />
-<script src="/static/route/js/calendar.js"></script>
-
-<link href="/static/route/css/timeline.css" rel="stylesheet" />
+<link href="/static/css/route/timeline.css" rel="stylesheet" />
 </head>
 
 <body>

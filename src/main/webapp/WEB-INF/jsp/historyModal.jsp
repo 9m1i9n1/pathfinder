@@ -75,7 +75,7 @@
 
 					<div class ="col-md-12 table-responsive box-profile">
 					<table class="table table-hover " id="tableTest">
-						<thead>
+						<thead class="bg-lightgray">
 							<tr>
 								<th >번호</th>
 								<th >출발지</th>

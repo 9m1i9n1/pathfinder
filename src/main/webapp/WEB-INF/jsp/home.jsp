@@ -218,7 +218,7 @@
 											</div>
 											
 											<div
-												class="flex-fill card-pane-right pt-2 pb-2 pl-4 pr-4 bg-lightgray"
+												class="flex-fill card-pane-right pt-2 pb-2 pl-4 pr-4 homeGraph"
 												id="branchFeeChartP">
 												<!-- 여기가 옆쪽 -->
 												<canvas id="branchFeeChart"
@@ -236,9 +236,8 @@
 	</section>
 
 	<!--  한국지도 -->
-	<script type="text/javascript" src="/static/js/test/raphael_min.js"></script>
-	<script type="text/javascript"
-		src="/static/js/test/raphael_path_s.korea.js"></script>
+	<script type="text/javascript" src="/static/js/home/raphael_min.js"></script>
+	<script type="text/javascript" src="/static/js/home/raphael_path_s.korea.js"></script>
 </body>
-<script src="/static/js/home.js"></script>
+<script src="/static/js/home/home.js"></script>
 </html>

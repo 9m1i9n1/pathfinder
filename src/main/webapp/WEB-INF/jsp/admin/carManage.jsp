@@ -12,9 +12,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   <head>
     <title>차량 관리 페이지</title>
 
-    <!-- 캘린더 표시 -->
-    <link rel="stylesheet" href="/static/route/css/calendar.css" />
-    <script src="/static/route/js/calendar.js"></script>
   </head>
   <body>
     <section class="content-header">

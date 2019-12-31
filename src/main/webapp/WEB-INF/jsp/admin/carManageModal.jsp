@@ -61,6 +61,7 @@
 					<div class="formCheck" id="serverFormCheck"></div>
 				</div>
 				<div class="card-footer text-right">
+					<button type="button" class="btn btn-success" id="InsertTest">테스트</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 					<button type="submit" class="btn btn-success" id="InsertBtn">등록</button>
 		 		</div>

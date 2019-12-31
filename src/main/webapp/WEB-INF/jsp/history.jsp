@@ -18,11 +18,7 @@
 <script
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
-<!-- 캘린더 표시 -->
-<link rel="stylesheet" href="/static/route/css/calendar.css" />
-<script src="/static/route/js/calendar.js"></script>
-
-<link rel="stylesheet" href="static/css/print.css">
+<link rel="stylesheet" href="static/css/history/print.css">
 </head>
 <body>
 	<section class="content-header">

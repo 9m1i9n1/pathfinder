@@ -3,17 +3,6 @@ $(document).ready(function() {
   treeLoading();
 });
 
-$(document).on("show.bs.modal", ".modal", function(event) {
-  var zIndex = 1040 + 10 * $(".modal:visible").length;
-  $(this).css("z-index", zIndex);
-  setTimeout(function() {
-    $(".modal-backdrop")
-      .not(".modal-stack")
-      .css("z-index", zIndex - 1)
-      .addClass("modal-stack");
-  }, 0);
-});
-
 // 검색 enter press
 function searchEnter() {
   if (window.event.keyCode == 13) {
@@ -692,3 +681,25 @@ $("form").each(function() {
     }
   });
 });
+
+$("#InsertTest").on('click', function() {
+	$("#userIdAdd").val("testuser");
+	$("#userNameAdd").val("홍길동");
+	$("#userEmailAdd").val("testuser@mail.com");
+	$("#userPhoneAdd").val("010-1234-5678");
+	
+    areaLoading(insertModal);
+    $("#areaIndexAdd").val(1);
+    $("#areaIndexAdd").trigger("change");
+
+    branchLoading(insertModal, 1);
+    $("#branchIndexAdd").val(3);
+    $("#branchIndexAdd").trigger("change");
+	
+	$("#userPositionAdd").val("사원");
+	$("#userPositionAdd").trigger("change");
+	
+	insertModal
+    .find("[name=userAuth][value=false]")
+    .prop("checked", true);
+})

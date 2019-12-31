@@ -31,7 +31,6 @@ function searchClick() {
   url = url + "?searchType=" + $("select#searchType").val();
   url = url + "&keyword=" + $("#keyword").val();
   url = url + "&selectedArea=" + treeId;
-  console.log(url);
   branchsearch(url);
 }
 
@@ -42,7 +41,6 @@ function resetvalid(formName) {
   for (var i = 0; i < length; i++) {
     sclass = $(formName)[0][i].getAttribute("id");
     sclass = "#" + sclass;
-    console.log();
     $(sclass).removeClass("is-invalid");
     $(sclass).removeClass("is-valid");
   }
@@ -133,7 +131,6 @@ function addressFind() {
       $("#branch_Addr").val(addr);
       $("#branch_Addr").blur();
 
-      console.log(addr.substr(0, 2));
       $("#branch_Area").val(addr.substr(0, 2));
       $("#branch_Area").blur();
     }
@@ -161,8 +158,6 @@ $.fn.serializeObject = function() {
 // 검색뷰
 
 function branchsearch(searchUrl, searchpage = 0) {
-  console.log("여기");
-  console.log(searchUrl);
   $.ajax({
     type: "GET",
     url: "/admin/branchmanage/search" + searchUrl + "&page=" + searchpage,
@@ -253,7 +248,6 @@ function branchinsert(insertData, barea) {
       var treeId = sessionStorage.getItem("treeId");
       if (treeId !== "company:1") {
         let Bname = areaNameTrans(barea);
-        console.log(Bname);
 
         var url = "";
         url =
@@ -299,7 +293,6 @@ function branchupdate(updateData, barea) {
 
       if (treeId !== "company:1") {
         let Bname = areaNameTrans(barea);
-        console.log(Bname);
         var url = "";
 
         url =
@@ -341,7 +334,6 @@ function branchdelete(idx, bname, barea) {
       }
       if (!!barea) {
         let Bname = areaNameTrans(barea);
-        console.log(Bname);
         var url = "";
         var treeId = sessionStorage.getItem("treeId");
         url =
@@ -429,7 +421,6 @@ function treeLoading() {
     .on("select_node.jstree", function(e, data) {
       var id = data.instance.get_node(data.selected).id;
       sessionStorage.setItem("treeId", id);
-      console.log(id, "wlwlwlwl");
       let vid = id.slice(5);
       if (vid != "ny:1") {
         if (data.node.children.length > 0) {
@@ -461,8 +452,6 @@ function treeLoading() {
 }
 
 $("#branch_Addr").on("propertychange change keyup paste input", function() {
-  console.log("change");
-
   var $el = $(":focus");
   $(this).blur();
   $el.focus();
@@ -517,7 +506,6 @@ var branchInsertValid = $("#branchInsertform").validate({
   errorPlacement: function(error, element) {},
 
   invalidHandler: function(form, validator) {
-    console.log("invaild 접속");
     var errors = validator.numberOfInvalids();
     if (errors) {
       validator.errorList[0].element.focus();
@@ -525,11 +513,9 @@ var branchInsertValid = $("#branchInsertform").validate({
   },
   submitHandler: function(form) {
     event.preventDefault();
-    console.log("인서트 접속");
     var formData = $("[name=branchInsertform]").serializeObject();
     let Barea = formData.areaIndex;
     let geo = geocoding(formData.branchAddr);
-    console.log(geo);
     formData.branchLat = geo.y;
     formData.branchLng = geo.x;
     formData.areaIndex = areaNameTrans(Barea);
@@ -540,13 +526,11 @@ var branchInsertValid = $("#branchInsertform").validate({
   },
   // 무조건 들어갈 때 실행됨 빠질 때 실행 되도록 해야함.
   highlight: function(element, errorClass, validClass) {
-    console.log("2", $(element)[0]);
     $(element)
       .addClass(errorClass)
       .removeClass(validClass);
   },
   unhighlight: function(element, errorClass, validClass) {
-    console.log("1", $(element)[0]);
     $(element)
       .removeClass(errorClass)
       .addClass(validClass);
@@ -602,7 +586,6 @@ var branchUpdateValid = $("#branchUpdateForm").validate({
   errorPlacement: function(error, element) {},
 
   invalidHandler: function(form, validator) {
-    console.log("invaild 접속");
     var errors = validator.numberOfInvalids();
     if (errors) {
       validator.errorList[0].element.focus();
@@ -610,9 +593,7 @@ var branchUpdateValid = $("#branchUpdateForm").validate({
   },
   submitHandler: function(form) {
     event.preventDefault();
-    console.log("인서트 접속");
     var formData1 = $("[name=branchUpdateForm]").serializeObject();
-    console.log(formData1);
 
     let Barea = formData1.branchArea;
     branchupdate(JSON.stringify(formData1), Barea);
@@ -632,3 +613,13 @@ var branchUpdateValid = $("#branchUpdateForm").validate({
       .addClass(validClass);
   }
 });
+
+$("#branchInsertTest").on('click', function() {
+	$("#branchName").val("더존비즈온");
+	$("#branchOwner").val("김용우");
+	$("#branchValue").val(43000);
+	$("#branch_Addr").val("강원 춘천시 남산면 수동리 749");
+	$("#branchDaddr").val("더존IT그룹 강촌캠퍼스");
+	$("#branch_Area").val("강원");
+	$("#branchPhone").val("02-6233-3000");
+})

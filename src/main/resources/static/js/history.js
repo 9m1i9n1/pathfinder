@@ -128,7 +128,7 @@ function deleteCheckModal(history) {
   });
 
   $("#checkTitle").text("확인");
-  $("#checkMessage").text("해당 기록를 삭제하시겠습니까?");
+  $("#checkMessage").text("해당 기록을 삭제하시겠습니까?");
   $("#checkModal").modal("show");
 }
 
@@ -165,7 +165,7 @@ function getRoutes(routes) {
       let count = 0;
       $.each(res.data, function(key, value) {
         str += `<tr id="ModalTr">`;
-        str += "<td data-title='번호'>" + ++count + "</td>";
+        str += "<td data-title='번호'><b>" + ++count + "</b></td>";
         str += "<td data-title='출발지'>" + value.rdep + "</td>";
         str += "<td data-title='도착지'>" + value.rarvl + "</td>";
         str += "<td data-title='거리'>" + value.rdist + " km" + "</td>";
@@ -189,25 +189,15 @@ function getRoutes(routes) {
       $("#routesListBody").html(str);
 
       detailsModal.find("#mapImg").attr("src", routes.imgSrc);
-
       detailsModal.find("#totalTime").text(routes.time);
-
       detailsModal.find("#regdate").text(routes.regdate);
-
       detailsModal.find("#username").text(routes.username);
-
       detailsModal.find("#carname").text(routes.carname);
-
       detailsModal.find("#dep").text(routes.dep);
-
       detailsModal.find("#arvl").text(routes.arvl);
-
       detailsModal.find("#sortType").text(routes.sortType + "순");
-
       detailsModal.find("#dist").text(routes.dist.addComma() + " km");
-
       detailsModal.find("#dist").text(routes.dist.addComma() + " km");
-
       detailsModal.find("#fee").text(routes.fee.addComma() + " 원");
     }
   });
@@ -226,11 +216,17 @@ $("#printBtn").on("click", function() {
   $("#printSection").html("");
   $("#printSection").append(domClone);
 
-  let tbody = $("#printSection").find('tbody').html();
-  
-  $("#printSection").find("thead").after(tbody);
-  $("#printSection").find('.scrollbar-outer').remove();
-  
+  let tbody = $("#printSection")
+    .find("tbody")
+    .html();
+
+  $("#printSection")
+    .find("thead")
+    .after(tbody);
+  $("#printSection")
+    .find(".scrollbar-outer")
+    .remove();
+
   window.print();
 });
 

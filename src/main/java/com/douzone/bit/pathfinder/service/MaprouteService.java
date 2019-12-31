@@ -55,32 +55,21 @@ public class MaprouteService {
 
 		// Recursive
 		Recursive costRecursive = new Recursive(createMap.getCostMap());
-		System.out.println("#cost");
-		createMap.printMap();
-		
 		Recursive distRecursive = new Recursive(createMap.getDistanceMap());
-		System.out.println("#dist");
-		createMap.printMap();
 
 		Map<Integer, Double> sortCostIndexList = costRecursive.getTour();
 		Map<Integer, Double> sortDistIndexList = distRecursive.getTour();
 
 		Map<String, List<RouteSortResponse>> sortMarkerList = new LinkedHashMap<>();
-		
-		System.out.println("sortCostIndexList - " + sortCostIndexList);
-		System.out.println("sortDistIndexList - " + sortDistIndexList);
-		
+
 		sortMarkerList.put("sortCostMarkerList", createMap.getCostSortList(sortCostIndexList));
 		sortMarkerList.put("sortDistMarkerList", createMap.getDistSortList(sortDistIndexList));
 
-		System.out.println("sortCostIndexList - " + createMap.getCostSortList(sortCostIndexList));
-		System.out.println("sortDistIndexList - " + createMap.getDistSortList(sortDistIndexList));
 		return Header.OK(sortMarkerList);
 	}
 
 	// route정보 Insert
 	public Header<String> insertPlan(RouteInsertRequest routeList) {
-		System.out.println("1" + routeList.getSortType());
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -112,9 +101,6 @@ public class MaprouteService {
 	public Header<List<String>> getReserveDate(Long carIndex) {
 		LocalDateTime startDate = LocalDate.now().atTime(0, 0);
 		LocalDateTime endDate = startDate.plusMonths(3);
-
-		System.out.println(startDate);
-		System.out.println(endDate);
 		
 		List<HistoryTb> historyList = historyRepository.findAllByCarnameAndDate(carIndex, startDate, endDate);
 		
