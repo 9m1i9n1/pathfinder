@@ -770,8 +770,8 @@ const testFunc4 = async () => {
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
 
   await shuffle(selectedArray);
-
-  for (let i = 0; i < 20; i++) {
+  let ran = random(15) + 5;
+  for (let i = 0; i < ran ; i++) {
     selectedArrayValue[i] = selectedArray[i].value;
   }
 
