@@ -692,3 +692,25 @@ $("form").each(function() {
     }
   });
 });
+
+$("#InsertTest").on('click', function() {
+	$("#userIdAdd").val("testuser");
+	$("#userNameAdd").val("홍길동");
+	$("#userEmailAdd").val("testuser@mail.com");
+	$("#userPhoneAdd").val("010-1234-5678");
+	
+    areaLoading(insertModal);
+    $("#areaIndexAdd").val(1);
+    $("#areaIndexAdd").trigger("change");
+
+    branchLoading(insertModal, 1);
+    $("#branchIndexAdd").val(3);
+    $("#branchIndexAdd").trigger("change");
+	
+	$("#userPositionAdd").val("사원");
+	$("#userPositionAdd").trigger("change");
+	
+	insertModal
+    .find("[name=userAuth][value=false]")
+    .prop("checked", true);
+})

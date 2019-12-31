@@ -613,3 +613,13 @@ var branchUpdateValid = $("#branchUpdateForm").validate({
       .addClass(validClass);
   }
 });
+
+$("#branchInsertTest").on('click', function() {
+	$("#branchName").val("더존비즈온");
+	$("#branchOwner").val("김용우");
+	$("#branchValue").val(43000);
+	$("#branch_Addr").val("강원 춘천시 남산면 수동리 749");
+	$("#branchDaddr").val("더존IT그룹 강촌캠퍼스");
+	$("#branch_Area").val("강원");
+	$("#branchPhone").val("02-6233-3000");
+})

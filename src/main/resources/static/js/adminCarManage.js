@@ -560,3 +560,16 @@ var carInsertValid = $("#carCreateForm").validate({
       .addClass(validClass);
   }
 });
+
+$("#InsertTest").on('click', function() {
+    $("#carArea").val(1);
+    $("#carArea").trigger("change");
+    $("#carNumber").val("01가1234");
+    
+    $("#carName").val(2);
+    $("#carName").trigger("change");
+    
+    $("#carFuel").val(7);
+    
+    $("#carBuy").val("2020-01-08");
+})
