@@ -6,45 +6,88 @@ $(document).ready(() => {
 $("#testButton").on("click", async (e) => {
 	testFunc();
 });
+async function testFunc() {
+	   let totalAreaLength = $("#depSelect")[0].length - 1;
+	   let start = Math.floor(Math.random() * totalAreaLength)+1;
+	    console.log("start - ", start);
+	    $("#depSelect").val(start).trigger("change.select2");
 
-function testFunc() {
-	let selectedArray = [];
-	let totalAreaLength = $("#depSelect")[0].length - 1;
-	let start = Math.floor(Math.random() * totalAreaLength)+1;
-	 
-	 $("#depSelect").val(start).trigger("change.select2");
+	    let selectData =$("#depSelect").select2("data")[0];
+	    let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
+	    
+	    markerGroup.clearLayers();
+	    markerAdd(selectData, icon);
 
-	 let selectData =$("#depSelect").select2("data")[0];
-	 let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
-	 console.log("selectData", selectData);
-	 markerGroup.clearLayers();
-	 markerAdd(selectData, icon);
+	    await carlist(depCarlist, selectData.areaIndex)
 
-	 carlist(depCarlist, selectData.areaIndex)
-	 selectedArray.push(start);
-	 
-	 setTimeout(function() {
-			testFunc2();
-		 }, 1000);
-}
 
-function testFunc2() {
-	$('#btn1').trigger("click");
-	 let totalCarLength = $("#carSelect")[0].length -1;
-	let selectedCar = Math.floor(Math.random() * totalCarLength) + 1; 
-	 let carValue = $("#carSelect")[0][selectedCar].value;
-	 $("#carSelect").val(carValue).trigger("change.select2");
-	console.log("asd", $("#carSelect").select2("data")[0]);
-	 let car = $("#carSelect").select2("data")[0];			 
-	 selectCar(car);
-	 
-	setTimeout(function() {
-		testFunc3();
-	},1000);
+	    $('#btn1').trigger("click");
+	    setTimeout(function() {
+	         testFunc2();
+	       }, 1000);
+	}
+
+async function testFunc2() {
+    let totalCarLength = $("#carSelect")[0].length -1;
+   let selectedCar = Math.floor(Math.random() * totalCarLength) + 1; 
+    let carValue = $("#carSelect")[0][selectedCar].value;
+    
+    $("#carSelect").val(carValue).trigger("change.select2");
+
+    let car = $("#carSelect").select2("data")[0];          
+    await selectCar(car);
+    
+    $('#btn2').trigger("click");
+    
+   setTimeout(function() {
+      testFunc3();
+   }, 1000);
 }
 
 function testFunc3(){
-	$('#btn2').trigger("click");
+	let selectedDay = Math.floor(Math.random() * 90) + 1; 
+	let date = moment().add(selectedDay, "days");
+	
+    $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
+    $('#btn3').trigger("click");
+    
+    setTimeout(function() {    	
+        testFunc4();
+     }, 1000);
+}
+
+function testFunc4(){
+	let cnt = 0;
+	let selectedArray = $.extend(true, [], $("#branchSelect")[0]);
+	selectedArray.splice(0,1);
+	console.log(selectedArray)
+	let selectedArrayValue=[];
+	let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
+
+	selectedArray = shuffle(selectedArray);
+	
+	for(let i = 0; i < 20; i++){		
+		selectedArrayValue[i] = selectedArray[i].value;
+	}
+	$("#branchSelect").val(selectedArrayValue).trigger("change.select2");
+	
+	let selectData = $("#branchSelect").select2("data");
+	console.log("selectData", selectData);
+	for(let i = 0; i < selectData.length; i++){
+		markerAdd(selectData[i], icon);
+	}
+		
+}
+
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+    	
+        const j = Math.floor(Math.random() * (i + 1));
+        
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    
+    return a;
 }
 // 다음 지도 사용
 // var map = new L.Map("map", {
@@ -140,7 +183,6 @@ let routeList;
 // ! 로딩 함수 구간 =====================
 const showSpinner = (element, text) => {
   element.loading({
-    stoppable: true,
     theme: "light",
     message: text,
     zIndex: 1e9
@@ -162,7 +204,6 @@ const loadCalendar = res => {
 
   let calendarSize = $("#headingDate").width();
   let disableList = res.data;
-  console.log("disableList - ", disableList);
 
   $("#calendar").calendar({
     width: calendarSize,
@@ -217,7 +258,7 @@ const depBranchlist = res => {
 };
 
 const branchlist = handleFunc => {
-  $.ajax({
+ return $.ajax({
     url: "/maproute/branchLoding",
     type: "get"
   }).then(res => {
@@ -227,7 +268,7 @@ const branchlist = handleFunc => {
 
 // 차량 선택 Draw
 const carlist = (handleFunc, areaIndex) => {
-  $.ajax({
+  return $.ajax({
     url: "/maproute/carLoading",
     data: { areaIndex },
     type: "get"
@@ -339,7 +380,6 @@ const drawTimeline = routeInfo => {
 // ! 선택 Event 구간 ===================
 // 출발지 선택시 Event
 $("#depSelect").on("select2:select", e => {
-	console.log("test", e);
   let selectData = e.params.data;
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
   markerGroup.clearLayers();
@@ -350,7 +390,7 @@ $("#depSelect").on("select2:select", e => {
   $("#branchSelect").empty();
 });
 const selectCar = (selectData) => {
-	  $.ajax({
+	  return $.ajax({
 		    url: "/maproute/getReserve.do",
 		    data: { carIndex: selectData.carIndex },
 		    type: "get"
@@ -361,7 +401,6 @@ const selectCar = (selectData) => {
 // 차량 선택시 Event
 $("#carSelect").on("select2:select", e => {
   let selectData = e.params.data;
-
   selectCar(selectData);
 });
 
@@ -370,7 +409,6 @@ $("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
-
   markerAdd(selectData, icon);
 });
 

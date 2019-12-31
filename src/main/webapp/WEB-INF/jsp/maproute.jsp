@@ -147,7 +147,7 @@
 										data-toggle="collapse" data-target="#col-selectDate"
 										aria-expanded="false" aria-controls="col-selectDate">
 										이전</button>
-									<button id="btn4" class="btn bg-olive" id="resultButton" type="button">
+									<button class="btn bg-olive" id="resultButton" type="button">
 										다음</button>
 								</div>
 							</div>
