@@ -168,7 +168,7 @@ function branchsearch(searchUrl, searchpage = 0) {
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
           str +=
-            `<tr class="tr-shadow"><td data-title='지역'>` +
+            `<tr class="tr-shadow"><td >` +
             value.area +
             "</td>";
           str += '<td data-title="지점명">' + value.branchName + "</td>";
@@ -361,7 +361,7 @@ function branchlist(selectPage) {
       var str = "";
       $.each(res.data, function(key, value) {
         str +=
-          `<tr class="tr-shadow"><td data-title='지역'>` + value.area + "</td>";
+          `<tr class="tr-shadow"><td >` + value.area + "</td>";
         str += '<td data-title="지점명">' + value.branchName + "</td>";
         str += '<td data-title="지점장">' + value.branchOwner + "</td>";
         str += '<td data-title="주소">' + value.branchAddr + "</td>";
