@@ -128,7 +128,7 @@ function deleteCheckModal(history) {
   });
 
   $("#checkTitle").text("확인");
-  $("#checkMessage").text("해당 기록를 삭제하시겠습니까?");
+  $("#checkMessage").text("해당 기록을 삭제하시겠습니까?");
   $("#checkModal").modal("show");
 }
 

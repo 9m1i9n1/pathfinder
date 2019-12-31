@@ -10,16 +10,17 @@ pageEncoding="UTF-8"%>
 
 <title>PathFinder</title>
 <link rel="shortcut icon" href="/static/img/favicon.ico">
+
 <!-- jQuery -->
-<script src="/static/plugins/jquery/jquery.min.js"></script>
+<script src="/static/js/public/jquery.js"></script>
 
 <!-- Bootstrap -->
-<script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/js/public/bootstrap.bundle.js"></script>
 
 <!-- Font Awesome Icons -->
 <link
   rel="stylesheet"
-  href="/static/plugins/fontawesome-free/css/all.min.css"
+  href="/static/css/public/fontawesome-free/css/all.css"
 />
 
 <!-- Google Font: Source Sans Pro -->
@@ -27,6 +28,30 @@ pageEncoding="UTF-8"%>
   href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean"
   rel="stylesheet"
 />
+
+<!-- Theme style -->
+<script src="/static/dist/js/adminlte.js"></script>
+<link rel="stylesheet" href="/static/dist/css/adminlte.css" />
+
+<!-- ChartJS -->
+<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+
+<%-- bootstrap-select --%>
+<link rel="stylesheet" href="/static/css/public/select2-bootstrap4.css">
+<link href="/static/css/public/select2.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+<%-- paging --%>
+<link rel="stylesheet" href="/static/css/public/paging.css" />
+<script src="/static/js/public/paging.js"></script>
+
+<!-- JsTree -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/jstree.min.js"></script>
+<link rel="stylesheet" href="/static/css/jstree/style.css" />
+
+<%-- daum map --%>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- LeafLet Library -->
 <link
@@ -38,53 +63,32 @@ pageEncoding="UTF-8"%>
 <!-- Leaflet routing-machine -->
 <link
   rel="stylesheet"
-  href="/static/route/css/leaflet-routing-machine.css"
+  href="/static/css/route/leaflet-routing-machine.css"
 />
-<script src="/static/route/js/leaflet-routing-machine.js"></script>
-
-<!-- Theme style -->
-<script src="/static/dist/js/adminlte.js"></script>
-<link rel="stylesheet" href="/static/dist/css/adminlte.css" />
-
-<!-- ChartJS -->
-<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-
-<%-- bootstrap-select --%>
-<link rel="stylesheet" href="/static/css/select2-bootstrap4.css">
-<link href="/static/css/select2.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
-
-<%-- paging --%>
-<link rel="stylesheet" href="/static/css/paging.css" />
-<script src="/static/js/paging.js"></script>
-
-<!-- JsTree -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/jstree.min.js"></script>
-<link rel="stylesheet" href="/static/css/jstree/style.css" />
-
-<%-- daum map --%>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/static/js/route/leaflet-routing-machine.js"></script>
 
 <%-- jquery validation --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
 
 <%-- moment --%>
-<script src="/static/route/js/moment.js"></script>
+<script src="/static/js/public/moment.js"></script>
+
+<%-- Calendar --%>
+<link rel="stylesheet" href="/static/css/public/calendar.css" />
+<script src="/static/js/public/calendar.js"></script>
 
 <%-- jquery Loading --%>
-<link rel="stylesheet" href="/static/css/loading.css" />
-<script src="/static/js/loading.js"></script>
+<link rel="stylesheet" href="/static/css/public/loading.css" />
+<script src="/static/js/public/loading.js"></script>
 
 <%-- scrollBar --%>
-<link rel="stylesheet" href="/static/css/scroll.css" />
-<script src="/static/js/jquery.scrollbar.js"></script>
+<link rel="stylesheet" href="/static/css/public/jquery.scrollbar.css" />
+<script src="/static/js/public/jquery.scrollbar.js"></script>
 
 <!-- Alert -->
-<link href="/static/css/alert.css" rel="stylesheet" />
+<link href="/static/css/public/alert.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<%-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --%>
 
 <script type="text/javascript">
   window.getCookie = function(name) {
@@ -93,6 +97,17 @@ pageEncoding="UTF-8"%>
       return match[2];
     }
   };
+
+  $(document).on("show.bs.modal", ".modal", function(event) {
+  var zIndex = 1040 + 10 * $(".modal:visible").length;
+  $(this).css("z-index", zIndex);
+  setTimeout(function() {
+    $(".modal-backdrop")
+      .not(".modal-stack")
+      .css("z-index", zIndex - 1)
+      .addClass("modal-stack");
+    }, 0);
+  });
 
   $(document).ready(function() {
     $.ajaxSetup({

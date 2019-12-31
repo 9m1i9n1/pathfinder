@@ -3,17 +3,6 @@ $(document).ready(function() {
   treeLoading();
 });
 
-$(document).on("show.bs.modal", ".modal", function(event) {
-  var zIndex = 1040 + 10 * $(".modal:visible").length;
-  $(this).css("z-index", zIndex);
-  setTimeout(function() {
-    $(".modal-backdrop")
-      .not(".modal-stack")
-      .css("z-index", zIndex - 1)
-      .addClass("modal-stack");
-  }, 0);
-});
-
 // 검색 enter press
 function searchEnter() {
   if (window.event.keyCode == 13) {

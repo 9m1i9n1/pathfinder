@@ -236,9 +236,8 @@
 	</section>
 
 	<!--  한국지도 -->
-	<script type="text/javascript" src="/static/js/test/raphael_min.js"></script>
-	<script type="text/javascript"
-		src="/static/js/test/raphael_path_s.korea.js"></script>
+	<script type="text/javascript" src="/static/js/home/raphael_min.js"></script>
+	<script type="text/javascript" src="/static/js/home/raphael_path_s.korea.js"></script>
 </body>
-<script src="/static/js/home.js"></script>
+<script src="/static/js/home/home.js"></script>
 </html>

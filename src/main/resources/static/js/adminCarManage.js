@@ -223,7 +223,7 @@ function deleteCheckModal(idx, carname, carea) {
   });
 
   $("#checkTitle").text("확인");
-  $("#checkMessage").text("해당 차량를 삭제하시겠습니까?");
+  $("#checkMessage").text("해당 차량을 삭제하시겠습니까?");
   $("#checkModal").modal("show");
 }
 

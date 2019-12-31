@@ -22,5 +22,5 @@ public class HistoryRoutesResponse {
 	private String rdep;
 	private String rarvl;
 	private Integer rfee;
-//	private List<MongoRoutesDTO> detail; 
+
 }
