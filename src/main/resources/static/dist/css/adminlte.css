@@ -28595,15 +28595,15 @@ a.text-muted:hover {
 }
 
 .tableScroll td {
-	width: 15%;
+	width: 140px;
 }
 
 .tableScroll thead th:last-child {
-	width: 200px;
+	width: 170px;
 }
 
 .tableScroll td:last-child {
-	width: 14%; 
+	width: 140px; 
 }
 
 
@@ -28721,10 +28721,6 @@ svg {
 		left: -9999px;
 	}
  
- 	.tableScroll td {
-		width: auto;
-	}
-	
 	.table tr { border: 1px solid #ccc; }
  
 	.table td { 
