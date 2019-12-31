@@ -28571,68 +28571,53 @@ a.text-muted:hover {
   padding: 0.7vh 0px;
 }
 
-.tableScroll table {
-	width: 100%; /* 140px * 5 column + 16px scrollbar width */
-	border-spacing: 0;
-}
-
 .tableScroll tbody, .tableScroll thead tr {
 	display: block;
 }
-
-.tableScroll tbody {
-	height: 150px;
-	overflow-y: auto;
-	overflow-x: hidden;
+.tableScroll thead {
+	left: -12px;
 }
 
-.tableScroll tbody tr {
-	width: 100%;
-}
-
- .tableScroll thead th {
-	width: 16%;
+.tableScroll thead th {
+	width: 17.66%;
 }
 
 .tableScroll td {
-	width: 140px;
+	width: 18%;
+}
+
+.tableScroll thead th:first-child {
+	width: 15.2%;
+
+}
+
+.tableScroll td:first-child {
+	width: 15.2%;
 }
 
 .tableScroll thead th:last-child {
-	width: 170px;
-}
-
-.tableScroll td:last-child {
-	width: 140px; 
-}
-
-
-.boardHeaderColor-red {
-	border-radius: 3px; border-top-style: solid; border-top-color: #dd4b39;
-}
-.boardHeaderColor-green {
-	border-radius: 3px; border-top-style: solid; border-top-color: #00a65a;
-}
-.boardHeaderColor-blue {
-	border-radius: 3px; border-top-style: solid; border-top-color: #0073b7;
-}
-
-.myScrollableBlock {
-  display: block;
-  height: 620px;
-  overflow: auto;
+	width: 120px;
 }
 
 .myScrollableBlockModal {
 	height: 150px;
-	width : 100%;
+	width: 100%;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 
+.myScrollableBlock {
+	display: block;
+	height: 620px;
+	overflow: auto;
+}
+
+.homeGraph {
+  border-top: 3px dotted rgba(220,220,220,0.5);
+  background-color: rgba(220,220,220,0.2);
+}
+
 .bg-lightgray {
-  /* background-color: #2b4e72; */
-  
   background-color: rgba(220,220,220,0.2);
 }
 
@@ -28640,67 +28625,6 @@ svg {
   display: block;
   margin: auto;
 }
-
-
-/*  @media screen and (max-width: 500px) {
-
-.theadblock { background-color: #327a81; color: white; font-size: 1em; padding: 0 0 5px 70px; text-align: left; text-transform: uppercase;}
-
-.table, tr, td { display: block; }
-
-.table td:first-child { position: absolute; top: 50%; -webkit-transform: translateY(-50%); border-top: 0px; margin: 0px 5px 0px 0px; padding: 0px 10px 4px 0px;  transform: translateY(-50%); }
-
-.table td:not(:first-child) { clear: both; margin-left: 80px; padding: 5px 0px 4px 60px;  position: relative; text-align: center;  width:300px; }
-
-.table td:not(:first-child):before { color: #91ced4; content: ''; display: block; left: 0; position: absolute; text-align: left; }
-
-.table td:last-child { text-align: left;}
-
-.branchCss td:nth-child(2):before { content: '지점명'; }
-
-.branchCss td:nth-child(3):before { content: '지점장'; }
-
-.branchCss td:nth-child(4):before { content: '주소'; }
-
-.branchCss td:nth-child(5):before { content: '전화번호'; }
-
-.branchCss td:nth-child(6):before { content: '운반비'; }
-
-.branchCss td:nth-child(7):before { content: '수정/삭제'; }
-
-
-
-.userCss td:nth-child(2):before { content: '지점'; }
-
-.userCss td:nth-child(3):before { content: '직책'; }
-
-.userCss td:nth-child(4):before { content: '아이디'; }
-
-.userCss td:nth-child(5):before { content: '이메일'; }
-
-.userCss td:nth-child(6):before { content: '전화번호'; }
-
-.userCss td:nth-child(7):before { content: '권한'; }
-
-.userCss td:nth-child(8):before { content: '수정/삭제'; }
-
-
-.carCss td:nth-child(2):before { content: '차량번호'; }
-
-.carCss td:nth-child(3):before { content: '차종'; }
-
-.carCss td:nth-child(4):before { content: '연비(km)'; }
-
-.carCss td:nth-child(5):before { content: '구입날짜'; }
-
-.carCss td:nth-child(6):before { content: '삭제'; }
-
- 
-
-.table tr { padding: 10px 0; position: relative;  }
-
-.table tr:first-child { display: none;  }
-}  */
 
 @media only screen and (max-width: 800px) {
 	

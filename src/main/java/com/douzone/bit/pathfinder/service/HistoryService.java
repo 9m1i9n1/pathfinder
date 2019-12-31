@@ -23,8 +23,6 @@ import com.douzone.bit.pathfinder.model.entity.mongodb.HistoryTb;
 import com.douzone.bit.pathfinder.model.entity.mongodb.RoutesTb;
 import com.douzone.bit.pathfinder.model.network.Header;
 import com.douzone.bit.pathfinder.model.network.Pagination;
-import com.douzone.bit.pathfinder.model.network.response.AdminUserResponse;
-import com.douzone.bit.pathfinder.model.network.response.HierarchyResponse;
 import com.douzone.bit.pathfinder.model.network.response.HistoryResponse;
 import com.douzone.bit.pathfinder.model.network.response.HistoryRoutesResponse;
 import com.douzone.bit.pathfinder.repository.CarRepository;
@@ -140,7 +138,7 @@ public class HistoryService {
 		String username = securityContext.getAuthentication().getName();
 
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
-		List<HistoryTb> historys = historyRepository.findByUsernameLike(username, pageable);
+		List<HistoryTb> historys = historyRepository.findByUsername(username, pageable);
 		
 		if (historys.isEmpty()) {
 			return Header.ERROR("조회 결과가 없습니다.");

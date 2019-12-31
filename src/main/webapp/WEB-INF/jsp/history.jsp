@@ -18,11 +18,7 @@
 <script
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
-<!-- 캘린더 표시 -->
-<link rel="stylesheet" href="/static/route/css/calendar.css" />
-<script src="/static/route/js/calendar.js"></script>
-
-<link rel="stylesheet" href="static/css/print.css">
+<link rel="stylesheet" href="static/css/history/print.css">
 </head>
 <body>
 	<section class="content-header">
@@ -69,12 +65,12 @@
 
 				<ul class="nav nav-pills">
 					<li class="nav-item"><a class="nav-link" href="#todayList"
-						id="will" onclick="getHistory(0, this.id)" data-toggle="tab">배송예정</a></li>
+						id="will" onclick="getHistory(0, this.id)" data-toggle="tab">운송예정</a></li>
 					<li class="nav-item"><a class="nav-link active" id="ing"
 						onclick="getHistory(0, this.id)" href="#afterList"
-						data-toggle="tab">배송중</a></li>
+						data-toggle="tab">운송중</a></li>
 					<li class="nav-item"><a class="nav-link" href="#beforeList"
-						id="pp" onclick="getHistory(0, this.id)" data-toggle="tab">배송완료</a></li>
+						id="pp" onclick="getHistory(0, this.id)" data-toggle="tab">운송완료</a></li>
 				</ul>
 			</div>
 

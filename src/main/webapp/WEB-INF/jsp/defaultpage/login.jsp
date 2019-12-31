@@ -1,18 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c"%> <%@taglib uri="http://www.springframework.org/security/tags"
-prefix="sec"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PATHFINDER :: LOGIN</title>
+    <title>PathFinder :: LOGIN</title>
     <!-- CSS -->
     <link rel="shortcut icon" href="/static/img/favicon.ico" />
+
     <link
       rel="stylesheet"
       href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"
     />
+
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"

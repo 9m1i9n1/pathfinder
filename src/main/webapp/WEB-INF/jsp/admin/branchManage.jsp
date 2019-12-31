@@ -90,7 +90,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
               </div>
 
 
-              <div class="card-body box-profile table-responsive">
+              <div class="card-body table-responsive p-0">
                 <table class="table table-hover" id="tableTest">
                   <thead>
                     <tr>

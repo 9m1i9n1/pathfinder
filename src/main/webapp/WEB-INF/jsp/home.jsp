@@ -22,7 +22,7 @@
 							class="fas fa-shipping-fast"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">오늘의 배송 현황</span> <span
+							<span class="info-box-text">오늘의 운송현황</span> <span
 								class="info-box-number" id="todayPercent"> </span>
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 							<div class="card">
 								<div class="card-header">
 									<h5 class="card-title">
-										<i class="fas fa-truck mr-1"></i>배송 현황(최근 한달)
+										<i class="fas fa-truck mr-1"></i>운송 현황(최근 한달)
 									</h5>
 
 									<div class="card-tools">
@@ -142,13 +142,12 @@
 								<li class="nav-item ">
 									<a class="nav-link active " href="#todayHistory"
 									data-toggle="tab" onclick="todayHistory()">
-										진행중인 배송
+										진행중인 운송
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link"
-									href="#recentlyHistory" data-toggle="tab"
-									onclick="recentlyHistory()">
+									<a class="nav-link" href="#recentlyHistory" 
+									data-toggle="tab" onclick="recentlyHistory()">
 										나의 히스토리
 									</a>
 								</li>
@@ -158,14 +157,14 @@
 							<table class="table m-0">
 
 								<thead>
-									<tr>
-										<th></th>
-										<th>출발일자</th>
-										<th>도착일자</th>
-										<th>사용자</th>
-										<th>출발지</th>
-										<th>도착지</th>
-										<th>차량번호</th>
+									<tr> 
+										<th style="width:10%"></th>
+										<th style="width:19%">출발일자</th>
+										<th style="width:19%">도착일자</th>
+										<th style="width:12%">사용자</th>
+										<th style="width:13%">출발지</th>
+										<th style="width:13%">도착지</th>
+										<th style="width:15%">차량번호</th>
 									</tr>
 								</thead>
 								<tbody id="schedule">
@@ -193,6 +192,7 @@
 										</button>
 									</div>
 								</div>
+								
 								<div class="card-body p-0">
 									<div class="row">
 										<div class="col-md-12">
@@ -218,13 +218,13 @@
 											</div>
 											
 											<div
-												class="flex-fill card-pane-right elevation-1 pl-3 pr-3"
+												class="flex-fill card-pane-right pt-2 pb-2 pl-4 pr-4 homeGraph"
 												id="branchFeeChartP">
 												<!-- 여기가 옆쪽 -->
 												<canvas id="branchFeeChart"
 													class="chartjs-render-monitor col-md-8"></canvas>
 											</div>
-										</div>
+						 				</div>
 									</div>
 								</div>
 							</div>
@@ -236,9 +236,8 @@
 	</section>
 
 	<!--  한국지도 -->
-	<script type="text/javascript" src="/static/js/test/raphael_min.js"></script>
-	<script type="text/javascript"
-		src="/static/js/test/raphael_path_s.korea.js"></script>
+	<script type="text/javascript" src="/static/js/home/raphael_min.js"></script>
+	<script type="text/javascript" src="/static/js/home/raphael_path_s.korea.js"></script>
 </body>
-<script src="/static/js/home.js"></script>
+<script src="/static/js/home/home.js"></script>
 </html>

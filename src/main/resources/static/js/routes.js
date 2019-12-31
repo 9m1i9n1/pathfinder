@@ -3,10 +3,8 @@ $(document).ready(() => {
   branchlist(depBranchlist);
 });
 
-$("#testButton").on("click", e => {
-  $("#depSelect")
-    .val("652")
-    .trigger("change");
+$("#testButton").on("click", () => {
+  testFunc();
 });
 
 // 다음 지도 사용
@@ -103,7 +101,6 @@ let routeList;
 // ! 로딩 함수 구간 =====================
 const showSpinner = (element, text) => {
   element.loading({
-    stoppable: true,
     theme: "light",
     message: text,
     zIndex: 1e9
@@ -125,7 +122,6 @@ const loadCalendar = res => {
 
   let calendarSize = $("#headingDate").width();
   let disableList = res.data;
-  console.log(res);
 
   $("#calendar").calendar({
     width: calendarSize,
@@ -157,18 +153,16 @@ const loadCalendar = res => {
 };
 
 $("select").on("select2:open", function() {
-	  $(".select2-results__options").addClass("scrollbar-outer");
-	  $('.select2-results__options').scrollbar();
+  $(".select2-results__options").addClass("scrollbar-outer");
+  $(".select2-results__options").scrollbar();
 });
 
 // 출발지 선택 Draw
 const depBranchlist = res => {
   res = res.data;
-
   let branchData = $.map(res, obj => {
     obj.id = obj.id || obj.branchIndex;
     obj.text = obj.text || obj.branchName;
-
     return obj;
   });
 
@@ -182,7 +176,7 @@ const depBranchlist = res => {
 };
 
 const branchlist = handleFunc => {
-  $.ajax({
+  return $.ajax({
     url: "/maproute/branchLoding",
     type: "get"
   }).then(res => {
@@ -192,7 +186,7 @@ const branchlist = handleFunc => {
 
 // 차량 선택 Draw
 const carlist = (handleFunc, areaIndex) => {
-  $.ajax({
+  return $.ajax({
     url: "/maproute/carLoading",
     data: { areaIndex },
     type: "get"
@@ -256,8 +250,6 @@ const selectBranchlist = res => {
 
 // 타임라인 그리기
 const drawTimeline = routeInfo => {
-  console.log("#routeInfo", routeInfo);
-
   let sumTime = 0;
 
   let str = "<ul>";
@@ -307,7 +299,6 @@ const drawTimeline = routeInfo => {
 $("#depSelect").on("select2:select", e => {
   let selectData = e.params.data;
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
-
   markerGroup.clearLayers();
   markerAdd(selectData, icon);
 
@@ -315,18 +306,19 @@ $("#depSelect").on("select2:select", e => {
 
   $("#branchSelect").empty();
 });
-
-// 차량 선택시 Event
-$("#carSelect").on("select2:select", e => {
-  let selectData = e.params.data;
-
-  $.ajax({
+const selectCar = selectData => {
+  return $.ajax({
     url: "/maproute/getReserve.do",
     data: { carIndex: selectData.carIndex },
     type: "get"
   }).then(res => {
     loadCalendar(res);
   });
+};
+// 차량 선택시 Event
+$("#carSelect").on("select2:select", e => {
+  let selectData = e.params.data;
+  selectCar(selectData);
 });
 
 // 경유지 선택시 Event
@@ -334,7 +326,6 @@ $("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
 
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
-
   markerAdd(selectData, icon);
 });
 
@@ -548,9 +539,8 @@ const carculateData = lrmData => {
     routeInfo.routes = $.extend(true, [], routes);
 
     routeInfo.sortType = switchState ? "거리" : "비용";
-    console.log(compareFee);
     routeInfo.percent = (compareFee / fee) * 100 - 100;
-//    738308 a +  a2.2 = 754579 - 2.2 = 
+    // 738308 a + a2.2 = 754579 - 2.2 =
     routeList = $.extend(true, {}, routeInfo);
 
     resolve(routeInfo);
@@ -645,7 +635,7 @@ const insertPlan = (req, imgSrc) => {
   let plan = $.extend(true, {}, req);
 
   plan.imgSrc = imgSrc;
-  //! 데이터 등록하는 부분. 현재 편의상 주석처리
+  // ! 데이터 등록하는 부분. 현재 편의상 주석처리
   $.ajax({
     url: "/maproute/insertPlan.do",
     type: "post",
@@ -654,12 +644,12 @@ const insertPlan = (req, imgSrc) => {
   }).then(res => {
     hideSpinner($("body"));
     $("#successModal").modal({ backdrop: "static", keyboard: false });
-    //    alert(res.data);
-    //    location.reload();
+    // alert(res.data);
+    // location.reload();
   });
 };
 
-//! 유틸 부분 =====================
+// ! 유틸 부분 =====================
 Number.prototype.addComma = function() {
   var regexp = /\B(?=(\d{3})+(?!\d))/g;
   return this.toString().replace(regexp, ",");
@@ -699,4 +689,99 @@ const ramdomName = function() {
   resultName = name1 + name2 + ".jpeg";
 
   return resultName;
+};
+
+function shuffle(arrays) {
+  let size = arrays.length;
+
+  for (let i = size - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arrays[i], arrays[j]] = [arrays[j], arrays[i]];
+  }
+}
+
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function random(max) {
+  return Math.floor(Math.random() * max) + 1;
+}
+
+//! 테스트 부분 ==========================
+const testFunc = async () => {
+  await testFunc1();
+  await testFunc2();
+  await testFunc3();
+  await testFunc4();
+};
+
+const testFunc1 = async () => {
+  let totalAreaLength = $("#depSelect")[0].length - 1;
+  let start = random(totalAreaLength);
+
+  $("#depSelect")
+    .val(start)
+    .trigger("change.select2");
+
+  let selectData = $("#depSelect").select2("data")[0];
+  let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
+
+  markerGroup.clearLayers();
+  markerAdd(selectData, icon);
+
+  await carlist(depCarlist, selectData.areaIndex);
+
+  $("#btn1").trigger("click");
+  await timeout(1500);
+};
+
+const testFunc2 = async () => {
+  let totalCarLength = $("#carSelect")[0].length - 1;
+  let selectedCar = random(totalCarLength);
+  let carValue = $("#carSelect")[0][selectedCar].value;
+
+  $("#carSelect")
+    .val(carValue)
+    .trigger("change.select2");
+
+  let car = $("#carSelect").select2("data")[0];
+  await selectCar(car);
+
+  $("#btn2").trigger("click");
+  await timeout(1500);
+};
+
+const testFunc3 = async () => {
+  let selectedDay = random(90);
+  let date = moment().add(selectedDay, "days");
+
+  $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
+
+  $("#btn3").trigger("click");
+  await timeout(1500);
+};
+
+const testFunc4 = async () => {
+  let selectedArray = $.extend(true, [], $("#branchSelect")[0]);
+  selectedArray.splice(0, 1);
+
+  let selectedArrayValue = [];
+  let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
+
+  await shuffle(selectedArray);
+  let ran = random(15) + 5;
+  for (let i = 0; i < ran ; i++) {
+    selectedArrayValue[i] = selectedArray[i].value;
+  }
+
+  $("#branchSelect")
+    .val(selectedArrayValue)
+    .trigger("change.select2");
+
+  let selectData = $("#branchSelect").select2("data");
+
+  for (let i = 0; i < selectData.length; i++) {
+    markerAdd(selectData[i], icon);
+  }
 };

@@ -9,6 +9,7 @@ function searchEnter() {
     searchClick();
   }
 }
+
 // 검색버튼
 function searchClick() {
   userLoading();
@@ -227,7 +228,7 @@ function userPwReset(userIndex) {
   $.ajax({
     url: "/admin/usermanage",
     type: "patch",
-    data: userIndex,
+    data: { userIndex: userIndex },
     success: function(res) {
       userLoading();
 
@@ -410,8 +411,8 @@ function branchLoading(modal, selected) {
 }
 
 // 모달 내 패스워드 초기화 버튼 클릭
-modifyModal.find("#userPw").click(function() {
-  let userIndex = $("#userModifyForm #userIndexModify").val();
+$("#userPwModify").click(function() {
+  let userIndex = $("#userIndexModify").val();
 
   $("#checkOk").on("click", function() {
     userPwReset(userIndex);
@@ -680,3 +681,25 @@ $("form").each(function() {
     }
   });
 });
+
+$("#InsertTest").on('click', function() {
+	$("#userIdAdd").val("testuser");
+	$("#userNameAdd").val("홍길동");
+	$("#userEmailAdd").val("testuser@mail.com");
+	$("#userPhoneAdd").val("010-1234-5678");
+	
+    areaLoading(insertModal);
+    $("#areaIndexAdd").val(1);
+    $("#areaIndexAdd").trigger("change");
+
+    branchLoading(insertModal, 1);
+    $("#branchIndexAdd").val(3);
+    $("#branchIndexAdd").trigger("change");
+	
+	$("#userPositionAdd").val("사원");
+	$("#userPositionAdd").trigger("change");
+	
+	insertModal
+    .find("[name=userAuth][value=false]")
+    .prop("checked", true);
+})

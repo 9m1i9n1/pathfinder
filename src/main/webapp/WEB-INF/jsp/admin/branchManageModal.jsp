@@ -73,6 +73,8 @@
 						type="text" name="branchLng">
 			</div>
 			<div class="card-footer text-right">
+				<input type="button" name="branchInsertBtn"
+					id="branchInsertTest" class="btn btn-success" value="테스트">
 				<input type="button" class="btn btn btn-secondary" data-dismiss="modal"
 					value="취소">
 				<input type="submit" name="branchInsertBtn"
