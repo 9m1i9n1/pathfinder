@@ -22,7 +22,6 @@ function searchClick() {
   url = url + "?searchType=" + $("select#searchType").val();
   url = url + "&keyword=" + $("#keyword").val();
   url = url + "&selectedArea=" + treeId;
-  console.log(url);
   carsearch(url);
 }
 
@@ -33,7 +32,6 @@ function resetvalid(formName) {
   for (var i = 0; i < length; i++) {
     sclass = $(formName)[0][i].getAttribute("id");
     sclass = "#" + sclass;
-    console.log();
     $(sclass).removeClass("is-invalid");
     $(sclass).removeClass("is-valid");
   }
@@ -190,7 +188,6 @@ function carinsert(insertData, carea) {
     contentType: "application/json",
     success: function(data) {
       var treeId = sessionStorage.getItem("treeId");
-      console.log(55555);
       if (treeId !== "company:1") {
         var url = "";
         url =
@@ -239,7 +236,6 @@ function cardelete(idx, carname, carea) {
     success: function() {
       var treeId = sessionStorage.getItem("treeId");
       if (treeId !== "company:1") {
-        console.log(carea);
         let Cname = areaNameTrans(carea);
         var url = "";
         url =
@@ -438,8 +434,8 @@ function arrayToObject(array) {
 }
 
 $("select").on("select2:open", function() {
-	  $(".select2-results__options").addClass("scrollbar-outer");
-	  $('.select2-results__options').scrollbar();
+  $(".select2-results__options").addClass("scrollbar-outer");
+  $(".select2-results__options").scrollbar();
 });
 
 function areaLoading(modal) {
@@ -547,10 +543,7 @@ var carInsertValid = $("#carCreateForm").validate({
   // valid 성공시
   submitHandler: function(form) {
     event.preventDefault();
-    console.log("인서트 접속");
     var formData = $("[name=carCreateForm]").serializeObject();
-    console.log(formData, "허허허");
-    console.log(formData.carArea, "하하하");
     carinsert(JSON.stringify(formData), formData.carArea);
     $("#insertModal").modal("hide");
     carInsertValid.resetForm();

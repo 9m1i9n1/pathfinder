@@ -139,12 +139,6 @@ public class CreateMap {
 	}
 
 	public void printMap() {
-		// for (int i = 0; i < map.length; i++) {
-		// for (int j = 0; j < map.length; j++) {
-		// System.out.println("i : " + i + " / j : " + j + " / map : " + map[i][j]);
-		// }
-		// }
-
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map.length; j++) {
 				System.out.printf("%f\t\t", map[i][j]);
