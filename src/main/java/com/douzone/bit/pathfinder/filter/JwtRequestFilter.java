@@ -102,6 +102,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			response.addCookie(cookie);
 		} catch (IllegalArgumentException e) {
 			System.out.println("Unable to get JWT Token");
+		} catch (NullPointerException e) {
+			System.out.println("Illegal Access.");
+			
+			Cookie cookie = new Cookie("token", null);
+			cookie.setMaxAge(0);
+
+			response.addCookie(cookie);
 		}
 	}
 }

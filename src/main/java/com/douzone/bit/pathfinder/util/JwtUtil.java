@@ -64,7 +64,7 @@ public class JwtUtil {
 
 	public Boolean validateToken(String token, SignDTO userDetails) {
 		final String userName = extractUserId(token);
-
+		
 		return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
 	}
 }
