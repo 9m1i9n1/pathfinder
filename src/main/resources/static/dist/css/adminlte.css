@@ -28675,6 +28675,26 @@ svg {
 	Label the data
 	*/
 	.table td:before { content: attr(data-title); }
+	
+	.input-group select{
+	height: 30px;
+	width: 90px;
+	}
+	
+	
+	
+	/* .toggle-group label{
+	width: 130px; 
+	} */
+	
+	.input-group-sm > .form-control:not(textarea), .input-group-sm > .custom-select {
+    height: calc(1.8125rem + 2px);
+    width: 100px;
+	}
+	
+	.toggle {
+	float: right;
+	}
 }
 
 .card-rmwl.card-outline-tabs a:hover {

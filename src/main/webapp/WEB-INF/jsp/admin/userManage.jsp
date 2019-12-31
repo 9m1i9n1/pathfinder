@@ -53,14 +53,14 @@
 						</h3>
 
 						<div class="card-tools">
-							<div class="input-group input-group-sm">
+							<div class="input-group input-group-sm col-sm-12">
 
-								<select class=" col-4 small " name="searchType" id="searchType">
+								<select class=" col-sm-4 small " name="searchType" id="searchType">
 									<option value="name" class="small">이름</option>
 									<option value="position" class="small">직책</option>
 								</select> <input type="search" name="keyword" id="keyword"
 									onkeypress="searchEnter()"
-									class="col-md-7 form-control form-control-navbar"
+									class="col-sm-7 form-control form-control-navbar"
 									placeholder="Search" />
 								<div class="input-group-append">
 									<button onclick="searchClick()" type="submit"
