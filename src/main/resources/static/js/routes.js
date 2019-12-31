@@ -59,14 +59,16 @@ function testFunc3(){
 function testFunc4(){
 	let cnt = 0;
 	let selectedArray = $.extend(true, [], $("#branchSelect")[0]);
+	
 	selectedArray.splice(0,1);
-	console.log(selectedArray)
+	
 	let selectedArrayValue=[];
 	let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
-
-	selectedArray = shuffle(selectedArray);
+	let time = Math.floor(Math.random() * 15) + 5; 
 	
-	for(let i = 0; i < 20; i++){		
+	selectedArray = shuffle(selectedArray);
+	console.log("time - ", time);
+	for(let i = 0; i < time; i++){		
 		selectedArrayValue[i] = selectedArray[i].value;
 	}
 	$("#branchSelect").val(selectedArrayValue).trigger("change.select2");
