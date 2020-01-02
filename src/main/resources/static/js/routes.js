@@ -710,6 +710,9 @@ function random(max) {
 
 //! 테스트 부분 ==========================
 const testFunc = async () => {
+  $("#showSortDist").prop("checked", false);
+  routeControl.getPlan().setWaypoints([]);
+  
   await testFunc1();
   await testFunc2();
   await testFunc3();
