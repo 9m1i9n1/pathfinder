@@ -28695,6 +28695,10 @@ svg {
 	.toggle {
 	float: right;
 	}
+	
+	.tableScroll td {
+     width: auto; 
+}
 }
 
 .card-rmwl.card-outline-tabs a:hover {
