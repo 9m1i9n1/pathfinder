@@ -203,8 +203,8 @@ form.was-validated
   color: #f8f9fa;
 }
 
-.select2-container--bootstrap4 .select2-results__option[role="group"] {
-  padding: 0;
+.select2-container--bootstrap4 .select2-results__option[role="option"] {
+  padding-left: 20px;
 }
 
 .select2-container--bootstrap4 .select2-results > .select2-results__options {
@@ -215,7 +215,8 @@ form.was-validated
 .select2-container--bootstrap4 .select2-results__group {
   padding: 6px;
   display: list-item;
-  color: #6c757d;
+  color: #4a4d4d;
+  font-weight: bold;
 }
 
 .select2-container--bootstrap4 .select2-selection__clear {

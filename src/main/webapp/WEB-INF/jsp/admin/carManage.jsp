@@ -91,7 +91,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
             <div class="card-body table-responsive p-0 height700px">
               <table class="table table-hover carCss" id="tableTest">
-                <thead>
+                <thead class="bg-lightgray">
                   <tr>
                     <th style="width: 15%">지역</th>
                     <th style="width: 20%">차량번호</th>
