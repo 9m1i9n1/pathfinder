@@ -42,7 +42,7 @@
 		<div class="card height100">
 			<div class="card-header">
 				<div class="row">
-				<ul class="nav nav-pills col-sm-7">
+				<ul class="nav nav-pills col-sm-8">
 					<li class="nav-item"><a class="nav-link" href="#todayList"
 						id="will" onclick="getHistory(0, this.id)" data-toggle="tab">운송예정</a></li>
 					<li class="nav-item"><a class="nav-link active" id="ing"
@@ -52,13 +52,13 @@
 						id="pp" onclick="getHistory(0, this.id)" data-toggle="tab">운송완료</a></li>
 				</ul>
 				
-					<div class="card-tools col-sm-5">
+					<div class="card-tools col-sm-4">
 					<div class="row">
 						<div class="col-sm-4">
 							<input id="myhistory" type="checkbox" data-toggle="toggle"
 								data-size="small" data-on="내 예약약" data-off="전체" data-onstyle="info"/>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-sm-6">
 							<div class=" input-group input-group-sm col-sm-12">
 								<input class="form-control form-control-navbar " type="search"
 									placeholder="출발날짜 선택" id="keyword" autocomplete="off" readonly />
