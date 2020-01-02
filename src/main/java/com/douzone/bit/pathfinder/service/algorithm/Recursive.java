@@ -2,6 +2,8 @@ package com.douzone.bit.pathfinder.service.algorithm;
 
 import java.util.*;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class Recursive {
 
 	private final int N;
@@ -40,7 +42,7 @@ public class Recursive {
 			solve();
 
 		long end = System.currentTimeMillis();
-		System.out.println("실행 시간(초) : " + (end - start) / 1000.0);
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName() + " / "+ "실행 시간(초) : " + (end - start) / 1000.0);
 
 		return tour;
 	}
