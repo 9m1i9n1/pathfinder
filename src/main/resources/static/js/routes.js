@@ -22,7 +22,7 @@ $("#testButton").on("click", () => {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map", { minZoom: 7 })
+let map = L.map("map", { minZoom: 6 })
   .setView([36.1358642, 128.0785804], 7)
   .on("easyPrint-finished", e => {
     insertImage(e.event)
@@ -712,7 +712,7 @@ function random(max) {
 const testFunc = async () => {
   $("#showSortDist").prop("checked", false);
   routeControl.getPlan().setWaypoints([]);
-  
+
   await testFunc1();
   await testFunc2();
   await testFunc3();
@@ -735,6 +735,7 @@ const testFunc1 = async () => {
 
   await carlist(depCarlist, selectData.areaIndex);
 
+  await timeout(800);
   $("#btn1").trigger("click");
   await timeout(1500);
 };
@@ -751,6 +752,7 @@ const testFunc2 = async () => {
   let car = $("#carSelect").select2("data")[0];
   await selectCar(car);
 
+  await timeout(800);
   $("#btn2").trigger("click");
   await timeout(1500);
 };
@@ -761,6 +763,7 @@ const testFunc3 = async () => {
 
   $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
 
+  await timeout(800);
   $("#btn3").trigger("click");
   await timeout(1500);
 };

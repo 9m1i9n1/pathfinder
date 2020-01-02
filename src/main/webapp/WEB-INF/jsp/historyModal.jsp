@@ -29,6 +29,7 @@
 								<label for="branchOwner" class="col-sm-4 col-form-label-sm">
 									<i class="fa fa-user" aria-hidden="true"></i>&nbsp 사용자
 								</label>
+								
 								<div class="col-sm-8">
 									<h2 class="form-control" id="username"></h2>
 								</div>
