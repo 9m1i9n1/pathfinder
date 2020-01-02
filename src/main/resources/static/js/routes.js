@@ -160,19 +160,26 @@ $("select").on("select2:open", function() {
 // 출발지 선택 Draw
 const depBranchlist = res => {
   res = res.data;
+  
+  let area=['서울','부산','대구','인천','광주','대전','울산','경기','강원','충북','충남','전북','전남','경북','경남','제주특별자치도','세종특별자치시'];
+  let finalBranchData = $.map(area, i => { return {text:i, children:[]}} );
   let branchData = $.map(res, obj => {
     obj.id = obj.id || obj.branchIndex;
     obj.text = obj.text || obj.branchName;
+    finalBranchData[obj.areaIndex-1].children.push(obj);
     return obj;
   });
-
+  
   $("#depSelect").select2({
     width: "100%",
     placeholder: "출발지 선택",
-    data: branchData,
+    data: finalBranchData,
     theme: "bootstrap4",
-    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
-  });
+    sorter: data => {
+    	for(let i =0; i < data.length; i++) data[i].children.sort((a, b) => a.text.localeCompare(b.text))
+    	return data;
+    }
+    });
 };
 
 const branchlist = handleFunc => {
@@ -180,6 +187,7 @@ const branchlist = handleFunc => {
     url: "/maproute/branchLoding",
     type: "get"
   }).then(res => {
+	  console.log("handleFunc - ", handleFunc);
     handleFunc(res);
   });
 };
@@ -708,22 +716,20 @@ function random(max) {
   return Math.floor(Math.random() * max) + 1;
 }
 
-//! 테스트 부분 ==========================
+// ! 테스트 부분 ==========================
 const testFunc = async () => {
-  await testFunc1();
+  await testFunc1(); // 실행
   await testFunc2();
   await testFunc3();
   await testFunc4();
 };
-
 const testFunc1 = async () => {
   let totalAreaLength = $("#depSelect")[0].length - 1;
   let start = random(totalAreaLength);
 
   $("#depSelect")
-    .val(start)
+    .val(start) 
     .trigger("change.select2");
-
   let selectData = $("#depSelect").select2("data")[0];
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
 
