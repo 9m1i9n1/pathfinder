@@ -126,7 +126,7 @@
 					<div class="card card-rmwl card-outline card-outline-tabs">
 						<div class="card-header">
 							<div class="card-title">
-								<i class="far fa-calendar-alt mr-1"></i>오늘의 스케쥴
+								<i class="far fa-calendar-alt mr-1"></i>스케줄
 							</div>
 							<div class="card-tools">
 								<a href="/history" class="btn btn-sm btn-secondary">전체보기</a>
@@ -142,7 +142,7 @@
 								<li class="nav-item ">
 									<a class="nav-link active " href="#todayHistory"
 									data-toggle="tab" onclick="todayHistory()">
-										진행중인 운송
+										오늘의 스케줄
 									</a>
 								</li>
 								<li class="nav-item">
