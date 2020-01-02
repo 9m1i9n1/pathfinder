@@ -22,7 +22,7 @@ $("#testButton").on("click", () => {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map", { minZoom: 7 })
+let map = L.map("map", { minZoom: 6 })
   .setView([36.1358642, 128.0785804], 7)
   .on("easyPrint-finished", e => {
     insertImage(e.event)
