@@ -51,7 +51,7 @@ let printPlugin = L.easyPrint({
 }).addTo(map);
 
 var routeControl = L.Routing.control({
-  serviceUrl: "http://13.209.199.103:5000/route/v1",
+  serviceUrl: "http://d2919a13.ngrok.io/route/v1",
   routeWhileDragging: false,
   draggableWaypoints: false,
   lineOptions: {

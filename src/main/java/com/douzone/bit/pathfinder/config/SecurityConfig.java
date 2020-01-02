@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login").permitAll().failureUrl("/login").and().logout().logoutSuccessUrl("/login")
 				.logoutUrl("/logout").deleteCookies("token").permitAll();
 
+		http.headers().frameOptions().disable();
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 

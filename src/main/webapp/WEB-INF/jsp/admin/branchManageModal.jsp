@@ -33,7 +33,7 @@
 						<label for="b3" class="col-sm-3 col-form-label-sm">운반비</label>
 						<div class="col-sm-8">
 							<input type="number" class="form-control" name="branchValue"
-								id="branchValue" placeholder="5천원 ~ 10만원">
+								id="branchValue" placeholder="5천원 ~ 10만원" step=100>
 						</div>
 					</div>
 					<div class="form-group row">
