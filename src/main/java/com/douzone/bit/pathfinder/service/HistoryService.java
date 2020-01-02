@@ -151,9 +151,11 @@ public class HistoryService {
 
 	public Header<List<HistoryResponse>> readTodayHistoryUseHome() {
 		LocalDateTime currentDate = LocalDateTime.now();
-
+		LocalDateTime todayStartDate = LocalDateTime.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth(),0 ,0 ,0);
+		LocalDateTime todayEndDate = LocalDateTime.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth()+1 ,0 ,0 ,0);
 		Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
-		List<HistoryTb> historys = historyRepository.findAllByIngList(pageable, currentDate);
+		List<HistoryTb> historys = historyRepository.findTodayList(pageable, todayEndDate, todayStartDate);
+		//List<HistoryTb> historys = historyRepository.findAllByIngList(pageable, currentDate);
 		if (historys.isEmpty()) {
 			return Header.ERROR("조회 결과가 없습니다.");
 		}
@@ -209,6 +211,8 @@ public class HistoryService {
 		String carNumber = carRepository.findByCarIndex(history.getCarIndex()).getCarNumber();
 
 		LocalDateTime currentDate = LocalDateTime.now();
+		LocalDateTime todayEndDate = LocalDateTime.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth()+1 ,0 ,0 ,0);
+		
 		LocalDateTime start = history.getDlvrdate();// 출발
 		LocalDateTime end = history.getArrivedate();// 도착
 
@@ -218,6 +222,10 @@ public class HistoryService {
 		} else if (currentDate.isAfter(end)) {
 			stat = -1;
 		}
+		if(currentDate.isAfter(start) && todayEndDate.isBefore(end)) {
+			stat = 2;
+		}
+		
 
 		HistoryResponse response = HistoryResponse.builder().id(history.getId())
 				.regdate(history.getRegdate().format(formatter)).username(history.getUsername()).carname(carNumber)
