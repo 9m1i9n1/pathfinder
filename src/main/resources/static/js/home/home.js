@@ -48,7 +48,7 @@ function initDoughnut(res) {
       },
       title: {
         display: true,
-        text: "배송현황"
+        text: "운송현황"
       },
       animation: {
         animateScale: true,
@@ -186,11 +186,11 @@ function todayHistory() {
             str +=
               '<td><span class="badge badge-secondary">도착완료</span></td>';
           else if (value.stat === 0)
-            str += '<td><span class="badge badge-success">도착예정</span></td>';
+            str += '<td><span class="badge badge-danger">도착예정</span></td>';
           else if (value.stat === 1)
-            str += '<td><span class="badge badge-warning">출발예정</span></td>';
+            str += '<td><span class="badge badge-warning">운송예정</span></td>';
           else if (value.stat ===2)
-        	str += '<td><span class="badge badge-warning">출발완료</span></td>';
+        	str += '<td><span class="badge badge-success">운송중</span></td>';
           str += "<td data-title='출발일자'>" + value.dlvrdate + "</td>";
           str += "<td data-title='도착일자'>" + value.arrivedate + "</td>";
           str += "<td data-title='사용자'>" + value.username + "</td>";

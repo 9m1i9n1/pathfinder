@@ -77,7 +77,7 @@
 
 									<div class="card-tools">
 										<input id="myDelivery" type="checkbox" data-toggle="toggle"
-											data-size="small" data-on="내 배송송" data-off="전체" data-onstyle="info"/>
+											data-size="small" data-on="내 운송송" data-off="전체" data-onstyle="info"/>
 										<button type="button" class="btn btn-tool"
 											data-card-widget="collapse">
 											<i class="fas fa-minus"></i>
@@ -97,21 +97,21 @@
 											</p>
 
 											<div class="progress-group">
-												배송예정 <span id="willProgress" class="float-right"></span>
+												운송예정 <span id="willProgress" class="float-right"></span>
 												<div class="progress progress-sm active">
 													<div id="willDiv" class="progress-bar bg-danger"></div>
 												</div>
 											</div>
 
 											<div class="progress-group">
-												배송중 <span id="ingProgress" class="float-right"></span>
+												운송중 <span id="ingProgress" class="float-right"></span>
 												<div class="progress progress-sm active">
 													<div id="ingDiv" class="progress-bar bg-warning"></div>
 												</div>
 											</div>
 
 											<div class="progress-group">
-												<span class="progress-text">배송완료</span> <span
+												<span class="progress-text">운송완료</span> <span
 													id="ppProgress" class="float-right"></span>
 												<div class="progress progress-sm active">
 													<div id="ppDiv" class="progress-bar bg-success"></div>
