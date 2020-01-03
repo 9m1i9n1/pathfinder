@@ -329,16 +329,23 @@ function branchdelete(idx, bname, barea) {
       if (barea === "세종특별자치시") {
         barea = "세종";
       }
-      if (!!barea) {
-        let Bname = areaNameTrans(barea);
-        var url = "";
-        var treeId = sessionStorage.getItem("treeId");
+      var treeId = sessionStorage.getItem("treeId");
+      if (treeId==="company:1") {
+    	  console.log("company:1",treeId)
+       /* let Bname = areaNameTrans(barea);
+        let url = "";
         url =
-          url + "?searchType=area&keyword=" + Bname + "&selectedArea=" + treeId;
-
-        branchsearch(url);
-      } else {
+          url + "?searchType=area&keyword=" + Bname + "&selectedArea=" + treeId;*/
+        console.log("1")
         branchlist();
+        /*branchsearch(url);*/
+        console.log("2")
+      } else {
+    	  console.log("3")
+    	   let Bname = areaNameTrans(barea);
+        let url1 = "?searchType=area&keyword=" + Bname + "&selectedArea=" + treeId;
+        branchsearch(url1);
+    	  console.log("4")
       }
 
       $("#updateTitle").text("삭제 성공");
