@@ -39,26 +39,27 @@ public class MaprouteService {
 
 	@Autowired
 	CarRepository carRepository;
-
-	private CreateMap createMap;
+	
 
 	// sortData 처리
 	// ! 맵 두개받아오면서 쓰레기 코드됨ㅠ 리팩토링 필수.
 	public Header<Map<String, List<RouteSortResponse>>> markerSort(List<Marker> markerList, Long carIndex) {
 		CarTb car = carRepository.findByCarIndex(carIndex);
 
-		createMap = new CreateMap(markerList, car.getCarName(), car.getCarFuel());
+		CreateMap createMap = new CreateMap(markerList, car.getCarName(), car.getCarFuel());
 
 		// Iterative
 		// Iterative costIterative = new Iterative(createMap.getCostMap());
 		// Iterative distIterative = new Iterative(createMap.getDistanceMap());
-
+		
 		// Recursive
 		Recursive costRecursive = new Recursive(createMap.getCostMap());
 		Recursive distRecursive = new Recursive(createMap.getDistanceMap());
 
 		Map<Integer, Double> sortCostIndexList = costRecursive.getTour();
-		Map<Integer, Double> sortDistIndexList = distRecursive.getTour();
+		Map<Integer, Double> sortDistIndexList = distRecursive.getTour(); 
+		
+		System.out.println();
 
 		Map<String, List<RouteSortResponse>> sortMarkerList = new LinkedHashMap<>();
 

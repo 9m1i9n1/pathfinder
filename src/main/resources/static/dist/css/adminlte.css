@@ -28588,6 +28588,7 @@ a.text-muted:hover {
 
 .tableScroll thead th:first-child {
 	width: 15.2%;
+
 }
 
 .tableScroll td:first-child {
@@ -28644,10 +28645,6 @@ svg {
 		left: -9999px;
 	}
  
- 	.tableScroll td {
-		width: auto;
-	}
-	
 	.table tr { border: 1px solid #ccc; }
  
 	.table td { 
@@ -28678,6 +28675,30 @@ svg {
 	Label the data
 	*/
 	.table td:before { content: attr(data-title); }
+	
+	.input-group select{
+	height: 30px;
+	width: 90px;
+	}
+	
+	
+	
+	/* .toggle-group label{
+	width: 130px; 
+	} */
+	
+	.input-group-sm > .form-control:not(textarea), .input-group-sm > .custom-select {
+    height: calc(1.8125rem + 2px);
+    width: 100px;
+	}
+	
+	.toggle {
+	float: right;
+	}
+	
+	.tableScroll td {
+     width: auto; 
+}
 }
 
 .card-rmwl.card-outline-tabs a:hover {

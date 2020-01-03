@@ -25,7 +25,7 @@ $("#testButton").on("click", () => {
 
 // 나중에 미국 추가 -
 // OSM 사용
-let map = L.map("map", { minZoom: 7 })
+let map = L.map("map", { minZoom: 6 })
   .setView([36.1358642, 128.0785804], 7)
   .on("easyPrint-finished", e => {
     insertImage(e.event)
@@ -54,7 +54,7 @@ let printPlugin = L.easyPrint({
 }).addTo(map);
 
 var routeControl = L.Routing.control({
-  serviceUrl: "http://218.39.221.89:5000/route/v1",
+  serviceUrl: "http://d2919a13.ngrok.io/route/v1",
   routeWhileDragging: false,
   draggableWaypoints: false,
   lineOptions: {
@@ -778,8 +778,9 @@ const testFunc4 = async () => {
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
 
   await shuffle(selectedArray);
+
   let ran = random(15) + 5;
-  for (let i = 0; i < ran ; i++) {
+  for (let i = 0; i < ran; i++) {
     selectedArrayValue[i] = selectedArray[i].value;
   }
 

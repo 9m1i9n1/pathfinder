@@ -167,10 +167,7 @@ function branchsearch(searchUrl, searchpage = 0) {
 
       if (res.resultCode !== "ERROR") {
         $.each(res.data, function(key, value) {
-          str +=
-            `<tr class="tr-shadow"><td data-title='지역'>` +
-            value.area +
-            "</td>";
+          str += `<tr class="tr-shadow"><td>` + value.area + "</td>";
           str += '<td data-title="지점명">' + value.branchName + "</td>";
           str += '<td data-title="지점장">' + value.branchOwner + "</td>";
           str += '<td data-title="주소">' + value.branchAddr + "</td>";
@@ -360,8 +357,7 @@ function branchlist(selectPage) {
     success: function(res) {
       var str = "";
       $.each(res.data, function(key, value) {
-        str +=
-          `<tr class="tr-shadow"><td data-title='지역'>` + value.area + "</td>";
+        str += `<tr class="tr-shadow"><td>` + value.area + "</td>";
         str += '<td data-title="지점명">' + value.branchName + "</td>";
         str += '<td data-title="지점장">' + value.branchOwner + "</td>";
         str += '<td data-title="주소">' + value.branchAddr + "</td>";
@@ -614,12 +610,12 @@ var branchUpdateValid = $("#branchUpdateForm").validate({
   }
 });
 
-$("#branchInsertTest").on('click', function() {
-	$("#branchName").val("더존비즈온");
-	$("#branchOwner").val("김용우");
-	$("#branchValue").val(43000);
-	$("#branch_Addr").val("강원 춘천시 남산면 수동리 749");
-	$("#branchDaddr").val("더존IT그룹 강촌캠퍼스");
-	$("#branch_Area").val("강원");
-	$("#branchPhone").val("02-6233-3000");
-})
+$("#branchInsertTest").on("click", function() {
+  $("#branchName").val("더존비즈온");
+  $("#branchOwner").val("김용우");
+  $("#branchValue").val(43000);
+  $("#branch_Addr").val("강원 춘천시 남산면 수동리 749");
+  $("#branchDaddr").val("더존IT그룹 강촌캠퍼스");
+  $("#branch_Area").val("강원");
+  $("#branchPhone").val("02-6233-3000");
+});
