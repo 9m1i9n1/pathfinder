@@ -105,12 +105,12 @@ function setNavigation() {
 
 					<li class="nav-item"><a id="maproute" href="/maproute"
 						class="menu nav-link"> <i class="nav-icon fas fa-truck"></i>
-							<p>경로탐색</p>
+							<p>운송등록</p>
 					</a></li>
 
 					<li class="nav-item"><a id="history" href="/history"
 						class="menu nav-link"> <i class="nav-icon fas fa-book"></i>
-							<p>조회내역</p>
+							<p>운송조회</p>
 					</a></li>
 
 					<li class="nav-item"><a id="hierarchy" href="/hierarchy"

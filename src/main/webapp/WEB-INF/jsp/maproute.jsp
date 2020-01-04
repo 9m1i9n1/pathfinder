@@ -24,7 +24,7 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-md-2 col-md-6">
-					<h1>운송 등록</h1>
+					<h1>운송등록</h1>
 				</div>
 				<div class="col-md-6">
 					<ol class="breadcrumb float-sm-right" id="headInfo">
