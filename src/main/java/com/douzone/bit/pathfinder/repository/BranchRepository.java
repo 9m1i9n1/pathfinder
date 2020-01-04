@@ -50,6 +50,7 @@ public interface BranchRepository extends JpaRepository<BranchTb, Long> {
 	public Page<BranchTb> findByAreaAndBranchNameLike(AreaTb area, String branchName, Pageable pageable);
 
 	public Page<BranchTb> findByAreaAndBranchAddrLike(AreaTb area, String branchAddr, Pageable pageable);
+
 	
 	//public Page<BranchTb> findByBranchAddrLike(List<BranchTb> branchs1, String branchAddr, Pageable pageable);
 

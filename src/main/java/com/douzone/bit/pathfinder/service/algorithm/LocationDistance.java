@@ -4,7 +4,7 @@ public class LocationDistance {
 	public double lat1, lon1, lat2, lon2;
 
 	public LocationDistance() {
-		
+
 	}
 
 	public void setDistance(double lat1, double lon1, double lat2, double lon2) {

@@ -62,8 +62,8 @@
 								</div>
 
 								<div class="card-footer text-center">
-									<button id="btn1" class="btn bg-olive float-right next" type="button">
-										다음</button>
+									<button id="btn1" class="btn bg-olive float-right next"
+										type="button">다음</button>
 								</div>
 							</div>
 						</div>

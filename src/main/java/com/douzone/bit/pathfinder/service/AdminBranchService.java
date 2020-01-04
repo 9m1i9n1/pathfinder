@@ -75,7 +75,7 @@ public class AdminBranchService {
 
 		List<AdminBranchResponse> branchList = branchs.stream().map(branch -> response(branch))
 				.collect(Collectors.toList());
-
+		
 		return Header.OK(branchList);
 	}
 
@@ -107,7 +107,8 @@ public class AdminBranchService {
 				.branchName(branch.getBranchName()).branchOwner(branch.getBranchOwner())
 				.branchValue(branch.getBranchValue()).branchAddr(branch.getBranchAddr())
 				.branchDaddr(branch.getBranchDaddr()).branchPhone(branch.getBranchPhone())
-				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng()).area(branch.getArea().getAreaName())
+				.branchLat(branch.getBranchLat()).branchLng(branch.getBranchLng())
+				.area(branch.getArea().getAreaName())
 				.areaIndex(branch.getArea().getAreaIndex()).build();
 		return adminBranchResponse;
 	}

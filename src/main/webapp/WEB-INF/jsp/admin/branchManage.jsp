@@ -92,7 +92,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover" id="tableTest">
-                  <thead>
+                  <thead class="bg-lightgray">
                     <tr>
                       <th style="width: 10%">지역</th>
                       <th style="width: 12%">지점명</th>
