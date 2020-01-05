@@ -41,7 +41,7 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	// 현재날짜가 출발일 도착일 사이(오늘의 운송)
 	@Query("{$and :[{'dlvrdate' : {'$lte' : ?0} }, {'arrivedate' : {'$gte' : ?1 } } ]}")
 	List<HistoryTb> findTodayList(Pageable pageable, LocalDateTime todayEndTime, LocalDateTime todayStratTime);
-	
+
 	// 전체 검색
 	@Query("{'arrivedate' : { '$lt' : ?0 }}")
 	Page<HistoryTb> findAllByPp(Pageable pageable, LocalDateTime LocalTime);
@@ -57,13 +57,16 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 
 	// 전체 검색 & 날짜로 검색
 	@Query("{$and : [{'arrivedate' : { '$lt' : ?0 }}, {'dlvrdate' : { '$gte' : ?1 }}, {'dlvrdate' : { '$lte' : ?2 }}]}")
-	Page<HistoryTb> findAllByPpAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword, LocalDateTime endDate);
+	Page<HistoryTb> findAllByPpAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword,
+			LocalDateTime endDate);
 
 	@Query("{$and :[ {arrivedate : { '$gte' : ?0} }, { 'dlvrdate' : {'$lte' : ?0 } }, { 'dlvrdate' : {'$gte' : ?1 }}, {'dlvrdate' : { '$lte' : ?2 }}]}")
-	Page<HistoryTb> findAllByIngAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword, LocalDateTime endDate);
+	Page<HistoryTb> findAllByIngAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword,
+			LocalDateTime endDate);
 
 	@Query("{$and : [{'dlvrdate' : { '$gt' : ?0 }}, { 'dlvrdate' : {'$gte' : ?1 }}, {'dlvrdate' : { '$lte' : ?2 }}]}")
-	Page<HistoryTb> findAllByWillAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword, LocalDateTime endDate);
+	Page<HistoryTb> findAllByWillAndDate(Pageable pageable, LocalDateTime LocalTime, LocalDateTime keyword,
+			LocalDateTime endDate);
 
 	// 내 글 검색
 	@Query("{$and : [ {'dlvrdate' : { '$gt' : ?0 }}, {'username' : ?1}] }")
