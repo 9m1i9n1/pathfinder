@@ -102,7 +102,10 @@
 
 ## MongoDB Schema
 
+
+
 **history Table**
+
 | Column     | Content   | Type        |
 | ---------- | --------- | ----------- |
 | regdate | 등록 날짜 | Date |
@@ -120,12 +123,22 @@
 | sortType  | 정렬 타입 | String |
 
 
+
 **routes Table**
+
 | Column     | Content   | Type        |
 | ---------- | --------- | ----------- |
 | detail  | 경로 | Array |
-	ㄴ | rdist  |A,B 사이 거리 | Double |
-	   | rtime  |A,B 사이 시간 | Double |
-	   | rdep  | A의 이름(출발) | String |
-	   | rarvl  |B의 이름(도착) | String |
-	   | rfee  | A,B 사이 비용 | Int32 |
+
+
+
+**detail Collection**
+
+| Column     | Content   | Type        |
+| ---------- | --------- | ----------- |
+| detail  | 경로 | Array |
+| rdist  |A,B 사이 거리 | Double |
+| rtime  |A,B 사이 시간 | Double |
+| rdep  | A의 이름(출발) | String |
+| rarvl  |B의 이름(도착) | String |
+| rfee  | A,B 사이 비용 | Int32 |
