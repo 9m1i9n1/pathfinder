@@ -103,7 +103,9 @@
 ## MongoDB Schema
 
 **history Table**
-| regdate  | 등록 날짜 | Date |
+| Column     | Content   | Type        |
+| ---------- | --------- | ----------- |
+| regdate | 등록 날짜 | Date |
 | username  | 유저ID | String |
 | carIndex  | 차량번호 | Int64 |
 | imgSrc  | S3의 이미지url | String |
@@ -118,7 +120,9 @@
 | sortType  | 정렬 타입 | String |
 
 
-**history Table**
+**routes Table**
+| Column     | Content   | Type        |
+| ---------- | --------- | ----------- |
 | detail  | 경로 | Array |
 	ㄴ | rdist  |A,B 사이 거리 | Double |
 	   | rtime  |A,B 사이 시간 | Double |
