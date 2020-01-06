@@ -134,9 +134,7 @@
 							<div id="col-selectBranch" class="collapse"
 								aria-labelledby="headingBranch" data-parent="#accordion-select">
 								<div class="card-body">
-									<select id="branchSelect" name="branchSelect"
-										multiple="multiple">
-										<option></option>
+									<select id="branchSelect" name="branchSelect">
 									</select>
 								</div>
 								<div class="card-footer text-right">
