@@ -167,7 +167,7 @@ const depBranchlist = res => {
   let area=['서울','부산','대구','인천','광주','대전','울산','경기','강원','충북','충남','전북','전남','경북','경남','제주특별자치도','세종특별자치시'];
   let finalBranchData = $.map(area, i => { return {text:i, children:[]}} );
   let branchData = $.map(res, obj => {
-    obj.id = obj.id || obj.branchIndex;
+    obj.id = obj.id || String(obj.branchIndex);
     obj.text = obj.text || obj.branchName;
     finalBranchData[obj.areaIndex-1].children.push(obj);
     return obj;
@@ -236,21 +236,20 @@ const selectBranchlist = res => {
   
   let area=['서울','부산','대구','인천','광주','대전','울산','경기','강원','충북','충남','전북','전남','경북','경남','제주특별자치도','세종특별자치시'];
   let finalBranchData = $.map(area, i => { return {text:i, children:[]}} );
-  
   let branchData = res
     .filter(obj => {
       return obj.branchIndex != dep;
     })
     .map(obj => {
-      obj.id = obj.id || obj.branchIndex;
+      obj.id = obj.id || String(obj.branchIndex);
       obj.text = obj.text || obj.branchName;
       finalBranchData[obj.areaIndex-1].children.push(obj);
       return obj;
     });
-
   $("#branchSelect").select2({
     width: "100%",
     placeholder: "경유지 선택",
+    multiple: true,
     data: finalBranchData,
     maximumSelectionLength: 20,
     theme: "bootstrap4",
@@ -328,21 +327,21 @@ const selectCar = selectData => {
 // 차량 선택시 Event
 $("#carSelect").on("select2:select", e => {
   let selectData = e.params.data;
+  
   selectCar(selectData);
 });
 
 // 경유지 선택시 Event
 $("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
-
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
+  
   markerAdd(selectData, icon);
 });
 
 // 경유지 삭제시 Event
 $("#branchSelect").on("select2:unselect", e => {
   let selectData = e.params.data;
-
   markerRemove(selectData);
 });
 
