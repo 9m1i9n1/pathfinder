@@ -39,7 +39,7 @@ public interface HistoryRepository extends MongoRepository<HistoryTb, String> {
 	Integer findAllByDoingToday(LocalDateTime LocalTime1, LocalDateTime LocalfindAllByIngTime2, LocalDateTime LocalTime3);
 
 	// 현재날짜가 출발일 도착일 사이(오늘의 운송)
-	@Query("{$and :[{'dlvrdate' : {'$lte' : ?0} }, {'arrivedate' : {'$gte' : ?1 } } ]}")
+	@Query("{$and :[{'arrivedate' : {'$lte' : ?0} }, {'arrivedate' : {'$gte' : ?1 } } ]}")
 	List<HistoryTb> findTodayList(Pageable pageable, LocalDateTime todayEndTime, LocalDateTime todayStratTime);
 
 	// 전체 검색

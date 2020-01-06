@@ -143,10 +143,12 @@ function recentlyHistory() {
           if (value.stat === -1)
             str +=
               '<td><span class="badge badge-secondary">운송완료</span></td>';
+          else if (value.stat === 0)
+            str += '<td><span class="badge badge-success">운송중</span></td>';
           else if (value.stat === 1)
             str += '<td><span class="badge badge-warning">운송예정</span></td>';
           else if (value.stat === 2)
-            str += '<td><span class="badge badge-success">운송중</span></td>';
+        	str += '<td><span class="badge badge-success">운송중</span></td>';
 
           str += "<td data-title='출발일자'>" + value.dlvrdate + "</td>";
           str += "<td data-title='도착일자'>" + value.arrivedate + "</td>";
@@ -186,7 +188,7 @@ function todayHistory() {
             str +=
               '<td><span class="badge badge-secondary">운송완료</span></td>';
           else if (value.stat === 0)
-            str += '<td><span class="badge badge-danger">오늘도착</span></td>';
+            str += '<td><span class="badge badge-success">운송중</span></td>';
           else if (value.stat === 1)
             str += '<td><span class="badge badge-warning">운송예정</span></td>';
           else if (value.stat === 2)
