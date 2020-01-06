@@ -4,7 +4,10 @@ $(document).ready(() => {
 });
 
 $("#testButton").on("click", () => {
-  testFunc();
+  
+	markerGroup.clearLayers();
+	$("#testButton").attr("disabled", true);
+	testFunc();
 });
 
 // 다음 지도 사용
@@ -175,19 +178,15 @@ const depBranchlist = res => {
     placeholder: "출발지 선택",
     data: finalBranchData,
     theme: "bootstrap4",
-    sorter: data => {
-    	for(let i =0; i < data.length; i++) data[i].children.sort((a, b) => a.text.localeCompare(b.text))
-    	return data;
-    }
+    sorter: data => data.filter(region => region.children.sort((a, b) => a.text.localeCompare(b.text)))
     });
-};
+  }
 
 const branchlist = handleFunc => {
   return $.ajax({
     url: "/maproute/branchLoding",
     type: "get"
   }).then(res => {
-	  console.log("handleFunc - ", handleFunc);
     handleFunc(res);
   });
 };
@@ -234,7 +233,10 @@ const depCarlist = res => {
 const selectBranchlist = res => {
   let dep = $("#depSelect").val();
   res = res.data;
-
+  
+  let area=['서울','부산','대구','인천','광주','대전','울산','경기','강원','충북','충남','전북','전남','경북','경남','제주특별자치도','세종특별자치시'];
+  let finalBranchData = $.map(area, i => { return {text:i, children:[]}} );
+  
   let branchData = res
     .filter(obj => {
       return obj.branchIndex != dep;
@@ -242,17 +244,17 @@ const selectBranchlist = res => {
     .map(obj => {
       obj.id = obj.id || obj.branchIndex;
       obj.text = obj.text || obj.branchName;
-
+      finalBranchData[obj.areaIndex-1].children.push(obj);
       return obj;
     });
 
   $("#branchSelect").select2({
     width: "100%",
     placeholder: "경유지 선택",
-    data: branchData,
+    data: finalBranchData,
     maximumSelectionLength: 20,
     theme: "bootstrap4",
-    sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
+    sorter: data => data.filter(region => region.children.sort((a, b) => a.text.localeCompare(b.text)))
   });
 };
 
@@ -718,7 +720,10 @@ function random(max) {
 
 // ! 테스트 부분 ==========================
 const testFunc = async () => {
-  await testFunc1(); // 실행
+  $("#showSortDist").prop("checked", false);
+  routeControl.getPlan().setWaypoints([]);
+
+  await testFunc1();
   await testFunc2();
   await testFunc3();
   await testFunc4();
@@ -738,6 +743,7 @@ const testFunc1 = async () => {
 
   await carlist(depCarlist, selectData.areaIndex);
 
+  await timeout(800);
   $("#btn1").trigger("click");
   await timeout(1500);
 };
@@ -754,6 +760,7 @@ const testFunc2 = async () => {
   let car = $("#carSelect").select2("data")[0];
   await selectCar(car);
 
+  await timeout(800);
   $("#btn2").trigger("click");
   await timeout(1500);
 };
@@ -764,6 +771,7 @@ const testFunc3 = async () => {
 
   $("#dateSelect").val(moment(date).format("YYYY-MM-DD"));
 
+  await timeout(800);
   $("#btn3").trigger("click");
   await timeout(1500);
 };
@@ -791,4 +799,5 @@ const testFunc4 = async () => {
   for (let i = 0; i < selectData.length; i++) {
     markerAdd(selectData[i], icon);
   }
+	$("#testButton").attr("disabled", false);
 };

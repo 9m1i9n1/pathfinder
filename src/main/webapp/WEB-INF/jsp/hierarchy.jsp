@@ -30,7 +30,7 @@
 			<div class="col-md-2">
 				<div class="card height100">
 					<div class="card-header">
-						<h3 class="card-title" style="height: 30px">부서 조직도</h3>
+						<h3 class="card-title" style="height: 30px">지점 목록</h3>
 					</div>
 					<div class="card-body small height675px">
 						<div id="jstree" class="myScrollableBlock scrollbar-outer"></div>
