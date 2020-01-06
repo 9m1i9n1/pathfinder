@@ -49,7 +49,7 @@
 
 - src/main/docker
 
-## Schema
+## MariaDB Schema
 
 **User Table**
 
@@ -97,3 +97,31 @@
 | ---------- | --------- | ----------- |
 | area_index | 지역 키   | BIGINT      |
 | area_name  | 지역 이름 | VARCHAR(10) |
+
+
+
+## MongoDB Schema
+
+**history Table**
+| regdate  | 등록 날짜 | Date |
+| username  | 유저ID | String |
+| carIndex  | 차량번호 | Int64 |
+| imgSrc  | S3의 이미지url | String |
+| dep  | 출발지 | String |
+| arvl  | 도착지 | String |
+| dist  | 총 거리 | Double |
+| fee  | 총 요금 | Int32 |
+| time  | 총 시간 | String |
+| dlvrdate  | 출발 날짜 | Date |
+| arrivedate  | 도착 날짜 | Date |
+| routes  | 경로(ObjectID) | ObjectId |
+| sortType  | 정렬 타입 | String |
+
+
+**history Table**
+| detail  | 경로 | Array |
+	ㄴ | rdist  |A,B 사이 거리 | Double |
+	   | rtime  |A,B 사이 시간 | Double |
+	   | rdep  | A의 이름(출발) | String |
+	   | rarvl  |B의 이름(도착) | String |
+	   | rfee  | A,B 사이 비용 | Int32 |
