@@ -331,21 +331,16 @@ function branchdelete(idx, bname, barea) {
       }
       var treeId = sessionStorage.getItem("treeId");
       if (treeId==="company:1") {
-    	  console.log("company:1",treeId)
        /* let Bname = areaNameTrans(barea);
         let url = "";
         url =
           url + "?searchType=area&keyword=" + Bname + "&selectedArea=" + treeId;*/
-        console.log("1")
         branchlist();
         /*branchsearch(url);*/
-        console.log("2")
       } else {
-    	  console.log("3")
-    	   let Bname = areaNameTrans(barea);
+    	let Bname = areaNameTrans(barea);
         let url1 = "?searchType=area&keyword=" + Bname + "&selectedArea=" + treeId;
         branchsearch(url1);
-    	  console.log("4")
       }
 
       $("#updateTitle").text("삭제 성공");
