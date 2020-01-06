@@ -28,8 +28,8 @@
 				</div>
 				<div class="col-md-6">
 					<ol class="breadcrumb float-sm-right" id="headInfo">
-						<%-- <li class="pr-3"><button class="float-sm-right btn bg-olive"
-								id="testButton">테스트</button></li> --%>
+						<li class="pr-3"><button class="float-sm-right btn bg-olive"
+								id="testButton">테스트</button></li>
 						<li class="breadcrumb-item"><a href="/home">홈</a></li>
 						<li class="breadcrumb-item active">운송 등록</li>
 					</ol>
