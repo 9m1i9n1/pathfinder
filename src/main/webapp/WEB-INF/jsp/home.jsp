@@ -22,7 +22,7 @@
 							class="fas fa-shipping-fast"></i></span>
 
 						<div class="info-box-content">
-							<span class="info-box-text">오늘의 운송현황</span> <span
+							<span class="info-box-text">잘 들어오는건지 테스트</span> <span
 								class="info-box-number" id="todayPercent"> </span>
 						</div>
 					</div>
