@@ -4,10 +4,9 @@ $(document).ready(() => {
 });
 
 $("#testButton").on("click", () => {
-  
-	markerGroup.clearLayers();
-	$("#testButton").attr("disabled", true);
-	testFunc();
+  markerGroup.clearLayers();
+  $("#testButton").attr("disabled", true);
+  testFunc();
 });
 
 // 다음 지도 사용
@@ -54,7 +53,6 @@ let printPlugin = L.easyPrint({
 }).addTo(map);
 
 var routeControl = L.Routing.control({
-  serviceUrl: "http://218.39.221.89:5000/route/v1",
   routeWhileDragging: false,
   draggableWaypoints: false,
   lineOptions: {
@@ -163,24 +161,47 @@ $("select").on("select2:open", function() {
 // 출발지 선택 Draw
 const depBranchlist = res => {
   res = res.data;
-  
-  let area=['서울','부산','대구','인천','광주','대전','울산','경기','강원','충북','충남','전북','전남','경북','경남','제주특별자치도','세종특별자치시'];
-  let finalBranchData = $.map(area, i => { return {text:i, children:[]}} );
+
+  let area = [
+    "서울",
+    "부산",
+    "대구",
+    "인천",
+    "광주",
+    "대전",
+    "울산",
+    "경기",
+    "강원",
+    "충북",
+    "충남",
+    "전북",
+    "전남",
+    "경북",
+    "경남",
+    "제주특별자치도",
+    "세종특별자치시"
+  ];
+  let finalBranchData = $.map(area, i => {
+    return { text: i, children: [] };
+  });
   let branchData = $.map(res, obj => {
     obj.id = obj.id || String(obj.branchIndex);
     obj.text = obj.text || obj.branchName;
-    finalBranchData[obj.areaIndex-1].children.push(obj);
+    finalBranchData[obj.areaIndex - 1].children.push(obj);
     return obj;
   });
-  
+
   $("#depSelect").select2({
     width: "100%",
     placeholder: "출발지 선택",
     data: finalBranchData,
     theme: "bootstrap4",
-    sorter: data => data.filter(region => region.children.sort((a, b) => a.text.localeCompare(b.text)))
-    });
-  }
+    sorter: data =>
+      data.filter(region =>
+        region.children.sort((a, b) => a.text.localeCompare(b.text))
+      )
+  });
+};
 
 const branchlist = handleFunc => {
   return $.ajax({
@@ -233,9 +254,29 @@ const depCarlist = res => {
 const selectBranchlist = res => {
   let dep = $("#depSelect").val();
   res = res.data;
-  
-  let area=['서울','부산','대구','인천','광주','대전','울산','경기','강원','충북','충남','전북','전남','경북','경남','제주특별자치도','세종특별자치시'];
-  let finalBranchData = $.map(area, i => { return {text:i, children:[]}} );
+
+  let area = [
+    "서울",
+    "부산",
+    "대구",
+    "인천",
+    "광주",
+    "대전",
+    "울산",
+    "경기",
+    "강원",
+    "충북",
+    "충남",
+    "전북",
+    "전남",
+    "경북",
+    "경남",
+    "제주특별자치도",
+    "세종특별자치시"
+  ];
+  let finalBranchData = $.map(area, i => {
+    return { text: i, children: [] };
+  });
   let branchData = res
     .filter(obj => {
       return obj.branchIndex != dep;
@@ -243,7 +284,7 @@ const selectBranchlist = res => {
     .map(obj => {
       obj.id = obj.id || String(obj.branchIndex);
       obj.text = obj.text || obj.branchName;
-      finalBranchData[obj.areaIndex-1].children.push(obj);
+      finalBranchData[obj.areaIndex - 1].children.push(obj);
       return obj;
     });
   $("#branchSelect").select2({
@@ -253,7 +294,10 @@ const selectBranchlist = res => {
     data: finalBranchData,
     maximumSelectionLength: 20,
     theme: "bootstrap4",
-    sorter: data => data.filter(region => region.children.sort((a, b) => a.text.localeCompare(b.text)))
+    sorter: data =>
+      data.filter(region =>
+        region.children.sort((a, b) => a.text.localeCompare(b.text))
+      )
   });
 };
 
@@ -327,7 +371,7 @@ const selectCar = selectData => {
 // 차량 선택시 Event
 $("#carSelect").on("select2:select", e => {
   let selectData = e.params.data;
-  
+
   selectCar(selectData);
 });
 
@@ -335,7 +379,7 @@ $("#carSelect").on("select2:select", e => {
 $("#branchSelect").on("select2:select", e => {
   let selectData = e.params.data;
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_default.png" });
-  
+
   markerAdd(selectData, icon);
 });
 
@@ -732,7 +776,7 @@ const testFunc1 = async () => {
   let start = random(totalAreaLength);
 
   $("#depSelect")
-    .val(start) 
+    .val(start)
     .trigger("change.select2");
   let selectData = $("#depSelect").select2("data")[0];
   let icon = new LeafIcon({ iconUrl: "/static/img/marker/marker_0.png" });
@@ -798,5 +842,5 @@ const testFunc4 = async () => {
   for (let i = 0; i < selectData.length; i++) {
     markerAdd(selectData[i], icon);
   }
-	$("#testButton").attr("disabled", false);
+  $("#testButton").attr("disabled", false);
 };
