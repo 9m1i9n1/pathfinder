@@ -35,14 +35,14 @@ public class MapCost {
   }
 
   public double getResultCost(double distance, int index, int homeIndex) {
-    resultCost = (distance * (payroll + mileageCost));
-    resultCost += ((costList.get(index) + costList.get(homeIndex) * 0.4) * tonRatio); 
- 
+    resultCost = (distance * mileageCost);
+    resultCost += ((costList.get(index) + costList.get(homeIndex) * 0.4) * tonRatio);
+
     return resultCost;
   }
 
   public double getResultDist(double distance, int index) {
-    resultCost = (distance * (payroll + mileageCost));
+    resultCost = (distance * mileageCost);
 
     return resultCost;
   }
