@@ -53,6 +53,7 @@ let printPlugin = L.easyPrint({
 }).addTo(map);
 
 var routeControl = L.Routing.control({
+  serviceUrl: "http://218.39.221.89:5000/route/v1",
   routeWhileDragging: false,
   draggableWaypoints: false,
   lineOptions: {
