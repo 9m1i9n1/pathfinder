@@ -170,7 +170,7 @@ function getRoutes(routes) {
         str += "<td data-title='도착지'>" + value.rarvl + "</td>";
         str += "<td data-title='거리'>" + value.rdist + " km" + "</td>";
         str += "<td data-title='시간'>" + value.rtime + "</td>";
-        str += "<td data-title='비용'>" + value.rfee.addComma() + "원</td>";
+        str += "<td data-title='비용'>￦" + value.rfee.addComma() + "</td>";
         str += "</tr>";
       });
 
@@ -196,9 +196,11 @@ function getRoutes(routes) {
       detailsModal.find("#dep").text(routes.dep);
       detailsModal.find("#arvl").text(routes.arvl);
       detailsModal.find("#sortType").text(routes.sortType + "순");
-      detailsModal.find("#dist").text(routes.dist.addComma() + " km");
-      detailsModal.find("#dist").text(routes.dist.addComma() + " km");
-      detailsModal.find("#fee").text(routes.fee.addComma() + " 원");
+      detailsModal.find("#dist").html(routes.dist.addComma() + " km");
+      detailsModal.find("#totalTime").html("&nbsp;&nbsp;" + routes.time);
+      detailsModal
+        .find("#fee")
+        .html("&nbsp;&nbsp;" + routes.fee.addComma() + " 원");
     }
   });
 }
@@ -233,5 +235,16 @@ $("#printBtn").on("click", function() {
 //! 유틸부분 =======================
 Number.prototype.addComma = function() {
   var regexp = /\B(?=(\d{3})+(?!\d))/g;
-  return this.toString().replace(regexp, ",");
+  let num = this.valueOf();
+  let text = "";
+
+  if (num < 100000) {
+    text = "&nbsp;&nbsp;" + this.toString().replace(regexp, ",");
+  } else {
+    text = this.toString().replace(regexp, ",");
+  }
+
+  console.log(text);
+
+  return text;
 };
