@@ -1,3 +1,7 @@
+# 2020.06.22 현재 모든 서버 닫혀있는 상태.
+
+PATHFINDER 소개 PPT : [BIT-PATHFINDER.pdf](https://github.com/9m1i9n1/pathfinder/files/4813191/BIT-PATHFINDER.pdf)
+
 # Pathfinder Server URL
 
 **http://218.39.221.89:8181/**
@@ -25,7 +29,7 @@
 
 ## 배송비 산출 공식
 
-**(거리 * 유틸비) + ( ( 상차비(출발지점) * 0.4 ) + (하차비(도착지점) ) * T 가중치)**
+**(거리 _ 유틸비) + ( ( 상차비(출발지점) _ 0.4 ) + (하차비(도착지점) ) \* T 가중치)**
 (차량 선택에 의해 창고 이용료가 비싸지기 때문에 차량마다 경로가 다를 수 있다)
 
 ~~크리티컬한 오류 : 창고이용료가 엄청 비싸거나 엄청 저렴할 경우, 거리에 상관없이 제일 나중에 가거나, 제일 먼저간다.~~
@@ -96,43 +100,39 @@
 | area_index | 지역 키   | BIGINT      |
 | area_name  | 지역 이름 | VARCHAR(10) |
 
-
-
 ## MongoDB Schema
 
 **history Table**
 
-| Column     | Content   | Type        |
-| ---------- | --------- | ----------- |
-| regdate | 등록 날짜 | Date |
-| username  | 유저ID | String |
-| carIndex  | 차량번호 | Int64 |
-| imgSrc  | S3의 이미지url | String |
-| dep  | 출발지 | String |
-| arvl  | 도착지 | String |
-| dist  | 총 거리 | Double |
-| fee  | 총 요금 | Int32 |
-| time  | 총 시간 | String |
-| dlvrdate  | 출발 날짜 | Date |
-| arrivedate  | 도착 날짜 | Date |
-| routes  | 경로(ObjectID) | ObjectId |
-| sortType  | 정렬 타입 | String |
-
+| Column     | Content        | Type     |
+| ---------- | -------------- | -------- |
+| regdate    | 등록 날짜      | Date     |
+| username   | 유저ID         | String   |
+| carIndex   | 차량번호       | Int64    |
+| imgSrc     | S3의 이미지url | String   |
+| dep        | 출발지         | String   |
+| arvl       | 도착지         | String   |
+| dist       | 총 거리        | Double   |
+| fee        | 총 요금        | Int32    |
+| time       | 총 시간        | String   |
+| dlvrdate   | 출발 날짜      | Date     |
+| arrivedate | 도착 날짜      | Date     |
+| routes     | 경로(ObjectID) | ObjectId |
+| sortType   | 정렬 타입      | String   |
 
 **routes Table**
 
-| Column     | Content   | Type        |
-| ---------- | --------- | ----------- |
-| detail  | 경로 | Array |
-
+| Column | Content | Type  |
+| ------ | ------- | ----- |
+| detail | 경로    | Array |
 
 **detail Collection**
 
-| Column     | Content   | Type        |
-| ---------- | --------- | ----------- |
-| detail  | 경로 | Array |
-| rdist  |A,B 사이 거리 | Double |
-| rtime  |A,B 사이 시간 | Double |
-| rdep  | A의 이름(출발) | String |
-| rarvl  |B의 이름(도착) | String |
-| rfee  | A,B 사이 비용 | Int32 |
+| Column | Content        | Type   |
+| ------ | -------------- | ------ |
+| detail | 경로           | Array  |
+| rdist  | A,B 사이 거리  | Double |
+| rtime  | A,B 사이 시간  | Double |
+| rdep   | A의 이름(출발) | String |
+| rarvl  | B의 이름(도착) | String |
+| rfee   | A,B 사이 비용  | Int32  |
